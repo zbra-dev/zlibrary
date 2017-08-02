@@ -64,6 +64,15 @@ namespace ZLibrary.Web
             ConfigureAuth(app);
             SeedDatabase(app);
 
+            // TODO: Stricter CORS rules in Production
+            app.UseCors(builder =>
+            {
+                builder
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            });
+            
             app.UseMvc();
         }
 
