@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using ZLibrary.Model;
 
 namespace ZLibrary.Persistence
@@ -18,7 +19,7 @@ namespace ZLibrary.Persistence
 
         public async Task<IList<User>> FindAll()
         {
-            return await context.Users.ToAsyncEnumerable().ToArray();
+            return await context.Users.ToListAsync();
         }
 
         public async Task<User> FindById(long id) {

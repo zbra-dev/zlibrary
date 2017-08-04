@@ -23,6 +23,7 @@ namespace ZLibrary.Persistence
             .Include(book => book.Authors)
             .Include(book => book.Publisher)
             .Include(book => book.Isbn)
+            // TODO - Load cover image
             .ToListAsync();
         }
 
