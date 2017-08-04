@@ -25,6 +25,8 @@ namespace ZLibrary.Web
                     Email = "adminZLibrary@zbra.com.br",
                 };
 
+                context.Users.Add(user);
+
                 var author = new Author("Joshua Block");
 
                 List<Author> authors = new List<Author>();
@@ -35,7 +37,7 @@ namespace ZLibrary.Web
                 var isbn = new Isbn("12345");
                 context.Isbns.Add(isbn);
 
-                var publisher = new Publisher("Madhouse Inc. ");
+                var publisher = new Publisher("Cambridge Publisher");
                 context.Publishers.Add(publisher);
 
                 var book = new Book()
@@ -48,9 +50,7 @@ namespace ZLibrary.Web
                     Title = "Effective Java"
                 };
 
-                context.Books.Add(book);
-
-                context.Users.Add(user);
+                context.Books.Add(book);   
 
                 context.SaveChanges();
             }
