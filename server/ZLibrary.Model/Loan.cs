@@ -7,7 +7,7 @@ namespace ZLibrary.Model
     {
 
         public Reservation Reservation { get; private set; }
-        public Date ExpirationDate { get; set; }
+        public Date ExpirationDate { get; private set; }
         public LoanStatus Status { get; set; }
 
         public Loan(Reservation reservation)

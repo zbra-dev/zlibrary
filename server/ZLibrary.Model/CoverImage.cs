@@ -13,7 +13,7 @@ namespace ZLibrary.Model
 
         public CoverImage(byte[] image)
         {
-            this.Image = image;
+            Image = image;
         }
 
     }
