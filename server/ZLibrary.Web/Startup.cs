@@ -41,6 +41,9 @@ namespace ZLibrary.Web
 
             // Add application services
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IBookService, BookService>();
+            services.AddTransient<IBookRepository, BookRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ITokenFactory, JsonWebTokenFactory>();
 
             services.Configure<JwtOptions>(o =>
@@ -64,6 +67,15 @@ namespace ZLibrary.Web
             ConfigureAuth(app);
             SeedDatabase(app);
 
+            // TODO: Stricter CORS rules in Production
+            app.UseCors(builder =>
+            {
+                builder
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            });
+            
             app.UseMvc();
         }
 

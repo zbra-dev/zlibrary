@@ -5,6 +5,7 @@ using System.Security.Claims;
 using ZLibrary.Model;
 using ZLibrary.Web.Options;
 using ZLibrary.Web.Resources;
+using Newtonsoft.Json;
 
 namespace ZLibrary.Web.Factory.Impl
 {
@@ -26,7 +27,8 @@ namespace ZLibrary.Web.Factory.Impl
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N").ToUpper()),
                 new Claim(JwtRegisteredClaimNames.Iat,
                     new DateTimeOffset(now).ToUniversalTime().ToUnixTimeSeconds().ToString(),
-                    ClaimValueTypes.Integer64)
+                    ClaimValueTypes.Integer64),
+                new Claim(ClaimTypes.Role, BuildRoles(), JsonClaimValueTypes.JsonArray)
             };
 
             var jwt = new JwtSecurityToken(
@@ -43,6 +45,13 @@ namespace ZLibrary.Web.Factory.Impl
                 Token = encodedJwt,
                 ExpiresIn = jwtOptions.Expires?.TotalSeconds
             };
+        }
+
+        // TODO: Example only, add proper roles here
+        private string BuildRoles()
+        {
+            var roles = new[] { "User" };
+            return JsonConvert.SerializeObject(roles);
         }
     }
 }

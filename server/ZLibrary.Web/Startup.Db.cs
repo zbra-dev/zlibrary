@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using ZLibrary.Model;
 using ZLibrary.Persistence;
+using System.Collections.Generic;
 
 namespace ZLibrary.Web
 {
@@ -21,12 +22,39 @@ namespace ZLibrary.Web
                 var user = new User()
                 {
                     Name = "Admin",
-                    Email = "admin@fillipe.zone",
+                    Email = "adminZLibrary@zbra.com.br",
                 };
-                context.Users.Add(user);
+
+                var author = new Author("Joshua Block");
+
+                List<Author> authors = new List<Author>();
+                authors.Add(author);
                 
+                context.Authors.Add(author);
+
+                var isbn = new Isbn("12345");
+                context.Isbns.Add(isbn);
+
+                var publisher = new Publisher("Madhouse Inc. ");
+                context.Publishers.Add(publisher);
+
+                var book = new Book()
+                {
+                    Authors = authors,
+                    Isbn = isbn,
+                    PublicationYear = 2014,
+                    Publisher = publisher,
+                    Synopsis = "Java for professional development and best practices.",
+                    Title = "Effective Java"
+                };
+
+                context.Books.Add(book);
+
+                context.Users.Add(user);
+
                 context.SaveChanges();
             }
         }
+
     }
 }
