@@ -9,29 +9,27 @@ namespace ZLibrary.Core
 {
     public class UserService : IUserService
     {
-        private readonly ZLibraryContext context;
+        private IUserRepository UserRepository;
 
-        public UserService(ZLibraryContext context)
+        public UserService(IUserRepository userRepository)
         {
-            this.context = context;
+            this.UserRepository = userRepository;
         }
 
         public async Task<IList<User>> FindAll()
         {
-            return await context.Users.ToAsyncEnumerable().ToArray();
+            return await UserRepository.FindAll();
         }
 
-        public async Task<User> FindById(long id) {
-            return await context.Users.FindAsync(id);
+        public async Task<User> FindById(long id)
+        {
+            return await UserRepository.FindById(id);
         }
 
         public async Task<long> Create(User user)
         {
-            await context.Users.AddAsync(user);
-            await context.SaveChangesAsync();
-            await context.Entry(user).ReloadAsync();
-            
-            return user.Id;
+            return await UserRepository.Create(user);
         }
+
     }
 }
