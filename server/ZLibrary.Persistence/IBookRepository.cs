@@ -10,7 +10,5 @@ namespace ZLibrary.Persistence
         Task<IList<Book>> FindAll();
         Task<Book> FindById(long id);
         Task<long> Create(Book user);
-
     }
-
 }

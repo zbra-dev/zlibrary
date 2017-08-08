@@ -8,10 +8,10 @@ using System.Collections.Generic;
 namespace ZLibrary.Web
 {
     public partial class Startup
-    {
+    {   
         // TODO: Seed database manually in Production
         private static void SeedDatabase(IApplicationBuilder app)
-        {
+        {  
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetService<ZLibraryContext>();
@@ -27,12 +27,17 @@ namespace ZLibrary.Web
 
                 context.Users.Add(user);
 
-                var author = new Author("Joshua Block");
+                var authorFactory = new AuthorFactory();
+                var authors = authorFactory.CreateAuthors();
+                foreach (var author in authors) 
+                {
+                    context.Authors.Add(author);
+                }
 
-                List<Author> authors = new List<Author>();
-                authors.Add(author);
-                
-                context.Authors.Add(author);
+               //var author = new Author("Joshua Block");
+               //List<Author> authors = new List<Author>();
+               //authors.Add(author);
+               //context.Authors.Add(author);
 
                 var isbn = new Isbn("12345");
                 context.Isbns.Add(isbn);
@@ -42,7 +47,7 @@ namespace ZLibrary.Web
 
                 var book = new Book()
                 {
-                    Authors = authors,
+                    Authors = authors.ToList(),
                     Isbn = isbn,
                     PublicationYear = 2014,
                     Publisher = publisher,
@@ -55,6 +60,5 @@ namespace ZLibrary.Web
                 context.SaveChanges();
             }
         }
-
     }
 }
