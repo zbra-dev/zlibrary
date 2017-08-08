@@ -34,11 +34,6 @@ namespace ZLibrary.Web
                     context.Authors.Add(author);
                 }
 
-               //var author = new Author("Joshua Block");
-               //List<Author> authors = new List<Author>();
-               //authors.Add(author);
-               //context.Authors.Add(author);
-
                 var isbn = new Isbn("12345");
                 context.Isbns.Add(isbn);
 
