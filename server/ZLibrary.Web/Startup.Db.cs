@@ -19,20 +19,13 @@ namespace ZLibrary.Web
                 if (context.Users.Any())
                     return;
 
-                var user = new User()
-                {
-                    Name = "Admin",
-                    Email = "adminZLibrary@zbra.com.br",
-                };
-
-                context.Users.Add(user);
+                var userFactory =  new UserFactory();
+                var users = userFactory.CreateCommomnUser().Concat(userFactory.CreateAdminUser());
+                context.Users.AddRange(users);
 
                 var authorFactory = new AuthorFactory();
                 var authors = authorFactory.CreateAuthors();
-                foreach (var author in authors) 
-                {
-                    context.Authors.Add(author);
-                }
+                context.Authors.AddRange(authors);
 
                 var isbn = new Isbn("12345");
                 context.Isbns.Add(isbn);
