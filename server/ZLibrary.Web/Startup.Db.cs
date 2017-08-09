@@ -17,22 +17,17 @@ namespace ZLibrary.Web
                 var context = serviceScope.ServiceProvider.GetService<ZLibraryContext>();
 
                 if (context.Users.Any())
-                    return;
-
-                var user = new User()
                 {
-                    Name = "Admin",
-                    Email = "adminZLibrary@zbra.com.br",
-                };
+                    return;
+                }
 
-                context.Users.Add(user);           
-               
+                var userFactory =  new UserFactory();
+                var users = userFactory.CreateCommomnUsers().Concat(userFactory.CreateAdminUsers());
+                context.Users.AddRange(users);
+
                 var authorFactory = new AuthorFactory();
                 var authors = authorFactory.CreateAuthors();
-                foreach (var author in authors) 
-                {
-                    context.Authors.Add(author);
-                }
+                context.Authors.AddRange(authors);
 
                 //Publishers
                 var publisherFactory = new PublisherFactory();
