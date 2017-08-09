@@ -25,13 +25,21 @@ namespace ZLibrary.Web
                     Email = "adminZLibrary@zbra.com.br",
                 };
 
-                context.Users.Add(user);
-
+                context.Users.Add(user);           
+               
                 var authorFactory = new AuthorFactory();
                 var authors = authorFactory.CreateAuthors();
                 foreach (var author in authors) 
                 {
                     context.Authors.Add(author);
+                }
+
+                //Publishers
+                var publisherFactory = new PublisherFactory();
+                var publishers =  publisherFactory.CreatedPublishers();
+                foreach (var publisherItem in publishers)
+                {
+                    context.Publishers.Add(publisherItem);
                 }
 
                 var isbn = new Isbn("12345");
