@@ -4,7 +4,7 @@ namespace ZLibrary.Model
 {
     public class PublisherFactory
     {
-        public IList<Publisher> CreatedPublishers()
+        public static IList<Publisher> CreatePublishers()
         {
             var publishers = new List<Publisher>();
             publishers.Add(new Publisher("Prentice Hall"));
@@ -36,7 +36,6 @@ namespace ZLibrary.Model
             publishers.Add(new Publisher("Makron Books"));
             publishers.Add(new Publisher("WROK"));
             return publishers;
-
         }
     }
 }

@@ -2,7 +2,6 @@ using System;
 
 namespace ZLibrary.Model
 {
-
     public class Isbn
     {
         public string Value { get; set; }
@@ -10,17 +9,14 @@ namespace ZLibrary.Model
 
         public Isbn()
         {
-
         }
-        public Isbn(string value)
+        public Isbn(string isbn)
         {
-            if (string.IsNullOrWhiteSpace(value))
+            if (string.IsNullOrWhiteSpace(isbn))
             {
-                throw new ArgumentNullException(nameof(value));
+                throw new ArgumentException($"The paramenter {nameof(isbn)} can not be null or empty.");
             }
-            Value = value;
+            Value = isbn;
         }
-
     }
-
 }

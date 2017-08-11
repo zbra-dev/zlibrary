@@ -4,7 +4,7 @@ namespace ZLibrary.Model
 {
     public class AuthorFactory
     {
-        public IList<Author> CreateAuthors()
+        public static IList<Author> CreateAuthors()
         {
             var authors = new List<Author>();
             authors.Add(new Author("Bruce Eckel"));

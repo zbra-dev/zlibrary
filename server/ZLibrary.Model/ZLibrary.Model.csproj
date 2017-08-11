@@ -1,5 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
   </PropertyGroup>
+  <ItemGroup>
+    <Content Include="Author.cs" />
+    <Content Include="Book.cs" />
+    <Content Include="User.cs" />
+    <Content Include="UserFactory.cs" />
+    <Content Include="Bag.cs" />
+    <Content Include="AuthorFactory.cs" />
+    <Content Include="Date.cs" />
+    <Content Include="Isbn.cs" />
+    <Content Include="Publisher.cs" />
+    <Content Include="CoverImage.cs" />
+    <Content Include="BookExternalReference.cs" />
+    <Content Include="BookCopy.cs" />
+    <Content Include="Loan.cs" />
+    <Content Include="LoanStatus.cs" />
+    <Content Include="ReservationStatus.cs" />
+    <Content Include="ReservationReason.cs" />
+    <Content Include="Reservation.cs" />
+    <Content Include="PublisherFactory.cs" />
+  </ItemGroup>
 </Project>

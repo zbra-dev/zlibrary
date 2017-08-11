@@ -8,10 +8,10 @@ using System.Collections.Generic;
 namespace ZLibrary.Web
 {
     public partial class Startup
-    {   
+    {
         // TODO: Seed database manually in Production
         private static void SeedDatabase(IApplicationBuilder app)
-        {  
+        {
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetService<ZLibraryContext>();
@@ -21,39 +21,29 @@ namespace ZLibrary.Web
                     return;
                 }
 
-                var userFactory =  new UserFactory();
-                var users = userFactory.CreateCommomnUsers().Concat(userFactory.CreateAdminUsers());
+                var users = UserFactory.CreateUsers();    
                 context.Users.AddRange(users);
 
-                var authorFactory = new AuthorFactory();
-                var authors = authorFactory.CreateAuthors();
+                var authors = AuthorFactory.CreateAuthors();
                 context.Authors.AddRange(authors);
 
-                //Publishers
-                var publisherFactory = new PublisherFactory();
-                var publishers =  publisherFactory.CreatedPublishers();
-                foreach (var publisherItem in publishers)
-                {
-                    context.Publishers.Add(publisherItem);
-                }
-
+                var publishers = PublisherFactory.CreatePublishers();
+                context.Publishers.AddRange(publishers);
+    
                 var isbn = new Isbn("12345");
                 context.Isbns.Add(isbn);
-
-                var publisher = new Publisher("Cambridge Publisher");
-                context.Publishers.Add(publisher);
 
                 var book = new Book()
                 {
                     Authors = authors.ToList(),
                     Isbn = isbn,
                     PublicationYear = 2014,
-                    Publisher = publisher,
+                    Publisher = publishers.FirstOrDefault(),
                     Synopsis = "Java for professional development and best practices.",
                     Title = "Effective Java"
                 };
 
-                context.Books.Add(book);   
+                context.Books.Add(book);
 
                 context.SaveChanges();
             }

@@ -5,6 +5,15 @@
     "args": [],
     "tasks": [
         {
+            "taskName": "test",
+            "args": [
+                "${workspaceRoot}/ZLibrary.Test/ZLibrary.Test.csproj"
+            ],
+            "isTestCommand": true,
+            "showOutput": "always",
+            "problemMatcher": "$msCompile"
+        },
+        {
             "taskName": "build",
             "args": [
                 "${workspaceRoot}/ZLibrary.Web/ZLibrary.Web.csproj"
