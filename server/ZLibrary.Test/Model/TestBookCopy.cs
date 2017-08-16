@@ -11,47 +11,34 @@ namespace ZLibrary.Test.Model
         public void TestCreateBook()
         {
             var book = new Book();
-            var externalReference = new BookExternalReference("Test");
-            var bookCopy = new BookCopy(book, externalReference);
+            var externalReference = new BookExternalReference();
+            var bookCopy = new BookCopy(book);
 
             Assert.IsNotNull(bookCopy);
             Assert.AreEqual(book, bookCopy.Book);
-            Assert.AreEqual(externalReference, bookCopy.BookExternalReference);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void TestCreateBookWithExternalReferenceParamenterNullShouldThrowException()
-        {
-            var book = new Book();
-            var bookCopy = new BookCopy(book, null);
+            Assert.AreEqual(BookExternalReference.Empty, bookCopy.BookExternalReference);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
         public void TestCreateBookWithBookParamenterNullShouldThrowException()
         {
-            var externalReference = new BookExternalReference("Test");
-            var bookCopy = new BookCopy(null, externalReference);
+            var bookCopy = new BookCopy(null);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void TestCreateBookWithParamentersNullShouldThrowException()
-        {
-            var bookCopy = new BookCopy(null, null);
-        }
-
-        [TestMethod]
-        public void TestBookCopyProperties()
+        public void TestGetAndSetBookCopyProperties()
         {
             var book = new Book();
-            var externalReference = new BookExternalReference("Test");
-            var bookCopy = new BookCopy(book, externalReference);
+            var externalReference = new BookExternalReference(){Value = "Teste"};;
+            var bookCopy = new BookCopy(book);
+            bookCopy.BookExternalReference = externalReference;
 
             Assert.IsNotNull(bookCopy);
             Assert.AreEqual(book, bookCopy.Book);
             Assert.AreEqual(externalReference, bookCopy.BookExternalReference);
+            bookCopy.BookExternalReference = BookExternalReference.Empty;
+            Assert.AreEqual(BookExternalReference.Empty, bookCopy.BookExternalReference);
         }
     }
 }

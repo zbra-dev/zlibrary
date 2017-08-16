@@ -8,40 +8,41 @@ namespace ZLibrary.Test.Model
     public class TestBookExternalReference
     {
         [TestMethod]
-        public void TestCreateBookExternalReference()
+        public void TestCreateNewBookExternalReferenceChekingValueProperty()
         {
-            var bookExternalReference = new BookExternalReference("Test");
+            var bookExternalReference = new BookExternalReference();
             Assert.IsNotNull(bookExternalReference);
+            Assert.AreEqual(string.Empty, bookExternalReference.Value);
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void TestCreateNewBookExternalReferenceWithNullConstructorShouldThrowException()
+        public void TestSetAndGetBookExternalReferenceProperties()
         {
-            var bookExternalReference = new BookExternalReference(null);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void TestCreateNewBookExternalReferenceWithEmptyConstructorShouldThrowException()
-        {
-            var bookExternalReference = new BookExternalReference("");
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void TestCreateNewBookExternalReferenceWithWhiteSpaceConstructorShouldThrowException()
-        {
-            var bookExternalReference = new BookExternalReference("   ");
-        }
-
-        [TestMethod]
-        public void TestGetIsbnProperties()
-        {
-            var bookExternalReference = new BookExternalReference("Test");
+            var bookExternalReference = new BookExternalReference();
 
             Assert.IsNotNull(bookExternalReference);
+            Assert.AreEqual(string.Empty, bookExternalReference.Value);
+            bookExternalReference.Value = "Test";
             Assert.AreEqual("Test", bookExternalReference.Value);
+        }
+
+        public void TestChengeBookExternalReferenceValuePropertieToNullShouldReturnEmpityString()
+        {
+            var bookExternalReference = new BookExternalReference();
+
+            Assert.IsNotNull(bookExternalReference);
+            Assert.AreEqual(string.Empty, bookExternalReference.Value);
+            bookExternalReference.Value = null;
+            Assert.AreEqual(string.Empty, bookExternalReference.Value);
+        }
+
+        public void TestChengeBookExternalReferenceValuePropertieToWhitSpacesStringShouldReturnEmpityString()
+        {
+            var bookExternalReference = new BookExternalReference();
+
+            Assert.IsNotNull(bookExternalReference);
+            Assert.AreEqual(string.Empty, bookExternalReference.Value);
+            bookExternalReference.Value = "     ";
+            Assert.AreEqual(string.Empty, bookExternalReference.Value);
         }
     }
 }

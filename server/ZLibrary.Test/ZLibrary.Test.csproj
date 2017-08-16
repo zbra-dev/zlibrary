@@ -27,5 +27,6 @@
     <Content Include="Model\TestReservationReason.cs" />
     <Content Include="Model\TestReservation.cs" />
     <Content Include="Model\TestPublisherFactory.cs" />
+    <Content Include="Utils\AssertionUtils.cs" />
   </ItemGroup>
 </Project>

@@ -4,16 +4,29 @@ namespace ZLibrary.Model
 {
     public class BookExternalReference
     {
-        // public static readonly BookExternalReference Empty = new BookExternalReference(string.Empty);
+        public static readonly BookExternalReference Empty = new BookExternalReference();
 
-        public string Value { get; set; }
-        public BookExternalReference(string value)
+        private string _value;
+
+        public string Value
         {
-            if (string.IsNullOrWhiteSpace(value))
+            get
             {
-                throw new ArgumentException($"The paramenter {nameof(value)} can not be null or empty.");
+                return _value;
             }
-            Value = value;
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    value = string.Empty;
+                }
+                _value = value;
+            }
+        }
+
+        public BookExternalReference()
+        {
+            Value = string.Empty;
         }
     }
 }

@@ -7,7 +7,7 @@ namespace ZLibrary.Model
         public User User { get; private set; }
         public BookCopy BookCopy { get; private set; }
         public ReservationReason Reason { get; private set; }
-        public Date StartDate { get; private set; }
+        public DateTime StartDate { get; private set; }
 
         public Reservation(BookCopy bookCopy, User user)
         {
@@ -23,7 +23,7 @@ namespace ZLibrary.Model
 
             User = user;
             BookCopy = bookCopy;
-            StartDate = new Date(DateTime.Now);
+            StartDate = DateTime.Now;
             Reason = new ReservationReason();
         }
     }

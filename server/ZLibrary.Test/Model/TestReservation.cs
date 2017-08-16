@@ -11,8 +11,7 @@ namespace ZLibrary.Test.Model
         public void TestCreateReservation()
         {
             var book = new Book();
-            var externalReference = new BookExternalReference("Test");
-            var bookCopy = new BookCopy(book, externalReference);
+            var bookCopy = new BookCopy(book);
             var user = new User();
             var reservation = new Reservation(bookCopy, user);
 
@@ -34,8 +33,7 @@ namespace ZLibrary.Test.Model
         public void TestCreateReservationWithUserNullShouldThrowException()
         {
             var book = new Book();
-            var externalReference = new BookExternalReference("Test");
-            var bookCopy = new BookCopy(book, externalReference);
+            var bookCopy = new BookCopy(book);
             var reservation = new Reservation(bookCopy, null);
         }
 
@@ -43,8 +41,7 @@ namespace ZLibrary.Test.Model
         public void TestReservationProperties()
         {
             var book = new Book();
-            var externalReference = new BookExternalReference("Test");
-            var bookCopy = new BookCopy(book, externalReference);
+            var bookCopy = new BookCopy(book);
             var user = new User();
             var reservation = new Reservation(bookCopy, user);
 
@@ -55,16 +52,14 @@ namespace ZLibrary.Test.Model
             Assert.AreEqual(user, reservation.User);
             Assert.AreEqual(ReservationStatus.Requested, reservation.Reason.Status);
             Assert.AreEqual("Test", reservation.Reason.Description);
-            Assert.IsNotNull(reservation.StartDate);
-            Assert.AreEqual(DateTime.Now.Date, reservation.StartDate.Value);
+            Assert.AreEqual(DateTime.Now.Date, reservation.StartDate.Date);
         }
 
         [TestMethod]
         public void TestReservationChangeStatusApprovedPropertie()
         {
             var book = new Book();
-            var externalReference = new BookExternalReference("Test");
-            var bookCopy = new BookCopy(book, externalReference);
+            var bookCopy = new BookCopy(book);
             var user = new User();
             var reservation = new Reservation(bookCopy, user);
 
@@ -76,7 +71,7 @@ namespace ZLibrary.Test.Model
             Assert.AreEqual(ReservationStatus.Approved, reservation.Reason.Status);
             Assert.AreEqual("Test", reservation.Reason.Description);
             Assert.IsNotNull(reservation.StartDate);
-            Assert.AreEqual(DateTime.Now.Date, reservation.StartDate.Value);
+            Assert.AreEqual(DateTime.Now.Date, reservation.StartDate.Date);
         }
 
 
@@ -84,8 +79,7 @@ namespace ZLibrary.Test.Model
         public void TestReservationChangeStatusWaitingPropertie()
         {
             var book = new Book();
-            var externalReference = new BookExternalReference("Test");
-            var bookCopy = new BookCopy(book, externalReference);
+            var bookCopy = new BookCopy(book);
             var user = new User();
             var reservation = new Reservation(bookCopy, user);
 
@@ -97,15 +91,14 @@ namespace ZLibrary.Test.Model
             Assert.AreEqual(ReservationStatus.Waiting, reservation.Reason.Status);
             Assert.AreEqual("Test", reservation.Reason.Description);
             Assert.IsNotNull(reservation.StartDate);
-            Assert.AreEqual(DateTime.Now.Date, reservation.StartDate.Value);
+            Assert.AreEqual(DateTime.Now.Date, reservation.StartDate.Date);
         }
 
         [TestMethod]
         public void TestReservationChangeStatusRejectedPropertie()
         {
             var book = new Book();
-            var externalReference = new BookExternalReference("Test");
-            var bookCopy = new BookCopy(book, externalReference);
+            var bookCopy = new BookCopy(book);
             var user = new User();
             var reservation = new Reservation(bookCopy, user);
 
@@ -117,7 +110,7 @@ namespace ZLibrary.Test.Model
             Assert.AreEqual(ReservationStatus.Rejected, reservation.Reason.Status);
             Assert.AreEqual("Test", reservation.Reason.Description);
             Assert.IsNotNull(reservation.StartDate);
-            Assert.AreEqual(DateTime.Now.Date, reservation.StartDate.Value);
+            Assert.AreEqual(DateTime.Now.Date, reservation.StartDate.Date);
         }
     }
 }

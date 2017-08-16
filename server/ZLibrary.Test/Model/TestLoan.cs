@@ -11,8 +11,7 @@ namespace ZLibrary.Test.Model
         public void TestCreateLoan()
         {
             var book = new Book();
-            var externalReference = new BookExternalReference("Test");
-            var bookCopy = new BookCopy(book, externalReference);
+            var bookCopy = new BookCopy(book);
             var user = new User();
             var reservation = new Reservation(bookCopy, user);
             var loan = new Loan(reservation);
@@ -32,8 +31,7 @@ namespace ZLibrary.Test.Model
         public void TestLoanProperties()
         {
             var book = new Book();
-            var externalReference = new BookExternalReference("Test");
-            var bookCopy = new BookCopy(book, externalReference);
+            var bookCopy = new BookCopy(book);
             var user = new User();
             var reservation = new Reservation(bookCopy, user);
             var loan = new Loan(reservation);
@@ -49,8 +47,7 @@ namespace ZLibrary.Test.Model
         public void TestLoanChangeStatusPropertie()
         {
             var book = new Book();
-            var externalReference = new BookExternalReference("Test");
-            var bookCopy = new BookCopy(book, externalReference);
+            var bookCopy = new BookCopy(book);
             var user = new User();
             var reservation = new Reservation(bookCopy, user);
             var loan = new Loan(reservation);
