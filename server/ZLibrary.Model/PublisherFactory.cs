@@ -35,6 +35,7 @@ namespace ZLibrary.Model
             publishers.Add(new Publisher("Wiley"));
             publishers.Add(new Publisher("Makron Books"));
             publishers.Add(new Publisher("WROK"));
+            publishers.Add(new Publisher("ITRev"));
             return publishers;
         }
     }

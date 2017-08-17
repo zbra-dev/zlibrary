@@ -17,7 +17,7 @@ namespace ZLibrary.Test.Model
             var author1 = new Author("Test Author");
             var author2 = new Author("Author Test");
             var authors = new List<Author> { author1, author2 };
-            var isbn = new Isbn("ISBN-10");
+            var isbn = Isbn.FromValue("9788574591865");
             var synopsis = "Synopsis";
             var coverImage = new CoverImage();
             book.Title = "Test";

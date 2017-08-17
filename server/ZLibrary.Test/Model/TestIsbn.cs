@@ -7,42 +7,59 @@ namespace ZLibrary.Test.Model
     [TestClass]
     public class TestIsbn
     {
+      
         [TestMethod]
-        public void TestCreateIsbn()
+        public void TestCreateIsbnFromValue()
         {
-            var isbn = new Isbn("Test");
+            var isbn = Isbn.FromValue("9788574591865");
             Assert.IsNotNull(isbn);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void TestCreateNewIsbnWithNullConstructorShouldThrowException()
+        public void TestCreateNewIsbnFromValueWithNullConstructorShouldThrowException()
         {
-            var isbn = new Isbn(null);
+            var isbn = Isbn.FromValue(null);
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void TestCreateNewIsbnWithEmptyConstructorShouldThrowException()
+        public void TestCreateNewIsbnFromValueWithEmptyConstructorShouldThrowException()
         {
-            var isbn = new Isbn("");
+             var isbn = Isbn.FromValue("");
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void TestCreateNewIsbnWithWhiteSpaceConstructorShouldThrowException()
+        public void TestCreateNewIsbnFromValueWithWhiteSpaceConstructorShouldThrowException()
         {
-            var isbn = new Isbn("   ");
+           var isbn = Isbn.FromValue("   ");
+        }
+
+
+        [TestMethod]
+        [ExpectedException(typeof(FormatException))]
+        public void TestCreateNewIsbnFromValueWithFormatValueShouldFormatException()
+        {
+           var isbn = Isbn.FromValue("Teste");
         }
 
         [TestMethod]
-        public void TestGetIsbnProperties()
+        [ExpectedException(typeof(FormatException))]
+        public void TestCreateNewIsbnFromValueWithFormatValueShouldInvalidOperationException()
         {
-            var isbn = new Isbn("Test");
+           var isbn = Isbn.FromValue("9728574591865");
+        }
+
+       
+        [TestMethod]
+        public void TestGetIsbnCheckValueProperties()
+        {
+            var isbn = Isbn.FromValue("9788574591865");
             isbn.Id = 3;
 
             Assert.IsNotNull(isbn);
-            Assert.AreEqual("Test", isbn.Value);
+            Assert.AreEqual("9788574591865", isbn.Value);
             Assert.AreEqual(3, isbn.Id);
         }
     }

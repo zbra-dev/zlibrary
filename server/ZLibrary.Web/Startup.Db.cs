@@ -9,7 +9,6 @@ namespace ZLibrary.Web
 {
     public partial class Startup
     {
-        // TODO: Seed database manually in Production
         private static void SeedDatabase(IApplicationBuilder app)
         {
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
@@ -21,7 +20,7 @@ namespace ZLibrary.Web
                     return;
                 }
 
-                var users = UserFactory.CreateUsers();    
+                var users = UserFactory.CreateUsers();
                 context.Users.AddRange(users);
 
                 var authors = AuthorFactory.CreateAuthors();
@@ -29,14 +28,11 @@ namespace ZLibrary.Web
 
                 var publishers = PublisherFactory.CreatePublishers();
                 context.Publishers.AddRange(publishers);
-    
-                var isbn = new Isbn("12345");
-                context.Isbns.Add(isbn);
 
                 var book = new Book()
                 {
-                    Authors = authors.ToList(),
-                    Isbn = isbn,
+                    Authors = authors.Where(a => a.Name == "Jack Phillips" || a.Name == "Andrew Troelsen").ToList(),
+                    Isbn = Isbn.FromValue("9780201738292"),
                     PublicationYear = 2014,
                     Publisher = publishers.FirstOrDefault(),
                     Synopsis = "Java for professional development and best practices.",

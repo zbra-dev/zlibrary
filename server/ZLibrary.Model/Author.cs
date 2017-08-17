@@ -5,13 +5,11 @@ namespace ZLibrary.Model
 
     public class Author
     {
-
         public string Name { get; set; }
         public long Id { get; set; }
 
         public Author()
         {
-
         }
 
         public Author(string name)
@@ -22,7 +20,5 @@ namespace ZLibrary.Model
             }
             Name = name;
         }
-
     }
-
 }
