@@ -5,7 +5,8 @@ namespace ZLibrary.Model
         public ReservationStatus Status { get; set; }
         public string Description { get; set; }
 
-        public ReservationReason(){
+        public ReservationReason()
+        {
             Status = ReservationStatus.Requested;
         }
     }

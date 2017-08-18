@@ -10,6 +10,7 @@ namespace ZLibrary.Model
         public Publisher()
         {
         }
+        
         public Publisher(string name)
         {
             if (string.IsNullOrWhiteSpace(name))

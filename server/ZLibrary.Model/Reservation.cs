@@ -11,7 +11,6 @@ namespace ZLibrary.Model
 
         public Reservation(BookCopy bookCopy, User user)
         {
-
             if (bookCopy == null)
             {
                 throw new ArgumentNullException($"The paramenter {nameof(bookCopy)} can not be null.");

@@ -8,18 +8,17 @@ namespace ZLibrary.Model
     {
         public static Isbn FromValue(string value) 
         {
-
             if (string.IsNullOrWhiteSpace(value)) 
             {
                 throw new ArgumentException($"The paramenter {nameof(value)} can not be null or empty.");
-            } 
-            
-            if(!CheckFormatString(value))
+            }
+
+            if (!CheckFormatString(value))
             {
                 throw new FormatException($"Invalid ISBN format: {value}");
             }
 
-            if(!CheckValue(value))
+            if (!CheckValue(value))
             {
                 throw new FormatException($"Invalid ISBN-13: {value}");
             }

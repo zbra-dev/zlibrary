@@ -26,7 +26,7 @@ namespace ZLibrary.Model
 
         public BookExternalReference()
         {
-            Value = string.Empty;
+            _value = string.Empty;
         }
     }
 }

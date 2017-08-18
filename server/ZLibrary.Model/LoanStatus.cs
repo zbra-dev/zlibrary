@@ -1,8 +1,9 @@
-namespace ZLibrary.Model {
-
-    public enum LoanStatus{
-    Borrowed,
-    Expired,
-    Returned
+namespace ZLibrary.Model 
+{
+    public enum LoanStatus
+    {
+        Borrowed,
+        Expired,
+        Returned
     }
 }

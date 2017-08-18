@@ -11,6 +11,7 @@ namespace ZLibrary.Model
         public CoverImage()
         {
         }
+        
         public CoverImage(byte[] image)
         {
             if (image == null)

@@ -6,6 +6,7 @@ namespace ZLibrary.Model
     {
         public Book Book { get; private set; }
         public BookExternalReference BookExternalReference { get; set; }
+        
         public BookCopy(Book book)
         {
             if (book == null)
