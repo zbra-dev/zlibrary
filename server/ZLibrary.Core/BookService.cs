@@ -26,11 +26,14 @@ namespace ZLibrary.Core
         {
             return await bookRepository.FindById(id);
         }
-
-        public async Task<long> Create(Book user)
+        public async Task Delete(long id)
         {
-            return await bookRepository.Create(user);
+            await bookRepository.Delete(id);
         }
-        
+
+        public async Task<long> Create(Book book)
+        {
+            return await bookRepository.Create(book);
+        }
     }
 }

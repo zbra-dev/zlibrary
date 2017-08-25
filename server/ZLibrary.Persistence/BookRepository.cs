@@ -34,20 +34,22 @@ namespace ZLibrary.Persistence
             .Include(book => book.Authors)
             .Include(book => book.Publisher)
             .Include(book => book.Isbn)
-            .FirstAsync();
+            .SingleOrDefaultAsync();
+        }
 
+        public async Task Delete(long id)
+        {
+            context.Books.Remove(context.Books.FirstOrDefault(i => i.Id == id));
+            await context.SaveChangesAsync();
         }
 
         public async Task<long> Create(Book book)
         {
-
             await context.Books.AddAsync(book);
             await context.SaveChangesAsync();
             await context.Entry(book).ReloadAsync();
 
             return book.Id;
         }
-
     }
-
 }

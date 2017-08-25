@@ -8,7 +8,7 @@ namespace ZLibrary.API
     {
         Task<IList<Book>> FindAll();
         Task<Book> FindById(long id);
+        Task Delete(long id);
         Task<long> Create(Book book);
     }
-    
 }
