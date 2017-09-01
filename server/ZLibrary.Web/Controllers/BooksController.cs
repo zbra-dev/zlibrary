@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using ZLibrary.API;
 using ZLibrary.Model;
+using System.Collections.Generic;
+using ZLibrary.Web.Validators;
 
 namespace ZLibrary.Web
 {
@@ -39,10 +41,28 @@ namespace ZLibrary.Web
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody]Book value)
+        public async Task<IActionResult> Create([FromBody]BookDTO value)
         {
-            var id = await bookService.Create(value);
-            return CreatedAtRoute("FindBook", new { id }, id);
+            var validationContext = new ValidationContext();
+            var bookValidator = new BookValidator(validationContext);
+            var validationResult = bookValidator.Validate(value);
+
+            if (validationResult.HasError) 
+            {
+                return BadRequest(validationResult.ErrorMessage);
+            }
+
+            var book = await bookService.FindById(value.Id);
+            if (book == null)
+            {
+                book = new Book();
+            }
+            book.Publisher = validationResult.GetResult<Publisher>();
+            book.Authors = validationResult.GetResult<List<Author>>();
+
+            var id = await bookService.Create(book);
+            
+            return Ok(BookDTO.FromModel(book));
         }
     }
 }
