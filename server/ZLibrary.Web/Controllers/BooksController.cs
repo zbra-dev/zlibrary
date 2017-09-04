@@ -4,8 +4,8 @@ using ZLibrary.API;
 using ZLibrary.Model;
 using System.Collections.Generic;
 using System.Linq;
-using ZLibrary.Web.DTO;
-
+using ZLibrary.Web.Controllers.Items;
+using ZLibrary.Web.Validators;
 namespace ZLibrary.Web
 {
     [Route("api/[controller]")]
@@ -51,10 +51,28 @@ namespace ZLibrary.Web
         }
 
         [HttpPost]
-        public async Task<IActionResult> Save([FromBody]Book value)
+        public async Task<IActionResult> Save([FromBody]BookDTO value)
         {
-            var id = await bookService.Save(value);
-            return CreatedAtRoute("FindBook", new { id }, id);
+            var validationContext = new ValidationContext();
+            var bookValidator = new BookValidator(validationContext);
+            var validationResult = bookValidator.Validate(value);
+
+            if (validationResult.HasError) 
+            {
+                return BadRequest(validationResult.ErrorMessage);
+            }
+
+            var book = await bookService.FindById(value.Id);
+            if (book == null)
+            {
+                book = new Book();
+            }
+            book.Publisher = validationResult.GetResult<Publisher>();
+            book.Authors = validationResult.GetResult<List<BookAuthor>>();
+
+            var id = await bookService.Save(book);
+            
+            return Ok(BookDTO.FromModel(book));
         }
 
 

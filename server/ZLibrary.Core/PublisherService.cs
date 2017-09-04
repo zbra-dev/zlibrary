@@ -22,24 +22,9 @@ namespace ZLibrary.Core
             return await publisherRepository.FindAll();
         }
 
-        public async Task<Publisher> FindById(long id)
+        public Publisher FindById(long id)
         {
-            return await publisherRepository.FindById(id);
-        }
-
-         public async Task Delete(long id)
-        {
-            await publisherRepository.Delete(id);
-        }
-
-        public async Task<Publisher> FindByName(string name)
-        {
-            return await publisherRepository.FindByName(name);
-        }
-
-        public async Task<long> Create(Publisher publisher)
-        {
-            return await publisherRepository.Create(publisher);
+            return publisherRepository.FindById(id);
         }
     }
 }

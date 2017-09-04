@@ -28,6 +28,6 @@
     <Content Include="Controllers\UsersController.cs"/>
     <Content Include="Controllers\PublisherController.cs"/>
     <Content Include="Controllers\PublishersController.cs"/>
-    <Content Include="DTO\BookDTO.cs"/>
+    <Content Include="Controllers\Items\BookDTO.cs"/>
   </ItemGroup>
 </Project>

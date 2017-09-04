@@ -1,11 +1,15 @@
-
 using System.Runtime.Serialization;
+using ZLibrary.Model;
 
-namespace ZLibrary.Web.DTO
+namespace ZLibrary.Web.Controllers.Items
 {
-    [DataContract]
     public class BookDTO
     {
+        public static BookDTO FromModel(Book book)
+        {
+            return new BookDTO() { PublisherId = book.Publisher.Id };
+        }
+
         [DataMember(Name = "id")]
         public long Id { get; set; }
 
