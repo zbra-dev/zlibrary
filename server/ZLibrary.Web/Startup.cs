@@ -42,8 +42,12 @@ namespace ZLibrary.Web
             // Add application services
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IBookService, BookService>();
+            services.AddTransient<IAuthorService, AuthorService>();
+            services.AddTransient<IPublisherService, PublisherService>();
             services.AddTransient<IBookRepository, BookRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IAuthorRepository, AuthorRepository>();
+            services.AddTransient<IPublisherRepository, PublisherRepository>();
             services.AddTransient<ITokenFactory, JsonWebTokenFactory>();
 
             services.Configure<JwtOptions>(o =>

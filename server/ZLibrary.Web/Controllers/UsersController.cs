@@ -31,6 +31,8 @@ namespace ZLibrary.Web
             return Ok(user);
         }
 
+        
+
         [HttpPost]
         public async Task<IActionResult> Create([FromBody]User value)
         {

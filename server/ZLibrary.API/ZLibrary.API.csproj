@@ -7,5 +7,7 @@
     <ProjectReference Include="..\ZLibrary.Model\ZLibrary.Model.csproj" />
     <Content Include="IBookService.cs" />
     <Content Include="IUserService.cs" />
+    <Content Include="IAuthorService.cs" />
+    <Content Include="IPublisherService.cs" />
   </ItemGroup>
 </Project>

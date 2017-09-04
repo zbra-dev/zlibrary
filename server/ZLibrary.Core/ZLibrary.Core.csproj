@@ -4,6 +4,9 @@
     <ProjectReference Include="..\ZLibrary.API\ZLibrary.API.csproj" />
     <ProjectReference Include="..\ZLibrary.Persistence\ZLibrary.Persistence.csproj" />
     <Content Include="BookService.cs" />
+    <Content Include="AuthorService.cs" />
+    <Content Include="PublisherService.cs" />
+    <Content Include="UserService.cs" />
   </ItemGroup>
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>

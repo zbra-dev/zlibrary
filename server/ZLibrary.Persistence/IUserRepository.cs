@@ -4,7 +4,6 @@ using ZLibrary.Model;
 
 namespace ZLibrary.Persistence
 {
-
     public interface IUserRepository
     {
         Task<IList<User>> FindAll();

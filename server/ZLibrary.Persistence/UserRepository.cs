@@ -7,7 +7,6 @@ using ZLibrary.Model;
 
 namespace ZLibrary.Persistence
 {
-
     public class UserRepository : IUserRepository
     {
         private readonly ZLibraryContext context;

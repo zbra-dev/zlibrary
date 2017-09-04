@@ -31,9 +31,28 @@ namespace ZLibrary.Core
             await bookRepository.Delete(id);
         }
 
-        public async Task<long> Create(Book book)
+        public async Task<long> Save(Book book)
         {
             return await bookRepository.Create(book);
+        }
+
+        public async Task<IList<Book>> FindBy(BookSearchParameter parameters) 
+        {
+            var bookSet = new HashSet<Book>();
+
+            var booksByTitle = await bookRepository.FindByTitle(parameters.Keyword);
+            bookSet.UnionWith(booksByTitle);
+
+            var booksByIsbn = await bookRepository.FindByIsbn(parameters.Keyword);
+            bookSet.UnionWith(booksByIsbn);
+
+            var booksByPublisher = await bookRepository.FindByPublisher(parameters.Keyword);
+            bookSet.UnionWith(booksByPublisher);
+
+            var booksByAuthor = await bookRepository.FindByAuthor(parameters.Keyword);
+            bookSet.UnionWith(booksByAuthor);
+
+           return bookSet.ToArray();
         }
     }
 }
