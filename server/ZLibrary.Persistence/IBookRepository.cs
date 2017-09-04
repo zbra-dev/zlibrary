@@ -10,7 +10,7 @@ namespace ZLibrary.Persistence
         Task<Book> FindById(long id);
         Task Delete (long id);
         Task<long> Create(Book user);
-        Task<IList<Book>> FindByTitle(string title);
+        Task<IList<Book>> FindByTitleOrSynopsis(string text);
         Task<IList<Book>> FindByIsbn(string isbn);
         Task<IList<Book>> FindByAuthor(string author);
         Task<IList<Book>> FindByPublisher(string publisher);

@@ -40,7 +40,7 @@ namespace ZLibrary.Core
         {
             var bookSet = new HashSet<Book>();
 
-            var booksByTitle = await bookRepository.FindByTitle(parameters.Keyword);
+            var booksByTitle = await bookRepository.FindByTitleOrSynopsis(parameters.Keyword);
             bookSet.UnionWith(booksByTitle);
 
             var booksByIsbn = await bookRepository.FindByIsbn(parameters.Keyword);
@@ -52,7 +52,7 @@ namespace ZLibrary.Core
             var booksByAuthor = await bookRepository.FindByAuthor(parameters.Keyword);
             bookSet.UnionWith(booksByAuthor);
 
-           return bookSet.ToArray();
+            return bookSet.ToArray();
         }
     }
 }

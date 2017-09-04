@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using ZLibrary.Web.Controllers.Items;
 using ZLibrary.Web.Validators;
+using ZLibrary.Web.Extensions;
+
 namespace ZLibrary.Web
 {
     [Route("api/[controller]")]
@@ -22,16 +24,7 @@ namespace ZLibrary.Web
         public async Task<IActionResult> FindAll()
         {
             var books = await bookService.FindAll();
-            return Ok(books.Select(b => new BookDTO() 
-            {
-                Id = b.Id,
-                AuthorIds = b.Authors.Select(a => a.AuthorId).ToArray(),
-                Isbn = b.Isbn.Value,
-                PublisherId = b.Publisher.Id,
-                PublicationYear = b.PublicationYear,
-                Title = b.Title,
-                Synopsis = b.Synopsis
-            }));
+            return Ok(books.ToBookViewItems());
         }
 
         [HttpGet("{id:long}", Name = "FindBook")]
@@ -80,8 +73,8 @@ namespace ZLibrary.Web
        public async Task<IActionResult> FindBy(string keyword)
        {
            var bookSearchParameter =  new BookSearchParameter(keyword);
-           var result = await bookService.FindBy(bookSearchParameter);
-           return Ok(result);
+           var books = await bookService.FindBy(bookSearchParameter);
+           return Ok(books.ToBookViewItems());
        }
     }
 }

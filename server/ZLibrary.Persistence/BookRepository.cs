@@ -58,12 +58,12 @@ namespace ZLibrary.Persistence
             return book.Id;
         }
 
-        public async Task<IList<Book>> FindByTitle(string title)
+        public async Task<IList<Book>> FindByTitleOrSynopsis(string text)
         {
             var books = await context.Books
                 .Include(book => book.Publisher)
                 .Include(book => book.Isbn)
-                .Where(b => b.Title.Contains(title))
+                .Where(b => b.Title.Contains(text) || b.Synopsis.Contains(text))
                 .ToListAsync();
 
             foreach (var book in books)
