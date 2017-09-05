@@ -79,15 +79,46 @@ namespace ZLibrary.Web
                 {
                     new BookAuthor() 
                     {
-                        Book = book,
-                        BookId = book.Id,
+                        Book = book2,
+                        BookId = book2.Id,
                         Author = jackPhillips,
                         AuthorId = jackPhillips.Id
                     },
                     new BookAuthor() 
                     {
-                        Book = book,
-                        BookId = book.Id,
+                        Book = book2,
+                        BookId = book2.Id,
+                        Author = andrewTroelsen,
+                        AuthorId = andrewTroelsen.Id
+                    } 
+                };
+                context.SaveChanges();
+
+                var book3 = new Book()
+                {
+                    Isbn = Isbn.FromValue("9780316037723"),
+                    PublicationYear = 2014,
+                    Publisher = publishers.Where<Publisher>(p => p.Name == "Addison - Wesley").SingleOrDefault(),
+                    Synopsis = "The practice of enterprise application development has benefited from the emergence of many new enabling technologies.",
+                    Title = "Enterprise Application Architecture"
+                };
+
+                context.Books.Add(book3);
+                context.SaveChanges();
+
+                book3.Authors = new List<BookAuthor>() 
+                {
+                    new BookAuthor() 
+                    {
+                        Book = book3,
+                        BookId = book3.Id,
+                        Author = jackPhillips,
+                        AuthorId = jackPhillips.Id
+                    },
+                    new BookAuthor() 
+                    {
+                        Book = book3,
+                        BookId = book3.Id,
                         Author = andrewTroelsen,
                         AuthorId = andrewTroelsen.Id
                     } 

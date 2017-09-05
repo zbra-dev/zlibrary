@@ -52,7 +52,18 @@ namespace ZLibrary.Core
             var booksByAuthor = await bookRepository.FindByAuthor(parameters.Keyword);
             bookSet.UnionWith(booksByAuthor);
 
-            return bookSet.ToArray();
+            Func<Book, object> orderBySelector;
+
+            if (parameters.OrderBy == SearchOrderBy.Created)
+            {
+                orderBySelector = b => b.Created;
+            }
+            else 
+            {
+                orderBySelector = b => b.Title;
+            }
+
+            return bookSet.OrderBy(orderBySelector).ToArray();
         }
     }
 }

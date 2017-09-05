@@ -6,9 +6,17 @@ namespace ZLibrary.API
     {
         public string Keyword {get; private set;}
 
+        public SearchOrderBy OrderBy { get; set; }
+
         public BookSearchParameter(string keyword)
         {
             Keyword = keyword;
         }
+    }
+
+    public enum SearchOrderBy 
+    {
+        Title = 0,
+        Created = 1
     }
 }

@@ -38,7 +38,9 @@ namespace ZLibrary.Persistence
                 .Include(b => b.Isbn)
                 .SingleOrDefaultAsync(b => b.Id == id);
 
+            
             book.Authors = context.BookAuthors.Where(ba => ba.BookId == book.Id).ToList();
+            
 
             return book;
         }
@@ -48,7 +50,7 @@ namespace ZLibrary.Persistence
             context.Books.Remove(context.Books.FirstOrDefault(i => i.Id == id));
             await context.SaveChangesAsync();
         }
-        
+
         public async Task<long> Create(Book book)
         {
             await context.Books.AddAsync(book);
@@ -90,13 +92,13 @@ namespace ZLibrary.Persistence
             return books;
         }
 
-         public async Task<IList<Book>> FindByAuthor(string author)
+        public async Task<IList<Book>> FindByAuthor(string author)
         {
-             var books = await context.Books
-                .Include(book => book.Publisher)
-                .Include(book => book.Isbn)
-                .Where(b => b.Authors.Any(a => a.Author.Name.Contains(author)))
-                .ToListAsync();
+            var books = await context.Books
+               .Include(book => book.Publisher)
+               .Include(book => book.Isbn)
+               .Where(b => b.Authors.Any(a => a.Author.Name.Contains(author)))
+               .ToListAsync();
 
             foreach (var book in books)
             {
@@ -106,7 +108,7 @@ namespace ZLibrary.Persistence
             return books;
         }
 
-         public async Task<IList<Book>> FindByPublisher(string publisher)
+        public async Task<IList<Book>> FindByPublisher(string publisher)
         {
             var books = await context.Books
                 .Include(book => book.Publisher)
