@@ -49,6 +49,7 @@ namespace ZLibrary.Web
             services.AddTransient<IAuthorRepository, AuthorRepository>();
             services.AddTransient<IPublisherRepository, PublisherRepository>();
             services.AddTransient<ITokenFactory, JsonWebTokenFactory>();
+            services.AddTransient<IImageService, ImageService>();
 
             services.Configure<JwtOptions>(o =>
             {

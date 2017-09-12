@@ -7,6 +7,8 @@ using System.Linq;
 using ZLibrary.Web.Controllers.Items;
 using ZLibrary.Web.Validators;
 using ZLibrary.Web.Extensions;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace ZLibrary.Web
 {
