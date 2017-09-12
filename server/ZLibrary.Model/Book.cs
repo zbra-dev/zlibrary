@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace ZLibrary.Model
@@ -12,6 +13,12 @@ namespace ZLibrary.Model
         public string Synopsis { get; set; }
         public int PublicationYear { get; set; }
         public CoverImage CoverImage { get; set; }
+        public DateTime Created { get; set; }
+
+        public Book()
+        {
+            Created = DateTime.Now;
+        }
 
         public override bool Equals(object obj)
         {

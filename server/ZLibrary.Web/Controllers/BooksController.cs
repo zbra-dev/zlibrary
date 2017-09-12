@@ -9,6 +9,7 @@ using ZLibrary.Web.Validators;
 using ZLibrary.Web.Extensions;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using System;
 
 namespace ZLibrary.Web
 {
@@ -28,6 +29,7 @@ namespace ZLibrary.Web
             var books = await bookService.FindAll();
             return Ok(books.ToBookViewItems());
         }
+
 
         [HttpGet("{id:long}", Name = "FindBook")]
         public async Task<IActionResult> FindById(long id)
@@ -71,10 +73,14 @@ namespace ZLibrary.Web
         }
 
 
-       [HttpGet("{keyword}", Name = "FindBookBy")]
-       public async Task<IActionResult> FindBy(string keyword)
+       [HttpGet("search/{keyword}/{orderByValue:int}", Name = "FindBookBy")]
+       public async Task<IActionResult> FindBy(string keyword, int orderByValue)
        {
-           var bookSearchParameter =  new BookSearchParameter(keyword);
+           var orderBy = (SearchOrderBy)Enum.ToObject(typeof(SearchOrderBy), orderByValue);
+           var bookSearchParameter =  new BookSearchParameter(keyword)
+           {
+                OrderBy = orderBy
+           };
            var books = await bookService.FindBy(bookSearchParameter);
            return Ok(books.ToBookViewItems());
        }
