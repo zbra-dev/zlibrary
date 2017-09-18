@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ZLibrary.API;
+using ZLibrary.API.Exception;
 using ZLibrary.Model;
 using ZLibrary.Persistence;
 
@@ -24,19 +25,34 @@ namespace ZLibrary.Core
 
         public async Task<Book> FindById(long id)
         {
+            if (id <= 0)
+            {
+                return null;
+            }
+
             return await bookRepository.FindById(id);
         }
         public async Task Delete(long id)
         {
+            if (id <= 0)
+            {
+                return;
+            }
+
             await bookRepository.Delete(id);
         }
 
-        public async Task<long> Save(Book book)
+        public async Task Save(Book book)
         {
-            return await bookRepository.Create(book);
+            if (book.NumberOfCopies <= 0)
+            {
+                throw new BookSaveException("Número de cópias deve ser positivo maior que zero.");
+            }
+
+            await bookRepository.Save(book);
         }
 
-        public async Task<IList<Book>> FindBy(BookSearchParameter parameters) 
+        public async Task<IList<Book>> FindBy(BookSearchParameter parameters)
         {
             var bookSet = new HashSet<Book>();
 
@@ -52,7 +68,18 @@ namespace ZLibrary.Core
             var booksByAuthor = await bookRepository.FindByAuthor(parameters.Keyword);
             bookSet.UnionWith(booksByAuthor);
 
-            return bookSet.ToArray();
+            Func<Book, object> orderBySelector;
+
+            if (parameters.OrderBy == SearchOrderBy.Created)
+            {
+                orderBySelector = b => b.Created;
+            }
+            else
+            {
+                orderBySelector = b => b.Title;
+            }
+
+            return bookSet.OrderBy(orderBySelector).ToArray();
         }
     }
 }

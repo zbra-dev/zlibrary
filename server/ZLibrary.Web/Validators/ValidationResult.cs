@@ -7,8 +7,18 @@ namespace ZLibrary.Web.Validators
     {
         private readonly Dictionary<Type, object> dataMap = new Dictionary<Type, object>();
 
-        public bool HasError { get; set; }
-        public string ErrorMessage { get; set;}
+        public bool HasError
+        {
+            get
+            {
+                if(string.IsNullOrWhiteSpace(ErrorMessage)){
+                    return false;
+                }
+
+                return true;
+            }
+        }
+        public string ErrorMessage { get; set; }
 
         public void AddResult(object data)
         {

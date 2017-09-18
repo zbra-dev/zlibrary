@@ -5,11 +5,6 @@ namespace ZLibrary.Web.Controllers.Items
 {
     public class BookDTO
     {
-        public static BookDTO FromModel(Book book)
-        {
-            return new BookDTO() { PublisherId = book.Publisher.Id };
-        }
-
         [DataMember(Name = "id")]
         public long Id { get; set; }
 
@@ -30,5 +25,8 @@ namespace ZLibrary.Web.Controllers.Items
         
         [DataMember(Name = "publicationYear")]
         public int PublicationYear { get; set; }
+
+        [DataMember(Name = "numberOfCopies")]
+        public int NumberOfCopies { get; set; }
     }
 }

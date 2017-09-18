@@ -9,7 +9,7 @@ namespace ZLibrary.API
         Task<IList<Book>> FindAll();
         Task<Book> FindById(long id);
         Task Delete(long id);
-        Task<long> Save(Book book);
+        Task Save(Book book);
         Task<IList<Book>> FindBy(BookSearchParameter bookSearchParameter);
     }
 }

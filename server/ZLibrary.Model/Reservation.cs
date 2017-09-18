@@ -4,16 +4,17 @@ namespace ZLibrary.Model
 {
     public class Reservation
     {
+        public long Id { get; set; }
         public User User { get; private set; }
-        public BookCopy BookCopy { get; private set; }
+        public long BookId { get; private set; }
         public ReservationReason Reason { get; private set; }
         public DateTime StartDate { get; private set; }
 
-        public Reservation(BookCopy bookCopy, User user)
+        public Reservation(long bookId, User user)
         {
-            if (bookCopy == null)
+            if (bookId <= 0)
             {
-                throw new ArgumentNullException($"The paramenter {nameof(bookCopy)} can not be null.");
+                throw new ArgumentNullException($"The paramenter {nameof(bookId)} must be greater than zero.");
             }
             if (user == null)
             {
@@ -21,7 +22,7 @@ namespace ZLibrary.Model
             }
 
             User = user;
-            BookCopy = bookCopy;
+            BookId = bookId;
             StartDate = DateTime.Now;
             Reason = new ReservationReason();
         }

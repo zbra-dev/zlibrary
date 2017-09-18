@@ -24,6 +24,10 @@ namespace ZLibrary.Core
 
         public Publisher FindById(long id)
         {
+			if (id <= 0 )
+            {
+                return null;
+            }
             return publisherRepository.FindById(id);
         }
     }

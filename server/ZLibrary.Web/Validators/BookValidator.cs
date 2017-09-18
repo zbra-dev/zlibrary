@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using ZLibrary.Model;
 using ZLibrary.Web.Controllers.Items;
@@ -17,18 +18,47 @@ namespace ZLibrary.Web.Validators
         {
             var validationResult = new ValidationResult();
 
+            if (value == null)
+            {
+                validationResult.ErrorMessage = "Dados inválidos.";
+                return validationResult;
+            }
+
+            if (string.IsNullOrWhiteSpace(value.Title))
+            {
+                validationResult.ErrorMessage = "Título não pode estar em branco.";
+                return validationResult;
+            }
+
+            try
+            {
+                var isbn = Isbn.FromValue(value.Isbn);
+                validationResult.AddResult(isbn);
+            }
+            catch (Exception ex)
+            {
+                validationResult.ErrorMessage = ex.Message;
+                return validationResult;
+            }
+
+            if (value.PublicationYear < 0 || value.PublicationYear > DateTime.Today.Year)
+            {
+                validationResult.ErrorMessage = "Ano de publicação inválido.";
+                return validationResult;
+            }
+
             var publisherId = value.PublisherId;
 
             var publisher = context.PublisherService.FindById(publisherId);
-            
-            if (publisher == null) 
+
+            if (publisher == null)
             {
-                validationResult.ErrorMessage = "Editora não foi encontrada";
+                validationResult.ErrorMessage = "Editora não foi encontrada.";
                 return validationResult;
             }
 
             var authorIds = value.AuthorIds;
-            var authorList = new List<Author>(authorIds.Length);
+            var authorList = new List<BookAuthor>(authorIds.Length);
 
             foreach (var authorId in authorIds)
             {
@@ -36,11 +66,15 @@ namespace ZLibrary.Web.Validators
 
                 if (author == null)
                 {
-                    validationResult.ErrorMessage = "Autor não foi encontrado";
+                    validationResult.ErrorMessage = "Autor não foi encontrado.";
                     return validationResult;
                 }
-
-                authorList.Add(author);
+                var bookAuthor = new BookAuthor()
+                {
+                    Author = author,
+                    AuthorId = author.Id,
+                };
+                authorList.Add(bookAuthor);
             }
 
             validationResult.AddResult(publisher);
