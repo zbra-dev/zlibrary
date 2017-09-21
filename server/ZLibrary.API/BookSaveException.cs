@@ -1,8 +1,8 @@
 using System;
 
-namespace ZLibrary.API.Exception
+namespace ZLibrary.API
 {
-    public class BookSaveException : SystemException
+    public class BookSaveException : Exception
     {
         public BookSaveException(string message) : base(message)
         {

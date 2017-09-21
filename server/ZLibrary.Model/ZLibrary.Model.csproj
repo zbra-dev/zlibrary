@@ -22,5 +22,6 @@
     <Content Include="ReservationReason.cs" />
     <Content Include="Reservation.cs" />
     <Content Include="PublisherFactory.cs" />
+    <Content Include="IsbnException.cs" />
   </ItemGroup>
 </Project>

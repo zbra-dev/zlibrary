@@ -1,8 +1,8 @@
 using System;
 
-namespace ZLibrary.API.Exception
+namespace ZLibrary.Model
 {
-    public class IsbnException : SystemException
+    public class IsbnException : Exception
     {
         public IsbnException(string message) : base(message)
         {

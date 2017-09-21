@@ -8,7 +8,6 @@ using ZLibrary.Web.Controllers.Items;
 using ZLibrary.Web.Validators;
 using ZLibrary.Web.Extensions;
 using System;
-using ZLibrary.API.Exception;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 
