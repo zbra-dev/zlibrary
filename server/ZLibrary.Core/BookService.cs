@@ -74,7 +74,7 @@ namespace ZLibrary.Core
             {
                 orderBySelector = b => b.Created;
             }
-            else
+            else 
             {
                 orderBySelector = b => b.Title;
             }

@@ -37,7 +37,9 @@ namespace ZLibrary.Web
             services.AddDbContext<ZLibraryContext>(o => o.UseInMemoryDatabase());
 
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc().AddJsonOptions(
+                options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
 
             // Add application services
             services.AddTransient<IUserService, UserService>();
@@ -49,6 +51,7 @@ namespace ZLibrary.Web
             services.AddTransient<IAuthorRepository, AuthorRepository>();
             services.AddTransient<IPublisherRepository, PublisherRepository>();
             services.AddTransient<ITokenFactory, JsonWebTokenFactory>();
+            services.AddTransient<IImageService, ImageService>();
 
             services.Configure<JwtOptions>(o =>
             {

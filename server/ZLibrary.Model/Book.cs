@@ -25,6 +25,7 @@ namespace ZLibrary.Model
         {
             return ++NumberOfCopies;
         }
+		
         public int RemoveCopy()
         {
             return --NumberOfCopies;

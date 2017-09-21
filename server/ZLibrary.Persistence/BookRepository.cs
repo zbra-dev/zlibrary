@@ -42,7 +42,8 @@ namespace ZLibrary.Persistence
             {
                 book.Authors = context.BookAuthors.Where(ba => ba.BookId == book.Id).ToList();
             }
-
+            
+            book.Authors = context.BookAuthors.Where(ba => ba.BookId == book.Id).ToList();
 
             return book;
         }
