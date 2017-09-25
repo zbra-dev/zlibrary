@@ -35,7 +35,7 @@ namespace ZLibrary.Web.Validators
                 var isbn = Isbn.FromValue(value.Isbn);
                 validationResult.AddResult(isbn);
             }
-            catch (Exception ex)
+            catch (IsbnException ex)
             {
                 validationResult.ErrorMessage = ex.Message;
                 return validationResult;

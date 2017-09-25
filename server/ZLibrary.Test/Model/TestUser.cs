@@ -14,13 +14,13 @@ namespace ZLibrary.Test.Model
             user.Id = 3;
             user.Name = "Test";
             user.Email = "test@test.com";
-            user.isAdministrator = true;
+            user.IsAdministrator = true;
 
             Assert.IsNotNull(user);
             Assert.AreEqual(3, user.Id);
             Assert.AreEqual("Test", user.Name);
             Assert.AreEqual("test@test.com", user.Email);
-            Assert.IsTrue(user.isAdministrator);
+            Assert.IsTrue(user.IsAdministrator);
         }
 
         [TestMethod]
@@ -32,7 +32,7 @@ namespace ZLibrary.Test.Model
             Assert.AreEqual(0, user.Id);
             Assert.IsNull(user.Name);
             Assert.IsNull(user.Email);
-            Assert.IsFalse(user.isAdministrator);
+            Assert.IsFalse(user.IsAdministrator);
         }
     }
 }

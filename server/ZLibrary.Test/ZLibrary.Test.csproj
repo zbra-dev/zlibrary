@@ -19,10 +19,8 @@
     <Content Include="Model\TestPublisher.cs" />
     <Content Include="Model\TestConverImage.cs" />
     <Content Include="Model\TestCoverImage.cs" />
-    <Content Include="Model\TestBookExternalReference.cs" />
     <Content Include="Model\TestBook.cs" />
     <Content Include="Model\TestBookCopy.cs" />
-    <Content Include="Model\TestDate.cs" />
     <Content Include="Model\TestLoan.cs" />
     <Content Include="Model\TestReservationReason.cs" />
     <Content Include="Model\TestReservation.cs" />

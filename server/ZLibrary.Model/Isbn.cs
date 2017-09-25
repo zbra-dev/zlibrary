@@ -10,17 +10,17 @@ namespace ZLibrary.Model
         {
             if (string.IsNullOrWhiteSpace(value)) 
             {
-                throw new ArgumentException($"The paramenter {nameof(value)} can not be null or empty.");
+                throw new IsbnException($"The paramenter {nameof(value)} can not be null or empty.");
             }
 
             if (!CheckFormatString(value))
             {
-                throw new FormatException($"Invalid ISBN format: {value}");
+                throw new IsbnException($"Invalid ISBN format: {value}");
             }
 
             if (!CheckValue(value))
             {
-                throw new FormatException($"Invalid ISBN-13: {value}");
+                throw new IsbnException($"Invalid ISBN-13: {value}");
             }
 
             return new Isbn(value);

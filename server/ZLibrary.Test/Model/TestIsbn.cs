@@ -16,21 +16,21 @@ namespace ZLibrary.Test.Model
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(IsbnException))]
         public void TestCreateNewIsbnFromValueWithNullConstructorShouldThrowException()
         {
             var isbn = Isbn.FromValue(null);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(IsbnException))]
         public void TestCreateNewIsbnFromValueWithEmptyConstructorShouldThrowException()
         {
              var isbn = Isbn.FromValue("");
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(IsbnException))]
         public void TestCreateNewIsbnFromValueWithWhiteSpaceConstructorShouldThrowException()
         {
            var isbn = Isbn.FromValue("   ");
@@ -38,14 +38,14 @@ namespace ZLibrary.Test.Model
 
 
         [TestMethod]
-        [ExpectedException(typeof(FormatException))]
+        [ExpectedException(typeof(IsbnException))]
         public void TestCreateNewIsbnFromValueWithFormatValueShouldFormatException()
         {
            var isbn = Isbn.FromValue("Teste");
         }
 
         [TestMethod]
-        [ExpectedException(typeof(FormatException))]
+        [ExpectedException(typeof(IsbnException))]
         public void TestCreateNewIsbnFromValueWithFormatValueShouldInvalidOperationException()
         {
            var isbn = Isbn.FromValue("9728574591865");

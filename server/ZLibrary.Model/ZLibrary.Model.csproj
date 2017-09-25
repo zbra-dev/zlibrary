@@ -14,8 +14,6 @@
     <Content Include="Isbn.cs" />
     <Content Include="Publisher.cs" />
     <Content Include="CoverImage.cs" />
-    <Content Include="BookExternalReference.cs" />
-    <Content Include="BookCopy.cs" />
     <Content Include="Loan.cs" />
     <Content Include="LoanStatus.cs" />
     <Content Include="ReservationStatus.cs" />

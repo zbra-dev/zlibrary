@@ -36,6 +36,7 @@ namespace ZLibrary.Web
                 /**** ONLY FOR TESTS PURPOSES   ****/
                 /***********************************/
 
+
                 var andrewTroelsen = context.Authors.Single(a => a.Name == "Andrew Troelsen");
                 var jackPhillips = context.Authors.Single(a => a.Name == "Jack Phillips");
                 var simonSarris = context.Authors.Single(a => a.Name == "Simon Sarris");

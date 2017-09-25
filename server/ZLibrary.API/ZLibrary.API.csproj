@@ -10,5 +10,6 @@
     <Content Include="IAuthorService.cs" />
     <Content Include="IPublisherService.cs" />
     <Content Include="BookSaveException.cs" />
+    <Content Include="IImageService.cs" />
   </ItemGroup>
 </Project>

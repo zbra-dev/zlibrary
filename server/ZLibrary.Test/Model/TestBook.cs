@@ -15,19 +15,44 @@ namespace ZLibrary.Test.Model
             var book = new Book();
             var publisher = new Publisher("Publisher Test");
             var author1 = new Author("Test Author");
-            var author2 = new Author("Author Test");
-            var authors = new List<Author> { author1, author2 };
+            author1.Id = 2;
+            var a = new Author("Test"){
+                    Id = 1
+                };
+            var author2 = new Author("Author Test"){
+                    Id = 2
+                } ;
+            
+            var bookAuthors = new List<BookAuthor>() 
+                {
+                    new BookAuthor() 
+                    {
+                        Book = book,
+                        BookId = book.Id,
+                        Author = author1,
+                        AuthorId = author1.Id
+                    },
+                    new BookAuthor() 
+                    {
+                        Book = book,
+                        BookId = book.Id,
+                        Author = author2,
+                        AuthorId = author2.Id
+                    },
+                };
             var isbn = Isbn.FromValue("9788574591865");
             var synopsis = "Synopsis";
             var coverImage = new CoverImage();
+            var numberOfCopies = 2;
             book.Title = "Test";
             book.Id = 3;
             book.Publisher = publisher;
-            book.Authors = authors;
+            book.Authors = bookAuthors;
             book.Isbn = isbn;
             book.Synopsis = synopsis;
             book.PublicationYear = 2002;
             book.CoverImage = coverImage;
+            book.NumberOfCopies = numberOfCopies;
 
             Assert.IsNotNull(book);
             Assert.AreEqual("Test", book.Title);
@@ -37,7 +62,8 @@ namespace ZLibrary.Test.Model
             Assert.AreEqual(isbn, book.Isbn);
             Assert.AreEqual(synopsis, book.Synopsis);
             Assert.AreEqual(coverImage, book.CoverImage);
-            authors.AssertListEquals(book.Authors);
+            Assert.AreEqual(numberOfCopies, book.NumberOfCopies);
+            bookAuthors.AssertListEquals(book.Authors);
         }
     }
 }
