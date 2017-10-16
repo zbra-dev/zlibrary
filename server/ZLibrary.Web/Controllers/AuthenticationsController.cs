@@ -1,38 +1,75 @@
 using System;
 using System.IO;
 using System.Net.Http;
+using System.Text;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using ZLibrary.API;
+using ZLibrary.Model;
+using ZLibrary.Web.Controllers.Items;
+using ZLibrary.Web.Validators;
 
 namespace ZLibrary.Web.Controllers
 {
     [Route("api/auth")]
     public class AuthenticationsController : Controller
     {
+        private readonly IUserService userService;
+
+        private readonly IAuthenticationApi authenticationApi;
+
+        public AuthenticationsController(IUserService userService, IAuthenticationApi authenticationApi)
+        {
+            this.userService = userService;
+            this.authenticationApi = authenticationApi;
+        }
+
         [HttpGet("redirect/{code?}")]
         public async Task<IActionResult> RedirectFromSlack(string code)
         {
-            using (HttpClient client = new HttpClient())
+            using (var client = new HttpClient())
             {
-                // TODO: load slack auth configuration from file
-                var SlackApiBase = "https://slack.com/api/{0}";
-                var clientId = "6575166742.236473063552";
-                var clientSecret = "e33f0fbba6c17d24ecae452a9f146b8c";
-                var queryString = $"client_id={clientId}&client_secret={clientSecret}&code={code}";
-                var httpMessage = await client.GetAsync(string.Format(SlackApiBase, "oauth.access") + "?" + queryString);
+                var httpMessage = await client.GetAsync(authenticationApi.GetAuthenticationUrl(code));
+                var result = await httpMessage.Content.ReadAsStringAsync();
                 using (httpMessage)
-                using (var textReader = new StringReader(await httpMessage.Content.ReadAsStringAsync()))
+                using (var textReader = new StringReader(result))
                 using (var reader = new JsonTextReader(textReader))
                 {
-                    // FIXME: parse string to SlackUserDTO
-                    var responseString = JsonSerializer.Create().Deserialize(reader);
-                    Console.WriteLine(responseString);
+                    var slackUserDTO = new JsonSerializer().Deserialize<SlackUserDTO>(reader);
+                    var validator = new SlackAuthenticationDataValidator();
+                    var validationResult = validator.Validate(slackUserDTO);
+                    if (validationResult.HasError)
+                    {
+                        var ErrorMessage = validationResult.ErrorMessage;
+                        Response.Redirect(Uri.EscapeUriString("/login?error=" + ErrorMessage));
+                        return BadRequest();
+                    }
 
-                    // TODO: update User entity model on database and include AccessToken and UserAvatarUrl
+                    var user = await userService.FindByEmail(slackUserDTO.User.Email);
+                    if (user == null)
+                    {
+                        user = new User()
+                        {
+                            Name = slackUserDTO.User.Name,
+                            Email = slackUserDTO.User.Email,
+                            AccessToken = slackUserDTO.AccessToken,
+                            UserAvatarUrl = slackUserDTO.User.UserAvatarUrl
+                        };
+                        await userService.Create(user);
+                    } 
+                    else
+                    {
+                        user.AccessToken = slackUserDTO.AccessToken;
+                        user.UserAvatarUrl = slackUserDTO.User.UserAvatarUrl;
+                        await userService.Update(user);
+                    }
+
+                    Response.Redirect("/home");
                 }
             }
-
             return Ok();
         }
     }

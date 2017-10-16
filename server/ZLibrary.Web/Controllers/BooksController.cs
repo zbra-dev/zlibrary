@@ -109,7 +109,7 @@ namespace ZLibrary.Web
             return Ok(books.ToBookViewItems());
         }
 		
-		[HttpGet("search/{keyword}/{orderByValue:int}", Name = "FindBookBy")]
+		[HttpGet("search/{keyword}/{orderByValue:int}", Name = "FindBookByWithOptions")]
 		public async Task<IActionResult> FindBy(string keyword, int orderByValue)
 		{
            var orderBy = (SearchOrderBy)Enum.ToObject(typeof(SearchOrderBy), orderByValue);

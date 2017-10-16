@@ -6,5 +6,7 @@ namespace ZLibrary.Model
         public string Name { get; set; }
         public string Email { get; set; }
         public bool IsAdministrator { get; set; }
+        public string AccessToken { get; set; }
+        public string UserAvatarUrl { get; set;}
     }
 }

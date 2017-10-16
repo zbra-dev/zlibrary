@@ -13,6 +13,7 @@ using ZLibrary.Persistence;
 using ZLibrary.Web.Factory;
 using ZLibrary.Web.Factory.Impl;
 using ZLibrary.Web.Options;
+using ZLibrary.Web.Controllers;
 
 namespace ZLibrary.Web
 {
@@ -52,6 +53,7 @@ namespace ZLibrary.Web
             services.AddTransient<IPublisherRepository, PublisherRepository>();
             services.AddTransient<ITokenFactory, JsonWebTokenFactory>();
             services.AddTransient<IImageService, ImageService>();
+            services.AddTransient<IAuthenticationApi, SlackApi>();
 
             services.Configure<JwtOptions>(o =>
             {

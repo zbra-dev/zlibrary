@@ -31,5 +31,14 @@ namespace ZLibrary.Core
             return await UserRepository.Create(user);
         }
 
+        public async Task<User> FindByEmail(string email)
+        {
+            return await UserRepository.FindByEmail(email);
+        }
+
+        public async Task Update(User user)
+        {
+            await UserRepository.Update(user);
+        }
     }
 }

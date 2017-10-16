@@ -34,6 +34,18 @@ namespace ZLibrary.Persistence
             return user.Id;
         }
 
+        public async Task<User> FindByEmail(string email) 
+        {
+           return await context.Users.SingleOrDefaultAsync(u => u.Email.Equals(email));
+        }
+
+        public async Task Update(User user)
+        {
+            context.Users.Update(user);
+            await context.SaveChangesAsync();
+            await context.Entry(user).ReloadAsync();
+        }
+
     }
 
 }
