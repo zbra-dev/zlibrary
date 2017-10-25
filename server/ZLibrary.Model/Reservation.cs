@@ -26,5 +26,9 @@ namespace ZLibrary.Model
             StartDate = DateTime.Now;
             Reason = new ReservationReason();
         }
+
+        private Reservation()
+        {
+        }
     }
 }

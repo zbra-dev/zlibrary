@@ -54,6 +54,8 @@ namespace ZLibrary.Web
             services.AddTransient<ITokenFactory, JsonWebTokenFactory>();
             services.AddTransient<IImageService, ImageService>();
             services.AddTransient<IAuthenticationApi, SlackApi>();
+            services.AddTransient<ILoanService, LoanService>();
+            services.AddTransient<ILoanRepository, LoanRepository>();
 
             services.Configure<JwtOptions>(o =>
             {

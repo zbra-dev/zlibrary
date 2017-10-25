@@ -4,6 +4,7 @@ namespace ZLibrary.Model
 {
     public class Loan
     {
+        public long Id { get; set; }
         public Reservation Reservation { get; private set; }
         public DateTime ExpirationDate { get; private set; }
         public LoanStatus Status { get; set; }
@@ -19,9 +20,13 @@ namespace ZLibrary.Model
             ExpirationDate = CalculateExpirationDate();
         }
 
+        private Loan()
+        {
+        }
+
         private DateTime CalculateExpirationDate()
         {
-            return DateTime.Now.Date.Add(new TimeSpan(90, 0, 0, 0));
+            return DateTime.Now.AddMonths(3);
         }
     }
 }

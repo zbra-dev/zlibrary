@@ -12,6 +12,8 @@ namespace ZLibrary.Persistence
         public DbSet<BookAuthor> BookAuthors { get; set; }
         public DbSet<Isbn> Isbns { get; set; }
         public DbSet<Publisher> Publishers { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<Loan> Loans { get; set; }
 
         public ZLibraryContext(DbContextOptions options)
             : base(options)

@@ -10,14 +10,14 @@ namespace ZLibrary.Web.Extensions
 
         public static BookDTO ToBookViewItem(this Book book)
         {
-            return new BookDTO() 
+            return new BookDTO()
             {
                 Id = book.Id,
-                AuthorIds =book.Authors.Select(a => a.AuthorId).ToArray(),
+                AuthorIds = book.Authors.Select(a => a.AuthorId).ToArray(),
                 Isbn = book.Isbn.Value,
                 PublisherId = book.Publisher.Id,
                 PublicationYear = book.PublicationYear,
-                Title =book.Title,
+                Title = book.Title,
                 Synopsis = book.Synopsis,
                 NumberOfCopies = book.NumberOfCopies
             };
