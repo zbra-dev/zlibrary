@@ -11,10 +11,12 @@ namespace ZLibrary.Core
     public class BookService : IBookService
     {
         private IBookRepository bookRepository;
+        private IReservationService reservationService;
 
-        public BookService(IBookRepository bookRepository)
+        public BookService(IBookRepository bookRepository, IReservationService reservationService)
         {
             this.bookRepository = bookRepository;
+            this.reservationService = reservationService;
         }
 
         public async Task<IList<Book>> FindAll()
@@ -37,6 +39,11 @@ namespace ZLibrary.Core
             {
                 return;
             }
+            var reservations = await reservationService.FindBookReservations(id);
+            if (reservations.Any())
+            {
+                throw new BookDeleteException("O Livro não pode ser deletado pois possui copias emprestadas.");
+            }
 
             await bookRepository.Delete(id);
         }
@@ -46,6 +53,15 @@ namespace ZLibrary.Core
             if (book.NumberOfCopies <= 0)
             {
                 throw new BookSaveException("Número de cópias deve ser positivo maior que zero.");
+            }
+
+            if (book.Id > 0)
+            {
+                var reservations = await reservationService.FindBookReservations(book.Id);
+                if (book.NumberOfCopies < reservations.Count())
+                {
+                    throw new BookSaveException("Número de cópias não pode ser menor que a quantidade de livros emprestados.");
+                }
             }
 
             await bookRepository.Save(book);
@@ -73,7 +89,7 @@ namespace ZLibrary.Core
             {
                 orderBySelector = b => b.Created;
             }
-            else 
+            else
             {
                 orderBySelector = b => b.Title;
             }

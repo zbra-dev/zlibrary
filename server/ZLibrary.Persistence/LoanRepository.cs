@@ -13,13 +13,13 @@ namespace ZLibrary.Persistence
 
         public LoanRepository(ZLibraryContext context)
         {
-             this.context = context;
+            this.context = context;
         }
 
         public async Task Create(Loan loan)
         {
-           await context.Loans.AddAsync(loan);
-           await context.SaveChangesAsync();
+            await context.Loans.AddAsync(loan);
+            await context.SaveChangesAsync();
         }
 
         public async Task<IList<Loan>> FindAll()
@@ -50,11 +50,21 @@ namespace ZLibrary.Persistence
             .ToListAsync();
         }
 
-        public async Task <Loan> Update(Loan loan)
+        public async Task<IList<Loan>> FindByBookId(long bookId)
         {
-             context.Loans.Update(loan);
-             await context.SaveChangesAsync();
-             return loan;
+            return await context.Loans
+            .Include(l => l.Reservation)
+            .Include(l => l.Reservation.Reason)
+            .Include(l => l.Reservation.User)
+            .Where(l => l.Reservation.BookId == bookId)
+            .ToListAsync();
+        }
+
+        public async Task<Loan> Update(Loan loan)
+        {
+            context.Loans.Update(loan);
+            await context.SaveChangesAsync();
+            return loan;
         }
     }
 }

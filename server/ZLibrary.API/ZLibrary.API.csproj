@@ -11,5 +11,8 @@
     <Content Include="IPublisherService.cs" />
     <Content Include="BookSaveException.cs" />
     <Content Include="IImageService.cs" />
+    <Content Include="ILoanService.cs" />
+    <Content Include="IReservationService.cs" />
+    <Content Include="BookDeleteException.cs" />
   </ItemGroup>
 </Project>

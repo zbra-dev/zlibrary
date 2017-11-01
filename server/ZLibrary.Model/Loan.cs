@@ -28,5 +28,10 @@ namespace ZLibrary.Model
         {
             return DateTime.Now.AddMonths(3);
         }
+
+        public bool IsReturned()
+        {
+            return Status == LoanStatus.Returned;
+        }
     }
 }

@@ -47,8 +47,15 @@ namespace ZLibrary.Web
         [HttpDelete("{id:long}", Name = "DeleteBook")]
         public async Task<IActionResult> Delete(long id)
         {
-            await bookService.Delete(id);
-            return NoContent();
+            try
+            {
+                await bookService.Delete(id);
+                return NoContent();
+            }
+            catch (BookDeleteException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost]
@@ -67,7 +74,7 @@ namespace ZLibrary.Web
 
             if (book == null && value.Id != 0)
             {
-                return BadRequest("Livro não cadastrado.");
+                return NotFound($"Nenhuma livro encontrada com o ID: {value.Id}.");
             }
 
             if (book == null)
@@ -101,24 +108,16 @@ namespace ZLibrary.Web
             }
         }
 
-        [HttpGet("{keyword}", Name = "FindBookBy")]
-        public async Task<IActionResult> FindBy(string keyword)
+        [HttpGet("search/{keyword}/{orderByValue:int}", Name = "FindBookBy")]
+        public async Task<IActionResult> FindBy(string keyword, int orderByValue)
         {
-            var bookSearchParameter = new BookSearchParameter(keyword);
+            var orderBy = (SearchOrderBy)Enum.ToObject(typeof(SearchOrderBy), orderByValue);
+            var bookSearchParameter = new BookSearchParameter(keyword)
+            {
+                OrderBy = orderBy
+            };
             var books = await bookService.FindBy(bookSearchParameter);
             return Ok(books.ToBookViewItems());
         }
-		
-		[HttpGet("search/{keyword}/{orderByValue:int}", Name = "FindBookByWithOptions")]
-		public async Task<IActionResult> FindBy(string keyword, int orderByValue)
-		{
-           var orderBy = (SearchOrderBy)Enum.ToObject(typeof(SearchOrderBy), orderByValue);
-           var bookSearchParameter =  new BookSearchParameter(keyword)
-           {
-                OrderBy = orderBy
-           };
-           var books = await bookService.FindBy(bookSearchParameter);
-           return Ok(books.ToBookViewItems());
-       }
     }
 }

@@ -15,10 +15,10 @@ namespace ZLibrary.Core
         {
             this.loanRepository = loanRepository;
         }
-        
+
         public async Task Create(Loan loan)
         {
-            if(loan == null)
+            if (loan == null)
             {
                 throw new LoanCreateException("Loan não pode ser nulo");
             }
@@ -53,6 +53,10 @@ namespace ZLibrary.Core
             return await loanRepository.FindByUserId(userId);
         }
 
+        public async Task<IList<Loan>> FindByBookId(long bookId)
+        {
+            return await loanRepository.FindByUserId(bookId);
+        }
         public async Task ReturnLoan(long id)
         {
             var loan = await FindById(id);

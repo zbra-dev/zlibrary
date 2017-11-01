@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace ZLibrary.Model
@@ -25,10 +26,15 @@ namespace ZLibrary.Model
         {
             return ++NumberOfCopies;
         }
-		
+
         public int RemoveCopy()
         {
             return --NumberOfCopies;
+        }
+
+        public bool CanApproveLoan(IList<Loan> loans)
+        {
+            return NumberOfCopies > loans.Count(l => !l.IsReturned());
         }
 
         public override bool Equals(object obj)

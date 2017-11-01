@@ -14,6 +14,11 @@
     <Content Include="IPublisherRepository.cs" />
     <Content Include="PublisherRepository.cs" />
     <Content Include="ZLibraryContext.cs" />
+    <Content Include="ILoanRepository.cs" />
+    <Content Include="LoanRepository.cs" />
+    <Content Include="ReservationRepository.cs" />
+    <Content Include="IReservationRepository.cs" />
+    <Content Include="ImageRepository.cs" />
   </ItemGroup>
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>

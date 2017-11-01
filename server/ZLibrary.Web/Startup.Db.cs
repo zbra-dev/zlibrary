@@ -36,7 +36,7 @@ namespace ZLibrary.Web
                 /**** ONLY FOR TESTS PURPOSES   ****/
                 /***********************************/
 
-
+                /*
                 var andrewTroelsen = context.Authors.Single(a => a.Name == "Andrew Troelsen");
                 var jackPhillips = context.Authors.Single(a => a.Name == "Jack Phillips");
                 var simonSarris = context.Authors.Single(a => a.Name == "Simon Sarris");
@@ -48,7 +48,8 @@ namespace ZLibrary.Web
                     PublicationYear = 2014,
                     Publisher = publishers.Where<Publisher>(p => p.Name == "Editora Futura").SingleOrDefault(),
                     Synopsis = "HTML5 Unleashed is the authoritative guide that covers the key web components driving the future of the Web",
-                    Title = "HTML 5 - Unleashed"
+                    Title = "HTML 5 - Unleashed",
+                    NumberOfCopies = 3
                 };
                 context.Books.Add(book);
                 context.SaveChanges();
@@ -61,6 +62,7 @@ namespace ZLibrary.Web
                         BookId = book.Id,
                         Author = simonSarris,
                         AuthorId = simonSarris.Id
+
                     }
                 };
                 context.SaveChanges();
@@ -71,7 +73,8 @@ namespace ZLibrary.Web
                     PublicationYear = 2014,
                     Publisher = publishers.FirstOrDefault(),
                     Synopsis = "Java 2 for professional development and best practices.",
-                    Title = "Effective Java"
+                    Title = "Effective Java",
+                    NumberOfCopies = 2
                 };
                 context.Books.Add(book2);
                 context.SaveChanges();
@@ -101,7 +104,8 @@ namespace ZLibrary.Web
                     PublicationYear = 2014,
                     Publisher = publishers.Where<Publisher>(p => p.Name == "Addison - Wesley").SingleOrDefault(),
                     Synopsis = "The practice of enterprise application development has benefited from the emergence of many new enabling technologies.",
-                    Title = "Enterprise Application Architecture"
+                    Title = "Enterprise Application Architecture",
+                    NumberOfCopies = 1
                 };
 
                 context.Books.Add(book3);
@@ -126,80 +130,82 @@ namespace ZLibrary.Web
                 };
                 context.SaveChanges();
 
-                /*                
-                                var book3 = new Book()
-                                {
-                                    Authors = new List<Author>() { martinFowler },
-                                    Isbn = Isbn.FromValue("9780316037723"),
-                                    PublicationYear = 2014,
-                                    Publisher = publishers.Where<Publisher>(p => p.Name == "Addison - Wesley").SingleOrDefault(),
-                                    Synopsis = "The practice of enterprise application development has benefited from the emergence of many new enabling technologies.",
-                                    Title = "Patterns of Enterprise Application Architecture"
-                                };
-                                martinFowler.Books = new List<Book>() { book3 };
-                                context.Books.Add(book3);
-                                context.SaveChanges();
+                
+                // var book3 = new Book()
+                // {
+                //     Authors = new List<Author>() { martinFowler },
+                //     Isbn = Isbn.FromValue("9780316037723"),
+                //     PublicationYear = 2014,
+                //     Publisher = publishers.Where<Publisher>(p => p.Name == "Addison - Wesley").SingleOrDefault(),
+                //     Synopsis = "The practice of enterprise application development has benefited from the emergence of many new enabling technologies.",
+                //     Title = "Patterns of Enterprise Application Architecture"
+                // };
+                // martinFowler.Books = new List<Book>() { book3 };
+                // context.Books.Add(book3);
+                // context.SaveChanges();
 
-                                var book4 = new Book()
-                                {
-                                    Authors = new List<Author>() { andrewTroelsen },
-                                    Isbn = Isbn.FromValue("9780201738292"),
-                                    PublicationYear = 2014,
-                                    Publisher = publishers.FirstOrDefault(),
-                                    Synopsis = "Java 2 for professional development and best practices.",
-                                    Title = "Java"
-                                };
-                                andrewTroelsen.Books = new List<Book>() { book2, book4 };
-                                context.Books.Add(book4);
-                                context.SaveChanges();
+                // var book4 = new Book()
+                // {
+                //     Authors = new List<Author>() { andrewTroelsen },
+                //     Isbn = Isbn.FromValue("9780201738292"),
+                //     PublicationYear = 2014,
+                //     Publisher = publishers.FirstOrDefault(),
+                //     Synopsis = "Java 2 for professional development and best practices.",
+                //     Title = "Java"
+                // };
+                // andrewTroelsen.Books = new List<Book>() { book2, book4 };
+                // context.Books.Add(book4);
+                // context.SaveChanges();
 
-                                var book5 = new Book()
-                                {
-                                    Authors = context.Authors.Where(a => a.Name == "Andrew Troelsen" ||  a.Name == "Martin Fowler").ToList(),
-                                    Isbn = Isbn.FromValue("9780316380508"),
-                                    PublicationYear = 2014,
-                                    Publisher = publishers.FirstOrDefault(),
-                                    Synopsis = "Java 2 for professional development and best practices.",
-                                    Title = "Java Cool"
-                                };
-                                context.Books.Add(book5);
-                                context.SaveChanges();
+                // var book5 = new Book()
+                // {
+                //     Authors = context.Authors.Where(a => a.Name == "Andrew Troelsen" || a.Name == "Martin Fowler").ToList(),
+                //     Isbn = Isbn.FromValue("9780316380508"),
+                //     PublicationYear = 2014,
+                //     Publisher = publishers.FirstOrDefault(),
+                //     Synopsis = "Java 2 for professional development and best practices.",
+                //     Title = "Java Cool"
+                // };
+                // context.Books.Add(book5);
+                // context.SaveChanges();
 
-                                var book6 = new Book()
-                                {
-                                    Authors = context.Authors.Where(a => a.Name == "Andrew Troelsen" ||  a.Name == "Martin Fowler").ToList(),
-                                    Isbn = Isbn.FromValue("9780764542800"),
-                                    PublicationYear = 2014,
-                                    Publisher = publishers.Where(p => p.Name == "Addison - Wesley").SingleOrDefault(),
-                                    Synopsis = "Java 2 for professional development and best practices.",
-                                    Title = "Java Fuck Cool"
-                                };
-                                context.Books.Add(book6);
-                                context.SaveChanges();
+                // var book6 = new Book()
+                // {
+                //     Authors = context.Authors.Where(a => a.Name == "Andrew Troelsen" || a.Name == "Martin Fowler").ToList(),
+                //     Isbn = Isbn.FromValue("9780764542800"),
+                //     PublicationYear = 2014,
+                //     Publisher = publishers.Where(p => p.Name == "Addison - Wesley").SingleOrDefault(),
+                //     Synopsis = "Java 2 for professional development and best practices.",
+                //     Title = "Java Fuck Cool"
+                // };
+                // context.Books.Add(book6);
+                // context.SaveChanges();
 
-                                var book7 = new Book()
-                                {
-                                    Authors = new List<Author>() { context.Authors.Single(a => a.Name == "Andrew Troelsen") },
-                                    Isbn = Isbn.FromValue("9780764542800"),
-                                    PublicationYear = 2014,
-                                    Publisher = context.Publishers.Where(p => p.Name == "Addison - Wesley").SingleOrDefault(),
-                                    Synopsis = "Java 2 for professional development and best practices.",
-                                    Title = "Java Awesome Cool"
-                                };
-                                context.Books.Add(book7);
-                                context.SaveChanges();
-                 */
+                // var book7 = new Book()
+                // {
+                //     Authors = new List<Author>() { context.Authors.Single(a => a.Name == "Andrew Troelsen") },
+                //     Isbn = Isbn.FromValue("9780764542800"),
+                //     PublicationYear = 2014,
+                //     Publisher = context.Publishers.Where(p => p.Name == "Addison - Wesley").SingleOrDefault(),
+                //     Synopsis = "Java 2 for professional development and best practices.",
+                //     Title = "Java Awesome Cool"
+                // };
+                // context.Books.Add(book7);
+                // context.SaveChanges();
+                
+
                 var bookId = 1;
                 var firstUser = users.First();
 
                 var reservation1 = new Reservation(bookId, firstUser);
-                reservation1.Reason.Description = "Solicitação de Teste1";
+                reservation1.Reason.Status = ReservationStatus.Approved;
                 context.Reservations.Add(reservation1);
                 context.SaveChanges();
 
                 var loan1 = new Loan(reservation1);
                 context.Loans.Add(loan1);
                 context.SaveChanges();
+                 */
             }
         }
     }

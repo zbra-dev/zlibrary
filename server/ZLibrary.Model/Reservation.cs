@@ -30,5 +30,20 @@ namespace ZLibrary.Model
         private Reservation()
         {
         }
+
+        public bool IsRequested()
+        {
+            return Reason.Status == ReservationStatus.Requested;
+        }
+
+        public bool IsApproved()
+        {
+            return Reason.Status == ReservationStatus.Approved;
+        }
+
+        public bool IsRejected()
+        {
+            return Reason.Status == ReservationStatus.Rejected;
+        }
     }
 }

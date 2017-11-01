@@ -42,15 +42,18 @@ namespace ZLibrary.Persistence
             {
                 book.Authors = context.BookAuthors.Where(ba => ba.BookId == book.Id).ToList();
             }
-            
-            book.Authors = context.BookAuthors.Where(ba => ba.BookId == book.Id).ToList();
 
             return book;
         }
 
         public async Task Delete(long id)
         {
-            context.Books.Remove(context.Books.SingleOrDefault(i => i.Id == id));
+            var book = context.Books.SingleOrDefault(i => i.Id == id);
+            if (book == null)
+            {
+                return;
+            }
+            context.Books.Remove(book);
             await context.SaveChangesAsync();
         }
 

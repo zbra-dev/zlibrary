@@ -47,7 +47,9 @@ namespace ZLibrary.Web
             services.AddTransient<IBookService, BookService>();
             services.AddTransient<IAuthorService, AuthorService>();
             services.AddTransient<IPublisherService, PublisherService>();
+            services.AddTransient<IReservationService, ReservationService>();
             services.AddTransient<IBookRepository, BookRepository>();
+            services.AddTransient<IReservationRepository, ReservationRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IAuthorRepository, AuthorRepository>();
             services.AddTransient<IPublisherRepository, PublisherRepository>();
