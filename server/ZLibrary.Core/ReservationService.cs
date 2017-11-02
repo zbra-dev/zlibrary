@@ -10,8 +10,8 @@ namespace ZLibrary.Core
 {
     public class ReservationService : IReservationService
     {
-        private IReservationRepository reservationRepository;
-        private ILoanService loanService;
+        private readonly IReservationRepository reservationRepository;
+        private readonly ILoanService loanService;
 
         public ReservationService(IReservationRepository reservationRepository, ILoanService loanService)
         {

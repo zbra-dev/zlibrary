@@ -45,7 +45,5 @@ namespace ZLibrary.Persistence
             await context.SaveChangesAsync();
             await context.Entry(user).ReloadAsync();
         }
-
     }
-
 }

@@ -27,11 +27,11 @@ namespace ZLibrary.Web
         {
             var user = await service.FindById(id);
             if (user == null)
+            {
                 return NotFound();
+            }
             return Ok(user);
         }
-
-        
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody]User value)

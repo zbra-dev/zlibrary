@@ -7,7 +7,6 @@ namespace ZLibrary.Web.Extensions
 {
     public static class LoanExtensions
     {
-
         public static LoanDTO ToLoanViewItem(this Loan loan)
         {
             return new LoanDTO()

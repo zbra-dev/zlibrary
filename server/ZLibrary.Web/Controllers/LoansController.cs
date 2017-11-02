@@ -9,7 +9,6 @@ using ZLibrary.Web.Validators;
 using ZLibrary.Web.Extensions;
 using System;
 
-
 namespace ZLibrary.Web.Controllers
 {
     [Route("api/[controller]")]
@@ -29,7 +28,6 @@ namespace ZLibrary.Web.Controllers
             return Ok(loans.ToLoanViewItems());
         }
 
-
         [HttpGet("{id:long}", Name = "FindLoan")]
         public async Task<IActionResult> FindById(long id)
         {
@@ -47,7 +45,7 @@ namespace ZLibrary.Web.Controllers
             var loans = await loanService.FindByUserId(userId);
             if (loans == null)
             {
-                return NotFound($"Nenhuma loan encontrada com o userId: {userId}.");
+                return NotFound($"Nenhuma loan encontrada com o userId: {userId}");
             }
             return Ok(loans.ToLoanViewItems());
         }
@@ -62,9 +60,10 @@ namespace ZLibrary.Web.Controllers
             }
             catch (LoanNotFoundException)
             {
-                return NotFound($"Nenhuma loan encontrada com o ID: {id}.");
+                return NotFound($"Nenhuma loan encontrada com o ID: {id}");
             }
         }
+
         [HttpPost("returned/{id:long}")]
         public async Task<IActionResult> UpdateLoanStatusToReturned(long id)
         {
@@ -75,7 +74,7 @@ namespace ZLibrary.Web.Controllers
             }
             catch (LoanNotFoundException)
             {
-                return NotFound($"Nenhuma loan encontrada com o ID: {id}.");
+                return NotFound($"Nenhuma loan encontrada com o ID: {id}");
             }
         }
     }

@@ -10,8 +10,8 @@ namespace ZLibrary.Core
 {
     public class BookService : IBookService
     {
-        private IBookRepository bookRepository;
-        private IReservationService reservationService;
+        private readonly IBookRepository bookRepository;
+        private readonly IReservationService reservationService;
 
         public BookService(IBookRepository bookRepository, IReservationService reservationService)
         {

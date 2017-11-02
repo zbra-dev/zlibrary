@@ -7,7 +7,6 @@ namespace ZLibrary.Web.Extensions
 {
     public static class BookExtensions
     {
-
         public static BookDTO ToBookViewItem(this Book book)
         {
             return new BookDTO()

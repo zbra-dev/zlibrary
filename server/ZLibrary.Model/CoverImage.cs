@@ -4,11 +4,13 @@ namespace ZLibrary.Model
 {
     public class CoverImage
     {
-        public static readonly CoverImage Empty = new CoverImage(new byte[] {});
-        public byte[] Image { get; set; }
+        public static readonly CoverImage Empty = new CoverImage();
+        
         public long Id { get; set; }
+        public byte[] Image { get; set; }
 
         public CoverImage()
+        : this(new byte[] {})
         {
         }
         

@@ -9,7 +9,7 @@ namespace ZLibrary.Core
 {
     public class UserService : IUserService
     {
-        private IUserRepository UserRepository;
+        private readonly IUserRepository UserRepository;
 
         public UserService(IUserRepository userRepository)
         {

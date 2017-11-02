@@ -40,7 +40,9 @@ namespace ZLibrary.Web
         {
             var book = await bookService.FindById(id);
             if (book == null)
+            {
                 return NotFound();
+            }
             return Ok(book.ToBookViewItem());
         }
 

@@ -7,7 +7,6 @@ namespace ZLibrary.Web.Extensions
 {
     public static class ReservationExtensions
     {
-
         public static ReservationResultDTO ToReservationViewItem(this Reservation reservation)
         {
             return new ReservationResultDTO() 

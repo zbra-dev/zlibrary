@@ -10,7 +10,7 @@ namespace ZLibrary.Core
 {
     public class PublisherService : IPublisherService
     {
-        private IPublisherRepository publisherRepository;
+        private readonly IPublisherRepository publisherRepository;
 
         public PublisherService(IPublisherRepository publisherRepository)
         {

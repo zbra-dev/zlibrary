@@ -10,7 +10,8 @@ namespace ZLibrary.Core
 {
     public class LoanService : ILoanService
     {
-        private ILoanRepository loanRepository;
+        private readonly ILoanRepository loanRepository;
+        
         public LoanService(ILoanRepository loanRepository)
         {
             this.loanRepository = loanRepository;

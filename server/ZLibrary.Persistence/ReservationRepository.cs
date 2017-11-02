@@ -60,6 +60,5 @@ namespace ZLibrary.Persistence
             await context.Entry(reservation).ReloadAsync();
             return reservation;
         }
-
     }
 }

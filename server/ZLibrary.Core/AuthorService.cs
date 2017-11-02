@@ -10,7 +10,7 @@ namespace ZLibrary.Core
 {
     public class AuthorService : IAuthorService
     {
-        private IAuthorRepository authorRepository;
+        private readonly IAuthorRepository authorRepository;
 
         public AuthorService(IAuthorRepository authorRepository)
         {

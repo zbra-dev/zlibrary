@@ -43,7 +43,6 @@ namespace ZLibrary.Web
             {
                 return NotFound($"Nenhuma reserva encontrada com o ID: {id}.");
             }
-
             return Ok(reservation.ToReservationViewItem());
         }
 
@@ -62,13 +61,12 @@ namespace ZLibrary.Web
         public async Task<IActionResult> Order([FromBody]ReservationRequestDTO value)
         {
             var user = await userService.FindById(value.UserId);
-
             if (user == null)
             {
                 return NotFound($"Nenhuma usuário encontrada com o ID: {value.UserId}.");
             }
-            var book = await bookService.FindById(value.BookId);
 
+            var book = await bookService.FindById(value.BookId);
             if (book == null)
             {
                 return NotFound($"Nenhuma livro encontrada com o ID: {value.BookId}.");
@@ -86,7 +84,6 @@ namespace ZLibrary.Web
             {
                 return NotFound($"Nenhuma reserva encontrada com o ID: {id}.");
             }
-
             try
             {
                 var book = await bookService.FindById(reservation.BookId);
@@ -101,7 +98,8 @@ namespace ZLibrary.Web
             {
                 return BadRequest(ex.Message);
             }
-            catch(InvalidOperationException ex){
+            catch (InvalidOperationException ex)
+            {
                 return BadRequest(ex.Message);
             }
         }
@@ -114,7 +112,6 @@ namespace ZLibrary.Web
             {
                 return NotFound($"Nenhuma reserva encontrada com o ID: {value.Id}.");
             }
-
             reservation.Reason.Description = value.Description;
             try
             {
