@@ -1,14 +1,17 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { BookComponent } from './book/book.component';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BookComponent} from './book/book.component';
 import {SharedModule} from '../../shared.module';
+import {NavbarComponent} from './navbar/navbar.component';
 
 @NgModule({
     declarations: [
-        BookComponent
+        BookComponent,
+        NavbarComponent
     ],
     exports: [
-        BookComponent
+        BookComponent,
+        NavbarComponent
     ],
     imports: [
         BrowserModule,
