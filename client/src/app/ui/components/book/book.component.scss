@@ -1,0 +1,13 @@
+.book {
+    display: block;
+    padding: 15px;
+    font-size: 1rem;
+
+    &__title {
+        font-size: 1.3em;
+    }
+
+    &__author {
+        font-size: 0.8em;
+    }
+}
