@@ -2,21 +2,20 @@ import {Observable} from 'rxjs/Observable';
 import {Book} from '../model/book';
 import 'rxjs/add/observable/of';
 import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../environments/environment';
+import {BookViewModelConverter} from './converter/book.view-model-converter';
+import 'rxjs/add/operator/map';
+
+const BOOKS_PATH = 'books';
 
 @Injectable()
 export class BookRepository {
-    private static generateDummyBooks() {
-        const books = [];
-        for (let i = 0; i < 5; i++) {
-            const book = new Book(i, `Book ${i}`);
-            book.author = `Author ${i}`;
-            books.push(book);
-        }
-        return books;
+    constructor(private httpClient: HttpClient) {
     }
 
     public findAll(): Observable<Book[]> {
-        const dummyBooks = BookRepository.generateDummyBooks();
-        return Observable.of(dummyBooks);
+        const url = `${environment.apiUrl}/${BOOKS_PATH}`;
+        return this.httpClient.get(url).map((data: any) => data.map(b => BookViewModelConverter.fromDTO(b)));
     }
 }
