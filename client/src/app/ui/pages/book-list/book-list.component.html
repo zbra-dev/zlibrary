@@ -1,2 +1,7 @@
 <zli-navbar></zli-navbar>
-<zli-book *ngFor="let book of books;" [book]="book"></zli-book>
+<zli-loading-overlay [isBusy]="isBusy">
+    <div class="container">
+        <h1>Books</h1>
+        <zli-book *ngFor="let book of books;" [book]="book"></zli-book>
+    </div>
+</zli-loading-overlay>
