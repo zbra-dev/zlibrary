@@ -1,0 +1,11 @@
+@import "variables";
+@import "~font-awesome/scss/font-awesome.scss";
+
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    background-color: $background-color;
+}

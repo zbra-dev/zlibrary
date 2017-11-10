@@ -2,6 +2,7 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {BookService} from '../../../service/book.service';
 import {Book} from '../../../model/book';
 import {LoaderMediator} from '../../mediators/loader.mediator';
+import {ToastMediator} from '../../mediators/toast.mediator';
 
 @Component({
     selector: 'zli-book-list',
@@ -13,7 +14,9 @@ export class BookListComponent implements OnInit {
     public books: Book[] = [];
     public isBusy = false;
 
-    constructor(private service: BookService, private loaderMediator: LoaderMediator) {
+    constructor(private service: BookService,
+                private loaderMediator: LoaderMediator,
+                private toastMediator: ToastMediator) {
         this.loaderMediator.onLoadChanged.subscribe(loading => this.isBusy = loading);
     }
 
@@ -23,9 +26,7 @@ export class BookListComponent implements OnInit {
                 books => {
                     this.books = books;
                 }, error => {
-                    console.error(error);
-                }, () => {
-                    console.log('Finished loading books!');
+                    this.toastMediator.show('Error loading books :(');
                 }
             )
         );

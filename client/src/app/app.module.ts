@@ -7,6 +7,7 @@ import {BookListComponent} from './ui/pages/book-list/book-list.component';
 import {PagesModule} from './ui/pages/pages.module';
 import {AuthGuard} from './ui/guards/auth.guard';
 import {LoginComponent} from './ui/pages/login/login.component';
+import {Toast} from './ui/components/toast/toast';
 
 const appRoutes: Routes = [
     {
@@ -41,7 +42,10 @@ const appRoutes: Routes = [
         BrowserModule,
         PagesModule
     ],
-    providers: [AuthGuard],
+    providers: [
+        AuthGuard,
+        Toast
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {

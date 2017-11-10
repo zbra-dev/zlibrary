@@ -4,17 +4,23 @@ import {BookComponent} from './book/book.component';
 import {SharedModule} from '../../shared.module';
 import {NavbarComponent} from './navbar/navbar.component';
 import {LoadingOverlayComponent} from './loading-overlay/loading-overlay.component';
+import {ToastComponent} from './toast/toast.component';
 
 @NgModule({
     declarations: [
         BookComponent,
         NavbarComponent,
-        LoadingOverlayComponent
+        LoadingOverlayComponent,
+        ToastComponent
     ],
     exports: [
         BookComponent,
         NavbarComponent,
-        LoadingOverlayComponent
+        LoadingOverlayComponent,
+        ToastComponent
+    ],
+    entryComponents: [
+        ToastComponent
     ],
     imports: [
         BrowserModule,
