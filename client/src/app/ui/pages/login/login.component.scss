@@ -1,0 +1,26 @@
+@import "~bootstrap/scss/mixins";
+
+.login {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    &__login-box {
+        height: 100%;
+        width: 100%;
+        max-width: 400px;
+        padding: 30px;
+        background-color: #ffffff;
+        display: flex;
+        flex-direction: column;
+    }
+
+    @media all and (min-width: 576px) {
+        &__login-box {
+            height: auto;
+            box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.1);
+        }
+    }
+}

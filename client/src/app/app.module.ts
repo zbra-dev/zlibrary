@@ -5,11 +5,18 @@ import {RouterModule, Routes} from '@angular/router';
 import {PageNotFoundComponent} from './ui/pages/page-not-found/page-not-found.component';
 import {BookListComponent} from './ui/pages/book-list/book-list.component';
 import {PagesModule} from './ui/pages/pages.module';
+import {AuthGuard} from './ui/guards/auth.guard';
+import {LoginComponent} from './ui/pages/login/login.component';
 
 const appRoutes: Routes = [
     {
         path: 'books',
-        component: BookListComponent
+        component: BookListComponent,
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'login',
+        component: LoginComponent
     },
     {
         path: '',
@@ -34,7 +41,7 @@ const appRoutes: Routes = [
         BrowserModule,
         PagesModule
     ],
-    providers: [],
+    providers: [AuthGuard],
     bootstrap: [AppComponent]
 })
 export class AppModule {

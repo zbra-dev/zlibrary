@@ -5,12 +5,7 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class BookRepository {
-    public findAll(): Observable<Book[]> {
-        const dummyBooks = this.generateDummyBooks();
-        return Observable.of(dummyBooks);
-    }
-
-    private generateDummyBooks() {
+    private static generateDummyBooks() {
         const books = [];
         for (let i = 0; i < 5; i++) {
             const book = new Book(i, `Book ${i}`);
@@ -18,5 +13,10 @@ export class BookRepository {
             books.push(book);
         }
         return books;
+    }
+
+    public findAll(): Observable<Book[]> {
+        const dummyBooks = BookRepository.generateDummyBooks();
+        return Observable.of(dummyBooks);
     }
 }
