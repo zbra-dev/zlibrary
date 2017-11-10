@@ -1,17 +1,15 @@
 import {NgModule} from '@angular/core';
 import {BookRepository} from './book.repository';
 import {AuthRepository} from './auth.repository';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {AuthInterceptor} from './interceptor/auth.interceptor';
+import {HttpClientModule} from '@angular/common/http';
+import {AuthInterceptorProvider} from './interceptor/auth.interceptor';
+import {ErrorInterceptorProvider} from './interceptor/error.interceptor';
 
 @NgModule({
     imports: [HttpClientModule],
     providers: [
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: AuthInterceptor,
-            multi: true,
-        },
+        AuthInterceptorProvider,
+        ErrorInterceptorProvider,
         BookRepository,
         AuthRepository
     ]
