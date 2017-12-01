@@ -12,7 +12,7 @@ namespace ZLibrary.Web.Extensions
             return new BookDTO()
             {
                 Id = book.Id,
-                AuthorIds = book.Authors.Select(a => a.AuthorId).ToArray(),
+                Authors = book.Authors.Select(a => a.Author.ToAuthorViewItems()).ToArray(),
                 Isbn = book.Isbn.Value,
                 PublisherId = book.Publisher.Id,
                 PublicationYear = book.PublicationYear,
@@ -25,6 +25,15 @@ namespace ZLibrary.Web.Extensions
         public static IEnumerable<BookDTO> ToBookViewItems(this IEnumerable<Book> books)
         {
             return books.Select(b => b.ToBookViewItem()).ToArray();
+        }
+
+        public static AuthorDTO ToAuthorViewItems(this Author auhtor)
+        {
+            return new AuthorDTO
+            {
+                Id = auhtor.Id,
+                Name = auhtor.Name
+            };
         }
     }
 }

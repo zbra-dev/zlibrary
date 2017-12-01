@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using ZLibrary.Model;
 using ZLibrary.Web.Controllers.Items;
 
@@ -57,7 +58,7 @@ namespace ZLibrary.Web.Validators
                 return validationResult;
             }
 
-            var authorIds = value.AuthorIds;
+            var authorIds = value.Authors.Select(d => d.Id).ToArray();
             var authorList = new List<BookAuthor>(authorIds.Length);
 
             foreach (var authorId in authorIds)

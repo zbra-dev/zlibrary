@@ -34,5 +34,9 @@
     <Content Include="Controllers\LoanController.cs" />
     <Content Include="Controllers\ReservationsController.cs" />
     <Content Include="Extensions\ReservationExtension.cs" />
+    <Content Include="Controllers\ImageController.cs" />
+    <Content Include="Extensions\BookExtensions.cs" />
+    <Content Include="Controllers\Items\AuthorDTO.cs" />
+    <Content Include="Controllers\IAutheticationApi.cs" />
   </ItemGroup>
 </Project>

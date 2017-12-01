@@ -14,8 +14,8 @@ namespace ZLibrary.Web.Controllers.Items
         [DataMember(Name = "publisherId")]
         public long PublisherId { get; set; }
         
-        [DataMember(Name = "authorIds")]
-        public long[] AuthorIds { get; set; }
+        [DataMember(Name = "authors")]
+        public AuthorDTO[] Authors { get; set; }
         
         [DataMember(Name = "isbn")]
         public string Isbn { get; set; }
