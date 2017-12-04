@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.Serialization;
 using ZLibrary.Model;
 
@@ -19,6 +20,9 @@ namespace ZLibrary.Web.Controllers.Items
         
         [DataMember(Name = "isbn")]
         public string Isbn { get; set; }
+
+        [DataMember(Name = "coverImageKey")]
+        public Guid CoverImageKey { get; set; }
         
         [DataMember(Name = "synopsis")]
         public string Synopsis { get; set; }

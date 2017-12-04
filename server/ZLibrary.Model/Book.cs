@@ -14,7 +14,7 @@ namespace ZLibrary.Model
         public string Synopsis { get; set; }
         public int PublicationYear { get; set; }
         public int NumberOfCopies { get; set; }
-        public CoverImage CoverImage { get; set; }
+        public Guid CoverImageKey { get; set; }
         public DateTime Created { get; set; }
 
         public Book()

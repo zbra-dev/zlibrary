@@ -50,6 +50,23 @@ namespace ZLibrary.Persistence
             return book;
         }
 
+        public async Task<Book> FindByCoverImageKey(Guid key)
+        {
+            var book = await context.Books
+                .Include(b => b.Publisher)
+                .Include(b => b.Isbn)
+                .SingleOrDefaultAsync(b => b.CoverImageKey == key);
+
+            if (book != null)
+            {
+                book.Authors = context.BookAuthors.Where(ba => ba.BookId == book.Id)
+                .Include(a => a.Author)
+                .ToList();
+            }
+
+            return book;
+        }
+
         public async Task Delete(long id)
         {
             var book = context.Books.SingleOrDefault(i => i.Id == id);

@@ -36,7 +36,7 @@ namespace ZLibrary.Web
                 /**** ONLY FOR TESTS PURPOSES   ****/
                 /***********************************/
 
-                /*
+                
                 var andrewTroelsen = context.Authors.Single(a => a.Name == "Andrew Troelsen");
                 var jackPhillips = context.Authors.Single(a => a.Name == "Jack Phillips");
                 var simonSarris = context.Authors.Single(a => a.Name == "Simon Sarris");
@@ -49,7 +49,8 @@ namespace ZLibrary.Web
                     Publisher = publishers.Where<Publisher>(p => p.Name == "Editora Futura").SingleOrDefault(),
                     Synopsis = "HTML5 Unleashed is the authoritative guide that covers the key web components driving the future of the Web",
                     Title = "HTML 5 - Unleashed",
-                    NumberOfCopies = 3
+                    NumberOfCopies = 3,
+                    CoverImageKey = Guid.Parse("80ae1455-8f43-4a40-aa41-39e486fd61d1")
                 };
                 context.Books.Add(book);
                 context.SaveChanges();
@@ -205,7 +206,6 @@ namespace ZLibrary.Web
                 var loan1 = new Loan(reservation1);
                 context.Loans.Add(loan1);
                 context.SaveChanges();
-                 */
             }
         }
     }

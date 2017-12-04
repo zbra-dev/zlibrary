@@ -9,6 +9,7 @@
     <Content Include="UserService.cs" />
     <Content Include="LoanService.cs" />
     <Content Include="ReservationService.cs" />
+    <Content Include="ImageService.cs" />
   </ItemGroup>
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>

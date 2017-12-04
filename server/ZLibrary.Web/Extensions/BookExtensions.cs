@@ -18,7 +18,8 @@ namespace ZLibrary.Web.Extensions
                 PublicationYear = book.PublicationYear,
                 Title = book.Title,
                 Synopsis = book.Synopsis,
-                NumberOfCopies = book.NumberOfCopies
+                NumberOfCopies = book.NumberOfCopies,
+                CoverImageKey = book.CoverImageKey
             };
         }
 

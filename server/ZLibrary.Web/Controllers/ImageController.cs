@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ZLibrary.API;
+using ZLibrary.Web.Validators;
 
 namespace ZLibrary.Web.Controllers
 {
@@ -13,14 +14,16 @@ namespace ZLibrary.Web.Controllers
     public class ImageController : Controller
     {
         private readonly IImageService imageService;
+        private readonly IBookService bookService;
 
-        public ImageController(IImageService imageService)
+        public ImageController(IImageService imageService, IBookService bookService)
         {
             this.imageService = imageService;
+            this.bookService = bookService;
         }
 
-        [HttpPost("Upload")]
-        public async Task<IActionResult> Upload(IFormFile file) 
+        [HttpPost("Upload/")]
+        public async Task<IActionResult> Upload(Guid key, IFormFile file)
         {
             var filePath = Path.GetTempFileName();
 
@@ -31,12 +34,35 @@ namespace ZLibrary.Web.Controllers
                     using (var binaryReader = new BinaryReader(stream))
                     {
                         var fileContent = binaryReader.ReadBytes((int)file.Length);
-                        await imageService.SaveImage(fileContent, file.ContentType);
+
+                        var imageValidator = new ImageValidator();
+                        var validationResult = imageValidator.Validate(file);
+
+                        if (validationResult.HasError)
+                        {
+                            return BadRequest(validationResult.ErrorMessage);
+                        }
+                        await imageService.SaveImage(key, fileContent);
                     }
                 }
             }
 
-            return Ok();
+            return Ok(key);
+        }
+
+        [HttpGet("LoadImage/{key}")]
+        public async Task<IActionResult> LoadImage(Guid key)
+        {
+
+            var book = await bookService.FindByCoverImageKey(key);
+
+            if (book == null)
+            {
+                return BadRequest("Não foi encontrado nenhum livro com está imagem.");
+            }
+
+            var imageArray = await imageService.LoadImage(key);
+            return Ok(imageArray);
         }
     }
 }

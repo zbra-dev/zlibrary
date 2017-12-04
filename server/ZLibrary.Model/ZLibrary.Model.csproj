@@ -13,7 +13,6 @@
     <Content Include="Date.cs" />
     <Content Include="Isbn.cs" />
     <Content Include="Publisher.cs" />
-    <Content Include="CoverImage.cs" />
     <Content Include="Loan.cs" />
     <Content Include="LoanStatus.cs" />
     <Content Include="ReservationStatus.cs" />

@@ -19,6 +19,7 @@
     <Content Include="ReservationRepository.cs" />
     <Content Include="IReservationRepository.cs" />
     <Content Include="ImageRepository.cs" />
+    <Content Include="IImageRepository.cs" />
   </ItemGroup>
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>

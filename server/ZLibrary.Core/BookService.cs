@@ -11,11 +11,13 @@ namespace ZLibrary.Core
     public class BookService : IBookService
     {
         private readonly IBookRepository bookRepository;
+        private readonly IImageService imageService;
         private readonly IReservationService reservationService;
 
-        public BookService(IBookRepository bookRepository, IReservationService reservationService)
+        public BookService(IBookRepository bookRepository, IImageService imageService, IReservationService reservationService)
         {
             this.bookRepository = bookRepository;
+            this.imageService = imageService;
             this.reservationService = reservationService;
         }
 
@@ -33,6 +35,12 @@ namespace ZLibrary.Core
 
             return await bookRepository.FindById(id);
         }
+
+        public async Task<Book> FindByCoverImageKey(Guid key)
+        {
+            return await bookRepository.FindByCoverImageKey(key);
+        }
+
         public async Task Delete(long id)
         {
             if (id <= 0)
@@ -44,8 +52,13 @@ namespace ZLibrary.Core
             {
                 throw new BookDeleteException("O Livro não pode ser deletado pois possui copias emprestadas.");
             }
+            var book = await FindById(id);
+            if (book != null)
+            {
+                imageService.DeleteFile(book.CoverImageKey);
+                await bookRepository.Delete(id);
+            }
 
-            await bookRepository.Delete(id);
         }
 
         public async Task Save(Book book)

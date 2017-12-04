@@ -38,5 +38,6 @@
     <Content Include="Extensions\BookExtensions.cs" />
     <Content Include="Controllers\Items\AuthorDTO.cs" />
     <Content Include="Controllers\IAutheticationApi.cs" />
+    <Content Include="Validators\ImageValidator.cs" />
   </ItemGroup>
 </Project>

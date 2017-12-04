@@ -15,9 +15,19 @@ namespace ZLibrary.Core
             this.imageRepository = imageRepository;
         }
 
-        public async Task<Guid> SaveImage(byte[] fileData, string contentType)
+        public async Task<Guid> SaveImage(Guid key, byte[] fileData)
         {
-            return await imageRepository.SaveFile(fileData);
+            return await imageRepository.SaveFile(key, fileData);
         }
+
+        public async Task<byte[]> LoadImage(Guid key)
+        {
+            return await imageRepository.GetFile(key);
+        }
+
+        public void DeleteFile(Guid key){
+            imageRepository.DeleteFile(key);
+        }
+
     }
 }
