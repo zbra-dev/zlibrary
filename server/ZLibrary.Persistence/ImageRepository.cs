@@ -27,7 +27,10 @@ namespace ZLibrary.Persistence
 
             using (var stream = new MemoryStream())
             {
-                await File.OpenRead(imageFilePath).CopyToAsync(stream);
+                if (File.Exists(imageFilePath))
+                {
+                    await File.OpenRead(imageFilePath).CopyToAsync(stream);
+                }
                 imageData = stream.ToArray();
             }
 

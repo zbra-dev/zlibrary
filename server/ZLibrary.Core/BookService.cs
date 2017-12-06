@@ -58,7 +58,6 @@ namespace ZLibrary.Core
                 imageService.DeleteFile(book.CoverImageKey);
                 await bookRepository.Delete(id);
             }
-
         }
 
         public async Task Save(Book book)

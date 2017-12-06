@@ -75,7 +75,8 @@ namespace ZLibrary.Web
                     Publisher = publishers.FirstOrDefault(),
                     Synopsis = "Java 2 for professional development and best practices.",
                     Title = "Effective Java",
-                    NumberOfCopies = 2
+                    NumberOfCopies = 2,
+                    CoverImageKey = Guid.Parse("5b0cf369-a0b2-4643-ac84-36058e729a21")
                 };
                 context.Books.Add(book2);
                 context.SaveChanges();
