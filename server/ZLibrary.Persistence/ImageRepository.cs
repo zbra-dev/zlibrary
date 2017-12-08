@@ -13,6 +13,7 @@ namespace ZLibrary.Persistence
             using (var stream = new MemoryStream(imageData))
             {
                 var dest = File.OpenWrite(imageFilePath);
+                await dest.FlushAsync();
                 await stream.CopyToAsync(dest);
                 dest.Dispose();
             }

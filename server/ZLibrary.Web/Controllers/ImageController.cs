@@ -22,7 +22,7 @@ namespace ZLibrary.Web.Controllers
             this.bookService = bookService;
         }
 
-        [HttpPost("Upload/")]
+        [HttpPost("upload/{key}")]
         public async Task<IActionResult> Upload(Guid key, IFormFile file)
         {
             var filePath = Path.GetTempFileName();
@@ -50,7 +50,7 @@ namespace ZLibrary.Web.Controllers
             return Ok(key);
         }
 
-        [HttpGet("LoadImage/{key}")]
+        [HttpGet("loadImage/{key}")]
         public async Task<IActionResult> LoadImage(Guid key)
         {
 
@@ -66,7 +66,6 @@ namespace ZLibrary.Web.Controllers
             {
                 return BadRequest($"Nenhum arquivo encontrado com a chave: {key}");
             }
-
             return Ok(imageArray);
         }
     }

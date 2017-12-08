@@ -90,13 +90,13 @@ namespace ZLibrary.Web
             book.Publisher = validationResult.GetResult<Publisher>();
             book.Authors = validationResult.GetResult<List<BookAuthor>>();
             book.NumberOfCopies = value.NumberOfCopies;
+            book.CoverImageKey = value.CoverImageKey;
 
             foreach (var bookAuthor in book.Authors)
             {
                 bookAuthor.Book = book;
                 bookAuthor.BookId = book.Id;
             }
-            //TODO: CoverImage
 
             try
             {
