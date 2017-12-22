@@ -71,10 +71,7 @@ namespace ZLibrary.Core
             var loans = await loanService.FindByBookId(reservation.BookId);
             if (book.CanApproveLoan(loans))
             {
-                reservation.Reason.Status = ReservationStatus.Approved;
-                await reservationRepository.Update(reservation);
-                var loan = new Loan(reservation);
-                await loanService.Create(loan);
+                await CreateLoan(reservation);
             }
             else
             {
@@ -96,6 +93,25 @@ namespace ZLibrary.Core
         public async Task<Reservation> Order(Book book, User user)
         {
             return await reservationRepository.Save(new Reservation(book.Id, user));
+        }
+
+        public async Task OrderNext(long bookId)
+        {
+            var reservations = await reservationRepository.FindByBookId(bookId);
+            var firstReservationWainting = reservations.OrderBy(r => r.StartDate).FirstOrDefault(r => r.Reason.Status == ReservationStatus.Waiting);
+
+            if (firstReservationWainting != null)
+            {
+                await CreateLoan(firstReservationWainting);
+            }
+        }
+
+        private async Task CreateLoan(Reservation reservation)
+        {
+            reservation.Reason.Status = ReservationStatus.Approved;
+            await reservationRepository.Update(reservation);
+            var loan = new Loan(reservation);
+            await loanService.Create(loan);
         }
     }
 }

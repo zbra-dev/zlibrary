@@ -11,7 +11,7 @@ namespace ZLibrary.API
         Task<IList<Loan>> FindByBookId(long bookId);
         Task<Loan> FindById(long id);
         Task ExpireLoan(long id);
-        Task ReturnLoan(long id);
+        Task<Loan> ReturnLoan(long id);
         Task Create(Loan loan);
     }
 }

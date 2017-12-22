@@ -13,5 +13,6 @@ namespace ZLibrary.API
         Task<Reservation> Order(Book book, User user);
         Task ApprovedReservation(Reservation reservation, Book book);
         Task RejectedReservation(Reservation reservation);
+        Task OrderNext(long bookId);
     }
 }

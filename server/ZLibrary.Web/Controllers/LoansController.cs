@@ -15,10 +15,12 @@ namespace ZLibrary.Web.Controllers
     public class LoansController : Controller
     {
         private readonly ILoanService loanService;
+        private readonly IReservationService reservationService;
 
-        public LoansController(ILoanService loanService)
+        public LoansController(ILoanService loanService, IReservationService reservationService)
         {
             this.loanService = loanService;
+            this.reservationService = reservationService;
         }
 
         [HttpGet]
@@ -69,7 +71,9 @@ namespace ZLibrary.Web.Controllers
         {
             try
             {
-                await loanService.ReturnLoan(id);
+                var loan = await loanService.ReturnLoan(id);
+                await reservationService.OrderNext(loan.Reservation.BookId);
+                
                 return Ok();
             }
             catch (LoanNotFoundException)

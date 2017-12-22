@@ -58,7 +58,7 @@ namespace ZLibrary.Core
         {
             return await loanRepository.FindByUserId(bookId);
         }
-        public async Task ReturnLoan(long id)
+        public async Task<Loan> ReturnLoan(long id)
         {
             var loan = await FindById(id);
 
@@ -68,7 +68,7 @@ namespace ZLibrary.Core
             }
 
             loan.Status = LoanStatus.Returned;
-            await loanRepository.Update(loan);
+            return await loanRepository.Update(loan);
         }
     }
 }
