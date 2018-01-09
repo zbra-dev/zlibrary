@@ -121,5 +121,17 @@ namespace ZLibrary.Web
             var books = await bookService.FindBy(bookSearchParameter);
             return Ok(books.ToBookViewItems());
         }
+
+        [HttpGet("isBookAvailable/{bookId:long}", Name = "IsBookAvailable")]
+        public async Task<IActionResult> IsBookAvailable(long bookId)
+        {
+            var book = await bookService.FindById(bookId);
+            if (book == null)
+            {
+                return NotFound($"Nenhuma livro encontrada com o ID: {bookId}.");
+            }
+            var isAvailable = await bookService.IsBookAvailable(book);
+            return Ok(isAvailable);
+        }
     }
 }

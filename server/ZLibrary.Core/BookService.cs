@@ -41,6 +41,18 @@ namespace ZLibrary.Core
             return await bookRepository.FindByCoverImageKey(key);
         }
 
+        public async Task<bool> IsBookAvailable(Book book)
+        {
+            var reservations = await reservationService.FindBookReservations(book.Id);
+
+            if (reservations == null)
+            {
+                return true;
+            }
+
+            return reservations.Count() < book.NumberOfCopies;
+        }
+
         public async Task Delete(long id)
         {
             if (id <= 0)
