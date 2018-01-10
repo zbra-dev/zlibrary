@@ -107,7 +107,8 @@ namespace ZLibrary.Persistence
 
             foreach (var book in books)
             {
-                book.Authors = context.BookAuthors.Where(ba => ba.BookId == book.Id).ToList();
+                book.Authors = context.BookAuthors.Where(ba => ba.BookId == book.Id).Include(a => a.Author)
+                                                                                    .ToList();
             }
 
             return books;
@@ -123,7 +124,8 @@ namespace ZLibrary.Persistence
 
             foreach (var book in books)
             {
-                book.Authors = context.BookAuthors.Where(ba => ba.BookId == book.Id).ToList();
+                book.Authors = context.BookAuthors.Where(ba => ba.BookId == book.Id).Include(a => a.Author)
+                                                                                    .ToList();
             }
 
             return books;
@@ -139,7 +141,7 @@ namespace ZLibrary.Persistence
 
             foreach (var book in books)
             {
-                book.Authors = context.BookAuthors.Where(ba => ba.BookId == book.Id).ToList();
+                book.Authors = context.BookAuthors.Where(ba => ba.BookId == book.Id).Include(a => a.Author).ToList();
             }
 
             return books;
@@ -155,7 +157,7 @@ namespace ZLibrary.Persistence
 
             foreach (var book in books)
             {
-                book.Authors = context.BookAuthors.Where(ba => ba.BookId == book.Id).ToList();
+                book.Authors = context.BookAuthors.Where(ba => ba.BookId == book.Id).Include(a => a.Author).ToList();
             }
 
             return books;
