@@ -1,4 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {AuthService} from "../../../service/auth.service";
+import {User} from "../../../model/user";
 
 @Component({
     selector: 'zli-navbar',
@@ -7,9 +9,19 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
     encapsulation: ViewEncapsulation.None
 })
 export class NavbarComponent implements OnInit {
-    constructor() {
+
+    public user: User;
+
+    constructor(private service: AuthService) {
+    }
+    ngOnInit() {
+        this.user = this.service.getLoggedUser();
+    }
+    public showMenu(texto) {
+
     }
 
-    ngOnInit() {
+    public onLogout() {
+        this.service.logout();
     }
 }

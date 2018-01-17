@@ -1,0 +1,72 @@
+.background-banner {
+    height: 581px;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    object-fit: contain;
+}
+
+.ALUGUE-SEUS {
+    @font-face {
+        font-family: "Roboto-bold";
+        src: url("../../../../assets/font/Roboto/Roboto-Bold.ttf");
+    }
+    font-size: 64px;
+    font-weight: bold;
+    letter-spacing: 19.2px;
+    text-align: left;
+    color: #ffffff;
+    white-space: nowrap;
+}
+
+.LIVROS-FAVORITOS {
+    @font-face {
+        font-family: "Roboto-Light";
+        src: url("../../../../assets/font/Roboto/Roboto-Light.ttf");
+    }
+    font-size: 55px;
+    font-weight: 300;
+    letter-spacing: 16.5px;
+    text-align: left;
+    color: #ffffff;
+    white-space: nowrap;
+}
+
+.ic-historico {
+    width: 23px;
+    height: 22px;
+    object-fit: contain;
+    background-color: transparent;
+}
+.UserName {
+    width: 101px;
+    height: 16px;
+    font-family: SFUIDisplay;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: left;
+    color: #ffffff;
+    white-space: nowrap;
+}
+.ic-options {
+    width: 13px;
+    height: 10px;
+    object-fit: contain;
+    transform: rotate(-2deg);
+    background-color: transparent;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+
+.Combined-Shape {
+    width: 123.9px;
+    height: 38px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 0 0 3px 0 rgba(224, 221, 221, 0.5);
+    border: solid 1px #dedcdc;
+}
