@@ -6,6 +6,7 @@ import { SharedModule } from '../../shared.module';
 import { NavbarComponent } from './navbar/navbar.component';
 import { LoadingOverlayComponent } from './loading-overlay/loading-overlay.component';
 import { ToastComponent } from './toast/toast.component';
+import { ReservationHistoryComponent } from './reservation-history/reservation-history.component';
 
 @NgModule({
     declarations: [
@@ -13,17 +14,20 @@ import { ToastComponent } from './toast/toast.component';
         BookPopupComponent,
         NavbarComponent,
         LoadingOverlayComponent,
-        ToastComponent
+        ToastComponent,
+        ReservationHistoryComponent
     ],
     exports: [
         BookComponent,
         BookPopupComponent,
         NavbarComponent,
         LoadingOverlayComponent,
-        ToastComponent
+        ToastComponent,
+        ReservationHistoryComponent
     ],
     entryComponents: [
-        ToastComponent
+        ToastComponent,
+        ReservationHistoryComponent
     ],
     imports: [
         BrowserModule,

@@ -1,0 +1,22 @@
+.modal {
+    display: block;
+    padding: 15px;
+    font-size: 1rem;
+
+    &__title {
+        font-size: xx-large;
+    }
+
+    &__author {
+        font-size: 0.8em;
+    }
+}
+
+h4{ color: #34495e}
+h3{ color: #726e6e}
+
+.LIVROS-ALUGADOS{
+    width: 478px;
+    height: 42px;
+    @apply --Text-Stye-7;
+}

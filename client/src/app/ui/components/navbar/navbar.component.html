@@ -8,7 +8,7 @@
         LIVROS FAVORITOS</div>
 
     <div style="cursor:pointer" (click)="showMenu('texto_de_exemplo_de_parametro')" >
-        <img src="../../../../assets/images/ic-historico.svg" class="ic-historico" style="cursor:pointer;position: absolute; right: 155px; top: 28px; width: 23px; height: 22px">
+        <img src="../../../../assets/images/ic-historico.svg" class="ic-historico" (click)="viewReservationHistory()" style="cursor:pointer;position: absolute; right: 155px; top: 28px; width: 23px; height: 22px">
 
         <div class="UserName" (click)="onLogout()" style="cursor:pointer;position: absolute; width: 101px; height: 16px; top: 30px; right: 35px; font-family: 'Roboto', sans-serif;font-weight: bold; font-size: 14px; text-align: left; color: white">
             {{user.name}}
