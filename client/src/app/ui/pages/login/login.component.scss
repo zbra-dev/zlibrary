@@ -1,24 +1,103 @@
 .login {
+   display: flex;
     height: 100%;
-    display: flex;
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.column-left {
+    flex: 2;
+    background: url("../../../../assets/images/background.png") no-repeat left fixed;
+}
+
+.column-right {
+    flex: 1;
+    background-color: #ffffff;
+    display: inline;
+}
+
+.box {
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    margin-left: 365px;
+}
 
-    &__login-box {
-        height: 100%;
-        width: 100%;
-        max-width: 400px;
-        padding: 30px;
-        background-color: #ffffff;
-        display: flex;
-        flex-direction: column;
+.welcome {
+    @font-face {
+        font-family: "Roboto-bold";
+        src: url("../../../../assets/font/Roboto/Roboto-Bold.ttf");
     }
+    font-size: 64px;
+    font-weight: bold;
+    letter-spacing: 19.2px;
+    text-align: center;
+    color: #ffffff;
+    white-space: nowrap;
+}
 
-    @media all and (min-width: 576px) {
-        &__login-box {
-            height: auto;
-            box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.1);
-        }
+.zlibrary {
+    @font-face {
+        font-family: "Roboto-Light";
+        src: url("../../../../assets/font/Roboto/Roboto-Light.ttf");
     }
+    font-size: 55px;
+    font-weight: 300;
+    letter-spacing: 16.5px;
+    text-align: left;
+    color: #ffffff;
+    white-space: nowrap;
+}
+
+.text-style {
+    @font-face {
+        font-family: "Roboto-Medium";
+        src: url("../../../../assets/font/Roboto/Roboto-Medium.ttf");
+    }
+    font-weight: 500;
+}
+
+.logo {
+    padding-left: 240px;
+    padding-top: 240px;
+}
+
+.link-slack{
+    text-decoration: none;
+}
+
+
+.button-slack{
+    width: 370px;
+    height: 92px;
+    border-radius: 13px;
+    background-color: #ffffff;
+    box-shadow: 0 0 7px 0 rgba(216, 216, 216, 0.5);
+    border: solid 1px #e5e5e5;
+    outline: none;
+    margin-top: 190px;
+    margin-left: 130px;
+    padding-top: 20px;
+}
+
+.enter-slack {
+    @font-face {
+        font-family: "Roboto-Medium";
+        src: url("../../../../assets/font/Roboto/Roboto-Medium.ttf");
+    }
+    font-size: 28px;
+    font-weight: 500;
+    text-align: left;
+    color: #443642;
+    left: 1337px;
+    top: 614px;
+    white-space: nowrap;
+    margin-left: 20px;
+}
+
+.slack-logo {
+    top: 608px;
+    left: 1243px;
+    float: left;
+    margin-left: 40px;
 }

@@ -8,10 +8,6 @@ export class AuthService {
     constructor(private repository: AuthRepository) {
     }
 
-    public login(username: string, password: string): Observable<User> {
-        return this.repository.login(username, password);
-    }
-
     public getLoggedUser(): User {
         return this.repository.getLoggedUser();
     }

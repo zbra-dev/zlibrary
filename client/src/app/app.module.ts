@@ -8,6 +8,7 @@ import {PagesModule} from './ui/pages/pages.module';
 import {AuthGuard} from './ui/guards/auth.guard';
 import {LoginComponent} from './ui/pages/login/login.component';
 import {Toast} from './ui/components/toast/toast';
+import { CookieService } from 'ngx-cookie-service';
 
 const appRoutes: Routes = [
     {
@@ -44,7 +45,8 @@ const appRoutes: Routes = [
     ],
     providers: [
         AuthGuard,
-        Toast
+        Toast,
+        CookieService
     ],
     bootstrap: [AppComponent]
 })
