@@ -1,17 +1,23 @@
 <zli-navbar></zli-navbar>
 <zli-loading-overlay [isBusy]="isBusy">
-
+<div id="background" (click)="toggleSidebar()"></div>
     <div class="book-window">
         <input [(ngModel)]="keyword" class="search-bar"  type="text" placeholder="Procurar" />
         <button (click)="search()" style="cursor:pointer" class="search-button">
-            <img src="../../../../assets/imagens/ic-search.png" />
+            <img src="../../../../assets/images/ic-search.png" />
         </button>
          <!-- change search() to addBook() -->
         <button *ngIf="isAdmin == true" (click)="search()" style="cursor:pointer" class="add-button">
-             <img src="../../../../assets/imagens/ic-add-book.png" />
+             <img src="../../../../assets/images/ic-add-book.png" />
         </button>
         <div class="book-container">
-            <zli-book style="width:25%;float: left;margin:auto" *ngFor="let book of books;" [book]="book"></zli-book>
+            <zli-book style="width:25%;float: left;margin:auto" *ngFor="let book of books;" [class.selected]="book === selectedBook" [book]="book" (click)="onSelect(book)"></zli-book>
+<div id="sidebar">
+            <div>
+                <div id="close" (click)="toggleSidebar()"></div>
+                <zli-book-popup [book]="selectedBook"></zli-book-popup>
+            </div>
+        </div>
         </div>
     </div>
 </zli-loading-overlay>

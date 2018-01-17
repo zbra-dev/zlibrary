@@ -5,6 +5,7 @@ import {AuthRepository} from './auth.repository';
 import {HttpClientModule} from '@angular/common/http';
 import {AuthInterceptorProvider} from './interceptor/auth.interceptor';
 import {ErrorInterceptorProvider} from './interceptor/error.interceptor';
+import { ReservationRepository } from './reservation.repository';
 
 @NgModule({
     imports: [HttpClientModule],
@@ -13,6 +14,7 @@ import {ErrorInterceptorProvider} from './interceptor/error.interceptor';
         ErrorInterceptorProvider,
         BookRepository,
         CoverImageRepository,
+        ReservationRepository,
         AuthRepository
     ]
 })

@@ -61,6 +61,7 @@ export class BookComponent implements OnInit {
           );
         }
       }
+
       public delete()
       {
         if (this.book != null) {

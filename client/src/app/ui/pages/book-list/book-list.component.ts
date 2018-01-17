@@ -13,6 +13,7 @@ import {ToastMediator} from '../../mediators/toast.mediator';
 })
 export class BookListComponent implements OnInit {
     public books: Book[] = [];
+    public selectedBook: Book;
     public isBusy = false;
     public isAdmin = true;
 
@@ -49,6 +50,7 @@ export class BookListComponent implements OnInit {
             )
         );
     }
+    
     public searchBy(keyword, orderBy)
     {
         this.loaderMediator.execute(
@@ -61,7 +63,18 @@ export class BookListComponent implements OnInit {
                 }
             )
         );
-
     }
 
+    public toggleSidebar(): void{
+        document.getElementById("background").classList.toggle("active");
+        if(document.getElementById("sidebar").classList.toggle("active") == false){
+            this.isBusy = false;
+            this.selectedBook = null;
+        }
+    }
+
+    public onSelect(book: Book): void {
+        this.selectedBook = book;
+        this.toggleSidebar();
+      }
 }

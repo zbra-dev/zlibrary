@@ -1,0 +1,58 @@
+<div *ngIf="book">
+  <div class="book_grid">
+    <h1 class="about_book">Sobre o Livro</h1>
+    <div *ngIf="image == null" class="placeholder_photo">
+    </div>
+    <img class="book_image" *ngIf="image" [src]="'data:image/jpg;base64,' + image ">
+    <h2 class="book_title">{{ book.title }}</h2>
+    <div>
+      <p class="book_synopsis_title">Sinopse:</p>
+      <p class="book_synopsis">{{book.synopsis}}</p>
+    </div>
+    <div>
+      <span class="book_authors_title">Autor(es): </span>
+      <span class="book_authors" *ngFor="let author of book.authors; last as isLast">{{author.name}}{{isLast ? '' : ', '}}</span>
+      <br>
+    </div>
+    <div>
+      <p>
+        <span class="book_year_title">Publicado em: </span>
+        <span class="book_year">{{book.publicationYear}}</span>
+      </p>
+    </div>
+  </div>
+  <div *ngIf="!IsOrder">
+    <div class="availability_box">
+      <p *ngIf="isAvailable" class="available_text">Disponível</p>
+      <p *ngIf="!isAvailable" class="unavailable_text">Insdisponível</p>
+    </div>
+    <div *ngIf="isAvailable" class="reservation_box_available" (click)="order()">
+      <p class="available_button_text_available">Alugar</p>
+    </div>
+    <div *ngIf="!isAvailable" class="reservation_box_unavailable" (click)="order()">
+      <p class="available_button_text_unavailable">+ add na lista de espera</p>
+    </div>
+  </div>
+  <div *ngIf="IsOrder">
+    <div class="sucess_order_box">
+      <p class="sucess_order_text">Sucesso! Aguarde pela aprovação</p>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="book == null">
+  <h1 class="about_book">Adicionar Livro</h1>
+  <div *ngIf="book == null" class="placeholder_photo"></div>
+  <div>
+    <p class="book_synopsis_title">Sinopse:</p>
+  </div>
+  <div>
+    <span class="book_authors_title">Autor(es): </span>
+    <br>
+  </div>
+  <div>
+    <p>
+      <span class="book_year_title">Publicado em: </span>
+    </p>
+  </div>
+</div>

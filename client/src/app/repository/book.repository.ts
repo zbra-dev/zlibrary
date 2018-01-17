@@ -8,7 +8,6 @@ import {BookViewModelConverter} from './converter/book.view-model-converter';
 import 'rxjs/add/operator/map';
 
 const BOOKS_PATH = 'books';
-const IMAGE_PATH = 'image/LoadImage';
 
 @Injectable()
 export class BookRepository {
@@ -16,13 +15,7 @@ export class BookRepository {
     }
     url = `${environment.apiUrl}/${BOOKS_PATH}`;
     public findAll(): Observable<Book[]> {
-        
-        const imageUrl = `${environment.apiUrl}/${IMAGE_PATH}/`;
-        return this.httpClient.get(this.url).map((data: any) => data.map(b => {
-            var book =  BookViewModelConverter.fromDTO(b);
-        
-            return book;
-        }));
+		return this.httpClient.get(this.url).map((data: any) => data.map(b => BookViewModelConverter.fromDTO(b)));
     }
 
     public search(keyword, orderby)
@@ -38,7 +31,7 @@ export class BookRepository {
 
     public IsBookAvailable(book : Book): Observable<boolean>{
         const isBookAvailableURL = this.url+`/isBookAvailable/${book.id}`;
-        return this.httpClient.get(isBookAvailableURL).map((res: boolean) => res);
+        return this.httpClient.get(isBookAvailableURL).map((res: boolean) => res != true ? false : res);
     }
 
     public delete(book : Book){
