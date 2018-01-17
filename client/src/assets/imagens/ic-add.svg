@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="57px" height="57px" viewBox="0 0 57 57" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>FE6A5705-A4BF-463B-84B0-7060937D34C6</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <circle id="path-1" cx="24.5" cy="24.5" r="24.5"></circle>
+        <filter x="-12.2%" y="-12.2%" width="124.5%" height="124.5%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.715295493   0 0 0 0 0.715295493   0 0 0 0 0.715295493  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="2.-Home-Administrador" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-1225.000000, -524.000000)">
+        <g id="Group-3" transform="translate(130.000000, 482.000000)">
+            <g id="ic-add" transform="translate(1099.000000, 46.000000)">
+                <g id="Oval-3">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                    <use fill="#34495E" fill-rule="evenodd" xlink:href="#path-1"></use>
+                </g>
+                <polygon id="+" fill="#FFFFFF" points="25.8515625 26.0507812 30.6328125 26.0507812 30.6328125 23.0625 25.8515625 23.0625 25.8515625 18 22.78125 18 22.78125 23.0625 18 23.0625 18 26.0507812 22.78125 26.0507812 22.78125 31.171875 25.8515625 31.171875"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

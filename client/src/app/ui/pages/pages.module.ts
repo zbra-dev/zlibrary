@@ -6,13 +6,15 @@ import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {ComponentsModule} from '../components/components.module';
 import {LoginComponent} from './login/login.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import { FormsModule  } from '@angular/forms';
 
 @NgModule({
     imports: [
         CommonModule,
         ReactiveFormsModule,
         SharedModule,
-        ComponentsModule
+        ComponentsModule,
+        FormsModule
     ],
     declarations: [
         BookListComponent,

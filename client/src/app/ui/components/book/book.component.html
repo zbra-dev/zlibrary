@@ -1,4 +1,24 @@
 <div class="book">
+    <div *ngIf="!isAvailable">
+        <div class="book-box-not-available">
+            <div class="book-unavailable">
+                <div class="unavailable-text">INDISPONÍVEL</div>
+            </div>
+            <div *ngIf="!isAdmin"class="book-waiting-list">
+                <div class="waiting-list-text">ENTRAR NA FILA DE ESPERA</div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="isAdmin"class="admin-modify">
+        <div class="admin-edit-text">Editar</div>
+        <div class="admin-delete-text" (click)="delete()">Deletar</div>
+    </div>
+    <img class="book-cover" [src]="'data:image/jpg;base64,' + image">
     <div class="book__title">{{book.title}}</div>
-    <div class="book__author">{{book.synopsis}}</div>
+    <div class="book__authors">
+        <p class="book__author" *ngFor="let author of book.authors; last as isLast">{{author.name}}{{isLast ? '' : ', '}}</p>
+    </div>
+    <button *ngIf="!isAdmin" style="cursor:pointer" class="ic-add">
+        <img src="../../../../assets/imagens/ic-add.png" />
+    </button>
 </div>

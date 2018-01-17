@@ -6,12 +6,14 @@ import {NavbarComponent} from './navbar/navbar.component';
 import {LoadingOverlayComponent} from './loading-overlay/loading-overlay.component';
 import {ToastComponent} from './toast/toast.component';
 
+
 @NgModule({
     declarations: [
         BookComponent,
         NavbarComponent,
         LoadingOverlayComponent,
         ToastComponent
+        
     ],
     exports: [
         BookComponent,

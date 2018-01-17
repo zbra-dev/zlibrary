@@ -1,7 +1,17 @@
 <zli-navbar></zli-navbar>
 <zli-loading-overlay [isBusy]="isBusy">
-    <div class="container">
-        <h1>Books</h1>
-        <zli-book *ngFor="let book of books;" [book]="book"></zli-book>
+
+    <div class="book-window">
+        <input [(ngModel)]="keyword" class="search-bar"  type="text" placeholder="Procurar" />
+        <button (click)="search()" style="cursor:pointer" class="search-button">
+            <img src="../../../../assets/imagens/ic-search.png" />
+        </button>
+         <!-- change search() to addBook() -->
+        <button *ngIf="isAdmin == true" (click)="search()" style="cursor:pointer" class="add-button">
+             <img src="../../../../assets/imagens/ic-add-book.png" />
+        </button>
+        <div class="book-container">
+            <zli-book style="width:25%;float: left;margin:auto" *ngFor="let book of books;" [book]="book"></zli-book>
+        </div>
     </div>
 </zli-loading-overlay>

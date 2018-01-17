@@ -107,7 +107,8 @@ namespace ZLibrary.Web
                     Publisher = publishers.Where<Publisher>(p => p.Name == "Addison - Wesley").SingleOrDefault(),
                     Synopsis = "The practice of enterprise application development has benefited from the emergence of many new enabling technologies.",
                     Title = "Enterprise Application Architecture",
-                    NumberOfCopies = 1
+                    NumberOfCopies = 1,
+                    CoverImageKey = Guid.Parse("5b0cf369-a0b2-4643-ac84-36058e729a22")
                 };
 
                 context.Books.Add(book3);
@@ -204,8 +205,26 @@ namespace ZLibrary.Web
                 context.Reservations.Add(reservation1);
                 context.SaveChanges();
 
+                var reservation2 = new Reservation(bookId, firstUser);
+                reservation2.Reason.Status = ReservationStatus.Approved;
+                context.Reservations.Add(reservation2);
+                context.SaveChanges();
+
+                var reservation3 = new Reservation(bookId, firstUser);
+                reservation3.Reason.Status = ReservationStatus.Approved;
+                context.Reservations.Add(reservation3);
+                context.SaveChanges();
+
                 var loan1 = new Loan(reservation1);
                 context.Loans.Add(loan1);
+                context.SaveChanges();
+
+                var loan2 = new Loan(reservation2);
+                context.Loans.Add(loan2);
+                context.SaveChanges();
+
+                var loan3 = new Loan(reservation3);
+                context.Loans.Add(loan3);
                 context.SaveChanges();
             }
         }

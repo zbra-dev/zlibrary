@@ -1,13 +1,152 @@
 .book {
     display: block;
-    padding: 15px;
+    height: 461px;
+    width: 250px;
+    margin: auto;
     font-size: 1rem;
-
     &__title {
         font-size: 1.3em;
+        height: 50px;
+        font-family: 'Roboto', sans-serif; 
+        font-weight: 500;
+        color: #34495e
     }
 
-    &__author {
-        font-size: 0.8em;
+    &__authors {
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        height: 51px;
+        max-width: 170px;
+        font-size: 1.28em;
+        float: left;
+        color: #b0b1b2;
     }
+    &__author {
+        white-space: nowrap;
+        font-size: 0.8em;
+        float: left;
+    }
+    z-index: 2;
+}
+
+.book:hover .admin-modify {
+    z-index: 4;
+    background-color: #060606;
+    opacity: 0.82;
+    height: 461px;
+    width: 250px;
+    margin: auto;
+    visibility: visible;
+    position: absolute;
+}
+
+.book-box {
+    background-color: #ffffff;
+    height: 461px;
+    width: 250px;
+    margin: auto;
+    display: flex;
+    position: absolute;
+  }
+  
+  .book-box-not-available {
+    z-index: 3;
+    opacity: 0.8;
+    background-color:#dadada;
+    display: block;
+    height: 461px;
+    width: 250px;
+    margin: auto;
+    position: absolute;
+  } 
+
+  .book-unavailable {
+    width: 250px;
+    height: 24px;
+    background-color: #ffffff;
+    box-shadow: 0 0 4px 0 rgba(187, 185, 185, 0.5);
+}
+
+.book-waiting-list {
+  width: 250px;
+  height: 24px;
+  background-color: #ffffff;
+  box-shadow: 0 0 4px 0 rgba(187, 185, 185, 0.5); 
+}
+
+  .ic-add {
+    float: right;
+    width: 50px;
+    height: 51px;
+    object-fit: contain;
+    top: 331px;
+    background-color: transparent;
+    border-color: transparent;
+    padding: 0px;
+    border: 0px;
+  }
+
+  .unavailable-text{
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 2.8px;
+    text-align: center;
+    color: #acafb1;
+  }
+
+  .waiting-list-text{
+    cursor: pointer;
+    width: 253px;
+    height: 11px;
+    font-family: Roboto;
+    font-size: 10px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 1px;
+    text-align: center;
+    color: #90baeb;
+  }
+
+  .book-cover{
+    display: flex; 
+    width: 250px;
+    height: 360px;
+  }
+  .admin-modify{
+  position: absolute;
+  font-family: Roboto;
+  font-size: 18px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: white;
+  margin: auto;
+  visibility: hidden;
+  text-align: center;
+  cursor: pointer;
+  }
+
+  .admin-edit-text{
+    position: absolute;
+    left:100px;
+    top: 200px;
+    text-align:center;
+    z-index:5;
+}
+
+  .admin-delete-text{
+    position: absolute;
+    left:100px;
+    top: 250px;
+    text-align:center;
+    z-index:5;
 }

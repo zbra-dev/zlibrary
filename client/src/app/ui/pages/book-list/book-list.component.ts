@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {BookService} from '../../../service/book.service';
 import {Book} from '../../../model/book';
+import {NavbarComponent} from '../../components/navbar/navbar.component';
 import {LoaderMediator} from '../../mediators/loader.mediator';
 import {ToastMediator} from '../../mediators/toast.mediator';
 
@@ -13,6 +14,9 @@ import {ToastMediator} from '../../mediators/toast.mediator';
 export class BookListComponent implements OnInit {
     public books: Book[] = [];
     public isBusy = false;
+    public isAdmin = true;
+
+    keyword = '';
 
     constructor(private service: BookService,
                 private loaderMediator: LoaderMediator,
@@ -21,6 +25,20 @@ export class BookListComponent implements OnInit {
     }
 
     public ngOnInit(): void {
+        this.findAll()
+    }
+
+    
+    public search(): void {
+        if(this.keyword != ``){
+            this.searchBy(this.keyword, 0);
+        }
+        else
+        {
+            this.findAll();
+        }
+    }
+    public findAll(){
         this.loaderMediator.execute(
             this.service.findAll().subscribe(
                 books => {
@@ -31,4 +49,19 @@ export class BookListComponent implements OnInit {
             )
         );
     }
+    public searchBy(keyword, orderBy)
+    {
+        this.loaderMediator.execute(
+            this.service.search(this.keyword, 0).subscribe(
+                books => {
+                    this.books = books;
+                    console.log(books);
+                }, error => {
+                    this.toastMediator.show(`Error loading books: ${error}`);
+                }
+            )
+        );
+
+    }
+
 }

@@ -1,0 +1,119 @@
+
+.book-container {
+    width: 1650px;
+    height: 832px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    margin-left:auto;
+    margin-right: auto;
+    margin-top: 50px;
+    flex-direction: row;
+    background-color: transparent;
+    border-color: transparent;
+    border-top-color: transparent;
+    border: 0px;
+  }
+
+  .book-window {
+    width: 1650px;
+    height:fit-content;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 0 8px 0 rgba(191, 191, 191, 0.5);
+    margin-left:auto;
+    margin-right: auto;
+    margin-top: -100px;
+  }
+  .search-bar {
+    width: 85%;
+    height: 42px;
+    padding: 10px;
+    margin-left: 32px;
+    border-radius: 19px;
+    border-bottom-right-radius: 0px;
+    border-top-right-radius: 0px;
+    background-color: #ffffff;
+    margin-left: 35px;
+    border: solid 1px #bababa;
+    border-right: 0px;
+  }
+  .search-button {
+    width: 81px;
+    border-top-left-radius: 0px!important;
+    border-bottom-left-radius: 0px!important;
+    height: 42px;
+    border-radius: 21px;
+    padding: 0px;
+    margin-top:50px;
+    border:0px;
+    background-color: #34495e !important;
+  }
+
+  .add-button {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    width: 49px;
+    height: 49px;
+    border:0px;
+    background-color: transparent;
+    object-fit: contain;
+    margin-right: 32px;
+    margin-top: 40px;
+    //position: absolute;
+    right: 130px;
+    border-color: transparent;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+  }
+  .book-cover {
+    position: absolute;
+    object-fit: contain;
+    background-image: linear-gradient(to bottom, #ffffff, #4b4b4b);
+  }
+  .book-details {
+    width: 239px;
+    height: 385px;
+    top: 75px;
+    left: 90px;
+    background-color: #ffffff;
+    box-shadow: 0 0 4px 0 rgba(198, 196, 196, 0.5);
+    border: solid 1px #eaeaea;
+    position: relative;
+  }
+
+  .book-details-admin {
+    width: 239px;
+    height: 385px;
+    top: 75px;
+    left: 90px;
+    background-color: #ffffff;
+    box-shadow: 0 0 4px 0 rgba(198, 196, 196, 0.5);
+    border: solid 1px #eaeaea;
+    position: relative;
+  }
+
+  .book-title {
+    width: 218px;
+    height: 32px;
+    top: 316px;
+    left: 15px;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-align: left;
+    color: #34495e;
+    position: absolute;
+  }
+  .book-authors {
+    width: 175px;
+    height: 14px;
+    font-family: Roboto;
+    font-size: 12px;
+    letter-spacing: 0.9px;
+    text-align: left;
+    color: #b0b1b2;
+    position: absolute;
+    top: 350px;
+    left: 15px;
+  }
