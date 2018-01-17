@@ -19,6 +19,8 @@ namespace ZLibrary.Web
 {
     public partial class Startup
     {
+        public IConfigurationRoot Configuration { get; }
+
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -28,8 +30,6 @@ namespace ZLibrary.Web
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
-
-        public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -55,10 +55,10 @@ namespace ZLibrary.Web
             services.AddTransient<IPublisherRepository, PublisherRepository>();
             services.AddTransient<ITokenFactory, JsonWebTokenFactory>();
             services.AddTransient<IImageService, ImageService>();
-            services.AddTransient<IImageRepository, ImageRepository>();
             services.AddTransient<IAuthenticationApi, SlackApi>();
             services.AddTransient<ILoanService, LoanService>();
             services.AddTransient<ILoanRepository, LoanRepository>();
+            services.Add(new ServiceDescriptor(typeof(ClientOptions), provider => BuildClientOptions(), ServiceLifetime.Singleton));
 
             services.Configure<JwtOptions>(o =>
             {
@@ -109,6 +109,12 @@ namespace ZLibrary.Web
                     : (TimeSpan?)null,
                 SigningCredentials = signingCredentials,
             };
+        }
+
+        private ClientOptions BuildClientOptions()
+        {
+            var options = Configuration.GetSection("ClientOptions");
+            return new ClientOptions() { ClientUrl = options["Url"] };
         }
     }
 }

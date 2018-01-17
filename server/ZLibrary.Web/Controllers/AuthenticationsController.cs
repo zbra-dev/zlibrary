@@ -6,10 +6,12 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using ZLibrary.API;
 using ZLibrary.Model;
 using ZLibrary.Web.Controllers.Items;
+using ZLibrary.Web.Options;
 using ZLibrary.Web.Validators;
 
 namespace ZLibrary.Web.Controllers
@@ -21,10 +23,13 @@ namespace ZLibrary.Web.Controllers
 
         private readonly IAuthenticationApi authenticationApi;
 
-        public AuthenticationsController(IUserService userService, IAuthenticationApi authenticationApi)
+        private readonly ClientOptions clientOptions;
+
+        public AuthenticationsController(IUserService userService, IAuthenticationApi authenticationApi, ClientOptions clientOptions)
         {
             this.userService = userService;
             this.authenticationApi = authenticationApi;
+            this.clientOptions = clientOptions;
         }
 
         [HttpGet("redirect/{code?}")]
@@ -43,9 +48,8 @@ namespace ZLibrary.Web.Controllers
                     var validationResult = validator.Validate(slackUserDTO);
                     if (validationResult.HasError)
                     {
-                        var ErrorMessage = validationResult.ErrorMessage;
-                        Response.Redirect(Uri.EscapeUriString("/login?error=" + ErrorMessage));
-                        return BadRequest();
+                        var errorMessage = validationResult.ErrorMessage;
+                        return Redirect("/login?error=" + errorMessage);
                     }
 
                     var user = await userService.FindByEmail(slackUserDTO.User.Email);
@@ -67,10 +71,10 @@ namespace ZLibrary.Web.Controllers
                         await userService.Update(user);
                     }
 
-                    Response.Redirect("/home");
+                    Response.Cookies.Append("user", JsonConvert.SerializeObject(user));
+                    return Redirect($"{clientOptions.ClientUrl}/books");
                 }
             }
-            return Ok();
         }
     }
 }
