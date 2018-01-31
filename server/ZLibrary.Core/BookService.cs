@@ -95,18 +95,24 @@ namespace ZLibrary.Core
         {
             var bookSet = new HashSet<Book>();
 
-            var booksByTitle = await bookRepository.FindByTitleOrSynopsis(parameters.Keyword);
-            bookSet.UnionWith(booksByTitle);
+            if (string.IsNullOrEmpty(parameters.Keyword))
+            {
+                bookSet.UnionWith(await FindAll());
+            }
+            else
+            {
+                var booksByTitle = await bookRepository.FindByTitleOrSynopsis(parameters.Keyword);
+                bookSet.UnionWith(booksByTitle);
 
-            var booksByIsbn = await bookRepository.FindByIsbn(parameters.Keyword);
-            bookSet.UnionWith(booksByIsbn);
+                var booksByIsbn = await bookRepository.FindByIsbn(parameters.Keyword);
+                bookSet.UnionWith(booksByIsbn);
 
-            var booksByPublisher = await bookRepository.FindByPublisher(parameters.Keyword);
-            bookSet.UnionWith(booksByPublisher);
+                var booksByPublisher = await bookRepository.FindByPublisher(parameters.Keyword);
+                bookSet.UnionWith(booksByPublisher);
 
-            var booksByAuthor = await bookRepository.FindByAuthor(parameters.Keyword);
-            bookSet.UnionWith(booksByAuthor);
-
+                var booksByAuthor = await bookRepository.FindByAuthor(parameters.Keyword);
+                bookSet.UnionWith(booksByAuthor);
+            }
             Func<Book, object> orderBySelector;
 
             if (parameters.OrderBy == SearchOrderBy.Created)

@@ -110,11 +110,11 @@ namespace ZLibrary.Web
             }
         }
 
-        [HttpGet("search/{keyword}/{orderByValue:int}", Name = "FindBookBy")]
-        public async Task<IActionResult> FindBy(string keyword, int orderByValue)
+        [HttpPost("search/", Name = "FindBookBy")]
+        public async Task<IActionResult> FindBy([FromBody]SearchParametersDTO value)
         {
-            var orderBy = (SearchOrderBy)Enum.ToObject(typeof(SearchOrderBy), orderByValue);
-            var bookSearchParameter = new BookSearchParameter(keyword)
+            var orderBy = (SearchOrderBy)Enum.ToObject(typeof(SearchOrderBy), value.OrderByValue);
+            var bookSearchParameter = new BookSearchParameter(value.Keyword)
             {
                 OrderBy = orderBy
             };
