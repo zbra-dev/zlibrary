@@ -12,10 +12,13 @@
             <img  class="logo" src="../../../../assets/images/logo.png">
             <div style="flex: auto;"></div>
             <div class="login-button-container">
-                <a class="login-button" href="https://slack.com/oauth/authorize?scope=identity.basic,identity.email,identity.team,identity.avatar&client_id=6575166742.236473063552">
+                <a class="login-button" href="https://slack.com/oauth/authorize?scope=identity.basic,identity.email,identity.team,identity.avatar&client_id=6575166742.236473063552" (click)="deleteLoginError()">
                     <div class="slack-logo"></div>
                     <span class="login-text">Entrar com slack</span>
                 </a>
+            </div>
+            <div class="login-error-container">
+                <span class="login-error">{{showError()}}</span>
             </div>
         </div>
     </div>

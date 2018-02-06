@@ -15,4 +15,12 @@ export class AuthService {
     public logout(): void {
         this.repository.logout();
     }
+
+    public getLoginError() {
+        return this.repository.getLoginError();
+    }
+
+    public deleteLoginError(): void {
+        this.repository.deleteLoginError();
+    }
 }

@@ -118,6 +118,23 @@
     margin-left: 8%;
 }
 
+.login-error-container {
+    width: 100%;
+    padding-top: 90px;
+    display: flex;
+    justify-content: center;
+}
+
+.login-error {
+    @font-face {
+        font-family: "Roboto";
+        src: url("../../../../assets/font/Roboto/Roboto-Regular.ttf");
+    }
+    font-size: 18px;
+    text-align: right;
+    color: #f48496;
+}
+
 @media (max-width:768px) {
     .column-left {
         display: none;
@@ -137,7 +154,7 @@
         text-indent: 15px;
         letter-spacing: 15px;
     }
-    
+
     .system-title {
         text-indent: 12px;
         letter-spacing: 12px;

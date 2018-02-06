@@ -49,7 +49,8 @@ namespace ZLibrary.Web.Controllers
                     if (validationResult.HasError)
                     {
                         var errorMessage = validationResult.ErrorMessage;
-                        return Redirect("/login?error=" + errorMessage);
+                        Response.Cookies.Append("loginError", errorMessage);
+                        return Redirect($"{clientOptions.ClientUrl}");
                     }
 
                     var user = await userService.FindByEmail(slackUserDTO.User.Email);
