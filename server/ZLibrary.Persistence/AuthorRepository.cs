@@ -25,5 +25,14 @@ namespace ZLibrary.Persistence
         {
             return context.Authors.Find(id);
         }
+
+        public async Task<IList<Author>> FindByName(string name)
+        {
+            var authors = await context.Authors
+               .Where(a => a.Name.Contains(name))
+               .ToListAsync();
+
+            return authors;
+        }
     }
 }

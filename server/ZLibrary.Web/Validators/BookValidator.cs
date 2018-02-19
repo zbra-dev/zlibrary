@@ -48,7 +48,7 @@ namespace ZLibrary.Web.Validators
                 return validationResult;
             }
 
-            var publisherId = value.PublisherId;
+            var publisherId = value.Publisher.Id;
 
             var publisher = context.PublisherService.FindById(publisherId);
 

@@ -26,5 +26,14 @@ namespace ZLibrary.Core
         {
             return authorRepository.FindById(id);
         }
+
+        public async Task<IList<Author>> FindByName(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return new Author[0];
+            }
+            return await authorRepository.FindByName(name);
+        }
     }
 }

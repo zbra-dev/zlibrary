@@ -30,5 +30,14 @@ namespace ZLibrary.Core
             }
             return publisherRepository.FindById(id);
         }
+
+         public async Task<IList<Publisher>> FindByName(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return new Publisher[0];
+            }
+            return await publisherRepository.FindByName(name);
+        }
     }
 }

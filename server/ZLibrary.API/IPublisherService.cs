@@ -8,5 +8,6 @@ namespace ZLibrary.API
     {
         Task<IList<Publisher>> FindAll();
         Publisher FindById(long id);
+        Task<IList<Publisher>> FindByName(string name);
     }
 }

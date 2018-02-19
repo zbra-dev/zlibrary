@@ -12,29 +12,21 @@ namespace ZLibrary.Web.Extensions
             return new BookDTO()
             {
                 Id = book.Id,
-                Authors = book.Authors.Select(a => a.Author.ToAuthorViewItems()).ToArray(),
+                Authors = book.Authors.Select(a => a.Author.ToAuthorViewItem()).ToArray(),
                 Isbn = book.Isbn.Value,
-                PublisherId = book.Publisher.Id,
+                Publisher = book.Publisher.ToPublisherViewItem(),
                 PublicationYear = book.PublicationYear,
                 Title = book.Title,
                 Synopsis = book.Synopsis,
                 NumberOfCopies = book.NumberOfCopies,
-                CoverImageKey = book.CoverImageKey
+                CoverImageKey = book.CoverImageKey,
+                IsAvailable = book.IsAvailable
             };
         }
 
         public static IEnumerable<BookDTO> ToBookViewItems(this IEnumerable<Book> books)
         {
             return books.Select(b => b.ToBookViewItem()).ToArray();
-        }
-
-        public static AuthorDTO ToAuthorViewItems(this Author auhtor)
-        {
-            return new AuthorDTO
-            {
-                Id = auhtor.Id,
-                Name = auhtor.Name
-            };
         }
     }
 }

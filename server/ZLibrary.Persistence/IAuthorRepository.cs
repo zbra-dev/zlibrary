@@ -8,5 +8,6 @@ namespace ZLibrary.Persistence
     {
         Task<IList<Author>> FindAll();
         Author FindById(long id);
+        Task<IList<Author>> FindByName(string name);
     }
 }

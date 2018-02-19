@@ -25,5 +25,14 @@ namespace ZLibrary.Persistence
         {
             return context.Publishers.Find(id);
         }
+
+         public async Task<IList<Publisher>> FindByName(string name)
+        {
+            var publishers = await context.Publishers
+               .Where(a => a.Name.Contains(name))
+               .ToListAsync();
+
+            return publishers;
+        }
     }
 }
