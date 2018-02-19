@@ -13,6 +13,5 @@ namespace ZLibrary.API
         Task<IList<Book>> FindBy(BookSearchParameter bookSearchParameter);
         Task Delete(long id);
         Task Save(Book book);
-        Task<bool> IsBookAvailable(Book book);
     }
 }

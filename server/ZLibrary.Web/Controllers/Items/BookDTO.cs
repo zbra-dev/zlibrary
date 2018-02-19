@@ -13,8 +13,8 @@ namespace ZLibrary.Web.Controllers.Items
         [DataMember(Name = "title")]
         public string Title { get; set; }
 
-        [DataMember(Name = "publisherId")]
-        public long PublisherId { get; set; }
+        [DataMember(Name = "publisher")]
+        public PublisherDTO Publisher { get; set; }
         
         [DataMember(Name = "authors")]
         public AuthorDTO[] Authors { get; set; }
@@ -33,6 +33,7 @@ namespace ZLibrary.Web.Controllers.Items
 
         [DataMember(Name = "numberOfCopies")]
         public int NumberOfCopies { get; set; }
+
         [DataMember(Name = "reservations")]
         public IEnumerable<ReservationResultDTO> Reservations { get; set; }
     }

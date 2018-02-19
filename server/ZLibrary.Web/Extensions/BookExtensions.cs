@@ -20,7 +20,6 @@ namespace ZLibrary.Web.Extensions
                 Synopsis = book.Synopsis,
                 NumberOfCopies = book.NumberOfCopies,
                 CoverImageKey = book.CoverImageKey,
-                IsAvailable = book.IsAvailable
             };
         }
 
