@@ -7,6 +7,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { LoadingOverlayComponent } from './loading-overlay/loading-overlay.component';
 import { ToastComponent } from './toast/toast.component';
 import { ReservationHistoryComponent } from './reservation-history/reservation-history.component';
+import { ConfirmComponent } from './confirm/confirm.component';
 
 @NgModule({
     declarations: [
@@ -15,7 +16,8 @@ import { ReservationHistoryComponent } from './reservation-history/reservation-h
         NavbarComponent,
         LoadingOverlayComponent,
         ToastComponent,
-        ReservationHistoryComponent
+        ReservationHistoryComponent,
+        ConfirmComponent
     ],
     exports: [
         BookComponent,
@@ -23,11 +25,13 @@ import { ReservationHistoryComponent } from './reservation-history/reservation-h
         NavbarComponent,
         LoadingOverlayComponent,
         ToastComponent,
-        ReservationHistoryComponent
+        ReservationHistoryComponent,
+        ConfirmComponent
     ],
     entryComponents: [
         ToastComponent,
-        ReservationHistoryComponent
+        ReservationHistoryComponent,
+        ConfirmComponent
     ],
     imports: [
         BrowserModule,

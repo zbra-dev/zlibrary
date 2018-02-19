@@ -60,6 +60,15 @@ namespace ZLibrary.Persistence
             .ToListAsync();
         }
 
+        public async Task<Loan> FindByReservationId(long reservationId)
+        {
+            return await context.Loans
+                .Include(l => l.Reservation)
+                .Include(l => l.Reservation.Reason)
+                .Include(l => l.Reservation.User)
+                .SingleOrDefaultAsync(l => l.Reservation.Id == reservationId);
+        }
+
         public async Task<Loan> Update(Loan loan)
         {
             context.Loans.Update(loan);

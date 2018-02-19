@@ -30,7 +30,9 @@ namespace ZLibrary.Persistence
             {
                 if (File.Exists(imageFilePath))
                 {
-                    await File.OpenRead(imageFilePath).CopyToAsync(stream);
+                    var t =  File.OpenRead(imageFilePath);
+                    await t.CopyToAsync(stream);
+                    t.Dispose();
                 }
                 imageData = stream.ToArray();
             }

@@ -63,13 +63,13 @@ namespace ZLibrary.Web
             var user = await userService.FindById(value.UserId);
             if (user == null)
             {
-                return NotFound($"Nenhuma usuário encontrada com o ID: {value.UserId}.");
+                return NotFound($"Nenhum usuário encontrado com o ID: {value.UserId}.");
             }
 
             var book = await bookService.FindById(value.BookId);
             if (book == null)
             {
-                return NotFound($"Nenhuma livro encontrada com o ID: {value.BookId}.");
+                return NotFound($"Nenhum livro encontrado com o ID: {value.BookId}.");
             }
 
             var reservation = await reservationService.Order(book, user);
@@ -89,7 +89,7 @@ namespace ZLibrary.Web
                 var book = await bookService.FindById(reservation.BookId);
                 if (book == null)
                 {
-                    return NotFound($"Nenhuma livro encontrada com o ID: {reservation.BookId}.");
+                    return NotFound($"Nenhum livro encontrado com o ID: {reservation.BookId}.");
                 }
                 await reservationService.ApprovedReservation(reservation, book);
                 return Ok();

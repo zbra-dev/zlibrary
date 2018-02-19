@@ -26,6 +26,7 @@ export class NavbarComponent implements OnInit {
 
     public onLogout() {
         this.service.logout();
+        window.location.reload();
     }
 
 	public viewReservationHistory(): void {

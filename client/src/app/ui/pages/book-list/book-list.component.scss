@@ -1,7 +1,7 @@
 
 .book-container {
-    width: 1650px;
-    height: 832px;
+    width: 90%;
+    height: 100%;
     border-radius: 10px;
     background-color: #ffffff;
     margin-left:auto;
@@ -14,19 +14,41 @@
     border: 0px;
   }
 
+  .book-grid{
+    width: 25%;
+    float: left;
+    margin:auto;
+  }
+  @media (max-width:1300px) {
+    .book-grid {
+        width: 33%;
+    }
+}
+
+  @media (max-width:1024px) {
+    .book-grid {
+        width: 50%;
+    }
+}
+
+@media (max-width:675px) {
+  .book-grid {
+      width: 100%;
+  }
+}
   .book-window {
-    width: 1650px;
+    width: 90%;
     height:fit-content;
     border-radius: 10px;
     background-color: #ffffff;
     box-shadow: 0 0 8px 0 rgba(191, 191, 191, 0.5);
     margin-left:auto;
     margin-right: auto;
-    margin-top: -100px;
+    margin-top: -450px;
   }
   .search-bar {
     width: 85%;
-    height: 42px;
+    height: 80%;
     padding: 10px;
     margin-left: 32px;
     border-radius: 19px;
@@ -37,8 +59,61 @@
     border: solid 1px #bababa;
     border-right: 0px;
   }
+
+  @media (max-width:1700px) {
+    .search-bar {
+        width: 80%;
+    }
+    .search-button{
+      width: 8% !important;
+    }
+  }
+  @media (min-width: 1111px) and (max-width:1685px) {
+    .search-bar {
+        width: 80%;
+    }
+    .search-button{
+      width: 7% !important;
+    }
+  }
+
+  @media (min-width: 861px) and (max-width:1110px) {
+    .search-bar {
+        width: 75%;
+    }
+    .search-button{
+      width: 7% !important;
+    }
+  }
+
+  @media (max-width:860px) {
+    .search-bar {
+        width: 70%;
+    }
+    .search-button{
+      width: 10% !important;
+    }
+  }
+
+  @media (max-width:590px) {
+    .search-bar {
+        width: 55%;
+    }
+    .search-button{
+      width: 10% !important;
+    }
+  }
+
+  @media (max-width:405px) {
+    .search-bar {
+        width: 50%;
+    }
+    .search-button{
+      width: 25%;
+    }
+  }
   .search-button {
-    width: 81px;
+    width: 5%;
     border-top-left-radius: 0px!important;
     border-bottom-left-radius: 0px!important;
     height: 42px;
@@ -52,15 +127,14 @@
   .add-button {
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
-    width: 49px;
-    height: 49px;
+    width: 5%;
+    height: 50%;
     border:0px;
     background-color: transparent;
     object-fit: contain;
     margin-right: 32px;
     margin-top: 40px;
-    //position: absolute;
-    right: 130px;
+    right: 20%;
     border-color: transparent;
     border-top-color: transparent;
     border-bottom-color: transparent;

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Book } from '../../../model/book';
 import { User } from '../../../model/user';
 import { BookService } from '../../../service/book.service';
@@ -27,6 +27,7 @@ export class BookPopupComponent implements OnInit {
   public isAvailable: boolean;
   public differ: any;
 
+  @Output() ordered: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(private bookService: BookService,
     private coverImageService: CoverImageService,
@@ -108,6 +109,7 @@ export class BookPopupComponent implements OnInit {
               reservation => {
                 console.log("Reserva Feita" + reservation.reservationReason.status);
                   this.IsOrder = reservation != null;
+                  this.ordered.emit();
               }, error => {
                   this.toastMediator.show(`Error when order the book: ${error}`);
               }

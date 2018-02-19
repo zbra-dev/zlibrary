@@ -1,24 +1,25 @@
 <div class="book">
-    <div *ngIf="!isAvailable">
+    <div *ngIf="!book.isAvailable && !hasBook">
         <div class="book-box-not-available">
             <div class="book-unavailable">
                 <div class="unavailable-text">INDISPONÍVEL</div>
             </div>
             <div *ngIf="!isAdmin"class="book-waiting-list">
-                <div class="waiting-list-text">ENTRAR NA FILA DE ESPERA</div>
+                <div class="waiting-list-text" (click)="viewBookDetails()">ENTRAR NA FILA DE ESPERA</div>
             </div>
         </div>
     </div>
-    <div *ngIf="isAdmin"class="admin-modify">
-        <div class="admin-edit-text">Editar</div>
-        <div class="admin-delete-text" (click)="delete()">Deletar</div>
+    <div *ngIf="user.isAdministrator"class="admin-modify">
+        <div class="admin-edit-text" (click)="viewBookDetails()">Editar</div>
+        <div class="admin-delete-text" (click)="deleteModal()">Deletar</div>
     </div>
     <img class="book-cover" [src]="'data:image/jpg;base64,' + image">
     <div class="book__title">{{book.title}}</div>
     <div class="book__authors">
-        <p class="book__author" *ngFor="let author of book.authors; last as isLast">{{author.name}}{{isLast ? '' : ', '}}</p>
+        <span class="book__author" *ngFor="let author of book.authors; last as isLast">{{author.name}}{{isLast ? '' : ', '}}</span>
     </div>
-    <button *ngIf="!isAdmin" style="cursor:pointer" class="ic-add">
-        <img src="../../../../assets/images/ic-add.png" />
+    <button *ngIf="!user.isAdministrator" style="cursor:pointer" class="ic-add" (click)="viewBookDetails()">
+        <img *ngIf="!hasBook"src="../../../../assets/images/ic-add.png" />
+        <img *ngIf="hasBook"src="../../../../assets/images/ic-checked.png" />
     </button>
 </div>

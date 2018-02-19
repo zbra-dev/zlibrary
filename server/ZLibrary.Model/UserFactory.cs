@@ -14,13 +14,10 @@ namespace ZLibrary.Model
         {
             var commonUsers = new List<User>();
             commonUsers.Add(new User() { Name = "Alexandre Cunha", Email = "alexandre.cunha@zbra.com.br", IsAdministrator = false });
-            commonUsers.Add(new User() { Name = "Caio Maia", Email = "caio.maia@zbra.com.br", IsAdministrator = false });
-            commonUsers.Add(new User() { Name = "Daniel Alves", Email = "daniel.alves@zbra.com.br", IsAdministrator = false });
             commonUsers.Add(new User() { Name = "Danillo Magno", Email = "danillo.magno@zbra.com.br", IsAdministrator = false });
-            commonUsers.Add(new User() { Name = "Felipe Rios", Email = "felipe.rios@zbra.com.br", IsAdministrator = false });
             commonUsers.Add(new User() { Name = "Fillipe Rosini", Email = "fillipe.rosini@zbra.com.br", IsAdministrator = false });
             commonUsers.Add(new User() { Name = "Filipe Sbragio", Email = "filipe.sbragio@zbra.com.br", IsAdministrator = false });
-            commonUsers.Add(new User() { Name = "Marcio Hariki", Email = "marcio.hariki@zbra.com.br", IsAdministrator = false });
+            commonUsers.Add(new User() { Name = "Gabriel Garcia", Email = "gabriel.garcia@zbra.com.br", IsAdministrator = false });
             commonUsers.Add(new User() { Name = "Jose Luz", Email = "jose.luz@zbra.com.br", IsAdministrator = false });
             commonUsers.Add(new User() { Name = "Rodrigo Rocha", Email = "rodrigo.rocha@zbra.com.br", IsAdministrator = false });
             commonUsers.Add(new User() { Name = "Leonardo Lombardi", Email = "leonardo.lombardi@zbra.com.br", IsAdministrator = false });
@@ -37,7 +34,7 @@ namespace ZLibrary.Model
         private static IList<User> CreateAdminUsers()
         {
             var adminUsers = new List<User>();
-            adminUsers.Add(new User() { Name = "Bruno François", Email = "bruno.francois@zbra.com.br", IsAdministrator = true });
+            adminUsers.Add(new User() { Name = "Bruno François", Email = "bruno.francois@zbra.com.br", IsAdministrator = false });
             adminUsers.Add(new User() { Name = "Cinthya Vieira", Email = "cinthya.vieira@zbra.com.br", IsAdministrator = true });
             adminUsers.Add(new User() { Name = "Fabio Augusto Falavinha", Email = "fabio.falavinha@zbra.com.br", IsAdministrator = true });
             adminUsers.Add(new User() { Name = "Jayme Preto", Email = "jayme.preto@zbra.com.br", IsAdministrator = true });

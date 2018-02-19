@@ -5,7 +5,7 @@ export class ReservationViewModelConverter {
 
     public static fromDTO(dto: any): Reservation {
         var reservationReason = new ReservationReason(dto.statusId, dto.description);
-        const reservation = new Reservation(dto.id, dto.user, dto.bookId, reservationReason , dto.startDate);
+        const reservation = new Reservation(dto.id, dto.userId, dto.bookId, reservationReason , dto.startDate, dto.loanStatusId);
 
         return reservation;
     }

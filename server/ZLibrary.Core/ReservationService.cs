@@ -33,6 +33,11 @@ namespace ZLibrary.Core
             return await reservationRepository.FindById(id);
         }
 
+        public async Task<IList<Reservation>> FindByBookId(long bookId)
+        {
+            return await reservationRepository.FindByBookId(bookId);
+        }
+
         public async Task<IList<Reservation>> FindBookReservations(long bookId)
         {
             if (bookId <= 0)

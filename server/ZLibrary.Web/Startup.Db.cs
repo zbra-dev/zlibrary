@@ -41,6 +41,8 @@ namespace ZLibrary.Web
                 var jackPhillips = context.Authors.Single(a => a.Name == "Jack Phillips");
                 var simonSarris = context.Authors.Single(a => a.Name == "Simon Sarris");
                 var martinFowler = context.Authors.Single(a => a.Name == "Martin Fowler");
+                 var bruceEckel = context.Authors.Single(a => a.Name == "Bruce Eckel");
+                
 
                 var book = new Book()
                 {
@@ -74,7 +76,7 @@ namespace ZLibrary.Web
                     PublicationYear = 2014,
                     Publisher = publishers.FirstOrDefault(),
                     Synopsis = "Java 2 for professional development and best practices.",
-                    Title = "Effective Java",
+                    Title = "Effective Java Java Java Java Java Java Java Java Java Java Java Java Java Java Java Javaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                     NumberOfCopies = 2,
                     CoverImageKey = Guid.Parse("5b0cf369-a0b2-4643-ac84-36058e729a21")
                 };
@@ -96,6 +98,13 @@ namespace ZLibrary.Web
                         BookId = book2.Id,
                         Author = andrewTroelsen,
                         AuthorId = andrewTroelsen.Id
+                    },
+                    new BookAuthor()
+                    {
+                        Book = book2,
+                        BookId = book2.Id,
+                        Author = bruceEckel,
+                        AuthorId = bruceEckel.Id
                     }
                 };
                 context.SaveChanges();
@@ -133,6 +142,295 @@ namespace ZLibrary.Web
                 };
                 context.SaveChanges();
 
+                   var book4 = new Book()
+                {
+                    Isbn = Isbn.FromValue("9780316037723"),
+                    PublicationYear = 2014,
+                    Publisher = publishers.Where<Publisher>(p => p.Name == "Addison - Wesley").SingleOrDefault(),
+                    Synopsis = "The practice of enterprise application development has benefited from the emergence of many new enabling technologies.",
+                    Title = "Enterprise Application Architecture",
+                    NumberOfCopies = 1,
+                    CoverImageKey = Guid.Parse("5b0cf369-a0b2-4643-ac84-36058e729a23")
+                };
+
+                context.Books.Add(book4);
+                context.SaveChanges();
+
+                book4.Authors = new List<BookAuthor>()
+                {
+                    new BookAuthor()
+                    {
+                        Book = book4,
+                        BookId = book4.Id,
+                        Author = jackPhillips,
+                        AuthorId = jackPhillips.Id
+                    },
+                    new BookAuthor()
+                    {
+                        Book = book4,
+                        BookId = book4.Id,
+                        Author = andrewTroelsen,
+                        AuthorId = andrewTroelsen.Id
+                    }
+                };
+                context.SaveChanges();
+
+                   var book5 = new Book()
+                {
+                    Isbn = Isbn.FromValue("9780316037723"),
+                    PublicationYear = 2014,
+                    Publisher = publishers.Where<Publisher>(p => p.Name == "Addison - Wesley").SingleOrDefault(),
+                    Synopsis = "The practice of enterprise application development has benefited from the emergence of many new enabling technologies.",
+                    Title = "Enterprise Application Architecture",
+                    NumberOfCopies = 1,
+                    CoverImageKey = Guid.Parse("5b0cf369-a0b2-4643-ac84-36058e729a24")
+                };
+
+                context.Books.Add(book5);
+                context.SaveChanges();
+
+                book5.Authors = new List<BookAuthor>()
+                {
+                    new BookAuthor()
+                    {
+                        Book = book5,
+                        BookId = book5.Id,
+                        Author = jackPhillips,
+                        AuthorId = jackPhillips.Id
+                    },
+                    new BookAuthor()
+                    {
+                        Book = book5,
+                        BookId = book5.Id,
+                        Author = andrewTroelsen,
+                        AuthorId = andrewTroelsen.Id
+                    }
+                };
+                context.SaveChanges();
+
+                 var book6 = new Book()
+                {
+                    Isbn = Isbn.FromValue("9780672336270"),
+                    PublicationYear = 2014,
+                    Publisher = publishers.FirstOrDefault(),
+                    Synopsis = "Java 2 for professional development and best practices.",
+                    Title = "Effective Java",
+                    NumberOfCopies = 2,
+                    CoverImageKey = Guid.Parse("5b0cf369-a0b2-4643-ac84-36058e729a25")
+                };
+                context.Books.Add(book6);
+                context.SaveChanges();
+
+                book6.Authors = new List<BookAuthor>()
+                {
+                    new BookAuthor()
+                    {
+                        Book = book6,
+                        BookId = book6.Id,
+                        Author = jackPhillips,
+                        AuthorId = jackPhillips.Id
+                    },
+                    new BookAuthor()
+                    {
+                        Book = book6,
+                        BookId = book6.Id,
+                        Author = andrewTroelsen,
+                        AuthorId = andrewTroelsen.Id
+                    }
+                };
+                context.SaveChanges();
+
+                var book7 = new Book()
+                {
+                    Isbn = Isbn.FromValue("9780672336270"),
+                    PublicationYear = 2014,
+                    Publisher = publishers.FirstOrDefault(),
+                    Synopsis = "Java 2 for professional development and best practices.",
+                    Title = "Effective Java",
+                    NumberOfCopies = 2,
+                    CoverImageKey = Guid.Parse("5b0cf369-a0b2-4643-ac84-36058e729a26")
+                };
+                context.Books.Add(book7);
+                context.SaveChanges();
+
+                book7.Authors = new List<BookAuthor>()
+                {
+                    new BookAuthor()
+                    {
+                        Book = book7,
+                        BookId = book7.Id,
+                        Author = jackPhillips,
+                        AuthorId = jackPhillips.Id
+                    },
+                    new BookAuthor()
+                    {
+                        Book = book7,
+                        BookId = book7.Id,
+                        Author = andrewTroelsen,
+                        AuthorId = andrewTroelsen.Id
+                    }
+                };
+                context.SaveChanges();
+
+                var book8 = new Book()
+                {
+                    Isbn = Isbn.FromValue("9780672336270"),
+                    PublicationYear = 2014,
+                    Publisher = publishers.FirstOrDefault(),
+                    Synopsis = "Java 2 for professional development and best practices.",
+                    Title = "Effective Java",
+                    NumberOfCopies = 2,
+                    CoverImageKey = Guid.Parse("5b0cf369-a0b2-4643-ac84-36058e729a27")
+                };
+                context.Books.Add(book8);
+                context.SaveChanges();
+
+                book8.Authors = new List<BookAuthor>()
+                {
+                    new BookAuthor()
+                    {
+                        Book = book8,
+                        BookId = book8.Id,
+                        Author = jackPhillips,
+                        AuthorId = jackPhillips.Id
+                    },
+                    new BookAuthor()
+                    {
+                        Book = book8,
+                        BookId = book8.Id,
+                        Author = andrewTroelsen,
+                        AuthorId = andrewTroelsen.Id
+                    }
+                };
+                context.SaveChanges();
+
+                var book9 = new Book()
+                {
+                    Isbn = Isbn.FromValue("9780672336270"),
+                    PublicationYear = 2014,
+                    Publisher = publishers.FirstOrDefault(),
+                    Synopsis = "Java 2 for professional development and best practices.",
+                    Title = "Effective Java",
+                    NumberOfCopies = 2,
+                    CoverImageKey = Guid.Parse("5b0cf369-a0b2-4643-ac84-36058e729a28")
+                };
+                context.Books.Add(book9);
+                context.SaveChanges();
+
+                book9.Authors = new List<BookAuthor>()
+                {
+                    new BookAuthor()
+                    {
+                        Book = book9,
+                        BookId = book9.Id,
+                        Author = jackPhillips,
+                        AuthorId = jackPhillips.Id
+                    },
+                    new BookAuthor()
+                    {
+                        Book = book9,
+                        BookId = book9.Id,
+                        Author = andrewTroelsen,
+                        AuthorId = andrewTroelsen.Id
+                    }
+                };
+                context.SaveChanges();
+
+                var book10 = new Book()
+                {
+                    Isbn = Isbn.FromValue("9780672336270"),
+                    PublicationYear = 2014,
+                    Publisher = publishers.FirstOrDefault(),
+                    Synopsis = "Java 2 for professional development and best practices.",
+                    Title = "Effective Java",
+                    NumberOfCopies = 2,
+                    CoverImageKey = Guid.Parse("5b0cf369-a0b2-4643-ac84-36058e729a29")
+                };
+                context.Books.Add(book10);
+                context.SaveChanges();
+
+                book10.Authors = new List<BookAuthor>()
+                {
+                    new BookAuthor()
+                    {
+                        Book = book10,
+                        BookId = book10.Id,
+                        Author = jackPhillips,
+                        AuthorId = jackPhillips.Id
+                    },
+                    new BookAuthor()
+                    {
+                        Book = book10,
+                        BookId = book10.Id,
+                        Author = andrewTroelsen,
+                        AuthorId = andrewTroelsen.Id
+                    }
+                };
+                context.SaveChanges();
+
+                var book11 = new Book()
+                {
+                    Isbn = Isbn.FromValue("9780672336270"),
+                    PublicationYear = 2014,
+                    Publisher = publishers.FirstOrDefault(),
+                    Synopsis = "Java 2 for professional development and best practices.",
+                    Title = "Effective Java",
+                    NumberOfCopies = 2,
+                    CoverImageKey = Guid.Parse("5b0cf369-a0b2-4643-ac84-36058e729a30")
+                };
+                context.Books.Add(book11);
+                context.SaveChanges();
+
+                book11.Authors = new List<BookAuthor>()
+                {
+                    new BookAuthor()
+                    {
+                        Book = book11,
+                        BookId = book11.Id,
+                        Author = jackPhillips,
+                        AuthorId = jackPhillips.Id
+                    },
+                    new BookAuthor()
+                    {
+                        Book = book11,
+                        BookId = book11.Id,
+                        Author = andrewTroelsen,
+                        AuthorId = andrewTroelsen.Id
+                    }
+                };
+                context.SaveChanges();
+
+                var book12 = new Book()
+                {
+                    Isbn = Isbn.FromValue("9780672336270"),
+                    PublicationYear = 2014,
+                    Publisher = publishers.FirstOrDefault(),
+                    Synopsis = "Java 2 for professional development and best practices.",
+                    Title = "Effective Java",
+                    NumberOfCopies = 2,
+                    CoverImageKey = Guid.Parse("5b0cf369-a0b2-4643-ac84-36058e729a31")
+                };
+                context.Books.Add(book12);
+                context.SaveChanges();
+
+                book12.Authors = new List<BookAuthor>()
+                {
+                    new BookAuthor()
+                    {
+                        Book = book12,
+                        BookId = book12.Id,
+                        Author = jackPhillips,
+                        AuthorId = jackPhillips.Id
+                    },
+                    new BookAuthor()
+                    {
+                        Book = book12,
+                        BookId = book12.Id,
+                        Author = andrewTroelsen,
+                        AuthorId = andrewTroelsen.Id
+                    }
+                };
+                context.SaveChanges();
                 
                 // var book3 = new Book()
                 // {
@@ -198,34 +496,37 @@ namespace ZLibrary.Web
                 
 
                 var bookId = 1;
-                var firstUser = users.First();
+                var firstUser = users.SingleOrDefault(u => u.Id == 16);
+                var secondUser = users.SingleOrDefault(u => u.Id == 17);
 
-                var reservation1 = new Reservation(bookId, firstUser);
+                var reservation1 = new Reservation(bookId, secondUser);
                 reservation1.Reason.Status = ReservationStatus.Approved;
                 context.Reservations.Add(reservation1);
                 context.SaveChanges();
 
-                var reservation2 = new Reservation(bookId, firstUser);
+                var reservation2 = new Reservation(bookId, secondUser);
                 reservation2.Reason.Status = ReservationStatus.Approved;
                 context.Reservations.Add(reservation2);
                 context.SaveChanges();
 
-                var reservation3 = new Reservation(bookId, firstUser);
-                reservation3.Reason.Status = ReservationStatus.Approved;
+                var reservation3 = new Reservation(bookId, secondUser);
+                reservation3.Reason.Status = ReservationStatus.Waiting;
                 context.Reservations.Add(reservation3);
                 context.SaveChanges();
 
                 var loan1 = new Loan(reservation1);
+                loan1.Status = LoanStatus.Expired;
                 context.Loans.Add(loan1);
                 context.SaveChanges();
 
                 var loan2 = new Loan(reservation2);
+                loan2.Status = LoanStatus.Returned;
                 context.Loans.Add(loan2);
                 context.SaveChanges();
 
-                var loan3 = new Loan(reservation3);
-                context.Loans.Add(loan3);
-                context.SaveChanges();
+                 var loan3 = new Loan(reservation3);
+                 context.Loans.Add(loan3);
+                 context.SaveChanges();
             }
         }
     }

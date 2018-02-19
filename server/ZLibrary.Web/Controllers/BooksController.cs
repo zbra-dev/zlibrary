@@ -19,12 +19,16 @@ namespace ZLibrary.Web
         private readonly IBookService bookService;
         private readonly IAuthorService authorService;
         private readonly IPublisherService publisherService;
+        private readonly IReservationService reservationService;
+        private readonly ILoanService loanService;
 
-        public BooksController(IBookService bookService, IAuthorService authorService, IPublisherService publisherService)
+        public BooksController(IBookService bookService, IAuthorService authorService, IPublisherService publisherService, IReservationService reservationService, ILoanService loanService)
         {
             this.bookService = bookService;
             this.authorService = authorService;
             this.publisherService = publisherService;
+            this.reservationService = reservationService;
+            this.loanService = loanService;
         }
 
         [HttpGet]
@@ -119,7 +123,23 @@ namespace ZLibrary.Web
                 OrderBy = orderBy
             };
             var books = await bookService.FindBy(bookSearchParameter);
-            return Ok(books.ToBookViewItems());
+            var booksDTO = books.ToBookViewItems();
+            foreach (var book in booksDTO)
+            {
+                var reservations = await reservationService.FindByBookId(book.Id);
+                var reservationsDTO = reservations.ToReservationViewItems();
+                foreach (var reservation in reservationsDTO)
+                {
+                    var loan = await loanService.FindByReservationId(reservation.Id);
+                    if(loan != null)
+                    {
+                        reservation.LoanStatusId = (long)loan.Status; 
+                    }
+                }
+                book.Reservations = reservationsDTO;
+            }
+
+            return Ok(booksDTO);
         }
 
         [HttpGet("isBookAvailable/{bookId:long}", Name = "IsBookAvailable")]

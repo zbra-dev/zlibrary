@@ -1,18 +1,12 @@
-<div style="background-image: url('../../../../assets/images/background-banner.png')" class="background-banner">
-    <img src="../../../../assets/images/logo-white.svg" class="logo-white" style="cursor:pointer; position: absolute; top: 50px; left: 50px; width: 48px; height: 43px;">
-
-
-    <div class="ALUGUE-SEUS" style="position: absolute; width: 660px; height: 75px; top: 210px; left: 148px; font-family: 'Roboto', sans-serif; font-weight: bold;font-size: 64px; text-align: left; letter-spacing:19.2px; color: white">ALUGUE SEUS </div>
-
-    <div class="LIVROS-FAVORITOS" style="position: absolute; width: 740px; height: 64px; top: 300px; left: 148px; font-family: 'Roboto', sans-serif;font-weight: light; font-size: 55px; text-align: left; letter-spacing:16.5px; color: white">
-        LIVROS FAVORITOS</div>
-
-    <div style="cursor:pointer" (click)="showMenu('texto_de_exemplo_de_parametro')" >
-        <img src="../../../../assets/images/ic-historico.svg" class="ic-historico" (click)="viewReservationHistory()" style="cursor:pointer;position: absolute; right: 155px; top: 28px; width: 23px; height: 22px">
-
-        <div class="UserName" (click)="onLogout()" style="cursor:pointer;position: absolute; width: 101px; height: 16px; top: 30px; right: 35px; font-family: 'Roboto', sans-serif;font-weight: bold; font-size: 14px; text-align: left; color: white">
-            {{user.name}}
+<div class="navbar-container">
+    <div style="background-image: url('../../../../assets/images/background-banner.png')" class="background-banner">
+        <img src="../../../../assets/images/logo-white.svg" class="logo-white" 
+            style="cursor:pointer; position: absolute; top: 50px; left: 50px; width: 48px; height: 43px;">
+        <div class="ALUGUE-SEUS">ALUGUE SEUS </div>
+        <div class="LIVROS-FAVORITOS">LIVROS FAVORITOS</div>
+        <div>
+            <div class="UserName">{{user.name}}</div>
+            <img src="../../../../assets/images/ic-options.svg" class="ic-options">
         </div>
-        <img src="../../../../assets/images/ic-options.svg" class="ic-options" style="cursor:pointer;position:absolute; right: 26px; top: 35px;">
     </div>
 </div>

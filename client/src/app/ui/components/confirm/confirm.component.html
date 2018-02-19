@@ -1,0 +1,13 @@
+<div class="modal-body">
+    <div class="delete-text">DELETAR</div>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="close()" style="cursor: pointer">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="modal-title">{{message}}</div>
+    <div class="cancel"(click)="cancel()">
+        <div class="cancel-text">CANCELAR</div>
+    </div>
+    <div class="sure" (click)="confirm()" >
+        <div class="sure-text" >TENHO CERTEZA</div>
+    </div>
+</div>

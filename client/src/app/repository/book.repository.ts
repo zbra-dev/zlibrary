@@ -1,11 +1,13 @@
-import {Observable} from 'rxjs/Observable';
-import {Book} from '../model/book';
+import { Observable } from 'rxjs/Observable';
+import { Book } from '../model/book';
 import 'rxjs/add/observable/of';
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {environment} from '../../environments/environment';
-import {BookViewModelConverter} from './converter/book.view-model-converter';
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+import { BookViewModelConverter } from './converter/book.view-model-converter';
 import 'rxjs/add/operator/map';
+import { User } from '../model/user';
+import { SearchParametersDTO } from './dto/searchParametersDTO';
 
 const BOOKS_PATH = 'books';
 
@@ -14,28 +16,26 @@ export class BookRepository {
     constructor(private httpClient: HttpClient) {
     }
     url = `${environment.apiUrl}/${BOOKS_PATH}`;
-    public findAll(): Observable<Book[]> {
-		return this.httpClient.get(this.url).map((data: any) => data.map(b => BookViewModelConverter.fromDTO(b)));
-    }
 
-    public search(keyword, orderby)
-    {
-        
+    public search(keyword, orderby) {
+        var dto = new SearchParametersDTO(keyword, orderby);
+        var json = JSON.stringify(dto);
+        var headers = new Headers({ 'Content-Type': 'application/json' });
+
         //search/{keyword}/{orderByValue:int}
-        return this.httpClient.get(this.url + '/search/'+keyword+'/'+orderby).map((data: any) => data.map(b => {
-            var book =  BookViewModelConverter.fromDTO(b);
-        
-            return book;
-        }));
+        return this.httpClient.post(this.url + '/search/', json, {
+            headers: new HttpHeaders().set('Content-Type', 'application/json')
+        }).map((data: any) => data.map(b => BookViewModelConverter.fromDTO(b)));
     }
 
-    public IsBookAvailable(book : Book): Observable<boolean>{
-        const isBookAvailableURL = this.url+`/isBookAvailable/${book.id}`;
+    public IsBookAvailable(book: Book): Observable<boolean> {
+        const isBookAvailableURL = this.url + `/isBookAvailable/${book.id}`;
         return this.httpClient.get(isBookAvailableURL).map((res: boolean) => res != true ? false : res);
     }
 
-    public delete(book : Book){
-        const deleteURL = this.url+`/${book.id}`;
-        return this.httpClient.delete(deleteURL).map((res: boolean) => res);
+    public delete(book: Book): Observable<Object> {
+        const deleteURL = this.url + `/${book.id}`;
+        return this.httpClient.delete(deleteURL);
     }
+
 }

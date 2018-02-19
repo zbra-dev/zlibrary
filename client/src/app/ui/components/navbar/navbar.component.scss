@@ -1,9 +1,15 @@
-.background-banner {
-    height: 581px;
+.navbar-container{
+    display:flex;
+    flex-direction: row;
+    height: 100%;
     width: 100%;
-    background-repeat: no-repeat;
+}
+
+.background-banner {
+    flex: auto;
+    height: 65%;
+    width: 100%;
     background-size: cover;
-    object-fit: contain;
 }
 
 .ALUGUE-SEUS {
@@ -11,12 +17,17 @@
         font-family: "Roboto-bold";
         src: url("../../../../assets/font/Roboto/Roboto-Bold.ttf");
     }
-    font-size: 64px;
+    font-size: 3vw;
     font-weight: bold;
     letter-spacing: 19.2px;
     text-align: left;
     color: #ffffff;
     white-space: nowrap;
+    position: absolute;
+    width: 30%;
+    height: 20%; 
+    top: 23%; 
+    left: 8%;
 }
 
 .LIVROS-FAVORITOS {
@@ -24,12 +35,17 @@
         font-family: "Roboto-Light";
         src: url("../../../../assets/font/Roboto/Roboto-Light.ttf");
     }
-    font-size: 55px;
+    font-size: 3vw;
     font-weight: 300;
     letter-spacing: 16.5px;
     text-align: left;
     color: #ffffff;
     white-space: nowrap;
+    position: absolute;
+    width: 30%;
+    height: 20%; 
+    top: 35%; 
+    left: 8%;
 }
 
 .ic-historico {
@@ -39,18 +55,26 @@
     background-color: transparent;
 }
 .UserName {
-    width: 101px;
-    height: 16px;
+    @font-face {
+        font-family: "SFUIDisplay";
+        src: url("../../../../assets/font/SFUIDisplay/SFUIDisplay-Regular.otf");
+    }
+    position: absolute;
+    top: 3%;
+    right: 2%;
     font-family: SFUIDisplay;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 600;
-    text-align: left;
+    text-align: right;
     color: #ffffff;
     white-space: nowrap;
 }
 .ic-options {
+    position: absolute;
     width: 13px;
     height: 10px;
+    right: 26px;
+    top: 35px;
     object-fit: contain;
     transform: rotate(-2deg);
     background-color: transparent;
@@ -70,3 +94,66 @@
     box-shadow: 0 0 3px 0 rgba(224, 221, 221, 0.5);
     border: solid 1px #dedcdc;
 }
+
+@media (max-height:649px) {
+    .ALUGUE-SEUS {
+        display: none;
+    }
+    .LIVROS-FAVORITOS{
+        display: none;
+    }
+  }
+
+  @media (min-height:650px) and (max-height: 725px) {
+    .ALUGUE-SEUS {
+        left: 25%;
+        top: 8%;
+    }
+    .LIVROS-FAVORITOS{
+        left: 25%;
+        top: 18%;
+    }
+  }
+
+  @media (min-height:726px) and (max-height: 760px) {
+    .ALUGUE-SEUS {
+        left: 20%;
+        top: 15%;
+    }
+    .LIVROS-FAVORITOS{
+        left: 20%;
+        top: 28%;
+    }
+  }
+
+  @media (min-height:761px) and (max-height: 785px) {
+    .ALUGUE-SEUS {
+        left: 20%;
+        top: 18%;
+    }
+    .LIVROS-FAVORITOS{
+        left: 20%;
+        top: 23%;
+    }
+  }
+  @media (min-height:761px) and (max-height: 785px) and (min-width: 850px) {
+    .ALUGUE-SEUS {
+        left: 20%;
+        top: 18%;
+    }
+    .LIVROS-FAVORITOS{
+        left: 20%;
+        top: 26%;
+    }
+  }
+
+  @media (min-height:761px) and (max-height: 785px) and (min-width: 1400px) and (max-width: 1980px) {
+    .ALUGUE-SEUS {
+        left: 20%;
+        top: 18%;
+    }
+    .LIVROS-FAVORITOS{
+        left: 20%;
+        top: 28%;
+    }
+  }

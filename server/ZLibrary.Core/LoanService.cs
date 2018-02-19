@@ -11,7 +11,7 @@ namespace ZLibrary.Core
     public class LoanService : ILoanService
     {
         private readonly ILoanRepository loanRepository;
-        
+
         public LoanService(ILoanRepository loanRepository)
         {
             this.loanRepository = loanRepository;
@@ -34,6 +34,15 @@ namespace ZLibrary.Core
         public async Task<Loan> FindById(long id)
         {
             return await loanRepository.FindById(id);
+        }
+
+        public async Task<Loan> FindByReservationId(long reservationId)
+        {
+            if (reservationId <= 0)
+            {
+                return null;
+            }
+            return await loanRepository.FindByReservationId(reservationId);
         }
 
         public async Task ExpireLoan(long id)

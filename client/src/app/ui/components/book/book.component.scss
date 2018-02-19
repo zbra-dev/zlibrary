@@ -1,31 +1,39 @@
 .book {
     display: block;
-    height: 461px;
+    height: 443px;
     width: 250px;
     margin: auto;
+    margin-top: 75px;
     font-size: 1rem;
+    box-shadow: 0 0 4px 0 rgba(198, 196, 196, 0.5);
+    border: solid 1px #eaeaea;
     &__title {
-        font-size: 1.3em;
-        height: 50px;
-        font-family: 'Roboto', sans-serif; 
-        font-weight: 500;
-        color: #34495e
+      font-size: 1.3em;
+      height: 31px;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 500;
+      color: #34495e;
+      max-width: 250px;
+      word-wrap: break-word;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
 
     &__authors {
-        display: flex;
+        display: inline-block;
         justify-content: left;
         align-items: center;
         height: 51px;
         max-width: 170px;
-        font-size: 1.28em;
-        float: left;
+        font-size: 1.2em;
         color: #b0b1b2;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
     &__author {
-        white-space: nowrap;
         font-size: 0.8em;
-        float: left;
     }
     z-index: 2;
 }
@@ -34,7 +42,7 @@
     z-index: 4;
     background-color: #060606;
     opacity: 0.82;
-    height: 461px;
+    height: 443px;
     width: 250px;
     margin: auto;
     visibility: visible;
@@ -51,25 +59,24 @@
   }
   
   .book-box-not-available {
-    z-index: 3;
     opacity: 0.8;
     background-color:#dadada;
     display: block;
-    height: 461px;
-    width: 250px;
+    height: 443px;
+    width: 248.5px;
     margin: auto;
     position: absolute;
   } 
 
   .book-unavailable {
-    width: 250px;
+    width: 248.5px;
     height: 24px;
     background-color: #ffffff;
     box-shadow: 0 0 4px 0 rgba(187, 185, 185, 0.5);
 }
 
 .book-waiting-list {
-  width: 250px;
+  width: 248.5px;
   height: 24px;
   background-color: #ffffff;
   box-shadow: 0 0 4px 0 rgba(187, 185, 185, 0.5); 
@@ -116,7 +123,7 @@
 
   .book-cover{
     display: flex; 
-    width: 250px;
+    width: 248.5px;
     height: 360px;
   }
   .admin-modify{

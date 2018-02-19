@@ -9,6 +9,7 @@ namespace ZLibrary.API
         Task<IList<Reservation>> FindAll();
         Task<Reservation> FindById(long id);
         Task<IList<Reservation>> FindByUserId(long userId);
+        Task<IList<Reservation>> FindByBookId(long bookId);
         Task<IList<Reservation>> FindBookReservations(long bookId);
         Task<Reservation> Order(Book book, User user);
         Task ApprovedReservation(Reservation reservation, Book book);

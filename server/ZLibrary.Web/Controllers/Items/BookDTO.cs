@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 using ZLibrary.Model;
 
@@ -32,5 +33,7 @@ namespace ZLibrary.Web.Controllers.Items
 
         [DataMember(Name = "numberOfCopies")]
         public int NumberOfCopies { get; set; }
+        [DataMember(Name = "reservations")]
+        public IEnumerable<ReservationResultDTO> Reservations { get; set; }
     }
 }

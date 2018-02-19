@@ -23,13 +23,13 @@
   </div>
   <div *ngIf="!IsOrder">
     <div class="availability_box">
-      <p *ngIf="isAvailable" class="available_text">Disponível</p>
-      <p *ngIf="!isAvailable" class="unavailable_text">Insdisponível</p>
+      <p *ngIf="book.isAvailable" class="available_text">Disponível</p>
+      <p *ngIf="!book.isAvailable" class="unavailable_text">Insdisponível</p>
     </div>
-    <div *ngIf="isAvailable" class="reservation_box_available" (click)="order()">
+    <div *ngIf="book.isAvailable" class="reservation_box_available" (click)="order()">
       <p class="available_button_text_available">Alugar</p>
     </div>
-    <div *ngIf="!isAvailable" class="reservation_box_unavailable" (click)="order()">
+    <div *ngIf="!book.isAvailable" class="reservation_box_unavailable" (click)="order()">
       <p class="available_button_text_unavailable">+ add na lista de espera</p>
     </div>
   </div>
