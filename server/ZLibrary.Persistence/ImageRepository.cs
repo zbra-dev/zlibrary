@@ -6,44 +6,55 @@ namespace ZLibrary.Persistence
 {
     public class ImageRepository : IImageRepository
     {
-        public async Task<Guid> SaveFile(Guid key, byte[] imageData)
+        private readonly object thisLock = new object();
+
+        public Guid SaveFile(Guid key, byte[] imageData)
         {
-            var imageFilePath = GenerateImagePath(key);
-
-            using (var stream = new MemoryStream(imageData))
+            lock (thisLock)
             {
-                var dest = File.OpenWrite(imageFilePath);
-                await dest.FlushAsync();
-                await stream.CopyToAsync(dest);
-                dest.Dispose();
-            }
+                var imageFilePath = GenerateImagePath(key);
 
-            return key;
+                using (var stream = new MemoryStream(imageData))
+                using (var dest = File.OpenWrite(imageFilePath))
+                {
+                    dest.Flush();
+                    stream.CopyTo(dest);
+                }
+
+                return key;
+            }
         }
 
-        public async Task<byte[]> GetFile(Guid key)
+        public byte[] GetFile(Guid key)
         {
-            byte[] imageData;
-            var imageFilePath = GenerateImagePath(key);
-
-            using (var stream = new MemoryStream())
+            lock (thisLock)
             {
-                if (File.Exists(imageFilePath))
-                {
-                    var t =  File.OpenRead(imageFilePath);
-                    await t.CopyToAsync(stream);
-                    t.Dispose();
-                }
-                imageData = stream.ToArray();
-            }
+                byte[] imageData;
+                var imageFilePath = GenerateImagePath(key);
 
-            return imageData;
+                using (var stream = new MemoryStream())
+                {
+                    if (File.Exists(imageFilePath))
+                    {
+                        using (var fileStream = File.OpenRead(imageFilePath))
+                        {
+                            fileStream.CopyTo(stream);
+                        }
+                    }
+                    imageData = stream.ToArray();
+                }
+
+                return imageData;
+            }
         }
 
         public void DeleteFile(Guid key)
         {
-            var imageFilePath = GenerateImagePath(key);
-            File.Delete(imageFilePath);
+            lock (thisLock)
+            {
+                var imageFilePath = GenerateImagePath(key);
+                File.Delete(imageFilePath);
+            }
         }
 
         private string GenerateImagePath(Guid key)

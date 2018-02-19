@@ -5,8 +5,8 @@ namespace ZLibrary.Persistence
 {
     public interface IImageRepository
     {
-        Task<Guid> SaveFile(Guid key, byte[] imageData);
-        Task<byte[]> GetFile(Guid key);
+        Guid SaveFile(Guid key, byte[] imageData);
+        byte[] GetFile(Guid key);
         void DeleteFile(Guid key);
     }
 }

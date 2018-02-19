@@ -23,7 +23,7 @@ namespace ZLibrary.Web.Controllers
         }
 
         [HttpPost("upload/{key}")]
-        public async Task<IActionResult> Upload(Guid key, IFormFile file)
+        public IActionResult Upload(Guid key, IFormFile file)
         {
             var filePath = Path.GetTempFileName();
 
@@ -42,7 +42,7 @@ namespace ZLibrary.Web.Controllers
                         {
                             return BadRequest(validationResult.ErrorMessage);
                         }
-                        await imageService.SaveImage(key, fileContent);
+                        imageService.SaveImage(key, fileContent);
                     }
                 }
             }
@@ -53,7 +53,6 @@ namespace ZLibrary.Web.Controllers
         [HttpGet("loadImage/{key}")]
         public async Task<IActionResult> LoadImage(Guid key)
         {
-
             var book = await bookService.FindByCoverImageKey(key);
 
             if (book == null)
@@ -61,7 +60,7 @@ namespace ZLibrary.Web.Controllers
                 return BadRequest("Não foi encontrado nenhum livro com está imagem.");
             }
 
-            var imageArray = await imageService.LoadImage(key);
+            var imageArray = imageService.LoadImage(key);
             if (!imageArray.Any())
             {
                 return BadRequest($"Nenhum arquivo encontrado com a chave: {key}");
