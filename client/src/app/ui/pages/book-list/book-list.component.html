@@ -1,6 +1,4 @@
-<zli-navbar>
-</zli-navbar>
-
+<zli-navbar></zli-navbar>
 <zli-loading-overlay [isBusy]="isBusy">
     <div id="background" (click)="toggleSidebar()"></div>
     <div class="book-window">
@@ -8,7 +6,7 @@
         <button (click)="search()" style="cursor:pointer" class="search-button">
             <img src="../../../../assets/images/ic-search.png" />
         </button>
-        <button *ngIf="isAdmin == true" (click)="search()" style="cursor:pointer" class="add-button">
+        <button *ngIf="isAdmin == true" (click)="onSelect()" style="cursor:pointer" class="add-button">
             <img src="../../../../assets/images/ic-add-book.png" />
         </button>
         <div class="book-container">

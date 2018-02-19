@@ -47,7 +47,7 @@ export class BookComponent implements OnInit {
     public getImage(): void {
         if (this.book != null) {
             this.loaderMediator.execute(
-                this.coverImageService.LoadImage(this.book).subscribe(
+                this.coverImageService.loadImage(this.book).subscribe(
                     image => {
                         this.image = image;
                     }, error => {

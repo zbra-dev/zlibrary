@@ -13,8 +13,8 @@ export class BookService {
         return this.repository.search(keyword, orderby);
     }
 
-    public IsBookAvailable(book : Book): Observable<boolean>{
-        return this.repository.IsBookAvailable(book);
+    public save(book: Book): Observable<Book>{
+        return this.repository.save(book);
     }
 
     public delete(book: Book):  Observable<Object>{

@@ -8,6 +8,8 @@ import { LoadingOverlayComponent } from './loading-overlay/loading-overlay.compo
 import { ToastComponent } from './toast/toast.component';
 import { ReservationHistoryComponent } from './reservation-history/reservation-history.component';
 import { ConfirmComponent } from './confirm/confirm.component';
+import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
+import { DirectivesModule } from '../directives/directives.module';
 
 @NgModule({
     declarations: [
@@ -26,7 +28,8 @@ import { ConfirmComponent } from './confirm/confirm.component';
         LoadingOverlayComponent,
         ToastComponent,
         ReservationHistoryComponent,
-        ConfirmComponent
+        ConfirmComponent,
+		ReactiveFormsModule
     ],
     entryComponents: [
         ToastComponent,
@@ -35,7 +38,10 @@ import { ConfirmComponent } from './confirm/confirm.component';
     ],
     imports: [
         BrowserModule,
-        SharedModule
+        SharedModule,
+ 		FormsModule,
+        ReactiveFormsModule,
+        DirectivesModule
     ],
     providers: []
 })

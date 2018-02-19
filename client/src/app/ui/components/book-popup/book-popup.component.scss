@@ -1,26 +1,34 @@
-    @import "~sass/variables";
-
-.book_grid {
-    position: fixed;
-    min-height: 140px;
-    height: 82.5%;
-    width: 36%;
-    overflow: auto;
-    bottom: 118px;
+@import "~sass/variables";
+.popup-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
 }
 
-.about_book {
-    width: 300px;
-    height: 28px;
-    margin-top: 4.8%;
-    margin-left: auto;
-    margin-right: auto; // margin-left: 17%;
-    // margin-right: 17%;
+.book_container {
+    min-height: 140px;
+    display: flex;
+    flex: auto;
+    flex-direction: column;
+    align-items: center; // height: 82.5%;
+    width: 100%; // overflow: auto;
+    overflow-y: auto;
+}
+
+.about_book_title {
+    word-break: break-word;
+    padding-top: 4.8%;
+    text-indent: 6.6px;
     letter-spacing: 6.6px;
     color: $dark-grey-blue;
+    @font-face {
+        font-family: "Roboto-Bold";
+        src: url("../../../../assets/font/Roboto/Roboto-Bold.ttf");
+    }
     font: {
-        family: Roboto;
-        size: 24px;
+        size: 1.25vw;
         weight: bold;
     }
     text: {
@@ -29,41 +37,72 @@
     }
 }
 
-.placeholder_photo {
-    min-height: 75%;
-    min-width: 50%;
-    width: 344px;
-    height: 457px;
+.placeholder-image-container {
+    position: relative;
     margin-top: 5.5%;
-    margin-left: auto;
-    margin-right: auto;
-    object-fit: contain;
-    opacity: 0.29;
-    background-color: #dedede;
-    z-index: 2;
-  }
-
- .book_image {
+    width: 50%;
+    flex: 0 0 auto;
+    height: 23.5vw;
     display: flex;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 5.5%;
-    width: 344px;
-    height: 457px;
-    max-width: 50%;
-    max-height: 75%;
-    
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    background-image: url('../../../../assets/images/placeholder-add-photo.png'); // object-fit: contain;
+}
+
+.placeholder_photo {
+    background-image: url('../../../../assets/images/placeholder-add-photo.png'); // object-fit: contain;
+    // opacity: 0.29;
+    // background-color: #dedede;
+    // width: 100%;
+    // height: 100%;
+}
+
+.book_image {
+    display: flex;
+    flex: 0 0 auto;
+    margin-top: 5.5%; // min-width: 344px;
+    // min-height: 457px;
+    width: 50%;
+    height: 75%;
+}
+
+.book_image_uploaded {
+    height: 100%;
+    position: absolute;
+}
+
+.book_information_container {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    min-height: 250px;
+    flex: 0 0 auto;
+    margin-bottom: 15px;
+}
+
+.book_inputs_container {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    min-height: 550px;
+    margin-bottom: 15px;
+    flex: 0 0 auto;
 }
 
 .book_title {
-    margin-top: 3%;
-    margin-left: auto;
-    margin-right: auto;
+    @font-face {
+        font-family: "Roboto-Medium";
+        src: url("../../../../assets/font/Roboto/Roboto-Medium.ttf");
+    }
     font: {
-        family: Roboto;
+        // size: 0.94vw;
         size: 18px;
         weight: bold;
     }
+    text-indent: 1.3px;
     letter-spacing: 1.3px;
     color: #979595;
     text: {
@@ -72,149 +111,387 @@
     }
 }
 
-.book_synopsis_title {
+.book_synopsis_title,
+.book_authors_title,
+.book_year_title,
+.input_title {
     display: flex;
-    margin-top: 3.1%;
-    margin-left: 9.4%;
-    margin-right: 78.6%;
+    margin-top: 20px;
+    float: left;
+    @font-face {
+        font-family: "Roboto-Bold";
+        src: url("../../../../assets/font/Roboto/Roboto-Bold.ttf");
+    }
     font: {
-        family: Roboto;
+        // size: 0.834vw;
         size: 16px;
         weight: bold;
     }
     text-align: justify;
     color: #979595;
+}
+
+.input_title {
+    display: block;
+}
+
+.book_synopsis,
+.book_authors,
+.book_year {
+    margin-left: 1%;
+    float: left;
+    @font-face {
+        font-family: "Roboto-Regular";
+        src: url("../../../../assets/font/Roboto/Roboto-Regular.ttf");
+    }
+    font: {
+        // size: 0.84vw;
+        size: 16px;
+        weight: normal;
+    }
+    text-align: justify;
+    color: #a9a9a9;
 }
 
 .book_synopsis {
-    margin-top: 1.1%;
-    margin-left: 9.6%;
-    margin-right: 9.6%;
-    font: {
-        family: Roboto;
-        size: 16px;
-    }
-    text-align: justify;
-    color: #a9a9a9;
+    margin-top: 15px;
+    margin-left: 0;
 }
 
-.book_authors_title,
-.book_year_title {
-    margin-top: 1.5%;
-    margin-left: 9.4%;
-    float: left;
-    font: {
-        family: Roboto;
-        size: 16px;
-        weight: bold;
-    }
-    text-align: justify;
-    color: #979595;
+.request_reservation-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 70px;
+    max-height: 118px;
+    height: 13%;
 }
 
-.book_authors,
-.book_year {
-    margin-top: 1.5%;
-    margin-left: 1%;
-    float: left;
-    font: {
-        family: Roboto;
-        size: 16px;
-    }
-    text-align: justify;
-    color: #a9a9a9;
+.create-buttons-container {
+    display: flex;
+    align-items: center;
+    min-height: 50px;
+    height: 10%;
+}
+
+.admin_options_container {
+    display: flex;
+    align-items: center;
+    min-height: 50px;
+    height: 10%;
+    justify-content: flex-end;
 }
 
 .availability_box {
-    position: fixed;
-    margin-top: 1%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    height: 44px;
-    bottom: 74px;
+    flex: 1 0 auto;
+    max-height: 44px;
     background-color: #ffffff;
-    box-shadow: 0 0 4px 0 rgba(187, 185, 185, 0.5);
-  }
-
-  .available_text,
-  .unavailable_text
-   {
-    margin-right: auto;
-    margin-left: auto;
-    margin-top: 6px;
-    width: 50%;
-    height: 24px;
-    font-family: Roboto;
-    font-size: 20px;
-    letter-spacing: 5.5px;
-    text: {
-        align: justify;
-        transform: uppercase;
-    }
-  }
-  .available_text{
-    margin-left: 13%;
-    color: #4a90e2;
-  }
-
-  .unavailable_text {
-    margin-left: 12.5%;
-    color: #acafb1;
-  }
-
-  .reservation_box_available,
-  .reservation_box_unavailable {
-    position: fixed;
-    width: 100%;
-    height: 74px;
-    bottom: 0px;
-    cursor: pointer;
-  }
-
-  .reservation_box_available {
-    background-color: #34495e;
-  }
-
-  .reservation_box_unavailable {
-    background-color: #bbbbbb;
-  }
-  
-
-  .available_button_text_available,
-  .available_button_text_unavailable,
-  .sucess_order_text {
-    margin-right: auto;
-    margin-top: 25px;
-    width: 100%;
-    height: 24px;
-    @font-face {
-        font-family: "SFUIDisplay-Bold";
-        src: url("../../../../assets/font/SFUIDisplay/SFUIDisplay-Bold.otf");
-    }
-    font-size: 18px;
-    font-weight: 600;
-    letter-spacing: 2.7px;
-    color: #ffffff;
-    text-transform: uppercase;
-  }
-
-.available_button_text_available {
-  margin-left: 15%;
+    box-shadow: 0 0 68px 10px rgba(100, 100, 100, 0.5);
 }
 
-.available_button_text_unavailable {
-    margin-left: 9.4%;
-  }
+.available_text,
+.unavailable_text {
+    @font-face {
+        font-family: "Roboto-Regular";
+        src: url("../../../../assets/font/Roboto/Roboto-Regular.ttf");
+    }
+    font-size: 20px; // font-size: 1.05vw;
+    text-indent: 5.5px;
+    letter-spacing: 5.5px;
+    text: {
+        align: center;
+        transform: uppercase;
+    }
+}
 
-.sucess_order_text {
-    margin-left: auto;
-     margin-right: auto;
-    transform: translate(6.85%, -60%);
-  }
+.available_text {
+    color: #4a90e2;
+}
 
-  .sucess_order_box {
-    position: fixed;
-    bottom: 0px;
+.unavailable_text {
+    color: #acafb1;
+}
+
+.reservation_box_available,
+.reservation_box_unavailable {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    height: 44px;
+    flex: 2;
+    max-height: 74px;
+    flex: 2 0 auto;
+    background-color: #34495e;
+    cursor: pointer;
+}
+
+.available_button_text_available,
+.available_button_text_unavailable,
+.sucess_order_text {
+    @font-face {
+        font-family: "SFUIDisplay-Semibold";
+        src: url("../../../../assets/font/SFUIDisplay/SFUIDisplay-Semibold.otf");
+    } // font-size: 0.84vw;
+    font-size: 18px;
+    font-weight: 600;
+    text-indent: 2.7px;
+    letter-spacing: 2.7px;
+    color: #ffffff;
+    word-break: break-word;
+    text: {
+        transform: uppercase;
+        align: center;
+    }
+}
+
+.sucess_order_box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 44px;
+    flex: 0.2;
     background-color: #4bd48c;
-  }
+}
+
+.add-image-button,
+.admin_options {
+    @font-face {
+        font-family: "Roboto-Medium";
+        src: url("../../../../assets/font/Roboto/Roboto-Medium.ttf");
+    }
+    font: {
+        size: 24px;
+        ;
+    }
+    color: #4a90e2;
+    text: {
+        align: center;
+    }
+}
+
+.admin_options {
+    text-align: left;
+    cursor: pointer;
+    margin-right: 35px;
+}
+
+.cancel-button,
+.create-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    border: 0px;
+    height: 100%;
+    cursor: pointer;
+}
+
+.cancel-button {
+    background-color: #bbbbbb;
+}
+
+.create-button {
+    background-color: #34495e;
+    ;
+}
+
+.textbox_input {
+    width: 100%;
+    height: 36px;
+    margin-top: 10px;
+    border: solid 1px #eaeaea;
+}
+
+.synopsis_textarea {
+    width: 100%;
+    margin-top: 10px;
+    border: solid 1px #eaeaea;
+    flex: 0 0 auto;
+    height: 104px;
+    resize: none;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.author_textbox_input {
+    height: 36px;
+    flex: 1 0 auto;
+    border: 0px transparent;
+    margin-top: 2px;
+    margin-left: 2px;
+}
+
+.author_textbox_input:focus {
+    outline: none;
+}
+
+.drop_down_filter {
+    // position: absolute;
+    max-height: 170px;
+    overflow: auto;
+    background-color: #ffffff;
+    box-shadow: 0 0 4px 0 rgba(215, 215, 215, 0.5);
+    border: solid 1px #f2f2f2;
+    width: 100%;
+}
+
+.drop_down_item,
+.drop_down_item_selected {
+    cursor: pointer;
+    padding: 5px;
+}
+
+.drop_down_item_selected {
+    background-color: #4a90e2;
+    color: white;
+}
+
+.custom_input {
+    position: relative;
+    width: 100%;
+    min-height: 36px;
+    margin-top: 10px;
+    border: solid 1px #eaeaea;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    flex: 1 0 auto;
+}
+
+.tagged_author {
+    position: relative;
+    // flex: 0 0 24%;
+    height: 26px;
+    border-radius: 13px;
+    background-color: #f2f2f2;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    margin-left: 2px;
+    justify-content:  center;
+    margin-top: 5px;
+}
+
+.tagged_text {
+    width: 80%;
+    margin-left: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.close {
+    z-index: 200;
+    cursor: pointer;
+    display: block;
+    position: absolute;
+    right: 7%;
+    width: 11px;
+    height: 11px;
+    transition: all 250ms linear;
+}
+
+.close:hover {
+    transform: rotate(180deg);
+}
+
+.close:before {
+    content: "";
+    position: absolute;
+    display: block;
+    margin: auto;
+    left: 0;
+    right: 3.9%;
+    top: 1.5%;
+    bottom: 0;
+    width: 11px;
+    height: 0;
+    border-top: 3px solid rgba(0, 0, 0, 0.5);
+    transform: rotate(45deg);
+    transform-origin: center;
+}
+
+.close:after {
+    content: "";
+    position: absolute;
+    display: block;
+    margin: auto;
+    left: 0;
+    right: 3.9%;
+    top: 1.5%;
+    bottom: 0;
+    width: 11px;
+    height: 0;
+    border-top: 3px solid rgba(0, 0, 0, 0.5);
+    transform: rotate(-45deg);
+    transform-origin: center;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: auto;
+}
+
+.input_invalid {
+    border: 2px solid #ff8282;
+    outline: none;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    margin: 0; 
+}
+
+.validation_alert {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    padding: 15px;
+    margin-bottom: -20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+@media (max-width: 1366px) {
+    .about_book_title {
+        text-indent: 4.6px;
+        letter-spacing: 4.6px;
+        font-size: 20px;
+    }
+    .book_title {
+        font-size: 14px;
+    }
+    .book_synopsis_title,
+    .book_authors_title,
+    .book_year_title,
+    .input_title {
+        font-size: 12px;
+    }
+    .book_synopsis,
+    .book_authors,
+    .book_year {
+        font-size: 12px;
+    }
+    .book_authors {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .available_text,
+    .unavailable_text {
+        font-size: 16px;
+    }
+    .available_button_text_available,
+    .available_button_text_unavailable,
+    .sucess_order_text {
+        font-size: 14px;
+        text-indent: 0.7px;
+        letter-spacing: 0.7px;
+    }
+}

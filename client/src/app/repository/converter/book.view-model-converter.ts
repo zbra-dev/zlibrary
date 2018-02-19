@@ -4,7 +4,18 @@ import { ReservationViewModelConverter } from './reservation.view-model-converte
 export class BookViewModelConverter {
     // TODO: Read missing fields
     public static fromDTO(dto: any): Book {
-        const book = new Book(dto.id, dto.title,dto.publisher,dto.authors,dto.isbn,dto.synopsis,dto.publicationYear,dto.numberOfCopies,dto.coverImageKey,dto.created, dto.reservations.map(r => ReservationViewModelConverter.fromDTO(r)));
+		const book = new Book();
+        book.id = dto.id;
+        book.title = dto.title;
+        book.publisher = dto.publisher;
+        book.authors = dto.authors;
+        book.isbn = dto.isbn;
+        book.synopsis = dto.synopsis;
+        book.publicationYear = dto.publicationYear;
+        book.numberOfCopies = dto.numberOfCopies;
+        book.coverImageKey = dto.coverImageKey;
+        book.created = dto.created;
+		book.reservations = dto.reservations.map(r => ReservationViewModelConverter.fromDTO(r));
         return book;
     }
 }

@@ -28,9 +28,12 @@ export class BookRepository {
         }).map((data: any) => data.map(b => BookViewModelConverter.fromDTO(b)));
     }
 
-    public IsBookAvailable(book: Book): Observable<boolean> {
-        const isBookAvailableURL = this.url + `/isBookAvailable/${book.id}`;
-        return this.httpClient.get(isBookAvailableURL).map((res: boolean) => res != true ? false : res);
+    public save(book: Book): Observable<Book> {
+        var json = JSON.stringify(book);
+        console.log("Book to Create JSON: " + json);
+        return this.httpClient.post(this.url, json, {
+            headers: new HttpHeaders().set('Content-Type', 'application/json')
+        }).map((data: any) => BookViewModelConverter.fromDTO(data));
     }
 
     public delete(book: Book): Observable<Object> {

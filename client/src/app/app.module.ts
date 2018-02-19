@@ -10,6 +10,7 @@ import {AuthGuard} from './ui/guards/auth.guard';
 import {LoginComponent} from './ui/pages/login/login.component';
 import {Toast} from './ui/components/toast/toast';
 import { CookieService } from 'ngx-cookie-service';
+import { ScrollIntoViewDirective } from './ui/directives/scroll-into-view.directive';
 
 const appRoutes: Routes = [
     {
