@@ -7,11 +7,11 @@
     "callable-types": true,
     "class-name": true,
     "comment-format": [
-      true,
+      false,
       "check-space"
     ],
     "curly": true,
-    "eofline": true,
+    "eofline": false,
     "forin": true,
     "import-blacklist": [
       true,
@@ -118,7 +118,7 @@
     "directive-selector": [
       true,
       "attribute",
-      "app",
+      "zli",
       "camelCase"
     ],
     "component-selector": [
