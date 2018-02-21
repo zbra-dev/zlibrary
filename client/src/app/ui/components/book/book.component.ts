@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { Book } from '../../../model/book';
-import { CoverImageService } from '../../../service/coverImage.service';
+import { CoverImageService } from '../../../service/cover-image.service';
 import { LoaderMediator } from '../../mediators/loader.mediator';
 import { ToastMediator } from '../../mediators/toast.mediator';
 import { BookService } from '../../../service/book.service';
@@ -10,8 +10,8 @@ import { modalConfigDefaults } from 'ngx-bootstrap/modal/modal-options.class';
 import { ConfirmMediator } from '../../mediators/confirm.mediator';
 import { User } from '../../../model/user';
 import { ReservationService } from '../../../service/reservation.service';
-import { ReservationStatus } from '../../../model/reservationStatus';
-import { LoanStatus } from '../../../model/loanStatus';
+import { ReservationStatus } from '../../../model/reservation-status';
+import { LoanStatus } from '../../../model/loan-status';
 
 
 @Component({
@@ -102,8 +102,9 @@ export class BookComponent implements OnInit {
 
     public getUserReservations(): boolean {
         if (this.book.reservations.length > 0) {
-            let userReservations = this.book.reservations.filter(r => r.userId == this.user.id);
-            return userReservations.length > 0 && userReservations.some(r => r.reservationReason.status != ReservationStatus.rejected || r.loanStatus != LoanStatus.returned)
+            const userReservations = this.book.reservations.filter(r => r.userId === this.user.id);
+            return userReservations.length > 0
+                && userReservations.some(r => r.reservationReason.isApproved || r.loanStatus !== LoanStatus.returned);
         }
         return false;
     }

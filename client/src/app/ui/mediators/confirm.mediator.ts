@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class ConfirmMediator {
+
     constructor(private modalService: BsModalService) {
     }
 

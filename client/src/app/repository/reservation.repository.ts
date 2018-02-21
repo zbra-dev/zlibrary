@@ -11,26 +11,24 @@ import { ReservationViewModelConverter } from './converter/reservation.view-mode
 import 'rxjs/add/operator/map';
 import { HttpErrorResponse } from '@angular/common/http/src/response';
 
-const RESERVATIONS_PATH = 'reservations/';
-const url = `${environment.apiUrl}/${RESERVATIONS_PATH}`;
+const RESERVATIONS_PATH = 'reservations';
+const URL = `${environment.apiUrl}/${RESERVATIONS_PATH}`;
 
 @Injectable()
 export class ReservationRepository {
+
   constructor(private httpClient: HttpClient) {
   }
 
   public findByUserId(user: User): Observable<Reservation[]> {
-    var findByUserIdUrl = url + `user/${user.id}`;
-    console.log("Find By User Id " + findByUserIdUrl);
+    const findByUserIdUrl = `${URL}/${user}/${user.id}`;
     return this.httpClient.get(findByUserIdUrl).map((data: any) => data.map(r => ReservationViewModelConverter.fromDTO(r)));
   }
 
   public order(user: User, book: Book): Observable<Reservation> {
-    var orderUrl = url + `order`;
-    console.log("Order URL " + orderUrl);
-    var dto = new ReservationResquestDTO(user.id, book.id);
-    var json = JSON.stringify(dto);
-    var headers = new Headers({ 'Content-Type': 'application/json' });
+    const orderUrl = `${URL}/order`;
+    const dto = new ReservationResquestDTO(user.id, book.id);
+    const json = JSON.stringify(dto);
 
     return this.httpClient.post(orderUrl, json, {
       headers: new HttpHeaders().set('Content-Type', 'application/json')

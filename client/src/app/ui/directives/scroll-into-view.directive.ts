@@ -13,7 +13,7 @@ export class ScrollIntoViewDirective implements OnChanges {
   public ngOnChanges(changes: SimpleChanges): void {
     if (!!changes.zliScrollIntoView.currentValue) {
 
-      var parent = this.el.nativeElement.parentNode,
+      const parent = this.el.nativeElement.parentNode,
         overTop = this.el.nativeElement.offsetTop - parent.offsetTop + this.el.nativeElement.clientHeight <= parent.scrollTop,
         overBottom = (this.el.nativeElement.offsetTop - parent.offsetTop) >= (parent.scrollTop + parent.clientHeight);
 

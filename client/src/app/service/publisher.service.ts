@@ -9,13 +9,11 @@ import { PublisherRepository } from '../repository/publisher.repository';
 
 @Injectable()
 export class PublisherService {
+
     constructor(private repository: PublisherRepository) {
     }
 
     public search(keyword: string): Observable<Publisher[]> {
-        // return terms.
-        //     .switchMap(term => term != ""? this.searchEntries(term) : new Observable<Author[]>().map(data => []));
-            console.log("HIT");
-            return this.repository.search(keyword);
+        return this.repository.search(keyword);
     }
 }

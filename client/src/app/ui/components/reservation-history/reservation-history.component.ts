@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
 @Component({
@@ -8,6 +8,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
     encapsulation: ViewEncapsulation.Emulated
 })
 export class ReservationHistoryComponent implements OnInit {
+
     constructor(private modalRef: BsModalRef) {
     }
 

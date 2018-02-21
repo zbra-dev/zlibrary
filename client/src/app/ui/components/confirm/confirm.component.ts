@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
-import {Book} from '../../../model/book';
+import { Book } from '../../../model/book';
 
 
 @Component({

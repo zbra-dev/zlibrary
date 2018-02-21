@@ -13,7 +13,7 @@
         <div class="admin-edit-text" (click)="viewBookDetails()">Editar</div>
         <div class="admin-delete-text" (click)="deleteModal()">Deletar</div>
     </div>
-    <img class="book-cover" [src]="'data:image/jpg;base64,' + image">
+    <img class="book-cover" *ngIf="image" [src]="'data:image/jpg;base64,' + image">
     <div class="book__title">{{book.title}}</div>
     <div class="book__authors">
         <span class="book__author" *ngFor="let author of book.authors; last as isLast">{{author.name}}{{isLast ? '' : ', '}}</span>

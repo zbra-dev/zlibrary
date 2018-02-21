@@ -8,7 +8,8 @@ import { BookViewModelConverter } from './converter/book.view-model-converter';
 import 'rxjs/add/operator/map';
 import { HttpErrorResponse } from '@angular/common/http/src/response';
 
-const IMAGE_PATH = 'image/';
+const IMAGE_PATH = 'image';
+const URL = `${environment.apiUrl}/${IMAGE_PATH}`;
 
 @Injectable()
 export class CoverImageRepository {
@@ -17,20 +18,16 @@ export class CoverImageRepository {
     }
 
     public loadImage(book: Book): Observable<string> {
-        const url = `${environment.apiUrl}/${IMAGE_PATH}LoadImage/`;
-        console.log("book key:  " + book.coverImageKey);
+        const url = `${URL}/LoadImage/`;
         if (book != null) {
             return this.httpClient.get(url + book.coverImageKey).map((res: string) => res);
         }
     }
 
-
-    public uploadImage(key: string, file:File): Observable<string> {
-        const url = `${environment.apiUrl}/${IMAGE_PATH}upload/` + key;
-        console.log("book key:  " + key);
+    public uploadImage(key: string, file: File): Observable<string> {
+        const url = `${URL}/upload/` + key;
         const formData = new FormData();
-        formData.append("file", file);
-        console.log("Form Data: " + formData.getAll);
-        return this.httpClient.post(url,formData).map((res: string) => res);
+        formData.append('file', file);
+        return this.httpClient.post(url, formData).map((res: string) => res);
     }
 }

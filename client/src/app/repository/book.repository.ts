@@ -10,34 +10,33 @@ import { User } from '../model/user';
 import { SearchParametersDTO } from './dto/searchParametersDTO';
 
 const BOOKS_PATH = 'books';
+const URL = `${environment.apiUrl}/${BOOKS_PATH}`;
 
 @Injectable()
 export class BookRepository {
+
     constructor(private httpClient: HttpClient) {
     }
-    url = `${environment.apiUrl}/${BOOKS_PATH}`;
 
     public search(keyword, orderby) {
-        var dto = new SearchParametersDTO(keyword, orderby);
-        var json = JSON.stringify(dto);
-        var headers = new Headers({ 'Content-Type': 'application/json' });
+        const dto = new SearchParametersDTO(keyword, orderby);
+        const json = JSON.stringify(dto);
 
         //search/{keyword}/{orderByValue:int}
-        return this.httpClient.post(this.url + '/search/', json, {
+        return this.httpClient.post(URL + '/search/', json, {
             headers: new HttpHeaders().set('Content-Type', 'application/json')
         }).map((data: any) => data.map(b => BookViewModelConverter.fromDTO(b)));
     }
 
     public save(book: Book): Observable<Book> {
-        var json = JSON.stringify(book);
-        console.log("Book to Create JSON: " + json);
-        return this.httpClient.post(this.url, json, {
+        const json = JSON.stringify(book);
+        return this.httpClient.post(URL, json, {
             headers: new HttpHeaders().set('Content-Type', 'application/json')
         }).map((data: any) => BookViewModelConverter.fromDTO(data));
     }
 
     public delete(book: Book): Observable<Object> {
-        const deleteURL = this.url + `/${book.id}`;
+        const deleteURL = `${URL}/${book.id}`;
         return this.httpClient.delete(deleteURL);
     }
 

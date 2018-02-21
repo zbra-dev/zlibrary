@@ -1,6 +1,6 @@
-import {ChangeDetectorRef, Component, Input, ViewEncapsulation} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {Subject} from 'rxjs/Subject';
+import { ChangeDetectorRef, Component, Input, ViewEncapsulation } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 
 const TOAST_TIMEOUT = 50000;
 

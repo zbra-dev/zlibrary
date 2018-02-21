@@ -1,5 +1,5 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {AuthService} from "../../../service/auth.service";
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { AuthService } from '../../../service/auth.service';
 
 @Component({
     selector: 'zli-login',

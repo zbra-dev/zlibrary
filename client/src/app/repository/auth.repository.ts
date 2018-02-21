@@ -1,7 +1,7 @@
-import {User} from '../model/user';
-import {Injectable} from '@angular/core';
-import {CookieService} from "ngx-cookie-service";
-import {UserViewModelConverter} from "./converter/user.view-model-converter";
+import { User } from '../model/user';
+import { Injectable } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
+import { UserViewModelConverter } from './converter/user.view-model-converter';
 const USER_KEY = 'user';
 const ERROR_KEY = 'loginError';
 
