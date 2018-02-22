@@ -1,4 +1,4 @@
-<div *ngIf="book && !canEdit" class="popup-container">
+<div *ngIf="!isNew && !canEdit" class="popup-container">
   <div class="book-container">
     <h1 class="about-book-title">Sobre o Livro</h1>
     <div *ngIf="!image" class="placeholder-image-container">
@@ -43,7 +43,7 @@
   </div>
 </div>
 
-<form *ngIf="book == null || canEdit" class="popup-container" [formGroup]="bookForm" autocomplete="on">
+<form *ngIf="isNew || canEdit" class="popup-container" [formGroup]="bookForm" autocomplete="on">
   <div class="book-container">
     <h1 class="about-book-title">Adicionar Livro</h1>
     <div *ngIf="imageLoad" style="position: relative">
@@ -68,7 +68,7 @@
           Campo não deve estar vazio
         </div>
       </label>
-      <input [(ngModel)]="bookToSave.title" name="title" type="text" class="textbox-input" formControlName="titleControl">
+      <input [(ngModel)]="book.title" name="title" type="text" class="textbox-input" formControlName="titleControl">
       <div class="input-label">ISBN:
         <div class="validation-alert" *ngIf="isbnControl.invalid && (isbnControl.dirty || isbnControl.touched) && !isbnControl.value">
           Campo obrigatório
@@ -77,10 +77,10 @@
           Dado preenchido inválido
         </div>
       </div>
-      <input [(ngModel)]="bookToSave.isbn" name="isbn" maxlength="13" type="number" class="textbox-input" (input)="Validate($event)"
+      <input [(ngModel)]="book.isbn" name="isbn" maxlength="13" type="number" class="textbox-input" (input)="Validate($event)"
         (keydown)="Validate($event)" formControlName="isbnControl">
       <label class="input-label">Sinopse:</label>
-      <textarea [(ngModel)]="bookToSave.synopsis" name="synopsis" type="text" class="synopsis-textarea" [ngModelOptions]="{standalone: true}"> </textarea>
+      <textarea [(ngModel)]="book.synopsis" name="synopsis" type="text" class="synopsis-textarea" [ngModelOptions]="{standalone: true}"> </textarea>
       <label class="input-label" >Autor(es):
         <div class="validation-alert" *ngIf="authorsControl.invalid && authorsControl.touched && !authorsControl.value">
           Campo obrigatório
@@ -90,7 +90,7 @@
         </div>
       </label>
       <div class="custom-input" [ngClass]="{ 'input-invalid': authorsControl.invalid && (authorsControl.touched || authorsControl.errors) }">
-        <div *ngFor="let author of selectedAuthors" class="tagged-author">
+        <div *ngFor="let author of book.authors" class="tagged-author">
           <div class="tagged-text">{{author.name}}</div>
           <div style="width: 23px;"></div>
           <div class="close" (click)="unSelectElement(author)"></div>
@@ -115,10 +115,10 @@
         </div>
       </label>
       <div class="custom-input" [ngClass]="{ 'input-invalid': publisherControl.invalid && (publisherControl.dirty || publisherControl.touched)}">
-        <div *ngIf="selectedPublisher" class="tagged-author">
-          <div class="tagged-text">{{selectedPublisher.name}}</div>
+        <div *ngIf="book.publisher" class="tagged-author">
+          <div class="tagged-text">{{book.publisher.name}}</div>
           <div style="width: 25px;"></div>
-          <div class="close" (click)="unSelectElement(selectedPublisher)"></div>
+          <div class="close" (click)="unSelectElement(book.publisher)"></div>
         </div>
         <input *ngIf="!selectedPublisher" type="text" name="publisherSearch" class="author-textbox-input"
           (keydown)="onKeyPressed($event);" (keyup)="searchTerm($event)" formControlName="publisherControl">
@@ -142,7 +142,7 @@
           Ano de Publicação tem que ser até o ano atual.
         </div>
       </label>
-      <input [(ngModel)]="bookToSave.publicationYear" type="number" [ngClass]="{ 'input-invalid': publicationYearControl.invalid && (publicationYearControl.dirty || publicationYearControl.touched)}"
+      <input [(ngModel)]="book.publicationYear" type="number" [ngClass]="{ 'input-invalid': publicationYearControl.invalid && (publicationYearControl.dirty || publicationYearControl.touched)}"
         min="1900" maxlength="4" class="textbox-input" formControlName="publicationYearControl" (keydown)="Validate($event)"
         (paste)="$event.preventDefault()">
       <label class="input-label">Número de Cópias:
@@ -153,16 +153,16 @@
           Número de copias deve estar entre 1 e 5.
         </div>
       </label>
-      <input [(ngModel)]="bookToSave.numberOfCopies" type="number" [ngClass]="{ 'input-invalid': numberOfCopiesControl.invalid && (numberOfCopiesControl.dirty || numberOfCopiesControl.touched)}"
+      <input [(ngModel)]="book.numberOfCopies" type="number" [ngClass]="{ 'input-invalid': numberOfCopiesControl.invalid && (numberOfCopiesControl.dirty || numberOfCopiesControl.touched)}"
         min="1" max="5" maxlength="1" class="textbox-input" (keydown)="Validate($event)" (paste)="$event.preventDefault()"
         formControlName="numberOfCopiesControl">
     </div>
   </div>
   <div class="create-buttons-container">
-    <div *ngIf="!book || canEdit" class="cancel-button" (click)="canEdit = false">
+    <div *ngIf="!isNew || canEdit" class="cancel-button" (click)="canEdit = false">
       <div class="available-button-text-available">Cancelar</div>
     </div>
-    <button *ngIf="!book || canEdit" class="create-button" [disabled]="!bookForm.valid" (click)="saveBook()">
+    <button *ngIf="isNew || canEdit" class="create-button" [disabled]="!bookForm.valid" (click)="saveBook()">
       <div class="available-button-text-available">+ ADD</div>
     </button>
   </div>

@@ -28,11 +28,22 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 export class BookPopupComponent implements OnInit {
   @Input()
   set bookData(value: Book) {
+    if (value !== this.book && this.canEdit) {
+      this.canEdit = false;
+    }
+    this.isNew = !value;
+    this.bookForm.reset();
     this.book = value;
+    if (!this.book) {
+      this.book = new Book();
+      this.book.numberOfCopies = 1;
+      this.imageLoad = false;
+      this.image = null;
+    }
     this.getImage();
-    this.initBookToSave();
   }
-  public book: Book;
+  public book = new Book();
+  private isNew = true;
   private canEdit = false;
 
   public user: User;
@@ -55,8 +66,6 @@ export class BookPopupComponent implements OnInit {
   public selectedPublisher: Publisher;
   public hoverPublisher: Publisher;
 
-  public bookToSave = new Book();
-
   bookForm: FormGroup;
 
   constructor(private bookService: BookService,
@@ -72,21 +81,19 @@ export class BookPopupComponent implements OnInit {
     this.searchAuthor();
     this.searchPublisher();
     this.bookForm = new FormGroup({
-      titleControl: new FormControl(this.bookToSave.title, Validators.compose([
+      titleControl: new FormControl(this.book.title, Validators.compose([
         Validators.required,
-        Validators.nullValidator,
         this.emptyStringValidator
       ])),
-      isbnControl: new FormControl(this.bookToSave.isbn, Validators.compose([
+      isbnControl: new FormControl(this.book.isbn, Validators.compose([
         Validators.required,
-        Validators.nullValidator,
         Validators.minLength(13),
         Validators.maxLength(13),
         this.isbnValidator
       ])),
-      authorsControl: new FormControl(this.selectedAuthors),
-      publisherControl: new FormControl(this.selectedPublisher),
-      publicationYearControl: new FormControl(this.bookToSave.publicationYear, Validators.compose([
+      authorsControl: new FormControl(this.book.authors),
+      publisherControl: new FormControl(this.book.publisher),
+      publicationYearControl: new FormControl(this.book.publicationYear, Validators.compose([
         Validators.required,
         Validators.minLength(4),
         Validators.maxLength(4),
@@ -95,7 +102,7 @@ export class BookPopupComponent implements OnInit {
         Validators.nullValidator,
         this.greaterThanZeroValidator
       ])),
-      numberOfCopiesControl: new FormControl(this.bookToSave.numberOfCopies, Validators.compose([
+      numberOfCopiesControl: new FormControl(this.book.numberOfCopies, Validators.compose([
         Validators.required,
         Validators.maxLength(1),
         Validators.min(1),
@@ -309,12 +316,10 @@ export class BookPopupComponent implements OnInit {
 
   public saveBook() {
     if (this.book === null) {
-      this.bookToSave.coverImageKey = Guid.newGUID();
+      this.book.coverImageKey = Guid.newGUID();
     }
-    this.bookToSave.authors = this.selectedAuthors;
-    this.bookToSave.publisher = this.selectedPublisher;
     this.loaderMediator.execute(
-      this.bookService.save(this.bookToSave).subscribe(
+      this.bookService.save(this.book).subscribe(
         book => {
           console.log('Livro Criado' + book);
           if (this.book === null || (this.image !== null && this.uploadedImage !== null)) {
@@ -373,23 +378,8 @@ export class BookPopupComponent implements OnInit {
     console.log('key Pressed:' + event.which);
   }
 
-  private initBookToSave() {
-    if (!!this.book) {
-      this.bookToSave = this.book;
-      this.selectedPublisher = this.book.publisher;
-      this.selectedAuthors = this.book.authors;
-    } else {
-      this.bookToSave = new Book();
-      this.bookToSave.numberOfCopies = 1;
-      this.selectedAuthors = [];
-      this.selectedPublisher = null;
-      this.imageLoad = false;
-      this.image = null;
-    }
-  }
-
   private greaterThanZeroValidator(control) {
-    if (!!!control.value || control.value > 0) {
+    if (!control.value || control.value > 0) {
       return null;
     }
 
@@ -408,7 +398,7 @@ export class BookPopupComponent implements OnInit {
   }
 
   private isbnValidator(control) {
-    if (!!!control.value) {
+    if (!control.value) {
       return null;
     }
     const isbn = control.value.toString();
@@ -438,7 +428,7 @@ export class BookPopupComponent implements OnInit {
   }
 
   private hasSelectedAuthors() {
-    if (this.selectedAuthors.length === 0) {
+    if (!this.book.authors || this.book.authors.length === 0) {
       return {
         hasSelectedAuthors: { filterAuthorsEmpty: 'select at least one author' }
       };
@@ -447,7 +437,7 @@ export class BookPopupComponent implements OnInit {
   }
 
   private hasSelectedPublisher() {
-    if (this.selectedPublisher === null) {
+    if (!this.book.publisher) {
       return {
         hasSelectedPublisher: { filterPublihserNull: 'select a publisher' }
       };
