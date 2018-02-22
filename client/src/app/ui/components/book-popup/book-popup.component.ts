@@ -1,25 +1,20 @@
-import { Component, Input, OnInit, ElementRef, keyframes } from '@angular/core';
-import { Book } from '../../../model/book';
-import { User } from '../../../model/user';
-import { BookService } from '../../../service/book.service';
-import { CoverImageService } from '../../../service/coverImage.service';
-import { ReservationService } from '../../../service/reservation.service';
-import { AuthService } from '../../../service/auth.service';
-import { LoaderMediator } from '../../mediators/loader.mediator';
-import { ToastMediator } from '../../mediators/toast.mediator';
-import { KeyValueDiffers } from '@angular/core';
-import { Reservation } from '../../../model/reservation';
-import { ReservationStatus } from '../../../model/reservationStatus';
-import { AuthorService } from '../../../service/author.service';
-import { Subject } from 'rxjs/Subject';
-import { Author } from '../../../model/author';
-import { Publisher } from '../../../model/publisher';
-import { Isbn } from '../../../model/isbn';
-import { Guid } from '../../../model/guid';
-import { element } from 'protractor';
-import { PublisherService } from '../../../service/publisher.service';
-import { fail } from 'assert';
-import { FormGroup, Validators, FormControl } from '@angular/forms';
+import {Component, ElementRef, Input, KeyValueDiffers, OnInit} from '@angular/core';
+import {Book} from '../../../model/book';
+import {User} from '../../../model/user';
+import {BookService} from '../../../service/book.service';
+import {CoverImageService} from '../../../service/coverImage.service';
+import {ReservationService} from '../../../service/reservation.service';
+import {AuthService} from '../../../service/auth.service';
+import {LoaderMediator} from '../../mediators/loader.mediator';
+import {ToastMediator} from '../../mediators/toast.mediator';
+import {AuthorService} from '../../../service/author.service';
+import {Subject} from 'rxjs/Subject';
+import {Author} from '../../../model/author';
+import {Publisher} from '../../../model/publisher';
+import {Guid} from '../../../model/guid';
+import {PublisherService} from '../../../service/publisher.service';
+import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
+import {AuthorSuggestionAdapter} from './author-suggestion.adapter';
 
 @Component({
   selector: 'zli-book-popup',
@@ -59,15 +54,16 @@ export class BookPopupComponent implements OnInit {
   bookForm: FormGroup;
 
   constructor(private bookService: BookService,
-    private coverImageService: CoverImageService,
-    private authorService: AuthorService,
-    private publisherService: PublisherService,
-    private reservationService: ReservationService,
-    private loaderMediator: LoaderMediator,
-    private toastMediator: ToastMediator,
-    private authService: AuthService,
-    private element: ElementRef,
-    differs: KeyValueDiffers) {
+              private coverImageService: CoverImageService,
+              private authorService: AuthorService,
+              private publisherService: PublisherService,
+              private reservationService: ReservationService,
+              private loaderMediator: LoaderMediator,
+              private toastMediator: ToastMediator,
+              private authService: AuthService,
+              private element: ElementRef,
+              public authorSuggestionAdapter: AuthorSuggestionAdapter,
+              differs: KeyValueDiffers) {
     this.loaderMediator.onLoadChanged.subscribe(loading => this.isBusy = loading);
     this.differ = differs.find([]).create();
     this.searchAuthor();
@@ -86,7 +82,7 @@ export class BookPopupComponent implements OnInit {
         Validators.maxLength(13),
         this.isbnValidator
       ])),
-      authorsControl: new FormControl(this.selectedAuthors),
+        authorsControl: new FormControl(this.bookToSave.authors, validateAuthors),
       publisherControl: new FormControl(this.selectedPublisher),
       publicationYearControl: new FormControl(this.bookToSave.publicationYear, Validators.compose([
         Validators.required,
@@ -109,14 +105,7 @@ export class BookPopupComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.authService.getLoggedUser();
-    console.log(this.user.name)
-
-    this.bookForm.controls['publisherControl'].valueChanges.subscribe(value => {
-      let error = this.hasSelectedPublisher();
-      if (error != null) {
-        this.bookForm.controls['publisherControl'].setErrors(error);
-      }
-    });
+      console.log(this.user.name);
   }
 
   get titleControl() {
@@ -128,12 +117,6 @@ export class BookPopupComponent implements OnInit {
   }
 
   get authorsControl() {
-    this.bookForm.controls['authorsControl'].valueChanges.subscribe(value => {
-      let error = this.hasSelectedAuthors();
-      if (error != null) {
-        this.bookForm.controls['authorsControl'].setErrors(error);
-      }
-    });
     return this.bookForm.get('authorsControl')
   }
 
@@ -453,22 +436,15 @@ export class BookPopupComponent implements OnInit {
     }
     return null;
   }
+}
 
-  private hasSelectedAuthors() {
-    if (this.selectedAuthors.length == 0) {
-      return {
-        hasSelectedAuthors: { filterAuthorsEmpty: "select at least one author" }
-      }
+// TODO: Move to a separate file
+function validateAuthors(control: AbstractControl): { [key: string]: any } {
+    const value = control.value;
+    if (!value || !value.length) {
+        return {
+            emptyAuthors: {value: control.value}
+        };
     }
-    return null
-  }
-
-  private hasSelectedPublisher() {
-    if (this.selectedPublisher == null) {
-      return {
-        hasSelectedPublisher: { filterPublihserNull: "select a publisher" }
-      }
-    }
-    return null
-  }
+    return null;
 }

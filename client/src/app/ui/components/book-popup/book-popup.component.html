@@ -85,30 +85,15 @@
         <div class="validation_alert" *ngIf="authorsControl.invalid && authorsControl.touched && !authorsControl.value">
           Campo obrigatório
         </div>
-        <div class="validation_alert" *ngIf="authorsControl.errors && authorsControl.errors.hasSelectedAuthors && authorsControl.value ">
+          <div class="validation_alert"
+               *ngIf="authorsControl.errors && authorsControl.errors.emptyAuthors && authorsControl.value ">
           Selecione pelo menos um autor
         </div>
       </label>
-      <div class="custom_input" [ngClass]="{ 'input_invalid': authorsControl.invalid && (authorsControl.touched || authorsControl.errors) }">
-        <div *ngFor="let author of selectedAuthors" class="tagged_author">
-          <div class="tagged_text">{{author.name}}</div>
-          <div style="width: 23px;"></div>
-          <div class="close" (click)="unSelectElement(author)"></div>
-        </div>
-        <input type="text" name="authorSearch" class="author_textbox_input" formControlName="authorsControl" (keydown)="onKeyPressed($event);"
-          (keyup)="searchTerm($event)" (click)="searchTerm($event)">
-        <div *ngIf="!!filterAuthors && filterAuthors.length > 0" class="drop_down_filter">
-          <div *ngFor="let author of filterAuthors;" (click)="selectElement(author);" [zliScrollIntoView]="selectedAuthor?.id == author.id"
-            (mousemove)="selectedAuthor = author">
-            <div *ngIf="selectedAuthor != author" class="drop_down_item">
-              <div>{{author.name}}</div>
-            </div>
-            <div *ngIf="selectedAuthor == author" class="drop_down_item_selected">
-              <div>{{author.name}}</div>
-            </div>
-          </div>
-        </div>
-      </div>
+        <zli-suggestion [formControlName]="'authorsControl'"
+                        [suggestionAdapter]="authorSuggestionAdapter"
+                        [(ngModel)]="bookToSave.authors">
+        </zli-suggestion>
       <label class="input_title">Editora:
         <div class="validation_alert" *ngIf="publisherControl.touched && publisherControl.errors">
           Campo obrigatório
