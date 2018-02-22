@@ -1,7 +1,7 @@
-<div *ngFor="let element of selected" class="selected-suggestion">
-    <div class="selected-suggestion__text">{{element.name}}</div>
+<div *ngFor="let element of selected" class="suggestion-tag">
+    <div class="suggestion-tag__text">{{element.name}}</div>
     <div style="width: 23px;"></div>
-    <div class="deselect-suggestion" (click)="deselectElement(element)"></div>
+    <div class="suggestion-tag__deselect" (click)="deselectElement(element)"></div>
 </div>
 <input type="text"
        class="suggestion-query"

@@ -49,7 +49,7 @@
     color: white;
 }
 
-.selected-suggestion {
+.suggestion-tag {
     position: relative;
     height: 26px;
     border-radius: 13px;
@@ -62,7 +62,7 @@
     margin-top: 5px;
 }
 
-.selected-suggestion__text {
+.suggestion-tag__text {
     width: 80%;
     margin-left: 2px;
     white-space: nowrap;
@@ -70,7 +70,7 @@
     text-overflow: ellipsis;
 }
 
-.deselect-suggestion {
+.suggestion-tag__deselect {
     z-index: 200;
     cursor: pointer;
     display: block;
@@ -81,11 +81,11 @@
     transition: all 250ms linear;
 }
 
-.deselect-suggestion:hover {
+.suggestion-tag__deselect:hover {
     transform: rotate(180deg);
 }
 
-.deselect-suggestion:before {
+.suggestion-tag__deselect:before {
     content: "";
     position: absolute;
     display: block;
@@ -101,7 +101,7 @@
     transform-origin: center;
 }
 
-.deselect-suggestion:after {
+.suggestion-tag__deselect:after {
     content: "";
     position: absolute;
     display: block;
