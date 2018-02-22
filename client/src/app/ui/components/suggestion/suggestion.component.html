@@ -1,0 +1,20 @@
+<div *ngFor="let element of selected" class="suggestion-tag">
+    <div class="suggestion-tag__text">{{element.name}}</div>
+    <div style="width: 23px;"></div>
+    <div class="suggestion-tag__deselect" (click)="deselectElement(element)"></div>
+</div>
+<input type="text"
+       class="suggestion-query"
+       *ngIf="!selectionLimit || selected.length < selectionLimit"
+       (keydown)="onKeyDown($event)"
+       [ngModel]="query" (ngModelChange)="onQueryChanged($event)">
+<div *ngIf="!!searchResults && searchResults.length > 0" class="suggestion-list">
+    <div *ngFor="let result of searchResults"
+         (click)="selectElement(candidate)"
+         (mousemove)="candidate = result"
+         [zliScrollIntoView]="candidate?.id == result.id">
+        <div class="suggestion-list__item" [ngClass]="{ 'suggestion-list_item--selected': candidate === result }">
+            <div>{{result.name}}</div>
+        </div>
+    </div>
+</div>

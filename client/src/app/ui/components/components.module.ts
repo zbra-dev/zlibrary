@@ -10,6 +10,8 @@ import { ReservationHistoryComponent } from './reservation-history/reservation-h
 import { ConfirmComponent } from './confirm/confirm.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DirectivesModule } from '../directives/directives.module';
+import { SuggestionComponent } from './suggestion/suggestion.component';
+import { AuthorSuggestionAdapter } from './book-popup/author-suggestion.adapter';
 
 @NgModule({
     declarations: [
@@ -19,7 +21,8 @@ import { DirectivesModule } from '../directives/directives.module';
         LoadingOverlayComponent,
         ToastComponent,
         ReservationHistoryComponent,
-        ConfirmComponent
+        ConfirmComponent,
+        SuggestionComponent,
     ],
     exports: [
         BookComponent,
@@ -43,7 +46,9 @@ import { DirectivesModule } from '../directives/directives.module';
         ReactiveFormsModule,
         DirectivesModule
     ],
-    providers: []
+    providers: [
+        AuthorSuggestionAdapter
+    ]
 })
 export class ComponentsModule {
 }
