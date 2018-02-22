@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 @Component({
     selector: 'zli-page-not-found',
@@ -7,8 +7,9 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
     encapsulation: ViewEncapsulation.Emulated
 })
 export class PageNotFoundComponent implements OnInit {
+
     constructor() {
-    }
+     }
 
     public ngOnInit(): void {
     }

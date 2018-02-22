@@ -9,6 +9,7 @@ import {AuthorRepository} from '../repository/author.respository';
 
 @Injectable()
 export class AuthorService {
+
     constructor(private repository: AuthorRepository) {
     }
 

@@ -1,7 +1,7 @@
-import {HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {AuthRepository} from '../auth.repository';
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import { HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { AuthRepository } from '../auth.repository';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -11,7 +11,7 @@ export class AuthInterceptor implements HttpInterceptor {
     public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const loggedUser = this.authRepository.getLoggedUser();
         if (!!loggedUser) {
-            const authReq = req.clone({headers: req.headers.set('Authorization', `Bearer ${loggedUser.accessToken}`)});
+            const authReq = req.clone({ headers: req.headers.set('Authorization', `Bearer ${loggedUser.accessToken}`) });
             return next.handle(authReq);
         }
 

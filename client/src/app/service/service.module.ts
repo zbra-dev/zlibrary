@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BookService } from './book.service';
-import { CoverImageService } from './coverImage.service';
+import { CoverImageService } from './cover-image.service';
 import { ReservationService } from './reservation.service';
 import { AuthService } from './auth.service';
 import { AuthorService } from './author.service';

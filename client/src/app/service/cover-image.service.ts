@@ -1,10 +1,11 @@
-import {CoverImageRepository} from '../repository/coverImage.repository';
-import {Observable} from 'rxjs/Observable';
-import {Book} from '../model/book';
-import {Injectable} from '@angular/core';
+import { CoverImageRepository } from '../repository/cover-image.repository';
+import { Observable } from 'rxjs/Observable';
+import { Book } from '../model/book';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CoverImageService {
+
     constructor(private repository: CoverImageRepository) {
     }
 
@@ -12,7 +13,7 @@ export class CoverImageService {
         return this.repository.loadImage(book);
     }
 
-    public uploadImage(key: string, file:File): Observable<string> {
+    public uploadImage(key: string, file: File): Observable<string> {
         return this.repository.uploadImage(key, file);
     }
 }

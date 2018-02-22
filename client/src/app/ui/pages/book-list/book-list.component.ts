@@ -29,8 +29,7 @@ export class BookListComponent implements OnInit {
         this.loaderMediator.onLoadChanged.subscribe(loading => this.isBusy = loading);
     }
 
-    public get isAdmin() { return this.user.isAdministrator };
-
+    public get isAdmin() { return this.user.isAdministrator; }
 
     public ngOnInit(): void {
         this.searchBy(this.keyword, 0);
@@ -39,7 +38,7 @@ export class BookListComponent implements OnInit {
 
 
     public search(): void {
-            this.searchBy(this.keyword, 0);
+        this.searchBy(this.keyword, 0);
     }
 
     public searchBy(keyword, orderBy) {
@@ -55,8 +54,8 @@ export class BookListComponent implements OnInit {
     }
 
     public toggleSidebar(): void {
-        document.getElementById("background").classList.toggle("active");
-        if (document.getElementById("sidebar").classList.toggle("active") == false) {
+        document.getElementById('background').classList.toggle('active');
+        if (document.getElementById('sidebar').classList.toggle('active') === false) {
             this.isBusy = false;
             this.selectedBook = null;
         }
@@ -67,7 +66,7 @@ export class BookListComponent implements OnInit {
         this.toggleSidebar();
     }
 
-    public updateBookStatus(message: string): void{
+    public updateBookStatus(message: string): void {
         this.search();
     }
 
