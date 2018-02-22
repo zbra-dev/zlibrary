@@ -18,7 +18,8 @@ import { Isbn } from '../../../model/isbn';
 import { Guid } from '../../../model/guid';
 import { element } from 'protractor';
 import { PublisherService } from '../../../service/publisher.service';
-import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
+import { AuthorSuggestionAdapter } from './author-suggestion.adapter';
 
 @Component({
   selector: 'zli-book-popup',
@@ -76,6 +77,7 @@ export class BookPopupComponent implements OnInit {
     private loaderMediator: LoaderMediator,
     private toastMediator: ToastMediator,
     private authService: AuthService,
+    public authorSuggestionAdapter: AuthorSuggestionAdapter,
     private elementRef: ElementRef) {
     this.loaderMediator.onLoadChanged.subscribe(loading => this.isBusy = loading);
     this.searchAuthor();
@@ -91,9 +93,10 @@ export class BookPopupComponent implements OnInit {
         Validators.maxLength(13),
         this.isbnValidator
       ])),
-      authorsControl: new FormControl(this.book.authors),
+      authorsControl: new FormControl(this.book.authors, validateAuthors),
       publisherControl: new FormControl(this.book.publisher),
       publicationYearControl: new FormControl(this.book.publicationYear, Validators.compose([
+
         Validators.required,
         Validators.minLength(4),
         Validators.maxLength(4),
@@ -132,12 +135,6 @@ export class BookPopupComponent implements OnInit {
   }
 
   get authorsControl() {
-    this.bookForm.controls['authorsControl'].valueChanges.subscribe(value => {
-      const error = this.hasSelectedAuthors();
-      if (error !== null) {
-        this.bookForm.controls['authorsControl'].setErrors(error);
-      }
-    });
     return this.bookForm.get('authorsControl');
   }
 
@@ -427,15 +424,6 @@ export class BookPopupComponent implements OnInit {
     return null;
   }
 
-  private hasSelectedAuthors() {
-    if (!this.book.authors || this.book.authors.length === 0) {
-      return {
-        hasSelectedAuthors: { filterAuthorsEmpty: 'select at least one author' }
-      };
-    }
-    return null;
-  }
-
   private hasSelectedPublisher() {
     if (!this.book.publisher) {
       return {
@@ -444,4 +432,15 @@ export class BookPopupComponent implements OnInit {
     }
     return null;
   }
+}
+
+// TODO: Move to a separate file
+function validateAuthors(control: AbstractControl): { [key: string]: any } {
+  const value = control.value;
+  if (!value || !value.length) {
+    return {
+      emptyAuthors: { value: control.value }
+    };
+  }
+  return null;
 }

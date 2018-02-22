@@ -1,0 +1,118 @@
+:host {
+    position: relative;
+    width: 100%;
+    min-height: 36px;
+    margin-top: 10px;
+    border: solid 1px #eaeaea;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 0 auto;
+    flex: 1 0 auto;
+}
+
+.suggestion-query {
+    height: 36px;
+    flex: 1 0 auto;
+    border: 0 transparent;
+    margin-top: 2px;
+    margin-left: 2px;
+}
+
+.suggestion-query:focus {
+    outline: none;
+}
+
+.suggestion-list {
+    max-height: 170px;
+    overflow: auto;
+    background-color: #ffffff;
+    box-shadow: 0 0 4px 0 rgba(215, 215, 215, 0.5);
+    border: solid 1px #f2f2f2;
+    width: 100%;
+}
+
+.suggestion-list__item {
+    cursor: pointer;
+    padding: 5px;
+}
+
+.suggestion-list__item--selected {
+    background-color: #4a90e2;
+    color: white;
+}
+
+.suggestion-tag {
+    position: relative;
+    height: 26px;
+    border-radius: 13px;
+    background-color: #f2f2f2;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    margin-left: 2px;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+.suggestion-tag__text {
+    width: 80%;
+    margin-left: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.suggestion-tag__deselect {
+    z-index: 200;
+    cursor: pointer;
+    display: block;
+    position: absolute;
+    right: 7%;
+    width: 11px;
+    height: 11px;
+    transition: all 250ms linear;
+}
+
+.suggestion-tag__deselect:hover {
+    transform: rotate(180deg);
+}
+
+.suggestion-tag__deselect:before {
+    content: "";
+    position: absolute;
+    display: block;
+    margin: auto;
+    left: 0;
+    right: 3.9%;
+    top: 1.5%;
+    bottom: 0;
+    width: 11px;
+    height: 0;
+    border-top: 3px solid rgba(0, 0, 0, 0.5);
+    transform: rotate(45deg);
+    transform-origin: center;
+}
+
+.suggestion-tag__deselect:after {
+    content: "";
+    position: absolute;
+    display: block;
+    margin: auto;
+    left: 0;
+    right: 3.9%;
+    top: 1.5%;
+    bottom: 0;
+    width: 11px;
+    height: 0;
+    border-top: 3px solid rgba(0, 0, 0, 0.5);
+    transform: rotate(-45deg);
+    transform-origin: center;
+}

@@ -82,33 +82,14 @@
       <label class="input-label">Sinopse:</label>
       <textarea [(ngModel)]="book.synopsis" name="synopsis" type="text" class="synopsis-textarea" [ngModelOptions]="{standalone: true}"> </textarea>
       <label class="input-label" >Autor(es):
-        <div class="validation-alert" *ngIf="authorsControl.invalid && authorsControl.touched && !authorsControl.value">
+        <div class="validation-alert" *ngIf="authorsControl.dirty && !!authorsControl.errors?.emptyAuthors && !!authorsControl.value ">
           Campo obrigatório
         </div>
-        <div class="validation-alert" *ngIf="authorsControl.dirty && !!authorsControl.errors?.hasSelectedAuthors && !!authorsControl.value ">
-          Selecione pelo menos um autor
-        </div>
       </label>
-      <div class="custom-input" [ngClass]="{ 'input-invalid': authorsControl.invalid && (authorsControl.touched || authorsControl.errors) }">
-        <div *ngFor="let author of book.authors" class="tagged-author">
-          <div class="tagged-text">{{author.name}}</div>
-          <div style="width: 23px;"></div>
-          <div class="close" (click)="unSelectElement(author)"></div>
-        </div>
-        <input type="text" name="authorSearch" class="author-textbox-input" formControlName="authorsControl" (keydown)="onKeyPressed($event);"
-          (keyup)="searchTerm($event)" (click)="searchTerm($event)">
-        <div *ngIf="!!filterAuthors && filterAuthors.length > 0" class="drop-down-filter">
-          <div *ngFor="let author of filterAuthors;" (click)="selectElement(author);" [zliScrollIntoView]="selectedAuthor?.id == author.id"
-            (mousemove)="selectedAuthor = author">
-            <div *ngIf="selectedAuthor != author" class="drop-down-item">
-              <div>{{author.name}}</div>
-            </div>
-            <div *ngIf="selectedAuthor == author" class="drop-down-item-selected">
-              <div>{{author.name}}</div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <zli-suggestion [formControlName]="'authorsControl'"
+                      [suggestionAdapter]="authorSuggestionAdapter"
+                      [(ngModel)]="book.authors">
+      </zli-suggestion>
       <label class="input-label">Editora:
         <div class="validation-alert" *ngIf="publisherControl.touched && !!publisherControl.errors">
           Campo obrigatório
