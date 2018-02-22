@@ -14,6 +14,7 @@
         <div class="admin-delete-text" (click)="deleteModal()">Deletar</div>
     </div>
     <img class="book-cover" *ngIf="image" [src]="'data:image/jpg;base64,' + image">
+    <img class="book-cover" *ngIf="!image" src="../../assets/images/placeholder-add-photo.png">
     <div class="book__title">{{book.title}}</div>
     <div class="book__authors">
         <span class="book__author" *ngFor="let author of book.authors; last as isLast">{{author.name}}{{isLast ? '' : ', '}}</span>
