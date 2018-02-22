@@ -48,7 +48,6 @@
   }
   .search-bar {
     width: 85%;
-    height: 80%;
     padding: 10px;
     margin-left: 32px;
     border-radius: 19px;
@@ -58,6 +57,10 @@
     margin-left: 35px;
     border: solid 1px #bababa;
     border-right: 0px;
+  }
+
+  .search-bar:focus{
+      outline: none;
   }
 
   @media (max-width:1700px) {
@@ -116,19 +119,19 @@
     width: 5%;
     border-top-left-radius: 0px!important;
     border-bottom-left-radius: 0px!important;
-    height: 42px;
+    height: 46px;
     border-radius: 21px;
     padding: 0px;
     margin-top:50px;
     border:0px;
     background-color: #34495e !important;
+    margin-left: -5px;
   }
 
   .add-button {
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
     width: 5%;
-    height: 50%;
     border:0px;
     background-color: transparent;
     object-fit: contain;
