@@ -1,24 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
-    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="1.1.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.3" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="1.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ZLibrary.API\ZLibrary.API.csproj" />
     <ProjectReference Include="..\ZLibrary.Core\ZLibrary.Core.csproj" />
     <ProjectReference Include="..\ZLibrary.Model\ZLibrary.Model.csproj" />
     <ProjectReference Include="..\ZLibrary.Persistence\ZLibrary.Persistence.csproj" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="1.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.0.0" />
     <Content Include="Startup.Db.cs" />
     <Content Include="Startup.Auth.cs" />
     <Content Include="Startup.cs" />
@@ -39,5 +39,8 @@
     <Content Include="Controllers\Items\AuthorDTO.cs" />
     <Content Include="Controllers\IAutheticationApi.cs" />
     <Content Include="Validators\ImageValidator.cs" />
+    <Content Include="Extensions\AuthorExtensions.cs" />
+    <Content Include="Utils\MultipartRequestHelper.cs" />
+    <Content Include="Validators\ValidationContext.cs" />
   </ItemGroup>
 </Project>

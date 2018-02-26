@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceRoot}/ZLibrary.Web/bin/Debug/netcoreapp1.1/ZLibrary.Web.dll",
+            "program": "${workspaceRoot}/ZLibrary.Web/bin/Debug/netcoreapp2.0/ZLibrary.Web.dll",
             "args": [],
             "cwd": "${workspaceRoot}/ZLibrary.Web",
             "stopAtEntry": false,

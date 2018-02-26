@@ -35,7 +35,7 @@ namespace ZLibrary.Web
         public void ConfigureServices(IServiceCollection services)
         {
             // Add DbContext
-            services.AddDbContext<ZLibraryContext>(o => o.UseInMemoryDatabase());
+            services.AddDbContext<ZLibraryContext>(o => o.UseInMemoryDatabase("ZLibrary_Dev"));
 
             // Add framework services.
             services.AddMvc().AddJsonOptions(
@@ -45,6 +45,7 @@ namespace ZLibrary.Web
             // Add application services
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IBookService, BookService>();
+            services.AddTransient<IBookFacade, BookFacade>();
             services.AddTransient<IAuthorService, AuthorService>();
             services.AddTransient<IPublisherService, PublisherService>();
             services.AddTransient<IReservationService, ReservationService>();
