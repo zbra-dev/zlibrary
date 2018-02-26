@@ -15,9 +15,9 @@ namespace ZLibrary.Core
             this.imageRepository = imageRepository;
         }
 
-        public Guid SaveImage(Guid key, byte[] fileData)
+        public Guid SaveImage(Guid key, string filePath)
         {
-            return imageRepository.SaveFile(key, fileData);
+            return imageRepository.SaveFile(key, filePath);
         }
 
         public byte[] LoadImage(Guid key)

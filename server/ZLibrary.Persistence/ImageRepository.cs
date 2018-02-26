@@ -8,21 +8,22 @@ namespace ZLibrary.Persistence
     {
         private readonly object thisLock = new object();
 
-        public Guid SaveFile(Guid key, byte[] imageData)
+        public Guid SaveFile(Guid key, string filePath)
         {
             lock (thisLock)
             {
                 var imageFilePath = GenerateImagePath(key);
-
-                using (var stream = new MemoryStream(imageData))
-                using (var dest = File.OpenWrite(imageFilePath))
+                if (File.Exists(filePath))
                 {
-                    dest.Flush();
-                    stream.CopyTo(dest);
+                    if (File.Exists(imageFilePath))
+                    {
+                        File.Delete(imageFilePath);
+                    }
+                    File.Move(filePath, imageFilePath);
                 }
-
-                return key;
             }
+
+            return key;
         }
 
         public byte[] GetFile(Guid key)

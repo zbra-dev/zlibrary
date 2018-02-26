@@ -14,5 +14,8 @@
     <Content Include="ILoanService.cs" />
     <Content Include="IReservationService.cs" />
     <Content Include="BookDeleteException.cs" />
+    <Content Include="ImageExtesionException.cs" />
+    <Content Include="ImageSaveException.cs" />
+    <Content Include="IBookFacade.cs" />
   </ItemGroup>
 </Project>

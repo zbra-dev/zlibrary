@@ -14,8 +14,8 @@ export class BookService {
         return this.repository.search(keyword, orderby);
     }
 
-    public save(book: Book): Observable<Book> {
-        return this.repository.save(book);
+    public save(book: Book, file: File): Observable<Book> {
+        return this.repository.save(book, file);
     }
 
     public delete(book: Book): Observable<Object> {

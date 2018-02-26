@@ -22,34 +22,6 @@ namespace ZLibrary.Web.Controllers
             this.bookService = bookService;
         }
 
-        [HttpPost("upload/{key}")]
-        public IActionResult Upload(Guid key, IFormFile file)
-        {
-            var filePath = Path.GetTempFileName();
-
-            if (file.Length > 0)
-            {
-                using (var stream = file.OpenReadStream())
-                {
-                    using (var binaryReader = new BinaryReader(stream))
-                    {
-                        var fileContent = binaryReader.ReadBytes((int)file.Length);
-
-                        var imageValidator = new ImageValidator();
-                        var validationResult = imageValidator.Validate(file);
-
-                        if (validationResult.HasError)
-                        {
-                            return BadRequest(validationResult.ErrorMessage);
-                        }
-                        imageService.SaveImage(key, fileContent);
-                    }
-                }
-            }
-
-            return Ok(key);
-        }
-
         [HttpGet("loadImage/{key}")]
         public async Task<IActionResult> LoadImage(Guid key)
         {

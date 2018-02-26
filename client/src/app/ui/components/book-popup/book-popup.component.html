@@ -1,150 +1,148 @@
 <div *ngIf="!isNew && !canEdit" class="popup-container">
-  <div class="book-container">
-    <h1 class="about-book-title">Sobre o Livro</h1>
-    <div *ngIf="!image" class="placeholder-image-container">
+    <div class="book-container">
+        <h1 class="about-book-title">Sobre o Livro</h1>
+        <div *ngIf="!image" class="placeholder-image-container">
+        </div>
+        <img class="book-image" *ngIf="image" [src]="'data:image/jpg;base64,' + image ">
+        <div class="book-information-container">
+            <h2 class="book-title">{{ book.title }}</h2>
+            <div class="book-information-label">ISBN:
+                <div class="book-information-content">{{book.isbn}}</div>
+            </div>
+            <div class="book-information-label">Sinopse: </div>
+            <div class="book-synopsis">{{book.synopsis}}</div>
+            <div class="book-information-label">Autor(es):
+                <div class="book-authors" *ngFor="let author of book.authors; last as isLast">{{author.name}}{{isLast ? '' : ', '}}</div>
+            </div>
+            <div class="book-information-label">Editora:
+                <div class="book-information-content">{{book.publisher.name}}</div>
+            </div>
+            <div class="book-information-label">Publicado em:
+                <div class="book-information-content">{{book.publicationYear}}</div>
+            </div>
+        </div>
     </div>
-    <img class="book-image" *ngIf="image" [src]="'data:image/jpg;base64,' + image ">
-    <div class="book-information-container">
-      <h2 class="book-title">{{ book.title }}</h2>
-      <div class="book-information-label">ISBN:
-        <div class="book-information-content">{{book.isbn}}</div>
-      </div>
-      <div class="book-information-label">Sinopse: </div>
-      <div class="book-synopsis">{{book.synopsis}}</div>
-      <div class="book-information-label">Autor(es):
-        <div class="book-authors" *ngFor="let author of book.authors; last as isLast">{{author.name}}{{isLast ? '' : ', '}}</div>
-      </div>
-      <div class="book-information-label">Editora:
-        <div class="book-information-content">{{book.publisher.name}}</div>
-      </div>
-      <div class="book-information-label">Publicado em:
-        <div class="book-information-content">{{book.publicationYear}}</div>
-      </div>
+    <div *ngIf="!isOrder && !user.isAdministrator" class="request-reservation-container">
+        <div class="availability-box">
+            <div *ngIf="book.isAvailable" class="available-text">Disponível</div>
+            <div *ngIf="!book.isAvailable" class="unavailable-text">Insdisponível</div>
+        </div>
+        <div *ngIf="book.isAvailable" class="reservation-box-available" (click)="order()">
+            <div class="available-button-text-available">Alugar</div>
+        </div>
+        <div *ngIf="!book.isAvailable" class="reservation-box-unavailable" (click)="order()">
+            <div class="available-button-text-unavailable">+ add na lista de espera</div>
+        </div>
     </div>
-  </div>
-  <div *ngIf="!isOrder && !user.isAdministrator" class="request-reservation-container">
-    <div class="availability-box">
-      <div *ngIf="book.isAvailable" class="available-text">Disponível</div>
-      <div *ngIf="!book.isAvailable" class="unavailable-text">Insdisponível</div>
+    <div *ngIf="isOrder" class="sucess-order-box">
+        <div class="sucess-order-text">Sucesso! Aguarde pela aprovação</div>
     </div>
-    <div *ngIf="book.isAvailable" class="reservation-box-available" (click)="order()">
-      <div class="available-button-text-available">Alugar</div>
+    <div *ngIf="user.isAdministrator" class="admin-options-container">
+        <div class="admin-options" (click)="canEdit = true">Editar</div>
+        <div *ngIf="canEdit" class="admin-options">Deletar</div>
     </div>
-    <div *ngIf="!book.isAvailable" class="reservation-box-unavailable" (click)="order()">
-      <div class="available-button-text-unavailable">+ add na lista de espera</div>
-    </div>
-  </div>
-  <div *ngIf="isOrder" class="sucess-order-box">
-    <div class="sucess-order-text">Sucesso! Aguarde pela aprovação</div>
-  </div>
-  <div *ngIf="user.isAdministrator" class="admin-options-container">
-    <div class="admin-options" (click)="canEdit = true">Editar</div>
-    <div *ngIf="canEdit" class="admin-options">Deletar</div>
-  </div>
 </div>
 
 <form *ngIf="isNew || canEdit" class="popup-container" [formGroup]="bookForm" autocomplete="on">
-  <div class="book-container">
-    <h1 class="about-book-title">Adicionar Livro</h1>
-    <div *ngIf="imageLoad" style="position: relative">
+    <div class="book-container">
+        <h1 class="about-book-title">Adicionar Livro</h1>
+        <div *ngIf="imageLoad" style="position: relative">
 
-      <input class ="input-image" type="file" accept="image/*" (change)="uploadImage($event)">
-    </div>
-    <div class="placeholder-image-container">
-      <img *ngIf="!image" class="book-image-uploaded">
-      <img class="book-image-uploaded" *ngIf="image" [src]="'data:image/jpg;base64,' + image ">
-      <input class ="input-image" type="file" accept="image/*" (change)="uploadImage($event)">
-      <div *ngIf="!imageLoad" class="add-image-button">Adicionar
-        <br>Foto
-      </div>
-      <!-- <div *ngIf="book == null" class="placeholder-photo"></div> -->
-    </div>
-    <div class="book-inputs-container">
-      <label class="input-label" style="margin-top: 0;">Nome do Livro:
-        <div class="validation-alert" *ngIf="titleControl.invalid && (titleControl.dirty || titleControl.touched) && !titleControl.errors?.emptyString">
-          Campo obrigatório
+            <input class="input-image" type="file" accept="image/*" (change)="uploadImage($event)">
         </div>
-        <div class="validation-alert" *ngIf="titleControl.dirty && !!titleControl.errors?.emptyString">
-          Campo não deve estar vazio
-        </div>
-      </label>
-      <input [(ngModel)]="book.title" name="title" type="text" class="textbox-input" formControlName="titleControl">
-      <div class="input-label">ISBN:
-        <div class="validation-alert" *ngIf="isbnControl.invalid && (isbnControl.dirty || isbnControl.touched) && !isbnControl.value">
-          Campo obrigatório
-        </div>
-        <div class="validation-alert" *ngIf="isbnControl.dirty && (!!isbnControl.errors?.minLength || !!isbnControl.errors?.maxLength || !!isbnControl.errors?.invalidIsbn)">
-          Dado preenchido inválido
-        </div>
-      </div>
-      <input [(ngModel)]="book.isbn" name="isbn" maxlength="13" type="number" class="textbox-input" (input)="Validate($event)"
-        (keydown)="Validate($event)" formControlName="isbnControl">
-      <label class="input-label">Sinopse:</label>
-      <textarea [(ngModel)]="book.synopsis" name="synopsis" type="text" class="synopsis-textarea" [ngModelOptions]="{standalone: true}"> </textarea>
-      <label class="input-label" >Autor(es):
-        <div class="validation-alert" *ngIf="authorsControl.dirty && !!authorsControl.errors?.emptyAuthors && !!authorsControl.value ">
-          Campo obrigatório
-        </div>
-      </label>
-      <zli-suggestion [formControlName]="'authorsControl'"
-                      [suggestionAdapter]="authorSuggestionAdapter"
-                      [(ngModel)]="book.authors">
-      </zli-suggestion>
-      <label class="input-label">Editora:
-        <div class="validation-alert" *ngIf="publisherControl.touched && !!publisherControl.errors">
-          Campo obrigatório
-        </div>
-      </label>
-      <div class="custom-input" [ngClass]="{ 'input-invalid': publisherControl.invalid && (publisherControl.dirty || publisherControl.touched)}">
-        <div *ngIf="book.publisher" class="tagged-author">
-          <div class="tagged-text">{{book.publisher.name}}</div>
-          <div style="width: 25px;"></div>
-          <div class="close" (click)="unSelectElement(book.publisher)"></div>
-        </div>
-        <input *ngIf="!selectedPublisher" type="text" name="publisherSearch" class="author-textbox-input"
-          (keydown)="onKeyPressed($event);" (keyup)="searchTerm($event)" formControlName="publisherControl">
-        <div *ngIf="!selectedPublisher &&!!filterPublishers && filterPublishers.length > 0" class="drop-down-filter">
-          <div *ngFor="let publisher of filterPublishers;" [zliScrollIntoView]="hoverPublisher?.id == publisher.id" (click)="selectElement(publisher);"
-            (mousemove)="hoverPublisher = publisher">
-            <div *ngIf="hoverPublisher != publisher" class="drop-down-item">
-              <div>{{publisher.name}}</div>
+        <div class="placeholder-image-container">
+            <img *ngIf="!image" class="book-image-uploaded">
+            <img class="book-image-uploaded" *ngIf="image" [src]="'data:image/jpg;base64,' + image ">
+            <input class="input-image" type="file" accept="image/*" (change)="uploadImage($event)">
+            <div *ngIf="!imageLoad" class="add-image-button">Adicionar
+                <br>Foto
             </div>
-            <div *ngIf="hoverPublisher == publisher" class="drop-down-item-selected">
-              <div>{{publisher.name}}</div>
+            <!-- <div *ngIf="book == null" class="placeholder-photo"></div> -->
+        </div>
+        <div class="book-inputs-container">
+            <label class="input-label" style="margin-top: 0;">Nome do Livro:
+                <div class="validation-alert" *ngIf="titleControl.invalid && (titleControl.dirty || titleControl.touched) && !titleControl.errors?.emptyString">
+                    Campo obrigatório
+                </div>
+                <div class="validation-alert" *ngIf="titleControl.dirty && !!titleControl.errors?.emptyString">
+                    Campo não deve estar vazio
+                </div>
+            </label>
+            <input [(ngModel)]="book.title" name="title" type="text" class="textbox-input" formControlName="titleControl">
+            <div class="input-label">ISBN:
+                <div class="validation-alert" *ngIf="isbnControl.invalid && (isbnControl.dirty || isbnControl.touched) && !isbnControl.value">
+                    Campo obrigatório
+                </div>
+                <div class="validation-alert" *ngIf="isbnControl.dirty && (!!isbnControl.errors?.minLength || !!isbnControl.errors?.maxLength || !!isbnControl.errors?.invalidIsbn)">
+                    Dado preenchido inválido
+                </div>
             </div>
-          </div>
+            <input [(ngModel)]="book.isbn" name="isbn" maxlength="13" type="number" class="textbox-input" (input)="Validate($event)"
+                (keydown)="Validate($event)" formControlName="isbnControl">
+            <label class="input-label">Sinopse:</label>
+            <textarea [(ngModel)]="book.synopsis" name="synopsis" type="text" class="synopsis-textarea" [ngModelOptions]="{standalone: true}"> </textarea>
+            <label class="input-label">Autor(es):
+                <div class="validation-alert" *ngIf="authorsControl.dirty && !!authorsControl.errors?.emptyAuthors && !!authorsControl.value ">
+                    Campo obrigatório
+                </div>
+            </label>
+            <zli-suggestion [formControlName]="'authorsControl'" [suggestionAdapter]="authorSuggestionAdapter" [(ngModel)]="book.authors">
+            </zli-suggestion>
+            <label class="input-label">Editora:
+                <div class="validation-alert" *ngIf="publisherControl.touched && !!publisherControl.errors">
+                    Campo obrigatório
+                </div>
+            </label>
+            <div class="custom-input" [ngClass]="{ 'input-invalid': publisherControl.invalid && (publisherControl.dirty || publisherControl.touched)}">
+                <div *ngIf="book.publisher" class="tagged-author">
+                    <div class="tagged-text">{{book.publisher.name}}</div>
+                    <div style="width: 25px;"></div>
+                    <div class="close" (click)="unSelectElement(book.publisher)"></div>
+                </div>
+                <input *ngIf="!selectedPublisher" type="text" name="publisherSearch" class="author-textbox-input" (keydown)="onKeyPressed($event);"
+                    (keyup)="searchTerm($event)" formControlName="publisherControl">
+                <div *ngIf="!selectedPublisher &&!!filterPublishers && filterPublishers.length > 0" class="drop-down-filter">
+                    <div *ngFor="let publisher of filterPublishers;" [zliScrollIntoView]="hoverPublisher?.id == publisher.id" (click)="selectElement(publisher);"
+                        (mousemove)="hoverPublisher = publisher">
+                        <div *ngIf="hoverPublisher != publisher" class="drop-down-item">
+                            <div>{{publisher.name}}</div>
+                        </div>
+                        <div *ngIf="hoverPublisher == publisher" class="drop-down-item-selected">
+                            <div>{{publisher.name}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <label class="input-label">Publicado em:
+                <div class="validation-alert" *ngIf="publicationYearControl.invalid && (publicationYearControl.dirty || publicationYearControl.touched)  && !publicationYearControl.value && !publicationYearControl.errors.greaterThanZero">
+                    Campo obrigatório
+                </div>
+                <div class="validation-alert" *ngIf="publicationYearControl.dirty && (!!publicationYearControl.errors?.max || !!publicationYearControl.errors?.min || !!publicationYearControl.errors?.greaterThanZero)">
+                    Ano de Publicação tem que ser até o ano atual.
+                </div>
+            </label>
+            <input [(ngModel)]="book.publicationYear" type="number" [ngClass]="{ 'input-invalid': publicationYearControl.invalid && (publicationYearControl.dirty || publicationYearControl.touched)}"
+                min="1900" maxlength="4" class="textbox-input" formControlName="publicationYearControl" (keydown)="Validate($event)"
+                (paste)="$event.preventDefault()">
+            <label class="input-label">Número de Cópias:
+                <div class="validation-alert" *ngIf="numberOfCopiesControl.invalid && (numberOfCopiesControl.dirty || numberOfCopiesControl.touched) && !numberOfCopiesControl.value && !numberOfCopiesControl.errors.greaterThanZero">
+                    Campo obrigatório
+                </div>
+                <div class="validation-alert" *ngIf="numberOfCopiesControl.dirty && (!!numberOfCopiesControl.errors?.max || !!numberOfCopiesControl.errors?.min || !!numberOfCopiesControl.errors?.greaterThanZero)">
+                    Número de copias deve estar entre 1 e 5.
+                </div>
+            </label>
+            <input [(ngModel)]="book.numberOfCopies" type="number" [ngClass]="{ 'input-invalid': numberOfCopiesControl.invalid && (numberOfCopiesControl.dirty || numberOfCopiesControl.touched)}"
+                min="1" max="5" maxlength="1" class="textbox-input" (keydown)="Validate($event)" (paste)="$event.preventDefault()"
+                formControlName="numberOfCopiesControl">
         </div>
-      </div>
-      <label class="input-label">Publicado em:
-        <div class="validation-alert" *ngIf="publicationYearControl.invalid && (publicationYearControl.dirty || publicationYearControl.touched)  && !publicationYearControl.value && !publicationYearControl.errors.greaterThanZero">
-          Campo obrigatório
-        </div>
-        <div class="validation-alert" *ngIf="publicationYearControl.dirty && (!!publicationYearControl.errors?.max || !!publicationYearControl.errors?.min || !!publicationYearControl.errors?.greaterThanZero)">
-          Ano de Publicação tem que ser até o ano atual.
-        </div>
-      </label>
-      <input [(ngModel)]="book.publicationYear" type="number" [ngClass]="{ 'input-invalid': publicationYearControl.invalid && (publicationYearControl.dirty || publicationYearControl.touched)}"
-        min="1900" maxlength="4" class="textbox-input" formControlName="publicationYearControl" (keydown)="Validate($event)"
-        (paste)="$event.preventDefault()">
-      <label class="input-label">Número de Cópias:
-        <div class="validation-alert" *ngIf="numberOfCopiesControl.invalid && (numberOfCopiesControl.dirty || numberOfCopiesControl.touched) && !numberOfCopiesControl.value && !numberOfCopiesControl.errors.greaterThanZero">
-          Campo obrigatório
-        </div>
-        <div class="validation-alert" *ngIf="numberOfCopiesControl.dirty && (!!numberOfCopiesControl.errors?.max || !!numberOfCopiesControl.errors?.min || !!numberOfCopiesControl.errors?.greaterThanZero)">
-          Número de copias deve estar entre 1 e 5.
-        </div>
-      </label>
-      <input [(ngModel)]="book.numberOfCopies" type="number" [ngClass]="{ 'input-invalid': numberOfCopiesControl.invalid && (numberOfCopiesControl.dirty || numberOfCopiesControl.touched)}"
-        min="1" max="5" maxlength="1" class="textbox-input" (keydown)="Validate($event)" (paste)="$event.preventDefault()"
-        formControlName="numberOfCopiesControl">
     </div>
-  </div>
-  <div class="create-buttons-container">
-    <div *ngIf="!isNew || canEdit" class="cancel-button" (click)="canEdit = false">
-      <div class="available-button-text-available">Cancelar</div>
+    <div class="create-buttons-container">
+        <div *ngIf="isNew || canEdit" class="cancel-button" (click)="canEdit = false">
+            <div class="available-button-text-available">Cancelar</div>
+        </div>
+        <button *ngIf="isNew || canEdit" class="create-button" [disabled]="!bookForm.valid" (click)="saveBook()">
+            <div class="available-button-text-available">+ ADD</div>
+        </button>
     </div>
-    <button *ngIf="isNew || canEdit" class="create-button" [disabled]="!bookForm.valid" (click)="saveBook()">
-      <div class="available-button-text-available">+ ADD</div>
-    </button>
-  </div>
 </form>

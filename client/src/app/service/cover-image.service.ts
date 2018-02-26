@@ -12,8 +12,4 @@ export class CoverImageService {
     public loadImage(book: Book): Observable<string> {
         return this.repository.loadImage(book);
     }
-
-    public uploadImage(key: string, file: File): Observable<string> {
-        return this.repository.uploadImage(key, file);
-    }
 }

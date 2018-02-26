@@ -5,7 +5,7 @@ namespace ZLibrary.API
 {
     public interface IImageService
     {
-        Guid SaveImage(Guid key, byte[] fileData);
+        Guid SaveImage(Guid key, string filePath);
         byte[] LoadImage(Guid key);
         void DeleteFile(Guid key);
     }

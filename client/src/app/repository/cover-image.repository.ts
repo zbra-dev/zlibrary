@@ -23,11 +23,4 @@ export class CoverImageRepository {
             return this.httpClient.get(url + book.coverImageKey).map((res: string) => res);
         }
     }
-
-    public uploadImage(key: string, file: File): Observable<string> {
-        const url = `${URL}/upload/` + key;
-        const formData = new FormData();
-        formData.append('file', file);
-        return this.httpClient.post(url, formData).map((res: string) => res);
-    }
 }

@@ -8,11 +8,11 @@ namespace ZLibrary.Web.Validators
         {
         }
 
-        public ValidationResult Validate(IFormFile file)
+        public ValidationResult Validate(string fileName)
         {
             var validationResult = new ValidationResult();
 
-            if (file.ContentType != "image/png")
+            if (!fileName.Contains(".png"))
             {
                 validationResult.ErrorMessage = "Formato de arquivo inválido, tente uma imagem com extessão '.png'.";
                 return validationResult;

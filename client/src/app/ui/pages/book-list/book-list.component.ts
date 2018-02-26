@@ -57,7 +57,6 @@ export class BookListComponent implements OnInit {
         document.getElementById('background').classList.toggle('active');
         if (document.getElementById('sidebar').classList.toggle('active') === false) {
             this.isBusy = false;
-            this.selectedBook = null;
         }
     }
 

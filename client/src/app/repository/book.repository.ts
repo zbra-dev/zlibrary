@@ -28,11 +28,14 @@ export class BookRepository {
         }).map((data: any) => data.map(b => BookViewModelConverter.fromDTO(b)));
     }
 
-    public save(book: Book): Observable<Book> {
+    public save(book: Book, file: File): Observable<Book> {
         const json = JSON.stringify(book);
-        return this.httpClient.post(URL, json, {
-            headers: new HttpHeaders().set('Content-Type', 'application/json')
-        }).map((data: any) => BookViewModelConverter.fromDTO(data));
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('value', json);
+
+        return this.httpClient.post(URL, formData)
+            .map((data: any) => BookViewModelConverter.fromDTO(data));
     }
 
     public delete(book: Book): Observable<Object> {

@@ -21,7 +21,7 @@ namespace ZLibrary.Web.Validators
 
             if (value == null)
             {
-                validationResult.ErrorMessage = "Dados inválidos.";
+                validationResult.ErrorMessage = "Dados do livro inválidos.";
                 return validationResult;
             }
 
