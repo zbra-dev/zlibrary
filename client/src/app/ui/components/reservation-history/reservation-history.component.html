@@ -1,29 +1,42 @@
-<div class="modal-header modal-lg">
-    <div class="history_title">{{history_title}}</div>
-        <h4 class="modal-title">{{LIVROS_ALUGADOS}}</h4>
+<div class="modal-history">
+    <div class="modal-header">
+        {{index}}
         <h4 class="modal-title">LIVROS ALUGADOS</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="close()">
-        <span aria-hidden="true">&times;</span>
-        </button>
+        <button type="button" class="close" (click)="close()">x</button>
+    </div>
+   <zli-reservation-list *ngFor="let reservation of reservations;" [reservation]="reservation"></zli-reservation-list>
 </div>
-    <div class="modal-body">
-        <div class='col-lg-3 col-xs-12'>
-            <img src="img/dark-background.png"
-            srcset="img/dark-background@2x.png 2x,
-                    img/dark-background@3x.png 3x"
-            class="dark-background">
-        </div>
-        <h3>JAVA PERSISTENCE WITH HIBERNATE</h3>
-        <h3>Autor: Christian Buaer e Gavin King</h3>
-        <div class='col-lg-3 col-xs-12'>
-        <button type="button" class="btn btn-link">Renovar</button>
-        </div>     
-                <img src="img/dark-background.png"
-                srcset="img/dark-background@2x.png 2x,
-                        img/dark-background@3x.png 3x"
-                class="dark-background">
-            <h3>BULDING J2EE APLICATIONS WITH THE RATIONAL UNIFIELD PROCESS</h3>
-            <h3>Peter Eeles, Kelli Houston, Wojtek Kozaczynski</h3>
-            <button type="button" class="btn btn-link">Renovar</button>
-    </div> 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<div class="modal-history">
+    <div class="modal-header">
+        {{index}}
+        <h4 class="modal-title">LIVROS ALUGADOS</h4>
+        <button type="button" class="close" (click)="close()">x</button>
+    </div>
+    <div class="modal-body"></div>
+        <div>
+            <div class="modal-rectangle" *ngFor="let reservation of reservations;">
+                <img class="book-image" [src]="'data:image/jpg;base64,' + image">
+                <div class="book-title">{{reservation.book.title}}</div>
+                    <div class="book-authors">
+                        <span *ngFor="let author of reservation.book.authors; last as isLast">{{author.name}}{{isLast ? '' : ', '}}</span>
+                    </div>
+                    <div class="reservation-start-date">Alugado em: {{reservation.startDate | date:'dd/MM/yyyy'}}</div>
+                    <button type="button" class="reservation-renovate">Renovar</button>
+            </div>
+        </div>
+</div>-->

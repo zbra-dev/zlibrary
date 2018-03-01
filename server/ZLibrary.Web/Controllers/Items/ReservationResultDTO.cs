@@ -7,10 +7,10 @@ namespace ZLibrary.Web.Controllers.Items
     {
         [DataMember(Name = "id")]
         public long Id { get; set; }
-        [DataMember(Name = "user")]
-        public long UserId { get; set; }
         [DataMember(Name = "userId")]
-        public long BookId { get; set; }
+        public long UserId { get; set; }
+        [DataMember(Name = "book")]
+        public BookDTO Book { get; set; }
         [DataMember(Name = "description")]
         public string Description { get; set; }
         [DataMember(Name = "statusId")]

@@ -102,7 +102,7 @@ export class BookComponent implements OnInit {
 
     public getUserReservations(): boolean {
         if (this.book.reservations.length > 0) {
-            const userReservations = this.book.reservations.filter(r => r.userId === this.user.id);
+            const userReservations = this.book.reservations.filter(r => r.user.id === this.user.id);
             return userReservations.length > 0
                 && userReservations.some(r => r.reservationReason.isApproved || r.loanStatus !== LoanStatus.returned);
         }

@@ -18,7 +18,7 @@ export class CoverImageRepository {
     }
 
     public loadImage(book: Book): Observable<string> {
-        const url = `${URL}/LoadImage/`;
+        const url = `${URL}/loadImage/`;
         if (book != null) {
             return this.httpClient.get(url + book.coverImageKey).map((res: string) => res);
         }

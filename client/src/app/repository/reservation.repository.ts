@@ -21,7 +21,7 @@ export class ReservationRepository {
   }
 
   public findByUserId(user: User): Observable<Reservation[]> {
-    const findByUserIdUrl = `${URL}/${user}/${user.id}`;
+    const findByUserIdUrl = `${URL}/user/${user.id}`;
     return this.httpClient.get(findByUserIdUrl).map((data: any) => data.map(r => ReservationViewModelConverter.fromDTO(r)));
   }
 

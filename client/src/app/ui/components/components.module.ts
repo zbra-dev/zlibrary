@@ -12,6 +12,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DirectivesModule } from '../directives/directives.module';
 import { SuggestionComponent } from './suggestion/suggestion.component';
 import { AuthorSuggestionAdapter } from './book-popup/author-suggestion.adapter';
+import { MenuComponent } from './menu/menu.component';
+import { ReservationListComponent } from "./reservation-list/reservation-list.component";
 
 @NgModule({
     declarations: [
@@ -23,6 +25,8 @@ import { AuthorSuggestionAdapter } from './book-popup/author-suggestion.adapter'
         ReservationHistoryComponent,
         ConfirmComponent,
         SuggestionComponent,
+        MenuComponent,
+        ReservationListComponent,
     ],
     exports: [
         BookComponent,
@@ -32,12 +36,15 @@ import { AuthorSuggestionAdapter } from './book-popup/author-suggestion.adapter'
         ToastComponent,
         ReservationHistoryComponent,
         ConfirmComponent,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MenuComponent,
+        ReservationListComponent
     ],
     entryComponents: [
         ToastComponent,
         ReservationHistoryComponent,
-        ConfirmComponent
+        ConfirmComponent,
+        ReservationListComponent
     ],
     imports: [
         BrowserModule,

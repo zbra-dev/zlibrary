@@ -24,3 +24,6 @@ export class Book {
     constructor() {
     }
 }
+
+
+//constructor(id: number, title: string, publisher: Publisher, authors: Author[],  isbn: Isbn, synopsis: string, publicationYear: number, numberOfCopies: number, coverImageKey: string,  created: Date) {

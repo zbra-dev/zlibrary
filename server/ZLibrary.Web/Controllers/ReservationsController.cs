@@ -49,12 +49,20 @@ namespace ZLibrary.Web
         [HttpGet("user/{userId:long}", Name = "FindReservationByUserId")]
         public async Task<IActionResult> FindByUserId(long userId)
         {
-            var reservation = await reservationService.FindByUserId(userId);
-            if (reservation == null)
+            var reservations = await reservationService.FindByUserId(userId);
+            if (reservations == null || !reservations.Any())
             {
                 return NotFound($"Nenhuma reserva encontrada com o user ID: {userId}.");
             }
-            return Ok(reservation.ToReservationViewItems());
+            var list = new List<ReservationResultDTO>();
+            foreach (var reservation in reservations)
+            {
+                var reservationDTO = reservation.ToReservationViewItem();
+                var book = await bookService.FindById(reservation.BookId);
+                reservationDTO.Book = book.ToBookViewItem();
+                list.Add(reservationDTO);
+            }
+            return Ok(list);
         }
 
         [HttpPost("order")]

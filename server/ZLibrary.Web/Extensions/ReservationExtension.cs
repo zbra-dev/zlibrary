@@ -12,7 +12,7 @@ namespace ZLibrary.Web.Extensions
             return new ReservationResultDTO() 
             {
                Id = reservation.Id,
-               BookId = reservation.BookId,
+               Book = new BookDTO() { Id = reservation.BookId },
                UserId = reservation.User.Id,
                Description = reservation.Reason.Description,
                StatusId = (long)reservation.Reason.Status,

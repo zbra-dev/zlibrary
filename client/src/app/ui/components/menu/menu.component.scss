@@ -1,0 +1,65 @@
+.user-menu{
+    width: 160.9px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 0 0 3px 0 rgba(224, 221, 221, 0.5);
+    border: solid 1px #dedcdc; 
+    padding: 9.5px;
+    margin: 2px;
+}
+
+.user-menu-container{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    top: 3%;
+    right: 2%;
+}
+
+.items-list{
+    font-size: 12px;
+    text-align: left;
+    color: #828282;
+    background-color: transparent;
+    border-color: transparent;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+}
+.user-menu-list{
+    list-style: none;
+    padding:0px;
+    margin:0px;
+}
+
+.user-menu-container{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    top: 3%;
+    right: 2%;
+}
+
+.user-menu-button {
+    display:flex;
+    flex-direction: row;
+    cursor:pointer;
+    align-items: center;
+}
+
+
+.user-name {
+    font-family: 'Roboto', sans-serif;
+    //font-family: SFUIDisplay;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: right;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    margin-right:8px;
+    color: #ffffff;
+    white-space: nowrap;
+}
