@@ -124,7 +124,7 @@
         </div>
     </div>
     <div class="create-buttons-container">
-        <div *ngIf="isNew || canEdit" class="cancel-button" (click)="canEdit = false">
+        <div *ngIf="isNew || canEdit" class="cancel-button" (click)="onCancel()">
             <div class="available-button-text-available">Cancelar</div>
         </div>
         <button *ngIf="isNew || canEdit" class="create-button" [disabled]="!bookForm.valid" (click)="saveBook()">

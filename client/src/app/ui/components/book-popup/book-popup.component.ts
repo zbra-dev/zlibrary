@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ElementRef, keyframes } from '@angular/core';
+import { Component, Input, OnInit, ElementRef, keyframes, Output, EventEmitter } from '@angular/core';
 import { Book } from '../../../model/book';
 import { User } from '../../../model/user';
 import { BookService } from '../../../service/book.service';
@@ -58,6 +58,9 @@ export class BookPopupComponent implements OnInit {
     public isBusy = false;
     public isOrder = false;
     public hasImageLoad = false;
+
+    @Output()
+    cancelEvent = new EventEmitter();
 
     constructor(private bookService: BookService,
         private coverImageService: CoverImageService,
@@ -182,5 +185,12 @@ export class BookPopupComponent implements OnInit {
                 }
             )
         );
+    }
+
+    onCancel(): void {
+        this.canEdit = false;
+        if (this.isNew) {
+            this.cancelEvent.emit(null);
+        }
     }
 }
