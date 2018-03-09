@@ -40,13 +40,20 @@ export class BookPopupComponent implements OnInit {
         this.book = value;
         if (!this.book) {
             this.book = new Book();
-            this.book.numberOfCopies = 1;
+            this.book.coverImageKey = Guid.newGUID();
             this.hasImageLoad = false;
             this.image = null;
+            this.uploadedImage = null;
         } else {
             this.getImage();
         }
     }
+
+    @Output()
+    cancelEvent = new EventEmitter();
+
+    @Output()
+    updateBookListEvent = new EventEmitter();
 
     public book = new Book();
     public user: User;
@@ -58,9 +65,6 @@ export class BookPopupComponent implements OnInit {
     public isBusy = false;
     public isOrder = false;
     public hasImageLoad = false;
-
-    @Output()
-    cancelEvent = new EventEmitter();
 
     constructor(private bookService: BookService,
         private coverImageService: CoverImageService,
@@ -145,8 +149,8 @@ export class BookPopupComponent implements OnInit {
             this.loaderMediator.execute(
                 this.reservationService.order(this.user, this.book).subscribe(
                     reservation => {
-                        console.log('Reserva Feita' + reservation.reservationReason.status);
                         this.isOrder = reservation !== null;
+                        this.updateBookListEvent.emit(null);
                     }, error => {
                         this.toastMediator.show(`Error when order the book: ${error}`);
                     }
@@ -170,16 +174,11 @@ export class BookPopupComponent implements OnInit {
     }
 
     public saveBook() {
-        if (!this.book.coverImageKey) {
-            this.book.coverImageKey = Guid.newGUID();
-        }
         this.loaderMediator.execute(
             this.bookService.save(this.book, this.uploadedImage).subscribe(
                 book => {
-                    this.book = book;
-                    this.getImage();
-                    this.isNew = false;
-                    this.canEdit = false;
+                    this.bookData = book;
+                    this.updateBookListEvent.emit(null);
                 }, error => {
                     this.toastMediator.show(`Error when saving the book: ${error}`);
                 }
