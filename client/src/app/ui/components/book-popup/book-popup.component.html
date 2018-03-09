@@ -109,7 +109,7 @@
                 </div>
             </label>
             <input [(ngModel)]="book.publicationYear" type="number" [ngClass]="{ 'input-invalid': publicationYearControl.invalid && (publicationYearControl.dirty || publicationYearControl.touched)}"
-                maxlength="4" class="textbox-input" formControlName="publicationYearControl">
+                maxlength="4" mim="0" class="textbox-input" formControlName="publicationYearControl">
             <label class="input-label">Número de Cópias:
                 <div class="validation-alert" *ngIf="numberOfCopiesControl.invalid && (numberOfCopiesControl.dirty || numberOfCopiesControl.touched) && !!numberOfCopiesControl.errors?.emptyField">
                     Campo obrigatório
@@ -119,7 +119,7 @@
                 </div>
             </label>
             <input [(ngModel)]="book.numberOfCopies" type="number" [ngClass]="{ 'input-invalid': numberOfCopiesControl.invalid && (numberOfCopiesControl.dirty || numberOfCopiesControl.touched)}"
-                min="1" max="5" maxlength="1" class="textbox-input"
+                min="1" max="5" class="textbox-input"
                 formControlName="numberOfCopiesControl">
         </div>
     </div>
