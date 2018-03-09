@@ -20,6 +20,7 @@ import { element } from 'protractor';
 import { PublisherService } from '../../../service/publisher.service';
 import { FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { AuthorSuggestionAdapter } from './author-suggestion.adapter';
+import { PublisherSuggestionAdapter } from './publisher-suggestion.adapter';
 import { BookComponent } from '../book/book.component';
 import { BookValidator } from '../../validators/book-validator';
 
@@ -67,6 +68,7 @@ export class BookPopupComponent implements OnInit {
         private toastMediator: ToastMediator,
         private authService: AuthService,
         public authorSuggestionAdapter: AuthorSuggestionAdapter,
+        public publisherSuggestionAdapter: PublisherSuggestionAdapter,
         private elementRef: ElementRef) {
         this.loaderMediator.onLoadChanged.subscribe(loading => this.isBusy = loading);
         this.bookForm = new FormGroup({

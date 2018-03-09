@@ -1,0 +1,10 @@
+<div class="typeahead-container">
+    <div *ngFor="let element of selected" class="suggestion-tag">
+        <div class="suggestion-tag__text">{{element.name}}</div>
+        <div style="width: 23px;"></div>
+        <div class="suggestion-tag__deselect" (click)="deselectElement(element)"></div>
+    </div>
+    <input type="text" class="suggestion-query" *ngIf="!selectionLimit || selected.length < selectionLimit" (keydown)="onKeyDown($event)"
+        (focus)="setSuggestionResults()" (blur)="onBlur()" [ngModel]="query" (ngModelChange)="onQueryChanged($event)">
+    <zli-list-results *ngIf="!!searchResults.length" [candidate]="candidate" [searchResults]="searchResults" (selectElement)="selectElement($event)"></zli-list-results>
+</div>

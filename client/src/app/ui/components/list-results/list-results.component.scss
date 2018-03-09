@@ -1,0 +1,27 @@
+:host {
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    min-height: 36px;
+    z-index: 600;
+}
+
+.suggestion-list {
+    max-height: 170px;
+    overflow: auto;
+    background-color: #ffffff;
+    box-shadow: 0 0 4px 0 rgba(215, 215, 215, 0.5);
+    border: solid 1px #f2f2f2;
+    width: 100%;
+    top: 36px;
+}
+
+.suggestion-list__item {
+    cursor: pointer;
+    padding: 5px;
+}
+
+.suggestion-list__item--selected {
+    background-color: #4a90e2;
+    color: white;
+}

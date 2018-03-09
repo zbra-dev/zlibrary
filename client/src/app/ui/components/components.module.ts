@@ -10,8 +10,11 @@ import { ReservationHistoryComponent } from './reservation-history/reservation-h
 import { ConfirmComponent } from './confirm/confirm.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DirectivesModule } from '../directives/directives.module';
-import { SuggestionComponent } from './suggestion/suggestion.component';
 import { AuthorSuggestionAdapter } from './book-popup/author-suggestion.adapter';
+import { PublisherSuggestionAdapter } from './book-popup/publisher-suggestion.adapter';
+import { TypeaheadComponent } from './typeahead/single-selection/single-selection-typeahead.component';
+import { TypeaheadMultiSelectionComponent } from './typeahead/multi-selection/multi-selection-typeahead.component';
+import { ListResultsComponent } from './list-results/list-results.component';
 
 @NgModule({
     declarations: [
@@ -22,7 +25,9 @@ import { AuthorSuggestionAdapter } from './book-popup/author-suggestion.adapter'
         ToastComponent,
         ReservationHistoryComponent,
         ConfirmComponent,
-        SuggestionComponent,
+        ListResultsComponent,
+        TypeaheadComponent,
+        TypeaheadMultiSelectionComponent,
     ],
     exports: [
         BookComponent,
@@ -47,7 +52,8 @@ import { AuthorSuggestionAdapter } from './book-popup/author-suggestion.adapter'
         DirectivesModule
     ],
     providers: [
-        AuthorSuggestionAdapter
+        AuthorSuggestionAdapter,
+        PublisherSuggestionAdapter
     ]
 })
 export class ComponentsModule {

@@ -1,0 +1,8 @@
+<!-- using 'mousedown' event instead of 'click' because 'click' has less priority than 'blur' event -->
+<div *ngIf="!!searchResults && searchResults.length > 0" class="suggestion-list">
+    <div *ngFor="let result of searchResults" (mousedown)="onMouseDown($event)" (mousemove)="candidate = result" [zliScrollIntoView]="candidate?.id == result.id">
+        <div class="suggestion-list__item" [ngClass]="{ 'suggestion-list__item--selected': candidate === result }">
+            <div>{{result.name}}</div>
+        </div>
+    </div>
+</div>
