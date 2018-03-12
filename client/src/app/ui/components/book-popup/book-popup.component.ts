@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ElementRef, keyframes, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ElementRef, keyframes, Output, EventEmitter, ViewChild } from '@angular/core';
 import { Book } from '../../../model/book';
 import { User } from '../../../model/user';
 import { BookService } from '../../../service/book.service';
@@ -30,30 +30,6 @@ import { BookValidator } from '../../validators/book-validator';
     styleUrls: ['./book-popup.component.scss']
 })
 export class BookPopupComponent implements OnInit {
-    @Input()
-    set bookData(value: Book) {
-        if (value !== this.book && this.canEdit) {
-            this.canEdit = false;
-        }
-        this.isNew = !value;
-        this.bookForm.reset();
-        this.book = value;
-        if (!this.book) {
-            this.book = new Book();
-            this.book.coverImageKey = Guid.newGUID();
-            this.hasImageLoad = false;
-            this.image = null;
-            this.uploadedImage = null;
-        } else {
-            this.getImage();
-        }
-    }
-
-    @Output()
-    cancelEvent = new EventEmitter();
-
-    @Output()
-    updateBookListEvent = new EventEmitter();
 
     public book = new Book();
     public user: User;
@@ -65,6 +41,12 @@ export class BookPopupComponent implements OnInit {
     public isBusy = false;
     public isOrder = false;
     public hasImageLoad = false;
+
+    @Output()
+    cancelEvent = new EventEmitter();
+
+    @Output()
+    updateBookListEvent = new EventEmitter();
 
     constructor(private bookService: BookService,
         private coverImageService: CoverImageService,
@@ -130,7 +112,7 @@ export class BookPopupComponent implements OnInit {
     }
 
     public getImage(): void {
-        if (!!this.book) {
+        if (!!this.book.id) {
             this.loaderMediator.execute(
                 this.coverImageService.loadImage(this.book).subscribe(
                     image => {
@@ -177,7 +159,7 @@ export class BookPopupComponent implements OnInit {
         this.loaderMediator.execute(
             this.bookService.save(this.book, this.uploadedImage).subscribe(
                 book => {
-                    this.bookData = book;
+                    this.initWith(book);
                     this.updateBookListEvent.emit(null);
                 }, error => {
                     this.toastMediator.show(`Error when saving the book: ${error}`);
@@ -191,5 +173,26 @@ export class BookPopupComponent implements OnInit {
         if (this.isNew) {
             this.cancelEvent.emit(null);
         }
+    }
+
+    public initWith(book: Book) {
+        if (!book) {
+            throw new Error('Livro não pode ser nulo.');
+        }
+        this.canEdit = false;
+        //Ensures clean validation errors
+        this.bookForm.reset();
+        this.book = book;
+        this.isNew = !book.id;
+        this.getImage();
+    }
+
+    public initNewBook() {
+        const book = new Book();
+        book.coverImageKey = Guid.newGUID();
+        this.hasImageLoad = false;
+        this.image = null;
+        this.uploadedImage = null;
+        this.initWith(book);
     }
 }

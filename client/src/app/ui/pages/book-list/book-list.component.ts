@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { BookService } from '../../../service/book.service';
 import { Book } from '../../../model/book';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
@@ -7,6 +7,7 @@ import { ToastMediator } from '../../mediators/toast.mediator';
 import { Input, EventEmitter } from '@angular/core';
 import { User } from '../../../model/user';
 import { AuthService } from '../../../service/auth.service';
+import { BookPopupComponent } from '../../components/book-popup/book-popup.component';
 
 @Component({
     selector: 'zli-book-list',
@@ -15,6 +16,9 @@ import { AuthService } from '../../../service/auth.service';
     encapsulation: ViewEncapsulation.Emulated
 })
 export class BookListComponent implements OnInit {
+    @ViewChild(BookPopupComponent)
+    bookPopupComponent: BookPopupComponent;
+
     public books: Book[] = [];
     public selectedBook: Book;
     public isBusy = false;
@@ -61,7 +65,11 @@ export class BookListComponent implements OnInit {
     }
 
     public onSelect(book: Book): void {
-        this.selectedBook = book;
+        if (!!book) {
+            this.bookPopupComponent.initWith(Object.assign({}, book));
+        } else {
+            this.bookPopupComponent.initNewBook();
+        }
         this.toggleSidebar();
     }
 
