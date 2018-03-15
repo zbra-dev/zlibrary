@@ -15,6 +15,7 @@ import { PublisherSuggestionAdapter } from './book-popup/publisher-suggestion.ad
 import { TypeaheadComponent } from './typeahead/single-selection/single-selection-typeahead.component';
 import { TypeaheadMultiSelectionComponent } from './typeahead/multi-selection/multi-selection-typeahead.component';
 import { ListResultsComponent } from './list-results/list-results.component';
+import { BookImageComponent } from './book-image/book-image.component';
 
 @NgModule({
     declarations: [
@@ -28,6 +29,7 @@ import { ListResultsComponent } from './list-results/list-results.component';
         ListResultsComponent,
         TypeaheadComponent,
         TypeaheadMultiSelectionComponent,
+        BookImageComponent,
     ],
     exports: [
         BookComponent,
