@@ -1,0 +1,13 @@
+:host {
+    width: 100%;
+}
+
+.image-input{
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+}
+
+input::-webkit-file-upload-button{
+    cursor: pointer;
+}

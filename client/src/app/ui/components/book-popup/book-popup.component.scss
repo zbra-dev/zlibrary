@@ -20,6 +20,7 @@
 .about-book-title {
     word-break: break-word;
     padding-top: 4.8%;
+    margin-bottom: 5.5%;
     text-indent: 6.6px;
     letter-spacing: 6.6px;
     color: $dark-grey-blue;
@@ -39,7 +40,6 @@
 
 .placeholder-image-container {
     position: relative;
-    margin-top: 5.5%;
     width: 50%;
     flex: 0 0 auto;
     height: 23.5vw;
@@ -67,8 +67,9 @@
     height: 75%;
 }
 
-.book-image-uploaded {
+.book-image-loaded {
     height: 100%;
+    width: 100%;
     position: absolute;
 }
 
@@ -384,14 +385,23 @@ button:disabled {
     outline: none;
 }
 
-.validation-alert {
+.validation-alert,
+.image-validation-alert {
     color: #a94442;
     background-color: #f2dede;
     border-color: #ebccd1;
-    padding: 15px;
-    margin-bottom: -20px;
     border: 1px solid transparent;
     border-radius: 4px;
+    padding: 15px;
+}
+
+.validation-alert{
+    margin-bottom: -20px;
+}
+
+.image-validation-alert {
+    width: 50%;
+    text-align: center;
 }
 
 @media (max-width: 1366px) {

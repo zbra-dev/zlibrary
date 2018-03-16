@@ -1,9 +1,9 @@
 <div *ngIf="!isNew && !canEdit" class="popup-container">
     <div class="book-container">
         <h1 class="about-book-title">Sobre o Livro</h1>
-        <div *ngIf="!image" class="placeholder-image-container">
+        <div *ngIf="!coverImageURL" class="placeholder-image-container">
         </div>
-        <img class="book-image" *ngIf="image" [src]="'data:image/jpg;base64,' + image ">
+        <img class="book-image" *ngIf="coverImageURL" [src]="coverImageURL">
         <div class="book-information-container">
             <h2 class="book-title">{{ book.title }}</h2>
             <div class="book-information-label">ISBN:
@@ -47,18 +47,18 @@
     <div class="book-container">
         <h1 *ngIf="canEdit && !isNew" class="about-book-title">Editar Livro</h1>
         <h1 *ngIf="isNew" class="about-book-title">Adicionar Livro</h1>
-        <div *ngIf="imageLoad" style="position: relative">
-
-            <input class="input-image" type="file" accept="image/*" (change)="uploadImage($event)">
+        <div class="image-validation-alert" *ngIf="imageControl.invalid && !imageControl.errors?.extensionInvalid && (imageControl.dirty || imageControl.touched)">
+            Imagem obrigatória
         </div>
-        <div class="placeholder-image-container">
-            <img *ngIf="!image" class="book-image-uploaded">
-            <img class="book-image-uploaded" *ngIf="image" [src]="'data:image/jpg;base64,' + image ">
-            <input class="input-image" type="file" accept="image/*" (change)="uploadImage($event)">
-            <div *ngIf="!imageLoad" class="add-image-button">Adicionar
+        <div class="image-validation-alert" *ngIf="imageControl.errors?.extensionInvalid">
+            Imagem tem que ter extensão '. png'
+        </div>
+        <div class="placeholder-image-container" [ngClass]="{ 'input-invalid':  imageControl.invalid && (imageControl.dirty || imageControl.touched)}">
+            <img class="book-image-loaded" #bookImag *ngIf="!!coverImageURL" [src]="coverImageURL">
+            <zli-load-image class="input-image" [formControlName]="'imageControl'" (ngModelChange)="setCoverImage($event)"></zli-load-image>
+            <div class="add-image-button">Adicionar
                 <br>Foto
             </div>
-            <!-- <div *ngIf="book == null" class="placeholder-photo"></div> -->
         </div>
         <div class="book-inputs-container">
             <label class="input-label" style="margin-top: 0;">Nome do Livro:
@@ -80,8 +80,7 @@
                 </div>
             </div>
             <input [(ngModel)]="book.isbn" [ngClass]="{ 'input-invalid': isbnControl.invalid && (isbnControl.dirty || isbnControl.touched)}"
-                name="isbn" maxlength="13" type="number" class="textbox-input"
-                formControlName="isbnControl">
+                name="isbn" maxlength="13" type="number" class="textbox-input" formControlName="isbnControl">
             <label class="input-label">Sinopse:</label>
             <textarea [(ngModel)]="book.synopsis" name="synopsis" type="text" class="synopsis-textarea" [ngModelOptions]="{standalone: true}"> </textarea>
             <label class="input-label">Autor(es):
@@ -119,8 +118,7 @@
                 </div>
             </label>
             <input [(ngModel)]="book.numberOfCopies" type="number" [ngClass]="{ 'input-invalid': numberOfCopiesControl.invalid && (numberOfCopiesControl.dirty || numberOfCopiesControl.touched)}"
-                min="1" max="5" class="textbox-input"
-                formControlName="numberOfCopiesControl">
+                min="1" max="5" class="textbox-input" formControlName="numberOfCopiesControl">
         </div>
     </div>
     <div class="create-buttons-container">

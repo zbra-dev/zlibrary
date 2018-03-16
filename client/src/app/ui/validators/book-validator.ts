@@ -1,7 +1,9 @@
 import { AbstractControl } from '@angular/forms';
 import { Utils } from '../components/utils/utils';
+import { Book } from '../../model/book';
 
 const INTEGER_REGEX = new RegExp(`^\\d+$`);
+const IMAGE_TYPE = 'image/png';
 
 export class BookValidator {
 
@@ -11,6 +13,23 @@ export class BookValidator {
             if (Utils.isNullOrWhiteSpace(value)) {
                 return {
                     emptyString: { 'value': value }
+                };
+            }
+            return null;
+        };
+    }
+
+    public static validateImageExtension(book: Book) {
+        return (c: AbstractControl) => {
+            const value = c.value;
+            if ((!value || value.length === 0) && !book.id) {
+                return { required: true };
+            }
+            if (!!value && value.type !== IMAGE_TYPE) {
+                return {
+                    extensionInvalid: {
+                        'actual': value.type, expected: IMAGE_TYPE
+                    }
                 };
             }
             return null;
