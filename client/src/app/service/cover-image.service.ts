@@ -9,7 +9,7 @@ export class CoverImageService {
     constructor(private repository: CoverImageRepository) {
     }
 
-    public loadImage(book: Book): Observable<string> {
-        return this.repository.loadImage(book);
+    public loadImage(coverImageKey: string): Observable<string> {
+        return this.repository.loadImage(coverImageKey);
     }
 }

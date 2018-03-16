@@ -16,6 +16,7 @@ import { TypeaheadComponent } from './typeahead/single-selection/single-selectio
 import { TypeaheadMultiSelectionComponent } from './typeahead/multi-selection/multi-selection-typeahead.component';
 import { ListResultsComponent } from './list-results/list-results.component';
 import { LoadImageComponent } from './load-image/load-image.component';
+import { BookImageComponent } from './book-image/book-image.component';
 
 @NgModule({
     declarations: [
@@ -30,6 +31,7 @@ import { LoadImageComponent } from './load-image/load-image.component';
         TypeaheadComponent,
         TypeaheadMultiSelectionComponent,
         LoadImageComponent,
+        BookImageComponent,
     ],
     exports: [
         BookComponent,

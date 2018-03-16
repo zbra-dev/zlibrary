@@ -51,7 +51,8 @@ export class BookPopupComponent implements OnInit {
     @Output()
     updateBookListEvent = new EventEmitter();
 
-    constructor(private bookService: BookService,
+    constructor(
+        private bookService: BookService,
         private coverImageService: CoverImageService,
         private authorService: AuthorService,
         private publisherService: PublisherService,
@@ -102,7 +103,6 @@ export class BookPopupComponent implements OnInit {
         this.bookForm.reset();
         this.book = book;
         this.isNew = !book.id;
-        this.getImage();
         //Set Image validate again because book reference has changed
         this.bookForm.get('imageControl').setValidators(BookValidator.validateImageExtension(this.book));
     }
@@ -141,22 +141,6 @@ export class BookPopupComponent implements OnInit {
 
     get numberOfCopiesControl() {
         return this.bookForm.get('numberOfCopiesControl');
-    }
-
-    public getImage(): void {
-        if (!!this.book.id) {
-            this.loaderMediator.execute(
-                this.coverImageService.loadImage(this.book).subscribe(
-                    imageBlob => {
-                        this.coverImageURL = `${BASE64_BASE_URL}${imageBlob}`;
-                        this.originalCoverImageURL = this.coverImageURL;
-                    }, error => {
-                        this.coverImageURL = null;
-                        this.toastMediator.show(`Error loading image: ${error}`);
-                    }
-                )
-            );
-        }
     }
 
     public order(): void {
@@ -206,5 +190,4 @@ export class BookPopupComponent implements OnInit {
             this.cancelEvent.emit(null);
         }
     }
-
 }
