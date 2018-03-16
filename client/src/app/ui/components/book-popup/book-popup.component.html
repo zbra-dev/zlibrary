@@ -1,8 +1,6 @@
 <div *ngIf="!isNew && !canEdit" class="popup-container">
     <div class="book-container">
         <h1 class="about-book-title">Sobre o Livro</h1>
-        <div *ngIf="!coverImageURL" class="placeholder-image-container">
-        </div>
         <zli-book-image class="book-image" [book]="book"></zli-book-image>
         <div class="book-information-container">
             <h2 class="book-title">{{ book.title }}</h2>
@@ -53,10 +51,14 @@
         <div class="image-validation-alert" *ngIf="imageControl.errors?.extensionInvalid">
             Imagem tem que ter extensão '. png'
         </div>
-        <div class="placeholder-image-container" [ngClass]="{ 'input-invalid':  imageControl.invalid && (imageControl.dirty || imageControl.touched)}">
+        <div class="placeholder-image-container" [ngClass]="{'input-image-hover': !isNew || !!newCoverImage, 'input-invalid':  imageControl.invalid && (imageControl.dirty || imageControl.touched)}">
             <img class="book-image-loaded" #bookImage *ngIf="!!coverImageURL" [src]="coverImageURL">
-            <zli-book-image class="book-image-uploaded" *ngIf="coverImageURL" [book]="book"></zli-book-image>
-            <zli-load-image class="input-image" [formControlName]="'imageControl'" (ngModelChange)="setCoverImage($event)"></zli-load-image>
+            <div class="edit-image">
+                <div class="edit-image-text" *ngIf=" !isNew || !!newCoverImage">Editar</div>
+            </div>
+            <div class="image-hover"></div>
+            <zli-load-image class="input-image" #loadImage [formControlName]="'imageControl'" (ngModelChange)="setCoverImage($event)"></zli-load-image>
+            <zli-book-image class="book-image-loaded" *ngIf="!coverImageURL && !isNew" [book]="book"></zli-book-image>
             <div class="add-image-button">Adicionar
                 <br>Foto
             </div>

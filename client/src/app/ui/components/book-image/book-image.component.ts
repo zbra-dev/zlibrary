@@ -4,7 +4,7 @@ import { LoaderMediator } from '../../mediators/loader.mediator';
 import { ToastMediator } from '../../mediators/toast.mediator';
 import { Book } from '../../../model/book';
 
-
+const BASE64_BASE_URL = 'data:image/jpg;base64,';
 
 @Component({
     selector: 'zli-book-image',
@@ -13,7 +13,7 @@ import { Book } from '../../../model/book';
     encapsulation: ViewEncapsulation.None
 })
 export class BookImageComponent implements OnInit {
-    public image: string;
+    public coverImageURL: string;
     public isLoading: boolean;
 
     constructor(private coverImageService: CoverImageService,
@@ -37,9 +37,9 @@ export class BookImageComponent implements OnInit {
             this.loaderMediator.execute(
                 this.coverImageService.loadImage(coverImageKey).subscribe(
                     image => {
-                        this.image = image;
+                        this.coverImageURL = `${BASE64_BASE_URL}${image}`;
                     }, error => {
-                        this.image = null;
+                        this.coverImageURL = null;
                         this.toastMediator.show(`Error loading image: ${error}`);
                     }, () => {
                         this.isLoading = false;

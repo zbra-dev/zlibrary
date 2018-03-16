@@ -21,9 +21,6 @@ import { PublisherSuggestionAdapter } from './publisher-suggestion.adapter';
 import { BookComponent } from '../book/book.component';
 import { BookValidator } from '../../validators/book-validator';
 
-
-const BASE64_BASE_URL = 'data:image/jpg;base64,';
-
 @Component({
     selector: 'zli-book-popup',
     templateUrl: './book-popup.component.html',
@@ -36,7 +33,6 @@ export class BookPopupComponent implements OnInit {
     public bookForm: FormGroup;
     public newCoverImage: File = null;
     public coverImageURL = null;
-    public originalCoverImageURL = null;
     private isNew = true;
     private canEdit = false;
     public isBusy = false;
@@ -44,6 +40,9 @@ export class BookPopupComponent implements OnInit {
 
     @ViewChild('bookImage')
     imageElement: ElementRef;
+
+    @ViewChild('loadImage')
+    loadImage: ElementRef;
 
     @Output()
     cancelEvent = new EventEmitter();
@@ -167,7 +166,7 @@ export class BookPopupComponent implements OnInit {
                 this.coverImageURL = e.target.result;
             };
         } else {
-            this.coverImageURL = this.originalCoverImageURL;
+            this.coverImageURL = null;
         }
     }
 
@@ -184,7 +183,7 @@ export class BookPopupComponent implements OnInit {
         );
     }
 
-    onCancel(): void {
+    public onCancel(): void {
         this.canEdit = false;
         if (this.isNew) {
             this.cancelEvent.emit(null);

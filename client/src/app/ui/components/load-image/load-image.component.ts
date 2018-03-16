@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, forwardRef, SimpleChanges, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, forwardRef, SimpleChanges, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl, ControlValueAccessor, Validator } from '@angular/forms';
 import { ToastMediator } from '../../mediators/toast.mediator';
 
@@ -15,7 +15,6 @@ import { ToastMediator } from '../../mediators/toast.mediator';
 export class LoadImageComponent implements OnInit, ControlValueAccessor, Validator {
 
     private file: File;
-    private value: File;
 
     private propagateChangeFunction: any;
     private propagateTouchFunction: any;
