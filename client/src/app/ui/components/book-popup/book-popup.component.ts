@@ -29,6 +29,7 @@ import { BookValidator } from '../../validators/book-validator';
 export class BookPopupComponent implements OnInit {
 
     public book = new Book();
+    public originalBook: Book;
     public user: User;
     public bookForm: FormGroup;
     public newCoverImage: File = null;
@@ -101,6 +102,7 @@ export class BookPopupComponent implements OnInit {
         //Ensures clean validation errors
         this.bookForm.reset();
         this.book = book;
+        this.originalBook = Object.assign({}, book);
         this.isNew = !book.id;
         //Set Image validate again because book reference has changed
         this.bookForm.get('imageControl').setValidators(BookValidator.validateImageExtension(this.book));
@@ -185,6 +187,7 @@ export class BookPopupComponent implements OnInit {
 
     public onCancel(): void {
         this.canEdit = false;
+        this.book = this.originalBook;
         if (this.isNew) {
             this.cancelEvent.emit(null);
         }
