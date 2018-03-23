@@ -306,88 +306,25 @@
     ;
 }
 
-.textbox-input {
-    width: 100%;
-    height: 36px;
-    margin-top: 10px;
-    border: solid 1px #eaeaea;
-}
-
+.textbox-input,
 .synopsis-textarea {
     width: 100%;
     margin-top: 10px;
     border: solid 1px #eaeaea;
+}
+
+.textbox-input {
+    height: 36px;
+    padding: 0 10px 0 10px;
+}
+
+.synopsis-textarea {
+    padding: 5px 10px 5px 10px;
     flex: 0 0 auto;
     height: 104px;
     resize: none;
     overflow-y: auto;
     overflow-x: hidden;
-}
-
-.author-textbox-input {
-    height: 36px;
-    flex: 1 0 auto;
-    border: 0px transparent;
-    margin-top: 2px;
-    margin-left: 2px;
-}
-
-.author-textbox-input:focus {
-    outline: none;
-}
-
-.drop-down-filter {
-    // position: absolute;
-    max-height: 170px;
-    overflow: auto;
-    background-color: #ffffff;
-    box-shadow: 0 0 4px 0 rgba(215, 215, 215, 0.5);
-    border: solid 1px #f2f2f2;
-    width: 100%;
-}
-
-.drop-down-item,
-.drop-down-item-selected {
-    cursor: pointer;
-    padding: 5px;
-}
-
-.drop-down-item-selected {
-    background-color: #4a90e2;
-    color: white;
-}
-
-.custom-input {
-    position: relative;
-    width: 100%;
-    min-height: 36px;
-    margin-top: 10px;
-    border: solid 1px #eaeaea;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    flex: 1 0 auto;
-}
-
-.tagged-author {
-    position: relative; // flex: 0 0 24%;
-    height: 26px;
-    border-radius: 13px;
-    background-color: #f2f2f2;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    margin-left: 2px;
-    justify-content: center;
-    margin-top: 5px;
-}
-
-.tagged-text {
-    width: 80%;
-    margin-left: 2px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .close {
@@ -445,13 +382,6 @@ button:disabled {
 .input-invalid {
     border: 2px solid #ff8282;
     outline: none;
-}
-
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    margin: 0;
 }
 
 .validation-alert {

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ElementRef, keyframes } from '@angular/core';
+import { Component, Input, OnInit, ElementRef, keyframes, Output, EventEmitter } from '@angular/core';
 import { Book } from '../../../model/book';
 import { User } from '../../../model/user';
 import { BookService } from '../../../service/book.service';
@@ -20,6 +20,9 @@ import { element } from 'protractor';
 import { PublisherService } from '../../../service/publisher.service';
 import { FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { AuthorSuggestionAdapter } from './author-suggestion.adapter';
+import { PublisherSuggestionAdapter } from './publisher-suggestion.adapter';
+import { BookComponent } from '../book/book.component';
+import { BookValidator } from '../../validators/book-validator';
 
 @Component({
     selector: 'zli-book-popup',
@@ -38,7 +41,7 @@ export class BookPopupComponent implements OnInit {
         if (!this.book) {
             this.book = new Book();
             this.book.numberOfCopies = 1;
-            this.imageLoad = false;
+            this.hasImageLoad = false;
             this.image = null;
         } else {
             this.getImage();
@@ -46,30 +49,18 @@ export class BookPopupComponent implements OnInit {
     }
 
     public book = new Book();
+    public user: User;
+    public uploadedImage: File = null;
+    public bookForm: FormGroup;
+    public image = null;
     private isNew = true;
     private canEdit = false;
-
-    public user: User;
     public isBusy = false;
     public isOrder = false;
-    public image = null;
-    public imageLoad = false;
+    public hasImageLoad = false;
 
-    //Variables to create or edit a book
-    public uploadedImage: File = null;
-
-    public searchAuthorTerm = new Subject<string>();
-    public searchPublisherTerm = new Subject<string>();
-
-    public filterAuthors: Author[];
-    public selectedAuthors: Author[];
-    public selectedAuthor: Author;
-
-    public filterPublishers: Publisher[];
-    public selectedPublisher: Publisher;
-    public hoverPublisher: Publisher;
-
-    bookForm: FormGroup;
+    @Output()
+    cancelEvent = new EventEmitter();
 
     constructor(private bookService: BookService,
         private coverImageService: CoverImageService,
@@ -80,55 +71,37 @@ export class BookPopupComponent implements OnInit {
         private toastMediator: ToastMediator,
         private authService: AuthService,
         public authorSuggestionAdapter: AuthorSuggestionAdapter,
+        public publisherSuggestionAdapter: PublisherSuggestionAdapter,
         private elementRef: ElementRef) {
         this.loaderMediator.onLoadChanged.subscribe(loading => this.isBusy = loading);
-        this.searchAuthor();
-        this.searchPublisher();
         this.bookForm = new FormGroup({
             titleControl: new FormControl(this.book.title, Validators.compose([
                 Validators.required,
-                this.emptyStringValidator
+                BookValidator.validateEmptyString()
             ])),
             isbnControl: new FormControl(this.book.isbn, Validators.compose([
                 Validators.required,
-                Validators.minLength(13),
-                Validators.maxLength(13),
-                this.isbnValidator
+                BookValidator.validateIsbn()
             ])),
-            authorsControl: new FormControl(this.book.authors, validateAuthors),
-            publisherControl: new FormControl(this.book.publisher),
+            authorsControl: new FormControl(this.book.authors, BookValidator.validateTypeahead()),
+            publisherControl: new FormControl(this.book.publisher, BookValidator.validateTypeahead()),
             publicationYearControl: new FormControl(this.book.publicationYear, Validators.compose([
-
                 Validators.required,
-                Validators.minLength(4),
-                Validators.maxLength(4),
-                Validators.min(1900),
-                Validators.max((new Date()).getFullYear()),
-                Validators.nullValidator,
-                this.greaterThanZeroValidator
+                BookValidator.validatePublicationYear()
             ])),
             numberOfCopiesControl: new FormControl(this.book.numberOfCopies, Validators.compose([
                 Validators.required,
                 Validators.maxLength(1),
-                Validators.min(1),
-                Validators.max(5),
-                this.greaterThanZeroValidator
+                BookValidator.validateNumberOfCopies(1, 5)
             ]))
         });
     }
 
     ngOnInit() {
         this.user = this.authService.getLoggedUser();
-        this.bookForm.controls['publisherControl'].valueChanges.subscribe(value => {
-            const error = this.hasSelectedPublisher();
-            if (error !== null) {
-                this.bookForm.controls['publisherControl'].setErrors(error);
-            }
-        });
     }
 
     get titleControl() {
-        // console.log(this.bookForm.get('titleControl').errors);
         return this.bookForm.get('titleControl');
     }
 
@@ -184,7 +157,7 @@ export class BookPopupComponent implements OnInit {
 
     uploadImage(event) {
         const reader = new FileReader();
-        this.imageLoad = true;
+        this.hasImageLoad = true;
         const image = this.elementRef.nativeElement.querySelector('.book-image-uploaded');
 
         reader.onload = function (e: any) {
@@ -194,123 +167,6 @@ export class BookPopupComponent implements OnInit {
 
         reader.readAsDataURL(event.target.files[0]);
         this.uploadedImage = event.target.files[0];
-    }
-
-
-    //Todo: transform into component
-    public searchAuthor(): void {
-        this.searchAuthorTerm.debounceTime(400)
-            .distinctUntilChanged()
-            .subscribe(term => {
-                if (term !== '') {
-                    this.authorService.search(term).subscribe(
-                        authors => {
-                            this.filterAuthors = authors;
-                        }, error => {
-                            this.toastMediator.show(`Error loading authors: ${error}`);
-                        });
-                } else {
-                    this.filterAuthors = [];
-                }
-            });
-    }
-
-    public searchPublisher(): void {
-        this.searchPublisherTerm.debounceTime(400)
-            .distinctUntilChanged()
-            .subscribe(term => {
-                if (term !== null && term !== '') {
-                    this.publisherService.search(term).subscribe(
-                        publishers => {
-                            this.filterPublishers = publishers;
-                        }, error => {
-                            this.toastMediator.show(`Error loading authors: ${error}`);
-                        }
-                    );
-                } else {
-                    this.filterPublishers = [];
-                }
-            });
-    }
-
-    searchTerm(event) {
-        if (event.target.name === 'authorSearch') {
-            this.searchAuthorTerm.next(event.target.value);
-        } else if (event.target.name === 'publisherSearch') {
-            this.searchPublisherTerm.next(event.target.value);
-        }
-    }
-
-    onKeyPressed(event) {
-        if (this.filterAuthors !== null && this.filterAuthors.length > 0) {
-            const index = this.filterAuthors.indexOf(this.selectedAuthor);
-            if (event.key === 'Enter') {
-                this.selectElement(this.selectedAuthor);
-                this.bookForm.controls['authorsControl'].patchValue(null);
-            } else if (event.key === 'ArrowUp') {
-                if (index > 0) {
-                    this.selectedAuthor = this.filterAuthors[index - 1];
-                } else {
-                    const lastIndex = this.filterAuthors.length - 1;
-                    this.selectedAuthor = this.filterAuthors[lastIndex];
-                }
-                event.preventDefault();
-            } else if (event.key === 'ArrowDown') {
-                if (index < this.filterAuthors.length - 1) {
-                    this.selectedAuthor = this.filterAuthors[index + 1];
-                } else {
-                    this.selectedAuthor = this.filterAuthors[0];
-                }
-                event.target.scrollIntoView();
-            }
-        }
-        if (this.filterPublishers !== null && this.filterPublishers.length > 0) {
-            const index = this.filterPublishers.indexOf(this.hoverPublisher);
-            if (event.key === 'Enter') {
-                this.selectElement(this.hoverPublisher);
-                event.target.value = '';
-            } else if (event.key === 'ArrowUp') {
-                if (index > 0) {
-                    this.hoverPublisher = this.filterPublishers[index - 1];
-                } else {
-                    const lastIndex = this.filterPublishers.length - 1;
-                    this.hoverPublisher = this.filterPublishers[lastIndex];
-                }
-                event.preventDefault();
-            } else if (event.key === 'ArrowDown') {
-                if (index < this.filterPublishers.length - 1) {
-                    this.hoverPublisher = this.filterPublishers[index + 1];
-                } else {
-                    this.hoverPublisher = this.filterPublishers[0];
-                }
-            }
-        }
-        console.log('key Pressed:' + event.key);
-    }
-
-    public selectElement(object: Object) {
-        if (object instanceof Author && !(this.selectedAuthors.some(a => a.id === object.id))) {
-            this.selectedAuthors.push(object);
-            this.bookForm.controls['authorsControl'].patchValue(null);
-            this.filterAuthors = [];
-        } else if (object instanceof Publisher && !this.selectedPublisher) {
-            this.bookForm.controls['publisherControl'].patchValue(null);
-            this.book.publisher = object;
-            this.filterPublishers = [];
-        }
-    }
-
-    public unSelectElement(object: Object) {
-        if (object instanceof Author) {
-            const index = this.selectedAuthors.indexOf(object);
-            if (index > -1) {
-                this.selectedAuthors.splice(index, 1);
-                this.bookForm.controls['authorsControl'].patchValue(null);
-            }
-        } else if (object instanceof Publisher) {
-            this.selectedPublisher = null;
-            this.bookForm.controls['publisherControl'].patchValue(null);
-        }
     }
 
     public saveBook() {
@@ -331,101 +187,10 @@ export class BookPopupComponent implements OnInit {
         );
     }
 
-    public Validate(event) {
-        if (event.target.value.length >= event.target.maxLength) {
-            switch (event.key) {
-                case '0':
-                case '1':
-                case '2':
-                case '3':
-                case '4':
-                case '5':
-                case '6':
-                case '7':
-                case '8':
-                case '9':
-                    event.preventDefault();
-                    break;
-            }
-            event.target.value = event.target.value.slice(0, event.target.maxLength);
+    onCancel(): void {
+        this.canEdit = false;
+        if (this.isNew) {
+            this.cancelEvent.emit(null);
         }
-        if (event.key === ',' || event.key === '.' || event.key === '-' || event.key === '+' || event.key === 'E' || event.key === 'e') {
-            event.preventDefault();
-        }
-        //Prevent Up Arrow and Down Arrow
-        if (event.which === 38 || event.which === 40) {
-            event.preventDefault();
-        }
-
-        console.log('key Pressed:' + event.which);
     }
-
-    private greaterThanZeroValidator(control) {
-        if (!control.value || control.value > 0) {
-            return null;
-        }
-
-        return {
-            greaterThanZero: { inputValue: control.value }
-        };
-    }
-
-    public emptyStringValidator(control) {
-        if (!!control.value && control.value.match(/^ *$/) !== null) {
-            return {
-                emptyString: { inputValue: '' }
-            };
-        }
-        return null;
-    }
-
-    private isbnValidator(control) {
-        if (!control.value) {
-            return null;
-        }
-        const isbn = control.value.toString();
-        const length = isbn.length;
-        if (length !== 13) {
-            return {
-                invalidIsbn: { inputValue: control.value }
-            };
-        }
-
-        const weightType1 = 1;
-        const weightType2 = 3;
-        const productor = new Array(length);
-        for (let i = 0; i < length; i++) {
-            if (i % 2 === 0) {
-                productor[i] = isbn[i] * weightType1;
-            } else {
-                productor[i] = isbn[i] * weightType2;
-            }
-        }
-        if (!(productor.reduce((a, b) => a + b) % 10 === 0)) {
-            return {
-                invalidIsbn: { inputValue: control.value }
-            };
-        }
-        return null;
-    }
-
-    private hasSelectedPublisher() {
-        if (!this.book.publisher) {
-            return {
-                hasSelectedPublisher: { filterPublihserNull: 'select a publisher' }
-            };
-        }
-        return null;
-    }
-}
-
-// TODO: Move to a separate file
-function validateAuthors(control: AbstractControl): { [key: string]: any } {
-    const value = control.value;
-    if (!value || !value.length) {
-        return {
-            emptyAuthors: { value: control.value }
-        };
-    }
-    return null;
 }

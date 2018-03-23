@@ -10,7 +10,6 @@ import { ReservationHistoryComponent } from './reservation-history/reservation-h
 import { ConfirmComponent } from './confirm/confirm.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DirectivesModule } from '../directives/directives.module';
-import { SuggestionComponent } from './suggestion/suggestion.component';
 import { AuthorSuggestionAdapter } from './book-popup/author-suggestion.adapter';
 import { MenuComponent } from './menu/menu.component';
 import { ReservationListComponent } from "./reservation-list/reservation-list.component";
@@ -24,10 +23,11 @@ import { ReservationListComponent } from "./reservation-list/reservation-list.co
         ToastComponent,
         ReservationHistoryComponent,
         ConfirmComponent,
-        SuggestionComponent,
         MenuComponent,
         ReservationListComponent,
+    
     ],
+
     exports: [
         BookComponent,
         BookPopupComponent,
@@ -54,7 +54,8 @@ import { ReservationListComponent } from "./reservation-list/reservation-list.co
         DirectivesModule
     ],
     providers: [
-        AuthorSuggestionAdapter
+        AuthorSuggestionAdapter,
+
     ]
 })
 export class ComponentsModule {
