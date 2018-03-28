@@ -488,3 +488,9 @@ button:disabled {
         letter-spacing: 0.7px;
     }
 }
+
+@media (max-width: 600px) {
+    .add-image-button {
+        font-size: 15px;
+    }    
+}
