@@ -30,6 +30,14 @@
     &.fa-close {
         color: lightgrey;
         cursor: pointer;
+        word-wrap: break-word;
+    }
+}
+
+@media(max-width:500px){
+    #message {
+        font-size: 11px;
+        word-wrap: break-word;
     }
 }
 

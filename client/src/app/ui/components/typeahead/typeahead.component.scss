@@ -96,3 +96,9 @@
     transform: rotate(-45deg);
     transform-origin: center;
 }
+
+@media(max-width:600px) {
+    .suggestion-tag {
+        width: 90%;
+    }
+}
