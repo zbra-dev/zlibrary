@@ -10,8 +10,12 @@
 
 }
 
-.book-image{
+.book-cover{
+    width: 142px;
     height: 100%;
+    opacity: 0.75;
+    margin: 0.3px;
+    border: solid 2px #e8dcdc14;
 }
 
 .modal-body{
@@ -38,9 +42,9 @@
     font-style: normal;
     font-stretch: normal;
     letter-spacing: 1.3px;
-    text-align: center;
     color: #726e6e;
-    margin-top: 55px;
+    margin-top: 60px;
+    display: flex;
 }
 
 .book-authors{
@@ -52,9 +56,8 @@
     font-stretch: normal;
     line-height: normal;
     letter-spacing: 1.1px;
-    text-align: center;
     color: #b0b1b2;
-    white-space: nowrap;
+    margin-left: 3px;
 }
 
 .close{
@@ -80,4 +83,9 @@
     right: 56px;
     position: absolute;
     margin-top: 60px;
+}
+.book-informations{
+    //style="display:flex; 
+    flex-direction:column;
+    margin-left: 50px;
 }

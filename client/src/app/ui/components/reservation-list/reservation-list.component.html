@@ -1,12 +1,23 @@
 <div class="modal-body" xmlns="http://www.w3.org/1999/html"></div>
 <div>
-    <div class="modal-rectangle" style="display:flex;">
-        <img class="book-image" [src]="'data:image/jpg;base64,' + image ">
-        <div style="display:flex; flex-direction:column;">
-            <span class="book-title">{{reservation.book.title}}</span>
-            <span class="book-authors"*ngFor="let author of reservation.book.authors; last as isLast">{{author.name}}{{isLast ? '' : ', '}}</span>
+    <div *ngIf="reservation">{{reservation.status}}
+        <div class="modal-rectangle" style="display:flex;">
+            <zli-book-image  class="book-cover" [book]="reservation.book"></zli-book-image>
+            <div class="book-informations">
+                <span class="book-title">{{reservation.book.title}}</span>
+                <span class="book-authors"*ngFor="let author of reservation.book.authors; last as isLast">{{author.name}}{{isLast ? '' : ', '}}</span>
+            </div>
+            <span class="reservation-start-date">Alugado em: {{reservation.startDate |  date:'MM/dd/yyyy'}}</span>
         </div>
-        <span class="reservation-start-date">Alugado em: {{reservation.startDate |  date:'MM/dd/yyyy'}}</span>
-        <button type="button" class="reservation-renovate">Renovar</button>
+    </div>
+    <div *ngIf="waitingList">{{reservation.status}}
+        <div class="modal-rectangle" style="display:flex;">
+            <zli-book-image  class="book-cover" [book]="reservation.book"></zli-book-image>
+            <div class="book-informations">
+                <span class="book-title">{{reservation.book.title}}</span>
+                <span class="book-authors"*ngFor="let author of reservation.book.authors; last as isLast">{{author.name}}{{isLast ? '' : ', '}}</span>
+            </div>
+            <button type="button" class="reservation-renovate">Cancelar</button>
+        </div>
     </div>
 </div>

@@ -1,0 +1,4 @@
+<div class="book-image-container">
+  <img class="book-image" *ngIf="!!coverImageURL" [src]="coverImageURL">
+  <img class="book-image-error" *ngIf="!coverImageURL && isLoading" src="../../assets/images/placeholder-add-photo.png">
+</div>

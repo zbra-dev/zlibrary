@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import { ReservationHistoryComponent } from '../reservation-history/reservation-history.component';
+import { ReservationHistoryComponent, ReservationHistoryType } from '../reservation-history/reservation-history.component';
 //import { WaitingListComponent } from '../waiting-list/waiting-list.component';
 import { BsModalService } from 'ngx-bootstrap';
 import { AuthService } from '../../../service/auth.service';
@@ -45,12 +45,14 @@ export class MenuComponent implements OnInit {
     public showRentedBooks(){
         let reservationHistoryModalControl = this.modalService.show(ReservationHistoryComponent)
         let reservationHistoryComponent = reservationHistoryModalControl.content as ReservationHistoryComponent;
+        reservationHistoryComponent.reservationHistoryType = ReservationHistoryType.Loaned;
         reservationHistoryComponent.modalControl = reservationHistoryModalControl;
     }
 
-    /*public showWaitingList(){
-        let waitingListModalControl = this.modalService.show(WaitingListComponent)
-        let waitingListModalComponent = waitingListModalControl.content as WaitingListComponent;
-        waitingListModalComponent.modalControl = waitingListModalControl;
-    }*/
+    public showWaitingList(){
+        let reservationHistoryModalControl = this.modalService.show(ReservationHistoryComponent)
+        let reservationHistoryComponent = reservationHistoryModalControl.content as ReservationHistoryComponent;
+        reservationHistoryComponent.reservationHistoryType = ReservationHistoryType.Waiting;
+        reservationHistoryComponent.modalControl = reservationHistoryModalControl;
+    }
 }

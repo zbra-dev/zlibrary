@@ -23,7 +23,6 @@ import { LoanStatus } from '../../../model/loan-status';
 export class BookComponent implements OnInit {
     @Input() public book: Book;
     @Input() public user: User;
-    public image: string;
     public isBusy = false;
     public hasBook: boolean;
 
@@ -40,23 +39,7 @@ export class BookComponent implements OnInit {
     }
 
     public ngOnInit(): void {
-        this.getImage();
         this.hasBook = this.getUserReservations();
-    }
-
-    public getImage(): void {
-        if (this.book != null) {
-            this.loaderMediator.execute(
-                this.coverImageService.loadImage(this.book).subscribe(
-                    image => {
-                        this.image = image;
-                    }, error => {
-                        this.image = null;
-                        this.toastMediator.show(`Error loading books: ${error}`);
-                    }
-                )
-            );
-        }
     }
 
     public delete() {

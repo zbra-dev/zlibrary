@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ElementRef, keyframes, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ElementRef, keyframes, Output, EventEmitter, ViewChild } from '@angular/core';
 import { Book } from '../../../model/book';
 import { User } from '../../../model/user';
 import { BookService } from '../../../service/book.service';
@@ -7,16 +7,13 @@ import { ReservationService } from '../../../service/reservation.service';
 import { AuthService } from '../../../service/auth.service';
 import { LoaderMediator } from '../../mediators/loader.mediator';
 import { ToastMediator } from '../../mediators/toast.mediator';
-import { KeyValueDiffers } from '@angular/core';
 import { Reservation } from '../../../model/reservation';
 import { ReservationStatus } from '../../../model/reservation-status';
 import { AuthorService } from '../../../service/author.service';
-import { Subject } from 'rxjs/Subject';
 import { Author } from '../../../model/author';
 import { Publisher } from '../../../model/publisher';
 import { Isbn } from '../../../model/isbn';
 import { Guid } from '../../../model/guid';
-import { element } from 'protractor';
 import { PublisherService } from '../../../service/publisher.service';
 import { FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { AuthorSuggestionAdapter } from './author-suggestion.adapter';
@@ -30,39 +27,32 @@ import { BookValidator } from '../../validators/book-validator';
     styleUrls: ['./book-popup.component.scss']
 })
 export class BookPopupComponent implements OnInit {
-    @Input()
-    set bookData(value: Book) {
-        if (value !== this.book && this.canEdit) {
-            this.canEdit = false;
-        }
-        this.isNew = !value;
-        this.bookForm.reset();
-        this.book = value;
-        if (!this.book) {
-            this.book = new Book();
-            this.book.numberOfCopies = 1;
-            this.hasImageLoad = false;
-            this.image = null;
-        } else {
-            this.getImage();
-        }
-    }
 
     public book = new Book();
+    public originalBook: Book;
     public user: User;
-    public uploadedImage: File = null;
     public bookForm: FormGroup;
-    public image = null;
+    public newCoverImage: File = null;
+    public coverImageURL = null;
     private isNew = true;
     private canEdit = false;
     public isBusy = false;
     public isOrder = false;
-    public hasImageLoad = false;
+
+    @ViewChild('bookImage')
+    imageElement: ElementRef;
+
+    @ViewChild('loadImage')
+    loadImage: ElementRef;
 
     @Output()
     cancelEvent = new EventEmitter();
 
-    constructor(private bookService: BookService,
+    @Output()
+    updateBookListEvent = new EventEmitter();
+
+    constructor(
+        private bookService: BookService,
         private coverImageService: CoverImageService,
         private authorService: AuthorService,
         private publisherService: PublisherService,
@@ -71,10 +61,13 @@ export class BookPopupComponent implements OnInit {
         private toastMediator: ToastMediator,
         private authService: AuthService,
         public authorSuggestionAdapter: AuthorSuggestionAdapter,
-        public publisherSuggestionAdapter: PublisherSuggestionAdapter,
-        private elementRef: ElementRef) {
+        public publisherSuggestionAdapter: PublisherSuggestionAdapter) {
         this.loaderMediator.onLoadChanged.subscribe(loading => this.isBusy = loading);
         this.bookForm = new FormGroup({
+            imageControl: new FormControl(this.newCoverImage, Validators.compose([
+                Validators.required,
+                BookValidator.validateImageExtension(this.book)
+            ])),
             titleControl: new FormControl(this.book.title, Validators.compose([
                 Validators.required,
                 BookValidator.validateEmptyString()
@@ -101,6 +94,32 @@ export class BookPopupComponent implements OnInit {
         this.user = this.authService.getLoggedUser();
     }
 
+    public initWith(book: Book) {
+        if (!book) {
+            throw new Error('Livro não pode ser nulo.');
+        }
+        this.canEdit = false;
+        //Ensures clean validation errors
+        this.bookForm.reset();
+        this.book = book;
+        this.originalBook = Object.assign({}, book);
+        this.isNew = !book.id;
+        //Set Image validate again because book reference has changed
+        this.bookForm.get('imageControl').setValidators(BookValidator.validateImageExtension(this.book));
+    }
+
+    public initNewBook() {
+        const book = new Book();
+        book.coverImageKey = Guid.newGUID();
+        this.coverImageURL = null;
+        this.newCoverImage = null;
+        this.initWith(book);
+    }
+
+    get imageControl() {
+        return this.bookForm.get('imageControl');
+    }
+
     get titleControl() {
         return this.bookForm.get('titleControl');
     }
@@ -125,28 +144,13 @@ export class BookPopupComponent implements OnInit {
         return this.bookForm.get('numberOfCopiesControl');
     }
 
-    public getImage(): void {
-        if (!!this.book) {
-            this.loaderMediator.execute(
-                this.coverImageService.loadImage(this.book).subscribe(
-                    image => {
-                        this.image = image;
-                    }, error => {
-                        this.image = null;
-                        this.toastMediator.show(`Error loading image: ${error}`);
-                    }
-                )
-            );
-        }
-    }
-
     public order(): void {
         if (this.book !== null) {
             this.loaderMediator.execute(
                 this.reservationService.order(this.user, this.book).subscribe(
                     reservation => {
-                        console.log('Reserva Feita' + reservation.reservationReason.status);
                         this.isOrder = reservation !== null;
+                        this.updateBookListEvent.emit(null);
                     }, error => {
                         this.toastMediator.show(`Error when order the book: ${error}`);
                     }
@@ -155,31 +159,25 @@ export class BookPopupComponent implements OnInit {
         }
     }
 
-    uploadImage(event) {
-        const reader = new FileReader();
-        this.hasImageLoad = true;
-        const image = this.elementRef.nativeElement.querySelector('.book-image-uploaded');
-
-        reader.onload = function (e: any) {
-            const src = e.target.result;
-            image.src = src;
-        };
-
-        reader.readAsDataURL(event.target.files[0]);
-        this.uploadedImage = event.target.files[0];
+    setCoverImage(image) {
+        this.newCoverImage = image;
+        if (!!image) {
+            const reader = new FileReader();
+            reader.readAsDataURL(this.newCoverImage);
+            reader.onload = (e: any) => {
+                this.coverImageURL = e.target.result;
+            };
+        } else {
+            this.coverImageURL = null;
+        }
     }
 
     public saveBook() {
-        if (!this.book.coverImageKey) {
-            this.book.coverImageKey = Guid.newGUID();
-        }
         this.loaderMediator.execute(
-            this.bookService.save(this.book, this.uploadedImage).subscribe(
+            this.bookService.save(this.book, this.newCoverImage).subscribe(
                 book => {
-                    this.book = book;
-                    this.getImage();
-                    this.isNew = false;
-                    this.canEdit = false;
+                    this.initWith(book);
+                    this.updateBookListEvent.emit(null);
                 }, error => {
                     this.toastMediator.show(`Error when saving the book: ${error}`);
                 }
@@ -187,8 +185,9 @@ export class BookPopupComponent implements OnInit {
         );
     }
 
-    onCancel(): void {
+    public onCancel(): void {
         this.canEdit = false;
+        this.book = this.originalBook;
         if (this.isNew) {
             this.cancelEvent.emit(null);
         }

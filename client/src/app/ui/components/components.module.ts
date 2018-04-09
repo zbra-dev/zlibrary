@@ -13,6 +13,12 @@ import { DirectivesModule } from '../directives/directives.module';
 import { AuthorSuggestionAdapter } from './book-popup/author-suggestion.adapter';
 import { MenuComponent } from './menu/menu.component';
 import { ReservationListComponent } from "./reservation-list/reservation-list.component";
+import { PublisherSuggestionAdapter } from './book-popup/publisher-suggestion.adapter';
+import { TypeaheadComponent } from './typeahead/single-selection/single-selection-typeahead.component';
+import { TypeaheadMultiSelectionComponent } from './typeahead/multi-selection/multi-selection-typeahead.component';
+import { ListResultsComponent } from './list-results/list-results.component';
+import { LoadImageComponent } from './load-image/load-image.component';
+import { BookImageComponent } from './book-image/book-image.component';
 
 @NgModule({
     declarations: [
@@ -25,9 +31,12 @@ import { ReservationListComponent } from "./reservation-list/reservation-list.co
         ConfirmComponent,
         MenuComponent,
         ReservationListComponent,
-    
+    	ListResultsComponent,
+        TypeaheadComponent,
+        TypeaheadMultiSelectionComponent,
+        LoadImageComponent,
+        BookImageComponent,
     ],
-
     exports: [
         BookComponent,
         BookPopupComponent,
@@ -55,7 +64,7 @@ import { ReservationListComponent } from "./reservation-list/reservation-list.co
     ],
     providers: [
         AuthorSuggestionAdapter,
-
+        PublisherSuggestionAdapter
     ]
 })
 export class ComponentsModule {

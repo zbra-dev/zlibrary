@@ -17,10 +17,10 @@ export class CoverImageRepository {
     constructor(private httpClient: HttpClient) {
     }
 
-    public loadImage(book: Book): Observable<string> {
-        const url = `${URL}/loadImage/`;
-        if (book != null) {
-            return this.httpClient.get(url + book.coverImageKey).map((res: string) => res);
+    public loadImage(coverImageKey: string): Observable<string> {
+        const url = `${URL}/LoadImage/`;
+        if (!!coverImageKey) {
+            return this.httpClient.get(url + coverImageKey).map((res: string) => res);
         }
     }
 }

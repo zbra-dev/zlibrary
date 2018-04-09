@@ -1,42 +1,10 @@
 <div class="modal-history">
     <div class="modal-header">
         {{index}}
-        <h4 class="modal-title">LIVROS ALUGADOS</h4>
+        <h4 *ngIf="isLoaned()" class="modal-title">LIVROS ALUGADOS</h4>
+        <h4 *ngIf="isWaiting()" class="modal-title">LISTA DE ESPERA</h4>
         <button type="button" class="close" (click)="close()">x</button>
     </div>
    <zli-reservation-list *ngFor="let reservation of reservations;" [reservation]="reservation"></zli-reservation-list>
+
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--<div class="modal-history">
-    <div class="modal-header">
-        {{index}}
-        <h4 class="modal-title">LIVROS ALUGADOS</h4>
-        <button type="button" class="close" (click)="close()">x</button>
-    </div>
-    <div class="modal-body"></div>
-        <div>
-            <div class="modal-rectangle" *ngFor="let reservation of reservations;">
-                <img class="book-image" [src]="'data:image/jpg;base64,' + image">
-                <div class="book-title">{{reservation.book.title}}</div>
-                    <div class="book-authors">
-                        <span *ngFor="let author of reservation.book.authors; last as isLast">{{author.name}}{{isLast ? '' : ', '}}</span>
-                    </div>
-                    <div class="reservation-start-date">Alugado em: {{reservation.startDate | date:'dd/MM/yyyy'}}</div>
-                    <button type="button" class="reservation-renovate">Renovar</button>
-            </div>
-        </div>
-</div>-->
