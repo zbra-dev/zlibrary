@@ -63,7 +63,7 @@ namespace ZLibrary.Core
 
         public async Task ApprovedReservation(Reservation reservation, Book book)
         {
-            if (reservation.IsApproved() || reservation.IsRejected())
+            if (reservation.IsApproved || reservation.IsRejected)
             {
                 throw new ReservationApprovedException($"O Status da reserversa precisa ser '{ReservationStatus.Requested}' ou '{ReservationStatus.Waiting}'.");
             }
@@ -74,7 +74,13 @@ namespace ZLibrary.Core
             }
 
             var loans = await loanService.FindByBookId(reservation.BookId);
-            if (book.CanApproveLoan(loans))
+            var loanBorrowedByUser = loans.SingleOrDefault(l => l.Reservation.User.Id == reservation.User.Id && l.Status == LoanStatus.Borrowed);
+            if (loanBorrowedByUser != null)
+            {
+                await CreateLoan(reservation);
+                await loanService.ReturnLoan(loanBorrowedByUser.Id);
+            }
+            else if (book.CanApproveLoan(loans))
             {
                 await CreateLoan(reservation);
             }
@@ -87,7 +93,7 @@ namespace ZLibrary.Core
 
         public async Task RejectedReservation(Reservation reservation)
         {
-            if (!reservation.IsRequested())
+            if (!reservation.IsRequested)
             {
                 throw new ReservationApprovedException($"O Status da reserversa precsisa ser '{ReservationStatus.Requested}'.");
             }

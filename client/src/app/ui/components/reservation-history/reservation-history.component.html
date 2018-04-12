@@ -1,10 +1,9 @@
 <div class="modal-history">
     <div class="modal-header">
         {{index}}
-        <h4 *ngIf="isLoaned()" class="modal-title">LIVROS ALUGADOS</h4>
-        <h4 *ngIf="isWaiting()" class="modal-title">LISTA DE ESPERA</h4>
+        <h4 *ngIf="isLoaned" class="modal-title">LIVROS ALUGADOS</h4>
+        <h4 *ngIf="isWaiting" class="modal-title">LISTA DE ESPERA</h4>
         <button type="button" class="close" (click)="close()">x</button>
     </div>
    <zli-reservation-list *ngFor="let reservation of reservations;" [reservation]="reservation"></zli-reservation-list>
-
 </div>

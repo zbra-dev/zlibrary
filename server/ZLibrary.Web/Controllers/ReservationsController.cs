@@ -19,12 +19,14 @@ namespace ZLibrary.Web
         private readonly IReservationService reservationService;
         private readonly IUserService userService;
         private readonly IBookService bookService;
+        private readonly ILoanService loanService;
 
-        public ReservationsController(IReservationService reservationService, IUserService userService, IBookService bookService)
+        public ReservationsController(IReservationService reservationService, IUserService userService, IBookService bookService, ILoanService loanService)
         {
             this.reservationService = reservationService;
             this.userService = userService;
             this.bookService = bookService;
+            this.loanService = loanService;
         }
 
         [HttpGet]
@@ -33,7 +35,6 @@ namespace ZLibrary.Web
             var reservations = await reservationService.FindAll();
             return Ok(reservations.ToReservationViewItems());
         }
-
 
         [HttpGet("{id:long}", Name = "FindReservation")]
         public async Task<IActionResult> FindById(long id)
@@ -58,8 +59,13 @@ namespace ZLibrary.Web
             foreach (var reservation in reservations)
             {
                 var reservationDTO = reservation.ToReservationViewItem();
-                var book = await bookService.FindById(reservation.BookId);
-                reservationDTO.Book = book.ToBookViewItem();
+                var loan = await loanService.FindByReservationId(reservation.Id);
+                if (loan != null)
+                {
+                    reservationDTO.LoanStatusId = (long)loan.Status;
+                    reservationDTO.IsLoanExpired = loan.IsExpired;
+                    reservationDTO.CanBorrow = loan.CanBorrow;
+                }
                 list.Add(reservationDTO);
             }
             return Ok(list);

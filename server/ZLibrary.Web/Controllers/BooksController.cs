@@ -46,7 +46,6 @@ namespace ZLibrary.Web
             return Ok(books.ToBookViewItems());
         }
 
-
         [HttpGet("{id:long}", Name = "FindBook")]
         public async Task<IActionResult> FindById(long id)
         {
@@ -55,7 +54,9 @@ namespace ZLibrary.Web
             {
                 return NotFound();
             }
-            return Ok(book.ToBookViewItem());
+            var bookDTO = book.ToBookViewItem();
+            await GetBookReservation(bookDTO);
+            return Ok(bookDTO);
         }
 
         [HttpDelete("{id:long}", Name = "DeleteBook")]
@@ -189,22 +190,31 @@ namespace ZLibrary.Web
             };
             var books = await bookFacade.FindBy(bookSearchParameter);
             var booksDTO = books.ToBookViewItems();
+            await GetBookReservations(booksDTO);
+            return Ok(booksDTO);
+        }
+
+        private async Task GetBookReservations(IEnumerable<BookDTO> booksDTO)
+        {
             foreach (var book in booksDTO)
             {
-                var reservations = await reservationService.FindByBookId(book.Id);
-                var reservationsDTO = reservations.ToReservationViewItems();
-                foreach (var reservation in reservationsDTO)
-                {
-                    var loan = await loanService.FindByReservationId(reservation.Id);
-                    if (loan != null)
-                    {
-                        reservation.LoanStatusId = (long)loan.Status;
-                    }
-                }
-                book.Reservations = reservationsDTO;
+               await GetBookReservation(book);
             }
+        }
 
-            return Ok(booksDTO);
+        private async Task GetBookReservation(BookDTO book)
+        {
+            var reservations = await reservationService.FindByBookId(book.Id);
+            var reservationsDTO = reservations.ToReservationViewItems();
+            foreach (var reservation in reservationsDTO)
+            {
+                var loan = await loanService.FindByReservationId(reservation.Id);
+                if (loan != null)
+                {
+                    reservation.LoanStatusId = (long)loan.Status;
+                }
+            }
+            book.Reservations = reservationsDTO;
         }
     }
 }

@@ -1,23 +1,14 @@
 <div class="modal-body" xmlns="http://www.w3.org/1999/html"></div>
-<div>
-    <div *ngIf="reservation">{{reservation.status}}
-        <div class="modal-rectangle" style="display:flex;">
-            <zli-book-image  class="book-cover" [book]="reservation.book"></zli-book-image>
-            <div class="book-informations">
-                <span class="book-title">{{reservation.book.title}}</span>
-                <span class="book-authors"*ngFor="let author of reservation.book.authors; last as isLast">{{author.name}}{{isLast ? '' : ', '}}</span>
-            </div>
-            <span class="reservation-start-date">Alugado em: {{reservation.startDate |  date:'MM/dd/yyyy'}}</span>
+<div *ngIf="reservation">
+    {{reservation.status}}
+    <div class="modal-rectangle" style="display: flex;">
+        <zli-book-image  class="book-cover" [book]="book"></zli-book-image>
+        <div class="book-information">
+            <span class="book-title">{{book?.title}}</span>
+            <span class="book-authors"*ngFor="let author of book?.authors; last as isLast">{{author.name}}{{isLast ? '' : ', '}}</span>
         </div>
-    </div>
-    <div *ngIf="waitingList">{{reservation.status}}
-        <div class="modal-rectangle" style="display:flex;">
-            <zli-book-image  class="book-cover" [book]="reservation.book"></zli-book-image>
-            <div class="book-informations">
-                <span class="book-title">{{reservation.book.title}}</span>
-                <span class="book-authors"*ngFor="let author of reservation.book.authors; last as isLast">{{author.name}}{{isLast ? '' : ', '}}</span>
-            </div>
-            <button type="button" class="reservation-renovate">Cancelar</button>
-        </div>
+        <span *ngIf="!showRenewButton" class="reservation-start-date">Alugado em: {{reservation.startDate | date:'MM/dd/yyyy'}}</span>
+        <div *ngIf="showRenewButton && !isRequested && !isWaiting" class="reservation-renovate" (click)="renew()">Renovar</div>
+        <div *ngIf="isRequested" class="reservation-requested">Renovação Solicitada</div>
     </div>
 </div>

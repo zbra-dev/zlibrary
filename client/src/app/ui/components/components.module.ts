@@ -12,7 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DirectivesModule } from '../directives/directives.module';
 import { AuthorSuggestionAdapter } from './book-popup/author-suggestion.adapter';
 import { MenuComponent } from './menu/menu.component';
-import { ReservationListComponent } from "./reservation-list/reservation-list.component";
+import { ReservationListComponent } from './reservation-list/reservation-list.component';
 import { PublisherSuggestionAdapter } from './book-popup/publisher-suggestion.adapter';
 import { TypeaheadComponent } from './typeahead/single-selection/single-selection-typeahead.component';
 import { TypeaheadMultiSelectionComponent } from './typeahead/multi-selection/multi-selection-typeahead.component';
@@ -31,7 +31,7 @@ import { BookImageComponent } from './book-image/book-image.component';
         ConfirmComponent,
         MenuComponent,
         ReservationListComponent,
-    	ListResultsComponent,
+        ListResultsComponent,
         TypeaheadComponent,
         TypeaheadMultiSelectionComponent,
         LoadImageComponent,

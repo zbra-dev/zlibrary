@@ -9,6 +9,10 @@ namespace ZLibrary.Model
         public DateTime ExpirationDate { get; private set; }
         public LoanStatus Status { get; set; }
 
+        public bool IsReturned => Status == LoanStatus.Returned;
+        public bool IsExpired => DateTime.Now > ExpirationDate;
+        public bool CanBorrow => DateTime.Now >= ExpirationDate.AddMonths(-1);
+
         public Loan(Reservation reservation)
         {
             if (reservation == null)
@@ -28,10 +32,5 @@ namespace ZLibrary.Model
         {
             return DateTime.Now.AddMonths(3);
         }
-
-        public bool IsReturned()
-        {
-            return Status == LoanStatus.Returned;
-        }
-    }
+   }
 }

@@ -35,7 +35,7 @@
 
 .book-title{
     width: 565px;
-    height: 35px;
+    height: 31px;
     font-family: Roboto;
     font-size: 18px;
     font-weight: 500;
@@ -45,6 +45,9 @@
     color: #726e6e;
     margin-top: 60px;
     display: flex;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .book-authors{
@@ -83,8 +86,32 @@
     right: 56px;
     position: absolute;
     margin-top: 60px;
+    cursor: pointer;
 }
-.book-informations{
+
+.reservation-cancel{
+    font-size: 18px;
+    font-family: Roboto;
+    color: #4a90e2;
+    background-color: transparent;
+    border-color: transparent;
+    right: 56px;
+    position: absolute;
+    margin-top: 60px;
+    cursor: pointer;
+}
+
+.reservation-requested{
+    font-size: 18px;
+    font-family: Roboto;
+    color: green;
+    background-color: transparent;
+    border-color: transparent;
+    right: 56px;
+    position: absolute;
+    margin-top: 60px;
+}
+.book-information{
     //style="display:flex; 
     flex-direction:column;
     margin-left: 50px;

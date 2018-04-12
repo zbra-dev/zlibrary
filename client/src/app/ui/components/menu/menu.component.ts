@@ -1,6 +1,5 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import { ReservationHistoryComponent, ReservationHistoryType } from '../reservation-history/reservation-history.component';
-//import { WaitingListComponent } from '../waiting-list/waiting-list.component';
 import { BsModalService } from 'ngx-bootstrap';
 import { AuthService } from '../../../service/auth.service';
 import { User } from '../../../model/user';
@@ -20,7 +19,7 @@ export class MenuComponent implements OnInit {
     constructor(private modalService: BsModalService,
         private service: AuthService) {
     }
-    
+
     ngOnInit() {
         this.user = this.service.getLoggedUser();
     }
@@ -28,10 +27,6 @@ export class MenuComponent implements OnInit {
     public viewReservationHistory(): void {
         this.modalService.show(ReservationHistoryComponent);
     }
-
-    /*public viewWaitingList(): void {
-        this.modalService.show(WaitingListComponent);
-    }*/
 
     public onLogout() {
         this.service.logout();
@@ -42,16 +37,16 @@ export class MenuComponent implements OnInit {
         this.showUserMenu = !this.showUserMenu;
     }
 
-    public showRentedBooks(){
-        let reservationHistoryModalControl = this.modalService.show(ReservationHistoryComponent)
-        let reservationHistoryComponent = reservationHistoryModalControl.content as ReservationHistoryComponent;
+    public showRentedBooks() {
+        const reservationHistoryModalControl = this.modalService.show(ReservationHistoryComponent);
+        const reservationHistoryComponent = reservationHistoryModalControl.content as ReservationHistoryComponent;
         reservationHistoryComponent.reservationHistoryType = ReservationHistoryType.Loaned;
         reservationHistoryComponent.modalControl = reservationHistoryModalControl;
     }
 
-    public showWaitingList(){
-        let reservationHistoryModalControl = this.modalService.show(ReservationHistoryComponent)
-        let reservationHistoryComponent = reservationHistoryModalControl.content as ReservationHistoryComponent;
+    public showWaitingList() {
+        const reservationHistoryModalControl = this.modalService.show(ReservationHistoryComponent);
+        const reservationHistoryComponent = reservationHistoryModalControl.content as ReservationHistoryComponent;
         reservationHistoryComponent.reservationHistoryType = ReservationHistoryType.Waiting;
         reservationHistoryComponent.modalControl = reservationHistoryModalControl;
     }

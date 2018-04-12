@@ -21,4 +21,8 @@ export class BookService {
     public delete(book: Book): Observable<Object> {
         return this.repository.delete(book);
     }
+
+    public findById(id: number): Observable<Book> {
+        return this.repository.findById(id);
+    }
 }
