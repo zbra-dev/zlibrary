@@ -50,7 +50,7 @@ export class BookComponent implements OnInit {
                         this.deleted.emit();
                     },
                     error => {
-                        this.toastMediator.show(`Error loading books: ${error}`);
+                        this.toastMediator.show(`O Livro não pode ser deletado pois possui copias emprestadas.`);
                     }
                 )
             );
