@@ -66,7 +66,7 @@ export class BookListComponent implements OnInit {
 
     public onSelect(book: Book): void {
         if (!!book) {
-            this.bookPopupComponent.initWith(Object.assign({}, book));
+            this.bookPopupComponent.initWith(Object.assign(new Book(), book));
         } else {
             this.bookPopupComponent.initNewBook();
         }

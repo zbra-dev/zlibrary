@@ -102,8 +102,9 @@ export class BookPopupComponent implements OnInit {
         //Ensures clean validation errors
         this.bookForm.reset();
         this.book = book;
-        this.originalBook = Object.assign({}, book);
+        this.originalBook = Object.assign(new Book(), book);
         this.isNew = !book.id;
+        this.isOrder = book.hasBookReservation(this.user);
         //Set Image validate again because book reference has changed
         this.bookForm.get('imageControl').setValidators(BookValidator.validateImageExtension(this.book));
     }

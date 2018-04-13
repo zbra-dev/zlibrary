@@ -2,6 +2,8 @@ import { Publisher } from './publisher';
 import { Author } from './author';
 import { Isbn } from './isbn';
 import { Reservation } from './reservation';
+import { LoanStatus } from './loan-status';
+import { User } from './user';
 
 export class Book {
 
@@ -22,5 +24,14 @@ export class Book {
     }
 
     constructor() {
+    }
+
+    public hasBookReservation(user: User): boolean {
+        if (this.reservations.length > 0) {
+            const userReservations = this.reservations.filter(r => r.userId === user.id);
+            return userReservations.length > 0
+                && userReservations.some(r => r.reservationReason.isApproved || r.loanStatus !== LoanStatus.returned);
+        }
+        return false;
     }
 }
