@@ -24,7 +24,7 @@ export class BookImageComponent implements OnInit {
 
     @Input()
     set book(book: Book) {
-        if (!!book.id) {
+        if (!!book && !!book.id) {
             this.loadImage(book.coverImageKey);
         }
     }

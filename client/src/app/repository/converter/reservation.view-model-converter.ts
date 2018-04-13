@@ -1,12 +1,21 @@
+import { LoanStatus } from './../../model/loan-status';
+import { ReservationReason } from './../../model/reservation-reason';
+import { Book } from './../../model/book';
+import { User } from './../../model/user';
 import { Reservation } from '../../model/reservation';
-import { ReservationReason } from '../../model/reservation-reason';
+import { BookViewModelConverter } from './book.view-model-converter';
 
 export class ReservationViewModelConverter {
-
     public static fromDTO(dto: any): Reservation {
-        const reservationReason = new ReservationReason(dto.statusId, dto.description);
-        const reservation = new Reservation(dto.id, dto.userId, dto.bookId, reservationReason, dto.startDate, dto.loanStatusId);
-
-        return reservation;
+         const reservationReason = new ReservationReason(dto.statusId, dto.description);
+         const reservation = new Reservation(dto.id,
+                                             dto.userId,
+                                             dto.bookId,
+                                             reservationReason,
+                                             dto.startDate,
+                                             dto.loanStatusId,
+                                             dto.isLoanExpired,
+                                             dto.canBorrow);
+         return reservation;
     }
 }

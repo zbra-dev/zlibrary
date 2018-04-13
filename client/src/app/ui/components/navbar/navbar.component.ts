@@ -14,22 +14,11 @@ export class NavbarComponent implements OnInit {
 
     public user: User;
 
-    constructor(private modalService: BsModalService, private service: AuthService) {
+    constructor(private service: AuthService) {
     }
 
     ngOnInit() {
         this.user = this.service.getLoggedUser();
     }
-    public showMenu(texto) {
 
-    }
-
-    public onLogout() {
-        this.service.logout();
-        window.location.reload();
-    }
-
-    public viewReservationHistory(): void {
-        this.modalService.show(ReservationHistoryComponent);
-    }
 }

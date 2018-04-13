@@ -43,4 +43,9 @@ export class BookRepository {
         return this.httpClient.delete(deleteURL);
     }
 
+    public findById(id: number): Observable<Book> {
+        const findByIdURL = `${URL}/${id}`;
+        return this.httpClient.get(findByIdURL).map((data: any) => BookViewModelConverter.fromDTO(data));
+    }
+
 }

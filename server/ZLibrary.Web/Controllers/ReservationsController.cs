@@ -19,12 +19,14 @@ namespace ZLibrary.Web
         private readonly IReservationService reservationService;
         private readonly IUserService userService;
         private readonly IBookService bookService;
+        private readonly ILoanService loanService;
 
-        public ReservationsController(IReservationService reservationService, IUserService userService, IBookService bookService)
+        public ReservationsController(IReservationService reservationService, IUserService userService, IBookService bookService, ILoanService loanService)
         {
             this.reservationService = reservationService;
             this.userService = userService;
             this.bookService = bookService;
+            this.loanService = loanService;
         }
 
         [HttpGet]
@@ -33,7 +35,6 @@ namespace ZLibrary.Web
             var reservations = await reservationService.FindAll();
             return Ok(reservations.ToReservationViewItems());
         }
-
 
         [HttpGet("{id:long}", Name = "FindReservation")]
         public async Task<IActionResult> FindById(long id)
@@ -49,12 +50,25 @@ namespace ZLibrary.Web
         [HttpGet("user/{userId:long}", Name = "FindReservationByUserId")]
         public async Task<IActionResult> FindByUserId(long userId)
         {
-            var reservation = await reservationService.FindByUserId(userId);
-            if (reservation == null)
+            var reservations = await reservationService.FindByUserId(userId);
+            if (reservations == null || !reservations.Any())
             {
                 return NotFound($"Nenhuma reserva encontrada com o user ID: {userId}.");
             }
-            return Ok(reservation.ToReservationViewItems());
+            var list = new List<ReservationResultDTO>();
+            foreach (var reservation in reservations)
+            {
+                var reservationDTO = reservation.ToReservationViewItem();
+                var loan = await loanService.FindByReservationId(reservation.Id);
+                if (loan != null)
+                {
+                    reservationDTO.LoanStatusId = (long)loan.Status;
+                    reservationDTO.IsLoanExpired = loan.IsExpired;
+                    reservationDTO.CanBorrow = loan.CanBorrow;
+                }
+                list.Add(reservationDTO);
+            }
+            return Ok(list);
         }
 
         [HttpPost("order")]

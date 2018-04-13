@@ -1,0 +1,13 @@
+<div class="modal-body" xmlns="http://www.w3.org/1999/html"></div>
+<div *ngIf="reservation">
+    <div class="modal-rectangle" style="display: flex;">
+        <zli-book-image  class="book-cover" [book]="book"></zli-book-image>
+        <div class="book-information">
+            <span class="book-title">{{book?.title}}</span>
+            <span class="book-authors"*ngFor="let author of book?.authors; last as isLast">{{author.name}}{{isLast ? '' : ', '}}</span>
+        </div>
+        <span *ngIf="!showRenewButton" class="reservation-start-date">Alugado em: {{reservation.startDate | date:'MM/dd/yyyy'}}</span>
+        <div *ngIf="showRenewButton && !isRequested && !isWaiting" class="reservation-renovate" (click)="renew()">Renovar</div>
+        <div *ngIf="isRequested" class="reservation-requested">Renovação Solicitada</div>
+    </div>
+</div>

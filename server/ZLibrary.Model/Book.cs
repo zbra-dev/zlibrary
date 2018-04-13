@@ -34,7 +34,7 @@ namespace ZLibrary.Model
 
         public bool CanApproveLoan(IList<Loan> loans)
         {
-            return NumberOfCopies > loans.Count(l => !l.IsReturned());
+            return NumberOfCopies > loans.Count(l => !l.IsReturned);
         }
 
         public override bool Equals(object obj)

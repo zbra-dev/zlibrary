@@ -10,6 +10,10 @@ namespace ZLibrary.Model
         public ReservationReason Reason { get; private set; }
         public DateTime StartDate { get; private set; }
 
+        public bool IsRequested => Reason.Status == ReservationStatus.Requested;
+        public bool IsApproved => Reason.Status == ReservationStatus.Approved;
+        public bool IsRejected =>  Reason.Status == ReservationStatus.Rejected;
+        
         public Reservation(long bookId, User user)
         {
             if (bookId <= 0)
@@ -31,19 +35,6 @@ namespace ZLibrary.Model
         {
         }
 
-        public bool IsRequested()
-        {
-            return Reason.Status == ReservationStatus.Requested;
-        }
-
-        public bool IsApproved()
-        {
-            return Reason.Status == ReservationStatus.Approved;
-        }
-
-        public bool IsRejected()
-        {
-            return Reason.Status == ReservationStatus.Rejected;
-        }
+       
     }
 }

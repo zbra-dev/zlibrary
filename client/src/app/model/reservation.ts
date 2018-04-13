@@ -1,4 +1,4 @@
-import {User} from './user';
+import { User } from './user';
 import { ReservationReason } from './reservation-reason';
 import { LoanStatus } from './loan-status';
 
@@ -8,6 +8,8 @@ export class Reservation {
                 public bookId: number,
                 public reservationReason: ReservationReason,
                 public startDate: string,
-                public loanStatus: LoanStatus) {
+                public loanStatus: LoanStatus,
+                public isLoanExpired: boolean,
+                public canBorrow: boolean) {
     }
 }

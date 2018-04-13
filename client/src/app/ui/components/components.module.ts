@@ -11,6 +11,8 @@ import { ConfirmComponent } from './confirm/confirm.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DirectivesModule } from '../directives/directives.module';
 import { AuthorSuggestionAdapter } from './book-popup/author-suggestion.adapter';
+import { MenuComponent } from './menu/menu.component';
+import { ReservationListComponent } from './reservation-list/reservation-list.component';
 import { PublisherSuggestionAdapter } from './book-popup/publisher-suggestion.adapter';
 import { TypeaheadComponent } from './typeahead/single-selection/single-selection-typeahead.component';
 import { TypeaheadMultiSelectionComponent } from './typeahead/multi-selection/multi-selection-typeahead.component';
@@ -27,6 +29,8 @@ import { BookImageComponent } from './book-image/book-image.component';
         ToastComponent,
         ReservationHistoryComponent,
         ConfirmComponent,
+        MenuComponent,
+        ReservationListComponent,
         ListResultsComponent,
         TypeaheadComponent,
         TypeaheadMultiSelectionComponent,
@@ -41,12 +45,15 @@ import { BookImageComponent } from './book-image/book-image.component';
         ToastComponent,
         ReservationHistoryComponent,
         ConfirmComponent,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MenuComponent,
+        ReservationListComponent
     ],
     entryComponents: [
         ToastComponent,
         ReservationHistoryComponent,
-        ConfirmComponent
+        ConfirmComponent,
+        ReservationListComponent
     ],
     imports: [
         BrowserModule,

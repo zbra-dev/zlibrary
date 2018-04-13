@@ -1,0 +1,63 @@
+<div class="user-menu-container">
+        <div class="user-menu-button" (click)="toggleMenu()">
+            <div class="user-name">
+                {{user.name}}
+            </div>
+            <img src="../../../../assets/images/ic-options.svg" class="ic-options">
+        </div>
+        <div class="user-menu" *ngIf="showUserMenu">
+            <ul class="user-menu-list">
+                <li class="user-menu-option">
+                    <img src="../../../../assets/images/green-notification.png">
+                    <button (click)="showRentedBooks()" style="cursor:pointer" class="items-list">
+                        Livros Alugados
+                    </button>
+                </li>
+                <li> 
+                    <img src="../../../../assets/images/yellow-notification.png">
+                    <button  (click)="showWaitingList()" style="cursor:pointer" class="items-list">
+                        Livros em Espera
+                    </button>
+                </li>
+                <li>
+                    <img src="../../../../assets/images/out.png">
+                    <button (click)="onLogout()" style="cursor:pointer" class="items-list">
+                        Sair
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<div class="dropdown">
+    <div class="dropdown-menu">
+        <a class="loan-books" href="#">Livros Alugados</a>
+        <a class="waiting-list" href="#">Livros em Espera</a>
+        <a class="logout" href="#">>Sair</a>
+    </div>
+</div>-->
+
+
+<!--<div class="dropdown">
+    <ul class="dropdown-menu">
+        <li> <a  [routerLink]="" (click)= "viewReservationHistory()">
+            <img src="../../../../assets/images/ic-rednotifications.png">Livros Alugado</a>
+        </li>
+        <li> <a  [routerLink]="" (click)= "viewReservationHistory()"><img src="../../../../assets/images/ic-rednotifications_yellow.png">Livros em Espera</a></li>
+        <li> <a  [routerLink]="" (click)= "onLogout()"><img src="../../../../assets/images/out.png">Sair</a></li>
+    </ul>
+</div>-->
+
+

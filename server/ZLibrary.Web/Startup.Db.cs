@@ -494,28 +494,28 @@ namespace ZLibrary.Web
                 // context.Books.Add(book7);
                 // context.SaveChanges();
                 
-
                 var bookId = 1;
-                var firstUser = users.SingleOrDefault(u => u.Id == 16);
-                var secondUser = users.SingleOrDefault(u => u.Id == 17);
+                var firstUser = users.SingleOrDefault(u => u.Id == 17);
+                var secondUser = users.SingleOrDefault(u => u.Id == 16);
 
                 var reservation1 = new Reservation(bookId, secondUser);
                 reservation1.Reason.Status = ReservationStatus.Approved;
                 context.Reservations.Add(reservation1);
                 context.SaveChanges();
 
-                var reservation2 = new Reservation(bookId, secondUser);
+                var reservation2 = new Reservation(2, secondUser);
                 reservation2.Reason.Status = ReservationStatus.Approved;
                 context.Reservations.Add(reservation2);
                 context.SaveChanges();
 
-                var reservation3 = new Reservation(bookId, secondUser);
+                var reservation3 = new Reservation(3, firstUser);
                 reservation3.Reason.Status = ReservationStatus.Waiting;
                 context.Reservations.Add(reservation3);
                 context.SaveChanges();
 
                 var loan1 = new Loan(reservation1);
-                loan1.Status = LoanStatus.Expired;
+                loan1.Status = LoanStatus.Borrowed;
+                //loan1.ExpirationDate = DateTime.Now.AddMonths(1); /*renew button test */
                 context.Loans.Add(loan1);
                 context.SaveChanges();
 

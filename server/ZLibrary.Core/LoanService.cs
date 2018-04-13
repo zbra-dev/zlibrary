@@ -65,8 +65,9 @@ namespace ZLibrary.Core
 
         public async Task<IList<Loan>> FindByBookId(long bookId)
         {
-            return await loanRepository.FindByUserId(bookId);
+            return await loanRepository.FindByBookId(bookId);
         }
+
         public async Task<Loan> ReturnLoan(long id)
         {
             var loan = await FindById(id);
