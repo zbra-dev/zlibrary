@@ -12,6 +12,6 @@ namespace ZLibrary.API
         Task<Book> FindByCoverImageKey(Guid key);
         Task<IList<Book>> FindBy(BookSearchParameter bookSearchParameter);
         Task Delete(long id);
-        Task Save(Book book, string imagePath);
+        Task<Book> Save(Book book, string imagePath);
     }
 }

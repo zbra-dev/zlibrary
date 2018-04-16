@@ -78,7 +78,7 @@ namespace ZLibrary.Persistence
             await context.SaveChangesAsync();
         }
 
-        public async Task Save(Book book)
+        public async Task<Book> Save(Book book)
         {
             if (book.Id == 0)
             {
@@ -95,6 +95,7 @@ namespace ZLibrary.Persistence
             }
             await context.SaveChangesAsync();
             await context.Entry(book).ReloadAsync();
+            return book;
         }
 
         public async Task<IList<Book>> FindByTitleOrSynopsis(string text)
@@ -129,6 +130,13 @@ namespace ZLibrary.Persistence
             }
 
             return books;
+        }
+
+        public async Task<bool> HasBookWithIsbn(string isbn)
+        {
+            return await context.Books
+                         .Include(b => b.Isbn)
+                         .AnyAsync(b => b.Isbn.Value == isbn);
         }
 
         public async Task<IList<Book>> FindByAuthor(string author)

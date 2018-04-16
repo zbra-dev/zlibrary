@@ -15,6 +15,7 @@ namespace ZLibrary.Web.Extensions
         {
             var book = new Book()
             {
+                Id = bookDTO.Id,
                 Title = bookDTO.Title,
                 Synopsis = bookDTO.Synopsis,
                 PublicationYear = bookDTO.PublicationYear,
@@ -33,26 +34,7 @@ namespace ZLibrary.Web.Extensions
 
             return book;
         }
-        public static Book FromBookViewItem(this BookDTO bookDTO, Book book, ValidationResult validationResult)
-        {
-            book.Title = bookDTO.Title;
-            book.Synopsis = bookDTO.Synopsis;
-            book.PublicationYear = bookDTO.PublicationYear;
-            book.Isbn = validationResult.GetResult<Isbn>();
-            book.Publisher = validationResult.GetResult<Publisher>();
-            book.Authors = validationResult.GetResult<List<BookAuthor>>();
-            book.NumberOfCopies = bookDTO.NumberOfCopies;
-            book.CoverImageKey = bookDTO.CoverImageKey;
-
-            foreach (var bookAuthor in book.Authors)
-            {
-                bookAuthor.Book = book;
-                bookAuthor.BookId = book.Id;
-            }
-
-            return book;
-        }
-
+        
         public async static Task<BookDTO> ToBookViewItem(this Book book, IReservationService reservationService, ILoanService loanService)
         {
             var bookDTO = new BookDTO()
@@ -75,7 +57,7 @@ namespace ZLibrary.Web.Extensions
 
         public async static Task<IEnumerable<BookDTO>> ToBookViewItems(this IEnumerable<Book> books, IReservationService reservationService, ILoanService loanService)
         {
-             var tasks = books.Select(b => b.ToBookViewItem(reservationService, loanService));
+            var tasks = books.Select(b => b.ToBookViewItem(reservationService, loanService));
             return await Task.WhenAll(tasks);
         }
     }

@@ -136,25 +136,17 @@ namespace ZLibrary.Web
                 return BadRequest(validationResult.ErrorMessage);
             }
 
-            var book = await bookFacade.FindById(dto.Id);
-
-            if (book == null && dto.Id != 0)
+            var bookFound = await bookFacade.FindById(dto.Id);
+            if (bookFound == null && dto.Id != 0)
             {
                 return NotFound($"Nenhum livro encontrado com o ID: {dto.Id}.");
             }
 
-            if (book == null)
-            {
-                book = dto.FromBookViewItem(validationResult);
-            }
-            else
-            {
-                book = dto.FromBookViewItem(book, validationResult);
-            }
-
             try
             {
-                await bookFacade.Save(book, targetFilePath);
+                var book = dto.FromBookViewItem(validationResult);
+                
+                book = await bookFacade.Save(book, targetFilePath);
 
                 return Ok(await book.ToBookViewItem(reservationService, loanService));
             }

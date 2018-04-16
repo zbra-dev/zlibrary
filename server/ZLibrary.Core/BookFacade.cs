@@ -36,14 +36,16 @@ namespace ZLibrary.Core
             await bookService.Delete(id);
         }
 
-        public async Task Save(Book book, string imagePath)
+        public async Task<Book> Save(Book book, string imagePath)
         {
             if (string.IsNullOrEmpty(imagePath) && book.Id == 0)
             {
                 throw new ImageSaveException("Imagem é obrigatória.");
             }
-            await bookService.Save(book);
+            var bookSaved =  await bookService.Save(book);
             imageService.SaveImage(book.CoverImageKey, imagePath);
+            return bookSaved;
+            
         }
 
         public async Task<IList<Book>> FindBy(BookSearchParameter bookSearchParameter)

@@ -72,8 +72,9 @@ namespace ZLibrary.Core
             }
         }
 
-        public async Task Save(Book book)
+        public async Task<Book> Save(Book book)
         {
+            Book bookOriginal = null;
             if (book.NumberOfCopies <= 0)
             {
                 throw new BookSaveException("Número de cópias deve ser positivo maior que zero.");
@@ -86,9 +87,21 @@ namespace ZLibrary.Core
                 {
                     throw new BookSaveException("Número de cópias não pode ser menor que a quantidade de livros emprestados.");
                 }
+                bookOriginal = await bookRepository.FindById(book.Id);
             }
 
-            await bookRepository.Save(book);
+            if ((book.Id == 0 || bookOriginal != null && book.Isbn != null && bookOriginal.Isbn != null && book.Isbn.Value != bookOriginal.Isbn.Value) && await bookRepository.HasBookWithIsbn(book.Isbn.Value))
+            {
+                throw new BookSaveException("ISBN já cadastrado.");
+            }
+            if (bookOriginal != null)
+            {
+                UpdateBookInformation(bookOriginal, book);
+                //keep Id in only one instance
+                book = null;
+                return await bookRepository.Save(bookOriginal);
+            }
+            return await bookRepository.Save(book);
         }
 
         public async Task<IList<Book>> FindBy(BookSearchParameter parameters)
@@ -125,6 +138,25 @@ namespace ZLibrary.Core
             }
 
             return bookSet.OrderBy(orderBySelector).ToArray();
+        }
+
+        private void UpdateBookInformation(Book bookToSave, Book newBook)
+        {
+            //FIXME: 
+            bookToSave.Title = newBook.Title;
+            bookToSave.Synopsis = newBook.Synopsis;
+            bookToSave.PublicationYear = newBook.PublicationYear;
+            bookToSave.Isbn = newBook.Isbn;
+            bookToSave.Publisher = newBook.Publisher;
+            bookToSave.Authors = newBook.Authors;
+            bookToSave.NumberOfCopies = newBook.NumberOfCopies;
+            bookToSave.CoverImageKey = newBook.CoverImageKey;
+
+            foreach (var bookAuthor in bookToSave.Authors)
+            {
+                bookAuthor.Book = bookToSave;
+                bookAuthor.BookId = bookToSave.Id;
+            }
         }
     }
 }

@@ -12,9 +12,10 @@ namespace ZLibrary.Persistence
         Task<Book> FindByCoverImageKey(Guid key);
         Task<IList<Book>> FindByTitleOrSynopsis(string text);
         Task<IList<Book>> FindByIsbn(string isbn);
+        Task<bool> HasBookWithIsbn(string isbn);
         Task<IList<Book>> FindByAuthor(string author);
         Task<IList<Book>> FindByPublisher(string publisher);
         Task Delete (long id);
-        Task Save(Book user);
+        Task<Book> Save(Book user);
     }
 }

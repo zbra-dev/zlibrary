@@ -26,7 +26,7 @@ export class Book {
     }
 
     public hasBookReservation(user: User): boolean {
-        if (this.reservations.length > 0) {
+        if (!!this.reservations && this.reservations.length > 0) {
             const userReservations = this.reservations.filter(r => r.userId === user.id);
             return userReservations.length > 0
                 && userReservations.some(r => r.reservationReason.isApproved && !r.canBorrow);
