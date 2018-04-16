@@ -33,7 +33,7 @@ namespace ZLibrary.Web
         public async Task<IActionResult> FindAll()
         {
             var reservations = await reservationService.FindAll();
-            return Ok(reservations.ToReservationViewItems());
+            return Ok(await reservations.ToReservationViewItems(loanService));
         }
 
         [HttpGet("{id:long}", Name = "FindReservation")]
@@ -55,20 +55,7 @@ namespace ZLibrary.Web
             {
                 return NotFound($"Nenhuma reserva encontrada com o user ID: {userId}.");
             }
-            var list = new List<ReservationResultDTO>();
-            foreach (var reservation in reservations)
-            {
-                var reservationDTO = reservation.ToReservationViewItem();
-                var loan = await loanService.FindByReservationId(reservation.Id);
-                if (loan != null)
-                {
-                    reservationDTO.LoanStatusId = (long)loan.Status;
-                    reservationDTO.IsLoanExpired = loan.IsExpired;
-                    reservationDTO.CanBorrow = loan.CanBorrow;
-                }
-                list.Add(reservationDTO);
-            }
-            return Ok(list);
+            return Ok(await reservations.ToReservationViewItems(loanService));
         }
 
         [HttpPost("order")]

@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using ZLibrary.API;
 using ZLibrary.Model;
 using ZLibrary.Web.Controllers.Items;
 using ZLibrary.Web.Validators;
@@ -51,9 +53,9 @@ namespace ZLibrary.Web.Extensions
             return book;
         }
 
-        public static BookDTO ToBookViewItem(this Book book)
+        public async static Task<BookDTO> ToBookViewItem(this Book book, IReservationService reservationService, ILoanService loanService)
         {
-            return new BookDTO()
+            var bookDTO = new BookDTO()
             {
                 Id = book.Id,
                 Authors = book.Authors.Select(a => a.Author.ToAuthorViewItem()).ToArray(),
@@ -65,11 +67,16 @@ namespace ZLibrary.Web.Extensions
                 NumberOfCopies = book.NumberOfCopies,
                 CoverImageKey = book.CoverImageKey,
             };
+
+            var reservations = await reservationService.FindByBookId(book.Id);
+            bookDTO.Reservations = await reservations.ToReservationViewItems(loanService);
+            return bookDTO;
         }
 
-        public static IEnumerable<BookDTO> ToBookViewItems(this IEnumerable<Book> books)
+        public async static Task<IEnumerable<BookDTO>> ToBookViewItems(this IEnumerable<Book> books, IReservationService reservationService, ILoanService loanService)
         {
-            return books.Select(b => b.ToBookViewItem()).ToArray();
+             var tasks = books.Select(b => b.ToBookViewItem(reservationService, loanService));
+            return await Task.WhenAll(tasks);
         }
     }
 }

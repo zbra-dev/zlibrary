@@ -8,7 +8,6 @@ import { AuthService } from '../../../service/auth.service';
 import { User } from '../../../model/user';
 import index from '@angular/cli/lib/cli';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
-import { LoanStatus } from '../../../model/loan-status';
 
 @Component({
     selector: 'zli-reservation-history',
@@ -53,7 +52,7 @@ export class ReservationHistoryComponent implements OnInit {
             .subscribe((reservations: Reservation[]) => {
                 const reservationStatus = this.convertToReservationStatus(this.reservationHistoryType);
                 this.reservations = reservations
-                    .filter(r => r.reservationReason.status === reservationStatus && r.loanStatus !== LoanStatus.returned);
+                    .filter(r => r.reservationReason.status === reservationStatus && !r.canBorrow);
             });
     }
 

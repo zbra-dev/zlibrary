@@ -1,4 +1,3 @@
-import { LoanStatus } from './../../model/loan-status';
 import { ReservationReason } from './../../model/reservation-reason';
 import { Book } from './../../model/book';
 import { User } from './../../model/user';
@@ -13,7 +12,6 @@ export class ReservationViewModelConverter {
                                              dto.bookId,
                                              reservationReason,
                                              dto.startDate,
-                                             dto.loanStatusId,
                                              dto.isLoanExpired,
                                              dto.canBorrow);
          return reservation;

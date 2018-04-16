@@ -17,8 +17,6 @@ namespace ZLibrary.Web.Controllers.Items
        public long StatusId { get; set; }
        [DataMember(Name = "startDate")]
        public DateTime StartDate { get; set; }
-       [DataMember(Name = "loanStatusId")]
-       public long LoanStatusId { get; set; }
        [DataMember(Name = "isLoanExpired")]
        public bool IsLoanExpired { get; set; }
        [DataMember(Name = "canBorrow")]

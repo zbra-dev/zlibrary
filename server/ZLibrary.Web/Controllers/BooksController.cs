@@ -43,7 +43,7 @@ namespace ZLibrary.Web
         public async Task<IActionResult> FindAll()
         {
             var books = await bookFacade.FindAll();
-            return Ok(books.ToBookViewItems());
+            return Ok(await books.ToBookViewItems(reservationService, loanService));
         }
 
         [HttpGet("{id:long}", Name = "FindBook")]
@@ -54,9 +54,7 @@ namespace ZLibrary.Web
             {
                 return NotFound();
             }
-            var bookDTO = book.ToBookViewItem();
-            await GetBookReservation(bookDTO);
-            return Ok(bookDTO);
+            return Ok(await book.ToBookViewItem(reservationService, loanService));
         }
 
         [HttpDelete("{id:long}", Name = "DeleteBook")]
@@ -158,7 +156,7 @@ namespace ZLibrary.Web
             {
                 await bookFacade.Save(book, targetFilePath);
 
-                return Ok(book.ToBookViewItem());
+                return Ok(await book.ToBookViewItem(reservationService, loanService));
             }
             catch (BookSaveException ex)
             {
@@ -189,32 +187,7 @@ namespace ZLibrary.Web
                 OrderBy = orderBy
             };
             var books = await bookFacade.FindBy(bookSearchParameter);
-            var booksDTO = books.ToBookViewItems();
-            await GetBookReservations(booksDTO);
-            return Ok(booksDTO);
-        }
-
-        private async Task GetBookReservations(IEnumerable<BookDTO> booksDTO)
-        {
-            foreach (var book in booksDTO)
-            {
-               await GetBookReservation(book);
-            }
-        }
-
-        private async Task GetBookReservation(BookDTO book)
-        {
-            var reservations = await reservationService.FindByBookId(book.Id);
-            var reservationsDTO = reservations.ToReservationViewItems();
-            foreach (var reservation in reservationsDTO)
-            {
-                var loan = await loanService.FindByReservationId(reservation.Id);
-                if (loan != null)
-                {
-                    reservation.LoanStatusId = (long)loan.Status;
-                }
-            }
-            book.Reservations = reservationsDTO;
+            return Ok(await books.ToBookViewItems(reservationService, loanService));
         }
     }
 }

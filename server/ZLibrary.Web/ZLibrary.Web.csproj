@@ -42,5 +42,7 @@
     <Content Include="Extensions\AuthorExtensions.cs" />
     <Content Include="Utils\MultipartRequestHelper.cs" />
     <Content Include="Validators\ValidationContext.cs" />
+    <Content Include="Controllers\Items\ReservationResultDTO.cs" />
+    <Content Include="Controllers\Items\SearchParametersDTO.cs" />
   </ItemGroup>
 </Project>

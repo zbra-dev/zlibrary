@@ -11,8 +11,6 @@ import { ConfirmMediator } from '../../mediators/confirm.mediator';
 import { User } from '../../../model/user';
 import { ReservationService } from '../../../service/reservation.service';
 import { ReservationStatus } from '../../../model/reservation-status';
-import { LoanStatus } from '../../../model/loan-status';
-
 
 @Component({
     selector: 'zli-book',
