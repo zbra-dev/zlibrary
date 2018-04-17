@@ -19,6 +19,7 @@ import { TypeaheadMultiSelectionComponent } from './typeahead/multi-selection/mu
 import { ListResultsComponent } from './list-results/list-results.component';
 import { LoadImageComponent } from './load-image/load-image.component';
 import { BookImageComponent } from './book-image/book-image.component';
+import { PipesModule } from '../pipes/pipes.module';
 
 @NgModule({
     declarations: [
@@ -35,7 +36,7 @@ import { BookImageComponent } from './book-image/book-image.component';
         TypeaheadComponent,
         TypeaheadMultiSelectionComponent,
         LoadImageComponent,
-        BookImageComponent,
+        BookImageComponent
     ],
     exports: [
         BookComponent,
@@ -60,7 +61,8 @@ import { BookImageComponent } from './book-image/book-image.component';
         SharedModule,
         FormsModule,
         ReactiveFormsModule,
-        DirectivesModule
+        DirectivesModule,
+        PipesModule
     ],
     providers: [
         AuthorSuggestionAdapter,

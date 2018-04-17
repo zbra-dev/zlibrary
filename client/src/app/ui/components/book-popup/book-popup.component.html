@@ -5,7 +5,7 @@
         <div class="book-information-container">
             <h2 class="book-title">{{ book.title }}</h2>
             <div class="book-information-label">ISBN:
-                <div class="book-information-content">{{book.isbn}}</div>
+                <div class="book-information-content">{{book.isbn | isbn}}</div>
             </div>
             <div class="book-information-label">Sinopse: </div>
             <div class="book-synopsis">{{book.synopsis}}</div>
@@ -23,7 +23,7 @@
     <div *ngIf="!isOrder && !user.isAdministrator" class="request-reservation-container">
         <div class="availability-box">
             <div *ngIf="book.isAvailable" class="available-text">Disponível</div>
-            <div *ngIf="!book.isAvailable" class="unavailable-text">Insdisponível</div>
+            <div *ngIf="!book.isAvailable" class="unavailable-text">Indisponível</div>
         </div>
         <div *ngIf="book.isAvailable" class="reservation-box-available" (click)="order()">
             <div class="available-button-text-available">Alugar</div>

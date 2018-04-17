@@ -10,7 +10,7 @@ export class Book {
     public title: string;
     public publisher: Publisher;
     public authors: Author[];
-    public isbn: number;
+    public isbn: string;
     public synopsis: string;
     public publicationYear: number;
     public numberOfCopies: number;
