@@ -30,6 +30,7 @@ export class ReservationListComponent implements OnInit {
     public book: Book;
     public isRequested = false;
     public isWaiting = false;
+    public date: string;
 
     public get showRenewButton(): boolean {
         return this.reservation.canBorrow && !this.reservation.isLoanExpired && this.reservation.reservationReason.isApproved;
@@ -49,6 +50,15 @@ export class ReservationListComponent implements OnInit {
                 }
             )
         );
+        this.setDate();
+    }
+
+    public setDate() {
+        if (this.isWaiting) {
+            this.date = this.reservation.startDate;
+        } else {
+            this.date = this.reservation.loanStart;
+        }
     }
 
     public renew() {

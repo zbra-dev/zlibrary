@@ -78,6 +78,7 @@ namespace ZLibrary.Core
             }
 
             loan.Status = LoanStatus.Returned;
+            loan.LoanEnd = DateTime.Now;
             return await loanRepository.Update(loan);
         }
     }

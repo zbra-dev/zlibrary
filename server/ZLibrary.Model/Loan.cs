@@ -7,6 +7,8 @@ namespace ZLibrary.Model
         public long Id { get; set; }
         public Reservation Reservation { get; private set; }
         public DateTime ExpirationDate { get; private set; }
+        public DateTime LoanStart { get; set; }
+        public DateTime LoanEnd { get; set; }
         public LoanStatus Status { get; set; }
 
         public bool IsReturned => Status == LoanStatus.Returned;
@@ -22,6 +24,8 @@ namespace ZLibrary.Model
             Reservation = reservation;
             Status = LoanStatus.Borrowed;
             ExpirationDate = CalculateExpirationDate();
+            LoanStart = DateTime.Now;
+            LoanEnd = ExpirationDate;
         }
 
         private Loan()

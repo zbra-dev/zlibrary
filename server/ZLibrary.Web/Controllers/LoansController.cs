@@ -36,18 +36,18 @@ namespace ZLibrary.Web.Controllers
             var loan = await loanService.FindById(id);
             if (loan == null)
             {
-                return NotFound($"Nenhuma loan encontrada com o ID: {id}.");
+                return NotFound($"Nenhum loan encontrado com o ID: {id}.");
             }
             return Ok(loan.ToLoanViewItem());
         }
 
-        [HttpGet("user/{id:long}", Name = "FindLoanByUser")]
+        [HttpGet("user/{userId:long}", Name = "FindLoanByUser")]
         public async Task<IActionResult> FindByUserId(long userId)
         {
             var loans = await loanService.FindByUserId(userId);
             if (loans == null)
             {
-                return NotFound($"Nenhuma loan encontrada com o userId: {userId}");
+                return NotFound($"Nenhum loan encontrado com o userId: {userId}");
             }
             return Ok(loans.ToLoanViewItems());
         }
@@ -62,7 +62,7 @@ namespace ZLibrary.Web.Controllers
             }
             catch (LoanNotFoundException)
             {
-                return NotFound($"Nenhuma loan encontrada com o ID: {id}");
+                return NotFound($"Nenhum loan encontrado com o ID: {id}");
             }
         }
 
@@ -73,12 +73,11 @@ namespace ZLibrary.Web.Controllers
             {
                 var loan = await loanService.ReturnLoan(id);
                 await reservationService.OrderNext(loan.Reservation.BookId);
-                
                 return Ok();
             }
             catch (LoanNotFoundException)
             {
-                return NotFound($"Nenhuma loan encontrada com o ID: {id}");
+                return NotFound($"Nenhum loan encontrado com o ID: {id}");
             }
         }
     }

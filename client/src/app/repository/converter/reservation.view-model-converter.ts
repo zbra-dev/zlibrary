@@ -13,7 +13,9 @@ export class ReservationViewModelConverter {
                                              reservationReason,
                                              dto.startDate,
                                              dto.isLoanExpired,
-                                             dto.canBorrow);
+                                             dto.canBorrow,
+                                             dto.loanStart,
+                                             dto.loanEnd);
          return reservation;
     }
 }

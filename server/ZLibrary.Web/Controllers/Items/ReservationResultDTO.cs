@@ -21,5 +21,9 @@ namespace ZLibrary.Web.Controllers.Items
        public bool IsLoanExpired { get; set; }
        [DataMember(Name = "canBorrow")]
        public bool CanBorrow { get; set; }
+       [DataMember(Name = "loanStart")]
+       public DateTime LoanStart { get; set; }
+       [DataMember(Name = "loanEnd")]
+       public DateTime LoanEnd { get; set; }
     }
 }

@@ -40,6 +40,8 @@ namespace ZLibrary.Web.Extensions
             {
                 reservationDTO.IsLoanExpired = loan.IsExpired;
                 reservationDTO.CanBorrow = loan.CanBorrow;
+                reservationDTO.LoanStart = loan.LoanStart;
+                reservationDTO.LoanEnd = loan.LoanEnd;
             }
             return reservationDTO;
         }

@@ -14,6 +14,8 @@ namespace ZLibrary.Web.Extensions
                 Id = loan.Id,
                 ReservationId = loan.Reservation.Id,
                 ExpirationDate = loan.ExpirationDate,
+                EndDate = loan.LoanEnd,
+                StartDate = loan.LoanStart,
                 Status = loan.Status
             };
         }

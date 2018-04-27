@@ -8,6 +8,8 @@ export class Reservation {
                 public reservationReason: ReservationReason,
                 public startDate: string,
                 public isLoanExpired: boolean,
-                public canBorrow: boolean) {
+                public canBorrow: boolean,
+                public loanStart: string,
+                public loanEnd: string) {
     }
 }
