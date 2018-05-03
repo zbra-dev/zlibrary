@@ -61,12 +61,14 @@ export class TypeaheadMultiSelectionComponent extends AbstractTypeahead implemen
 
     public selectElement(element: Suggestion): void {
         if (!(this.selected.some(e => e.id === element.id))) {
-            this.selected.push(element);
-            this.candidate = null;
-            this.cleanResultLists();
-            this.query = '';
-            this.onQueryChanged(this.query);
-            this.propagateChangeFunction(this.selected);
+            setTimeout(() => {
+             this.selected.push(element);
+             this.candidate = null;
+             this.cleanResultLists();
+             this.query = '';
+             this.onQueryChanged(this.query);
+             this.propagateChangeFunction(this.selected);
+            });
         }
     }
 
