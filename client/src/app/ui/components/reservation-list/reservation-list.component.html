@@ -6,9 +6,14 @@
             <span class="book-title">{{book?.title}}</span>
             <span class="book-authors"*ngFor="let author of book?.authors; last as isLast">{{author.name}}{{isLast ? '' : ', '}}</span>
         </div>
-        <span *ngIf="!showRenewButton && !isWaiting" class="reservation-start-date">Alugado em: {{date | date:'MM/dd/yyyy'}}</span>
-        <span *ngIf="!showRenewButton && isWaiting" class="reservation-start-date">Data de Solicitação: {{date | date:'MM/dd/yyyy'}}</span>
-        <div *ngIf="showRenewButton && !isRequested && !isWaiting" class="reservation-renovate" (click)="renew()">Renovar</div>
-        <div *ngIf="isRequested" class="reservation-requested">Renovação Solicitada</div>
+        <span *ngIf="!showRenewButton && !isWaiting && !isRequested" class="reservation-start-date">Alugado em: {{date | date:'MM/dd/yyyy'}}</span>
+        <div *ngIf="!showRenewButton && isWaiting" class="approved-waiting-list">
+        <span>Solicitação aprovada, aguarde a disponibilidade do livro</span>
+        <br>
+        <span> Aceita em {{date | date:'MM/dd/yyyy'}}</span>
+        </div>
+        <span *ngIf="isRequested" class="requested-waiting-list">Aguardando Aprovação</span>
+        <div *ngIf="showRenewButton && !isOrdered && !isWaiting" class="reservation-renovate" (click)="renew()">Renovar</div>
+        <div *ngIf="isOrdered && !isRequested" class="reservation-requested">Renovação Solicitada</div>
     </div>
 </div>

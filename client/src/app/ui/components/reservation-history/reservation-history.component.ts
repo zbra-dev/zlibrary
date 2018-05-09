@@ -37,22 +37,21 @@ export class ReservationHistoryComponent implements OnInit {
         this.showReservations();
     }
 
-    private convertToReservationStatus(reservationHistoryType: ReservationHistoryType): ReservationStatus {
+    public filterReservationsByStatus(reservationHistoryType: ReservationHistoryType, reservations: Reservation[]): Reservation[] {
         if (reservationHistoryType === ReservationHistoryType.Loaned) {
-            return ReservationStatus.approved;
+            return reservations.filter(r => r.reservationReason.status === ReservationStatus.approved && !r.isReturned);
         }
         if (reservationHistoryType === ReservationHistoryType.Waiting) {
-            return ReservationStatus.waiting;
+            return reservations.filter(r => (r.reservationReason.status === ReservationStatus.waiting
+                    || r.reservationReason.status === ReservationStatus.requested) && !r.canBorrow);
         }
-        throw new Error('Reservation Status is invalid');
+        throw new Error('Status da Reserva Inválido');
     }
 
     public showReservations() {
         this.reservationService.findByUserId(this.user)
             .subscribe((reservations: Reservation[]) => {
-                const reservationStatus = this.convertToReservationStatus(this.reservationHistoryType);
-                this.reservations = reservations
-                    .filter(r => r.reservationReason.status === reservationStatus && !r.canBorrow);
+                this.reservations = this.filterReservationsByStatus(this.reservationHistoryType, reservations);
             });
     }
 

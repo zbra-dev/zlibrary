@@ -314,6 +314,17 @@
     }
 }
 
+.suggestion-message{
+    font-size: 14px;
+    font-weight: 600;
+    text-indent: 2.7px;
+    letter-spacing: 2.7px;
+    word-break: break-word;
+    text-transform: uppercase;
+    text-align: center;
+    color: #4a90e2;
+}
+
 .available-text {
     color: #4a90e2;
 }
@@ -335,6 +346,17 @@
     cursor: pointer;
 }
 
+.waiting-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    flex: 2;
+    max-height: 74px;
+    flex: 2 0 auto;
+    background-color: #4bd48c;
+}
+
 .available-button-text-available,
 .available-button-text-unavailable,
 .sucess-order-text {
@@ -354,7 +376,8 @@
     }
 }
 
-.sucess-order-box {
+.sucess-order-box, 
+.expired-box {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -362,6 +385,10 @@
     min-height: 44px;
     flex: 0.2;
     background-color: #4bd48c;
+}
+
+.expired-box {
+    background-color: #ff0000;
 }
 
 .add-image-button,

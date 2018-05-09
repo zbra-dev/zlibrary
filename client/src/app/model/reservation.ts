@@ -7,6 +7,7 @@ export class Reservation {
                 public bookId: number,
                 public reservationReason: ReservationReason,
                 public startDate: string,
+                public isReturned: boolean,
                 public isLoanExpired: boolean,
                 public canBorrow: boolean,
                 public loanStart: string,

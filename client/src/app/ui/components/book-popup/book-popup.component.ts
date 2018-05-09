@@ -1,14 +1,15 @@
+import { ReservationStatus } from './../../../model/reservation-status';
+import { User } from './../../../model/user';
+import { Book } from './../../../model/book';
+import { Reservation } from './../../../model/reservation';
+import { LoanStatus } from './../../../model/loan-status';
 import { Component, OnInit, ElementRef, keyframes, Output, EventEmitter, ViewChild } from '@angular/core';
-import { Book } from '../../../model/book';
-import { User } from '../../../model/user';
 import { BookService } from '../../../service/book.service';
 import { CoverImageService } from '../../../service/cover-image.service';
 import { ReservationService } from '../../../service/reservation.service';
 import { AuthService } from '../../../service/auth.service';
 import { LoaderMediator } from '../../mediators/loader.mediator';
 import { ToastMediator } from '../../mediators/toast.mediator';
-import { Reservation } from '../../../model/reservation';
-import { ReservationStatus } from '../../../model/reservation-status';
 import { AuthorService } from '../../../service/author.service';
 import { Author } from '../../../model/author';
 import { Publisher } from '../../../model/publisher';
@@ -21,11 +22,19 @@ import { PublisherSuggestionAdapter } from './publisher-suggestion.adapter';
 import { BookComponent } from '../book/book.component';
 import { BookValidator } from '../../validators/book-validator';
 
+const WAITINGMESSAGE = 'Aguardando aprovação';
+const EXPIREDMESSAGE = 'Reserva expirada';
+const APPROVEDMESSAGE = 'Reserva aprovada';
+const WAITINGLISTMESSAGE = 'Reserva na lista de espera';
+const REJECTEDMESSAGE = 'Reserva rejeitada';
+const RENEWMESSAGE = 'Vá para sua lista de livros para renovar';
+
 @Component({
     selector: 'zli-book-popup',
     templateUrl: './book-popup.component.html',
     styleUrls: ['./book-popup.component.scss']
 })
+
 export class BookPopupComponent implements OnInit {
 
     public book = new Book();
@@ -38,6 +47,9 @@ export class BookPopupComponent implements OnInit {
     private canEdit = false;
     public isBusy = false;
     public isOrder = false;
+    public reservations: Reservation[];
+    public message: string;
+    public isExpired = false;
 
     @ViewChild('bookImage')
     imageElement: ElementRef;
@@ -107,6 +119,10 @@ export class BookPopupComponent implements OnInit {
         this.isOrder = book.hasBookReservation(this.user);
         //Set Image validate again because book reference has changed
         this.bookForm.get('imageControl').setValidators(BookValidator.validateImageExtension(this.book));
+        if (!this.isNew) {
+            this.refreshReservationStatus();
+        }
+        this.isExpired = false;
     }
 
     public initNewBook() {
@@ -115,6 +131,50 @@ export class BookPopupComponent implements OnInit {
         this.coverImageURL = null;
         this.newCoverImage = null;
         this.initWith(book);
+    }
+
+    public refreshReservationStatus() {
+
+        const currentReservations = this.book.reservations
+        .filter(r => r.userId === this.user.id && !r.isReturned);
+
+        if (currentReservations.length === 0) {
+            return;
+        }
+
+        const currentReservation = currentReservations[0];
+
+        this.reservationService.findByUserId(this.user)
+            .subscribe((reservations: Reservation[]) => {
+
+                const userReservations = reservations
+                    .filter(r => r.id === currentReservation.id);
+
+                if (userReservations.length !== 0) {
+                    this.printReservationState(userReservations[0]);
+                }
+            });
+    }
+
+    private printReservationState(reservation: Reservation | null) {
+        if (!reservation) {
+            return;
+        } else if (reservation.isLoanExpired) {
+            this.message = EXPIREDMESSAGE;
+            this.isExpired = true;
+        } else if (reservation.reservationReason.status === ReservationStatus.approved) {
+                    if (!reservation.canBorrow) {
+                        this.message = APPROVEDMESSAGE;
+                    } else {
+                        this.message = RENEWMESSAGE;
+                    }
+        } else if (reservation.reservationReason.status === ReservationStatus.waiting) {
+            this.message = WAITINGLISTMESSAGE;
+        } else if (reservation.reservationReason.status === ReservationStatus.rejected) {
+            this.message = REJECTEDMESSAGE;
+        } else {
+            this.message = WAITINGMESSAGE;
+        }
     }
 
     get imageControl() {
@@ -152,8 +212,9 @@ export class BookPopupComponent implements OnInit {
                     reservation => {
                         this.isOrder = reservation !== null;
                         this.updateBookListEvent.emit(null);
+                        this.printReservationState(reservation);
                     }, error => {
-                        this.toastMediator.show(`Error when order the book: ${error}`);
+                        this.toastMediator.show(`Error when ordering the book: ${error}`);
                     }
                 )
             );
@@ -180,7 +241,7 @@ export class BookPopupComponent implements OnInit {
                     this.initWith(book);
                     this.updateBookListEvent.emit(null);
                 }, error => {
-                    this.toastMediator.show(`Error when saving the book: ${error}`);
+                    this.toastMediator.show(`Erro ao salvar o livro: ${error}`);
                 }
             )
         );

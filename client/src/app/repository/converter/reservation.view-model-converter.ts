@@ -12,6 +12,7 @@ export class ReservationViewModelConverter {
                                              dto.bookId,
                                              reservationReason,
                                              dto.startDate,
+                                             dto.isReturned,
                                              dto.isLoanExpired,
                                              dto.canBorrow,
                                              dto.loanStart,

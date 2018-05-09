@@ -28,8 +28,9 @@ export class ReservationListComponent implements OnInit {
     public user: User;
     public reservationStatus: ReservationStatus;
     public book: Book;
-    public isRequested = false;
+    public isOrdered = false;
     public isWaiting = false;
+    public isRequested = false;
     public date: string;
 
     public get showRenewButton(): boolean {
@@ -39,14 +40,15 @@ export class ReservationListComponent implements OnInit {
     ngOnInit() {
         this.user = this.authService.getLoggedUser();
         this.isWaiting = this.reservation.reservationReason.status === ReservationStatus.waiting;
+        this.isRequested = this.reservation.reservationReason.status === ReservationStatus.requested;
         this.loaderMediator.execute(
             this.bookService.findById(this.reservation.bookId).subscribe(
                 book => {
                     this.book = book;
-                    this.isRequested = !this.isWaiting
+                    this.isOrdered = !this.isWaiting
                         && book.reservations.some(r => r.reservationReason.status === ReservationStatus.requested);
                 }, error => {
-                    this.toastMediator.show(`Error loading books: ${error}`);
+                    this.toastMediator.show(`Erro ao carregar os livros: ${error}`);
                 }
             )
         );
@@ -54,7 +56,7 @@ export class ReservationListComponent implements OnInit {
     }
 
     public setDate() {
-        if (this.isWaiting) {
+        if (this.isWaiting || this.isRequested) {
             this.date = this.reservation.startDate;
         } else {
             this.date = this.reservation.loanStart;
@@ -65,9 +67,9 @@ export class ReservationListComponent implements OnInit {
         this.loaderMediator.execute(
             this.reservationService.order(this.user, this.book).subscribe(
                 reservation => {
-                    this.isRequested = true;
+                    this.isOrdered = true;
                 }, error => {
-                    this.toastMediator.show(`Error ordering book: ${error}`);
+                    this.toastMediator.show(`Erro ao renovar o livro: ${error}`);
                 }
             )
         );

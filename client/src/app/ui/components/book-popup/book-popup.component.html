@@ -32,8 +32,17 @@
             <div class="available-button-text-unavailable">+ add na lista de espera</div>
         </div>
     </div>
-    <div *ngIf="isOrder" class="sucess-order-box">
-        <div class="sucess-order-text">Sucesso! Aguarde pela aprovação</div>
+    <div *ngIf="isOrder && !isExpired && !user.isAdministrator" class="request-reservation-container">
+        <div class="availability-box">
+            <div class="suggestion-message">Para mais informações, verifique sua lista de livros</div>
+        </div>
+        <div class="waiting-box">
+            <div class="sucess-order-text">{{message}}</div>
+        </div>
+
+    </div>
+    <div *ngIf="isExpired && !user.isAdministrator" class="expired-box">
+        <div class="sucess-order-text">{{message}}</div>
     </div>
     <div *ngIf="user.isAdministrator" class="admin-options-container">
         <div class="admin-options" (click)="canEdit = true">Editar</div>
