@@ -51,7 +51,7 @@ export class BookListComponent implements OnInit {
                 books => {
                     this.books = books;
                 }, error => {
-                    this.toastMediator.show(`Error loading books: ${error}`);
+                    this.toastMediator.show(`Erro ao carregar os livros: ${error}`);
                 }
             )
         );

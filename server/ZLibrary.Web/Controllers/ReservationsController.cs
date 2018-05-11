@@ -53,7 +53,7 @@ namespace ZLibrary.Web
             var reservations = await reservationService.FindByUserId(userId);
             if (reservations == null || !reservations.Any())
             {
-                return NotFound($"Nenhuma reserva encontrada com o user ID: {userId}.");
+                return NotFound($"Nenhuma reserva encontrada com o ID do usuário: {userId}.");
             }
             return Ok(await reservations.ToReservationViewItems(loanService));
         }

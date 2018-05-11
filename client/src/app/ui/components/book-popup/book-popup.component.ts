@@ -214,7 +214,7 @@ export class BookPopupComponent implements OnInit {
                         this.updateBookListEvent.emit(null);
                         this.printReservationState(reservation);
                     }, error => {
-                        this.toastMediator.show(`Error when ordering the book: ${error}`);
+                        this.toastMediator.show(`Erro ao pedir o livro: ${error}`);
                     }
                 )
             );

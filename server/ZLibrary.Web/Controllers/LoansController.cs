@@ -36,7 +36,7 @@ namespace ZLibrary.Web.Controllers
             var loan = await loanService.FindById(id);
             if (loan == null)
             {
-                return NotFound($"Nenhum loan encontrado com o ID: {id}.");
+                return NotFound($"Nenhum empréstimo encontrado com o ID: {id}.");
             }
             return Ok(loan.ToLoanViewItem());
         }
@@ -47,7 +47,7 @@ namespace ZLibrary.Web.Controllers
             var loans = await loanService.FindByUserId(userId);
             if (loans == null)
             {
-                return NotFound($"Nenhum loan encontrado com o userId: {userId}");
+                return NotFound($"Nenhum empréstimo encontrado com o userId: {userId}");
             }
             return Ok(loans.ToLoanViewItems());
         }
@@ -62,7 +62,7 @@ namespace ZLibrary.Web.Controllers
             }
             catch (LoanNotFoundException)
             {
-                return NotFound($"Nenhum loan encontrado com o ID: {id}");
+                return NotFound($"Nenhum empréstimo encontrado com o ID: {id}");
             }
         }
 
@@ -77,7 +77,7 @@ namespace ZLibrary.Web.Controllers
             }
             catch (LoanNotFoundException)
             {
-                return NotFound($"Nenhum loan encontrado com o ID: {id}");
+                return NotFound($"Nenhum empréstimo encontrado com o ID: {id}");
             }
         }
     }

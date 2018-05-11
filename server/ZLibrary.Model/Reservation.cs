@@ -18,11 +18,11 @@ namespace ZLibrary.Model
         {
             if (bookId <= 0)
             {
-                throw new ArgumentNullException($"The paramenter {nameof(bookId)} must be greater than zero.");
+                throw new ArgumentNullException($"O parâmetro {nameof(bookId)} deve ser maior que zero.");
             }
             if (user == null)
             {
-                throw new ArgumentNullException($"The paramenter {nameof(user)} can not be null.");
+                throw new ArgumentNullException($"O parametro {nameof(user)} não pode ser nulo.");
             }
 
             User = user;

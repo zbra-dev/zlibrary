@@ -21,7 +21,7 @@ namespace ZLibrary.Core
         {
             if (loan == null)
             {
-                throw new LoanCreateException("Loan não pode ser nulo");
+                throw new LoanCreateException("Empréstimo não pode ser nulo");
             }
             await loanRepository.Create(loan);
         }
