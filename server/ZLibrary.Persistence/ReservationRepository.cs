@@ -31,6 +31,14 @@ namespace ZLibrary.Persistence
                 .ToListAsync();
         }
 
+        public async Task<IList<Reservation>> FindByStatus(ReservationStatus status)
+        {
+            return await context.Reservations.Where(r => r.Reason.Status == status)
+                .Include(reservation => reservation.User)
+                .Include(reservation => reservation.Reason)
+                .ToListAsync();
+        }
+
         public async Task<Reservation> FindById(long id)
         {
             return await context.Reservations

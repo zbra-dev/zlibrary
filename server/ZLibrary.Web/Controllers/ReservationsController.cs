@@ -58,6 +58,22 @@ namespace ZLibrary.Web
             return Ok(await reservations.ToReservationViewItems(loanService));
         }
 
+        [HttpGet("status/{statusName}", Name = "FindReservationsByStatus")]
+        public async Task<IActionResult> FindReservationsByStatus(string statusName)
+        {
+            ReservationStatus reservationStatus;
+            if (!Enum.TryParse<ReservationStatus>(statusName, out reservationStatus)) 
+            {
+                return BadRequest($"Não foi possível converter o status [{statusName}]");
+            }
+            var reservations = await reservationService.FindByStatus(reservationStatus);
+            if (reservations == null || !reservations.Any())
+            {
+                return NotFound($"Nenhuma reserva encontrada com o status: {reservationStatus}.");
+            }
+            return Ok(await reservations.ToReservationViewItems(loanService));
+        }
+
         [HttpPost("order")]
         public async Task<IActionResult> Order([FromBody]ReservationRequestDTO value)
         {

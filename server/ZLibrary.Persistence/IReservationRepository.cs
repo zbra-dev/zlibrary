@@ -12,5 +12,6 @@ namespace ZLibrary.Persistence
         Task<IList<Reservation>> FindByBookId(long BookId);
         Task<Reservation> Save(Reservation reservation);
         Task Update(Reservation reservation);
+        Task<IList<Reservation>> FindByStatus(ReservationStatus reservationStatus);
     }
 }

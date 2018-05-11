@@ -52,6 +52,11 @@ namespace ZLibrary.Core
             return loansBorrowed.Where(l => reservationApprovedIds.Contains(l.Reservation.Id)).Select(l => l.Reservation).ToList();
         }
 
+        public async Task<IList<Reservation>> FindByStatus(ReservationStatus reservationStatus)
+        {
+            return await reservationRepository.FindByStatus(reservationStatus);
+        }
+
         public async Task<IList<Reservation>> FindByUserId(long userId)
         {
             if (userId <= 0)

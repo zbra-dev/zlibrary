@@ -15,5 +15,6 @@ namespace ZLibrary.API
         Task ApprovedReservation(Reservation reservation, Book book);
         Task RejectedReservation(Reservation reservation);
         Task OrderNext(long bookId);
+        Task<IList<Reservation>> FindByStatus(ReservationStatus reservationStatus);
     }
 }
