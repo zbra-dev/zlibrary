@@ -32,6 +32,7 @@ export class ReservationListComponent implements OnInit {
     public isWaiting = false;
     public isRequested = false;
     public date: string;
+    public isExpired: boolean;
 
     public get showRenewButton(): boolean {
         return this.reservation.canBorrow && !this.reservation.isLoanExpired && this.reservation.reservationReason.isApproved;
@@ -41,6 +42,7 @@ export class ReservationListComponent implements OnInit {
         this.user = this.authService.getLoggedUser();
         this.isWaiting = this.reservation.reservationReason.status === ReservationStatus.Waiting;
         this.isRequested = this.reservation.reservationReason.status === ReservationStatus.Requested;
+        this.isExpired = this.reservation.isLoanExpired;
         this.loaderMediator.execute(
             this.bookService.findById(this.reservation.bookId).subscribe(
                 book => {

@@ -1,3 +1,4 @@
+import { Reservation } from './../../../model/reservation';
 import { Component, Input, OnInit, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { Book } from '../../../model/book';
 import { CoverImageService } from '../../../service/cover-image.service';
@@ -23,6 +24,8 @@ export class BookComponent implements OnInit {
     @Input() public user: User;
     public isBusy = false;
     public hasBook: boolean;
+    public isExpired: boolean;
+    public reservations: Reservation[];
 
     @Output() deleted: EventEmitter<void> = new EventEmitter<void>();
     @Output() view: EventEmitter<Book> = new EventEmitter<Book>();
@@ -38,7 +41,9 @@ export class BookComponent implements OnInit {
 
     public ngOnInit(): void {
         this.hasBook = this.book.hasBookReservation(this.user);
+        this.isExpired = this.book.calculateExpired(this.user);
     }
+
 
     public delete() {
         if (this.book != null) {

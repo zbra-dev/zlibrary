@@ -33,7 +33,7 @@
     border: solid 1px #ececec;
 }
 
-.book-title{
+.book-title, .expired-book-title{
     width: 565px;
     height: 31px;
     font-family: Roboto;
@@ -50,7 +50,11 @@
     overflow: hidden;
 }
 
-.book-authors{
+.expired-book-title{
+    color: red;
+}
+
+.book-authors, .expired-book-authors{
     height: 19px;
     font-family: Roboto;
     font-size: 16px;
@@ -61,6 +65,10 @@
     letter-spacing: 1.1px;
     color: #b0b1b2;
     margin-left: 3px;
+}
+
+.expired-book-authors{
+    color: red;
 }
 
 .close{
@@ -102,9 +110,9 @@
     color: #4a90e2;
     background-color: transparent;
     border-color: transparent;
-    right: 56px;
+    right: 90px;
     position: absolute;
-    margin-top: 60px;
+    margin-top: 75px;
     cursor: pointer;
 }
 
@@ -120,16 +128,21 @@
     cursor: pointer;
 }
 
-.reservation-requested{
+.reservation-requested, .reservation-expired{
     font-size: 18px;
     font-family: Roboto;
     color: green;
     background-color: transparent;
     border-color: transparent;
-    right: 56px;
+    right: 90px;
     position: absolute;
-    margin-top: 60px;
+    margin-top: 75px;
 }
+
+.reservation-expired{
+     color: red;
+}
+
 .book-information{
     //style="display:flex; 
     flex-direction:column;

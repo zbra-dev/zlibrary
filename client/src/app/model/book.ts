@@ -33,5 +33,14 @@ export class Book {
         }
         return false;
     }
+    public calculateExpired(user: User): boolean {
+        if (!!this.reservations && this.reservations.length > 0) {
+            const userReservations = this.reservations.filter(r => r.userId === user.id);
+            //return userReservations[0].isLoanExpired;
+            return userReservations.length > 0
+                && userReservations.some(r => r.isLoanExpired);
+        }
+        return false;
+    }
 }
 

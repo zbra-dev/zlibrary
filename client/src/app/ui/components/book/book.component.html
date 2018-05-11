@@ -12,7 +12,8 @@
     </div>
     <button *ngIf="!user.isAdministrator" style="cursor:pointer" class="ic-add" (click)="viewBookDetails()">
         <img *ngIf="!hasBook"src="../../../../assets/images/ic-add.png" />
-        <img *ngIf="hasBook"src="../../../../assets/images/ic-checked.png" />
+        <img *ngIf="hasBook && !isExpired"src="../../../../assets/images/ic-checked.png" />
+        <img *ngIf="hasBook && isExpired"src="../../../../assets/images/ic-expired.png" />
     </button>
 </div>
 
@@ -41,6 +42,7 @@
     </div>
     <button *ngIf="!user.isAdministrator" style="cursor:pointer" class="ic-add" (click)="viewBookDetails()">
         <img *ngIf="!hasBook"src="../../../../assets/images/ic-add.png" />
-        <img *ngIf="hasBook"src="../../../../assets/images/ic-checked.png" />
+        <img *ngIf="hasBook && !isExpired"src="../../../../assets/images/ic-checked.png" />
+        <img *ngIf="hasBook && isExpired"src="../../../../assets/images/ic-expired.png" />
     </button>
 </div>

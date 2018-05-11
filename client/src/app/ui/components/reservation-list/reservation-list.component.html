@@ -2,11 +2,15 @@
 <div *ngIf="reservation">
     <div class="modal-rectangle" style="display: flex;">
         <zli-book-image  class="book-cover" [book]="book"></zli-book-image>
-        <div class="book-information">
-            <span class="book-title">{{book?.title}}</span>
-            <span class="book-authors"*ngFor="let author of book?.authors; last as isLast">{{author.name}}{{isLast ? '' : ', '}}</span>
+        <div *ngIf="isExpired" class="book-information">
+            <span  class="expired-book-title">{{book?.title}}</span>
+            <span class="expired-book-authors"*ngFor="let author of book?.authors; last as isLast">{{author.name}}{{isLast ? '' : ', '}}</span>
         </div>
-        <span *ngIf="!showRenewButton && !isWaiting && !isRequested" class="reservation-start-date">Alugado em: {{date | date:'MM/dd/yyyy'}}</span>
+        <div *ngIf="!isExpired" class="book-information">
+            <span  class="book-title">{{book?.title}}</span>
+            <span  class="book-authors"*ngFor="let author of book?.authors; last as isLast">{{author.name}}{{isLast ? '' : ', '}}</span>
+        </div>
+        <span *ngIf="!showRenewButton && !isWaiting && !isRequested && !isExpired" class="reservation-start-date">Alugado em: {{date | date:'MM/dd/yyyy'}}</span>
         <div *ngIf="!showRenewButton && isWaiting" class="approved-waiting-list">
         <span>Solicitação aprovada, aguarde a disponibilidade do livro</span>
         <br>
@@ -15,5 +19,6 @@
         <span *ngIf="isRequested" class="requested-waiting-list">Aguardando Aprovação</span>
         <div *ngIf="showRenewButton && !isOrdered && !isWaiting" class="reservation-renovate" (click)="renew()">Renovar</div>
         <div *ngIf="isOrdered && !isRequested" class="reservation-requested">Renovação Solicitada</div>
+        <div *ngIf="isExpired" class="reservation-expired">Reserva Expirada</div>
     </div>
 </div>
