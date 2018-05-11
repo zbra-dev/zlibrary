@@ -1,0 +1,62 @@
+.modal-history{
+    width: 1180px;
+    max-height: 758px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    z-index: 10;
+    left: -330px;
+    position: absolute;
+    overflow: auto;
+
+}
+
+.modal-title{
+    font-size: 2.5em;
+    position: relative;
+    width: 1178px;
+    height: 182px;
+    text-align: center;
+    line-height: 3.5;
+    letter-spacing: 9.3px;
+    color: #34495e;
+}
+
+.modal-body{
+    padding: 0px;
+}
+
+.close{
+    object-fit: contain;
+}
+
+.modal-rectangle{
+    width: 1179px;
+    height: 178px;
+    background-color: #ffffff;
+    box-shadow: 0 0 7px 0 rgba(218, 217, 217, 0.5);
+    border: solid 1px #ececec;
+}
+
+.accept-button{
+    font-size: 18px;
+    font-family: Roboto;
+    color: #4a90e2;
+    background-color: transparent;
+    border-color: transparent;
+    right: 150px;
+    position: absolute;
+    margin-top: 60px;
+    cursor: pointer;
+}
+
+.reject-button{
+    font-size: 18px;
+    font-family: Roboto;
+    color: #4a90e2;
+    background-color: transparent;
+    border-color: transparent;
+    right: 56px;
+    position: absolute;
+    margin-top: 60px;
+    cursor: pointer;
+}

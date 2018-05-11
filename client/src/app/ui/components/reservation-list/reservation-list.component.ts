@@ -39,14 +39,14 @@ export class ReservationListComponent implements OnInit {
 
     ngOnInit() {
         this.user = this.authService.getLoggedUser();
-        this.isWaiting = this.reservation.reservationReason.status === ReservationStatus.waiting;
-        this.isRequested = this.reservation.reservationReason.status === ReservationStatus.requested;
+        this.isWaiting = this.reservation.reservationReason.status === ReservationStatus.Waiting;
+        this.isRequested = this.reservation.reservationReason.status === ReservationStatus.Requested;
         this.loaderMediator.execute(
             this.bookService.findById(this.reservation.bookId).subscribe(
                 book => {
                     this.book = book;
                     this.isOrdered = !this.isWaiting
-                        && book.reservations.some(r => r.reservationReason.status === ReservationStatus.requested);
+                        && book.reservations.some(r => r.reservationReason.status === ReservationStatus.Requested);
                 }, error => {
                     this.toastMediator.show(`Erro ao carregar os livros: ${error}`);
                 }

@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import { ReservationHistoryComponent, ReservationHistoryType } from '../reservation-history/reservation-history.component';
+import { RequestedBooksComponent} from '../requested-books/requested-books.component';
 import { BsModalService } from 'ngx-bootstrap';
 import { AuthService } from '../../../service/auth.service';
 import { User } from '../../../model/user';
@@ -33,6 +34,8 @@ export class MenuComponent implements OnInit {
         window.location.reload();
     }
 
+    public get isAdmin() { return this.user.isAdministrator; }
+
     public toggleMenu() {
         this.showUserMenu = !this.showUserMenu;
     }
@@ -49,5 +52,11 @@ export class MenuComponent implements OnInit {
         const reservationHistoryComponent = reservationHistoryModalControl.content as ReservationHistoryComponent;
         reservationHistoryComponent.reservationHistoryType = ReservationHistoryType.Waiting;
         reservationHistoryComponent.modalControl = reservationHistoryModalControl;
+    }
+
+    public showRequestedBooks(){
+        const requestedBooksModalControl = this.modalService.show(RequestedBooksComponent);
+        const requestedBooksComponet = requestedBooksModalControl.content as RequestedBooksComponent;
+        requestedBooksComponet.modalControl = requestedBooksModalControl;
     }
 }

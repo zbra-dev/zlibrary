@@ -20,6 +20,7 @@ import { ListResultsComponent } from './list-results/list-results.component';
 import { LoadImageComponent } from './load-image/load-image.component';
 import { BookImageComponent } from './book-image/book-image.component';
 import { PipesModule } from '../pipes/pipes.module';
+import { RequestedBooksComponent} from './requested-books/requested-books.component';
 
 @NgModule({
     declarations: [
@@ -36,7 +37,8 @@ import { PipesModule } from '../pipes/pipes.module';
         TypeaheadComponent,
         TypeaheadMultiSelectionComponent,
         LoadImageComponent,
-        BookImageComponent
+        BookImageComponent,
+        RequestedBooksComponent
     ],
     exports: [
         BookComponent,
@@ -48,13 +50,15 @@ import { PipesModule } from '../pipes/pipes.module';
         ConfirmComponent,
         ReactiveFormsModule,
         MenuComponent,
-        ReservationListComponent
+        ReservationListComponent,
+        RequestedBooksComponent
     ],
     entryComponents: [
         ToastComponent,
         ReservationHistoryComponent,
         ConfirmComponent,
-        ReservationListComponent
+        ReservationListComponent,
+        RequestedBooksComponent
     ],
     imports: [
         BrowserModule,

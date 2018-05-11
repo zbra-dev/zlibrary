@@ -162,15 +162,15 @@ export class BookPopupComponent implements OnInit {
         } else if (reservation.isLoanExpired) {
             this.message = EXPIREDMESSAGE;
             this.isExpired = true;
-        } else if (reservation.reservationReason.status === ReservationStatus.approved) {
+        } else if (reservation.reservationReason.status === ReservationStatus.Approved) {
                     if (!reservation.canBorrow) {
                         this.message = APPROVEDMESSAGE;
                     } else {
                         this.message = RENEWMESSAGE;
                     }
-        } else if (reservation.reservationReason.status === ReservationStatus.waiting) {
+        } else if (reservation.reservationReason.status === ReservationStatus.Waiting) {
             this.message = WAITINGLISTMESSAGE;
-        } else if (reservation.reservationReason.status === ReservationStatus.rejected) {
+        } else if (reservation.reservationReason.status === ReservationStatus.Rejected) {
             this.message = REJECTEDMESSAGE;
         } else {
             this.message = WAITINGMESSAGE;

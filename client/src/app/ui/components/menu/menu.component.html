@@ -19,6 +19,12 @@
                         Livros em Espera
                     </button>
                 </li>
+                <li *ngIf="isAdmin == true"> 
+                    <img src="../../../../assets/images/Shape.svg">
+                    <button  (click)="showRequestedBooks()" style="cursor:pointer" class="items-list">
+                        Aceitar / Recusar
+                    </button>
+                </li>
                 <li>
                     <img src="../../../../assets/images/out.png">
                     <button (click)="onLogout()" style="cursor:pointer" class="items-list">

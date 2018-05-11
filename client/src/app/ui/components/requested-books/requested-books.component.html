@@ -1,0 +1,21 @@
+<div class="modal-history">
+    <div class="modal-header">
+        {{index}}
+        <h4 class="modal-title">LIVROS REQUISITADOS</h4>
+        <button type="button" class="close" (click)="close()">x</button>
+    </div>
+    <div class="modal-body">
+        <div ng-repeat="reservation in reservations" class="modal-rectangle" style="display: flex;">
+            <!--<zli-book-image  class="book-cover" [book]="book"></zli-book-image>-->
+            <div class="book-information">
+                <span class="book-title">{{reservation.id}}</span>
+                <span class="book-authors"*ngFor="let author of book?.authors; last as isLast">{{author.name}}{{isLast ? '' : ', '}}</span>
+            </div>
+            <button type="button" class="accept-button" (click)="accept">Aceitar</button>
+            <button type="button" class="reject-button" (click)="reject">Recusar</button>
+        </div>
+
+    </div>
+    
+</div>
+

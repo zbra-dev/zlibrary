@@ -1,6 +1,6 @@
 export enum ReservationStatus {
-    requested = 0,
-    approved = 1,
-    waiting = 2,
-    rejected = 3
+    Requested = 0,
+    Approved = 1,
+    Waiting = 2,
+    Rejected = 3
 }

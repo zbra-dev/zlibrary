@@ -10,6 +10,7 @@ import { environment } from '../../environments/environment';
 import { ReservationViewModelConverter } from './converter/reservation.view-model-converter';
 import 'rxjs/add/operator/map';
 import { HttpErrorResponse } from '@angular/common/http/src/response';
+import { ReservationStatus } from '../model/reservation-status';
 
 const RESERVATIONS_PATH = 'reservations';
 const URL = `${environment.apiUrl}/${RESERVATIONS_PATH}`;
@@ -33,5 +34,11 @@ export class ReservationRepository {
     return this.httpClient.post(orderUrl, json, {
       headers: new HttpHeaders().set('Content-Type', 'application/json')
     }).map((data: any) => ReservationViewModelConverter.fromDTO(data));
+  }
+
+  public findByStatus(status: ReservationStatus): Observable<Reservation[]> {
+    console.log('ReservationStatus[status] ===> ' + ReservationStatus[status]);
+    const url = `${URL}/status/${ReservationStatus[status]}`;
+    return this.httpClient.get(url).map((data: any) => data.map(r => ReservationViewModelConverter.fromDTO(r)));
   }
 }
