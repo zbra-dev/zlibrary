@@ -515,7 +515,7 @@ namespace ZLibrary.Web
 
                 var loan1 = new Loan(reservation1);
                 loan1.Status = LoanStatus.Borrowed;
-                loan1.ExpirationDate = DateTime.Now.AddDays(-1);
+                //loan1.ExpirationDate = DateTime.Now.AddDays(-1);
                 context.Loans.Add(loan1);
                 context.SaveChanges();
 

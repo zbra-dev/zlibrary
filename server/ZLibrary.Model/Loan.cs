@@ -6,7 +6,7 @@ namespace ZLibrary.Model
     {
         public long Id { get; set; }
         public Reservation Reservation { get; private set; }
-        public DateTime ExpirationDate { get; /*private*/ set; }
+        public DateTime ExpirationDate { get; private set; }
         public DateTime LoanStart { get; set; }
         public DateTime LoanEnd { get; set; }
         public LoanStatus Status { get; set; }
