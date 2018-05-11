@@ -18,7 +18,7 @@ namespace ZLibrary.Model
         {
             if (reservation == null)
             {
-                throw new ArgumentNullException($"The paramenter {nameof(reservation)} can not be null.");
+                throw new ArgumentNullException($"O parâmetro {nameof(reservation)} não pode ser nulo.");
             }
             Reservation = reservation;
             Status = LoanStatus.Borrowed;

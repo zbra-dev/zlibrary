@@ -74,7 +74,7 @@ export class BookComponent implements OnInit {
 
                     },
                     error => {
-                        this.toastMediator.show(`Error loading books: ${error}`);
+                        this.toastMediator.show(`Erro ao pedir o livro: ${error}`);
                     }
                 )
             );

@@ -38,7 +38,7 @@ export abstract class AbstractTypeahead implements OnInit {
                     this.searchResults = results;
                     this.searchResultsCache = this.searchResults;
                 }, error => {
-                    this.toastMediator.show(`Error loading search results: ${error}`);
+                    this.toastMediator.show(`Erro ao carregar os resultados da pesquisa: ${error}`);
                 });
             });
     }

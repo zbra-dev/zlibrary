@@ -15,7 +15,7 @@ namespace ZLibrary.Model
         {
             if (string.IsNullOrWhiteSpace(name))
             {
-                throw new ArgumentException($"The paramenter {nameof(name)} can not be null or empty.");
+                throw new ArgumentException($"O parâmetro {nameof(name)} não pode ser nulo ou vazio.");
             }
             Name = name;
         }

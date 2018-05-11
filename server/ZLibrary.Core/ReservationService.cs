@@ -70,7 +70,7 @@ namespace ZLibrary.Core
         {
             if (reservation.IsApproved || reservation.IsRejected)
             {
-                throw new ReservationApprovedException($"O Status da reserversa precisa ser '{ReservationStatus.Requested}' ou '{ReservationStatus.Waiting}'.");
+                throw new ReservationApprovedException($"O Status da reserversa precisa ser Solicitado ou Aguardando.");
             }
 
             if (book == null)
@@ -100,7 +100,7 @@ namespace ZLibrary.Core
         {
             if (!reservation.IsRequested)
             {
-                throw new ReservationApprovedException($"O Status da reserversa precsisa ser '{ReservationStatus.Requested}'.");
+                throw new ReservationApprovedException($"O Status da reserversa precsisa ser Solicitado.");
             }
             reservation.Reason.Status = ReservationStatus.Rejected;
             await reservationRepository.Update(reservation);

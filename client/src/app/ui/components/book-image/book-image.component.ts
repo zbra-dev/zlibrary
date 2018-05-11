@@ -40,7 +40,7 @@ export class BookImageComponent implements OnInit {
                         this.coverImageURL = `${BASE64_BASE_URL}${image}`;
                     }, error => {
                         this.coverImageURL = null;
-                        this.toastMediator.show(`Error loading image: ${error}`);
+                        this.toastMediator.show(`Erro ao carregar a imagem: ${error}`);
                     }, () => {
                         this.isLoading = false;
                     }
