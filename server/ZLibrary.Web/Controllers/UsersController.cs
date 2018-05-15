@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using ZLibrary.Web.Extensions;
 using ZLibrary.API;
 using ZLibrary.Model;
 
@@ -30,7 +31,7 @@ namespace ZLibrary.Web
             {
                 return NotFound();
             }
-            return Ok(user);
+            return Ok(user.ToLiteUserViewItem());
         }
 
         [HttpPost]

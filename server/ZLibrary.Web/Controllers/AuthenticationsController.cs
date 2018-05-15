@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Net.Http;
 using System.Text;
+using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -11,6 +12,7 @@ using Newtonsoft.Json;
 using ZLibrary.API;
 using ZLibrary.Model;
 using ZLibrary.Web.Controllers.Items;
+using ZLibrary.Web.Extensions;
 using ZLibrary.Web.Options;
 using ZLibrary.Web.Validators;
 
@@ -68,11 +70,14 @@ namespace ZLibrary.Web.Controllers
                     else
                     {
                         user.AccessToken = slackUserDTO.AccessToken;
-                        user.UserAvatarUrl = slackUserDTO.User.UserAvatarUrl;
+                        if(!string.IsNullOrEmpty(slackUserDTO.User.UserAvatarUrl)){
+                            var imageurls = slackUserDTO.User.UserAvatarUrl.Split("https");
+                            user.UserAvatarUrl = "https" + Uri.UnescapeDataString(imageurls.FirstOrDefault(url => url.Contains(".png")));
+                        }
                         await userService.Update(user);
                     }
 
-                    Response.Cookies.Append("user", JsonConvert.SerializeObject(user));
+                    Response.Cookies.Append("user", JsonConvert.SerializeObject(user.ToUserViewItem()));
                     return Redirect($"{clientOptions.ClientUrl}/books");
                 }
             }

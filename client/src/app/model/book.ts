@@ -19,26 +19,22 @@ export class Book {
     public reservations: Reservation[];
 
     public get isAvailable(): boolean {
-        return this.numberOfCopies > 0 && this.reservations.filter(r => r.reservationReason.isApproved).length < this.numberOfCopies;
-    }
-
-    constructor() {
+        return this.numberOfCopies > 0 && this.reservations.filter(r => r.reservationReason.isApproved && !!r.loan && !r.loan.isReturned).length < this.numberOfCopies;
     }
 
     public hasBookReservation(user: User): boolean {
         if (!!this.reservations && this.reservations.length > 0) {
             const userReservations = this.reservations.filter(r => r.userId === user.id);
             return userReservations.length > 0
-                && userReservations.some(r => r.reservationReason.isApproved && !r.isReturned);
+                && userReservations.some(r => !r.reservationReason.isRejected || r.reservationReason.isApproved && !!r.loan && !r.loan.isReturned);
         }
         return false;
     }
     public calculateExpired(user: User): boolean {
         if (!!this.reservations && this.reservations.length > 0) {
             const userReservations = this.reservations.filter(r => r.userId === user.id);
-            //return userReservations[0].isLoanExpired;
             return userReservations.length > 0
-                && userReservations.some(r => r.isLoanExpired);
+                && userReservations.some(r => !!r.loan && r.loan.isExpired);
         }
         return false;
     }

@@ -1,0 +1,45 @@
+.modal-history{
+    width: 1180px;
+    max-height: 758px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    z-index: 10;
+    left: -330px;
+    position: absolute;
+    overflow: auto;
+
+}
+
+.modal-title{
+    font-size: 2.5em;
+    position: relative;
+    width: 1178px;
+    height: 182px;
+    text-align: center;
+    line-height: 3.5;
+    letter-spacing: 9.3px;
+    color: #34495e;
+}
+.columns-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    flex-direction: row;
+    padding-right: 15%;
+    border-bottom: 1px solid #dad9d9;
+}
+
+.column-title{
+    flex: 1;
+    font-size: 1.3em;
+    text-align: center;
+    line-height: 3.5;
+    letter-spacing: 1.3px;
+    padding-left: 10%;
+    color: #34495e;
+}
+
+
+.close{
+    object-fit: contain;
+}

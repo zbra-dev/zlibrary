@@ -21,6 +21,8 @@ import { LoadImageComponent } from './load-image/load-image.component';
 import { BookImageComponent } from './book-image/book-image.component';
 import { PipesModule } from '../pipes/pipes.module';
 import { RequestedBooksComponent} from './requested-books/requested-books.component';
+import { ReturnBookListComponent } from './return-book-list/return-book-list.component';
+import { LoanComponent } from './loan/loan.component';
 
 @NgModule({
     declarations: [
@@ -38,7 +40,9 @@ import { RequestedBooksComponent} from './requested-books/requested-books.compon
         TypeaheadMultiSelectionComponent,
         LoadImageComponent,
         BookImageComponent,
-        RequestedBooksComponent
+        RequestedBooksComponent,
+        ReturnBookListComponent,
+        LoanComponent
     ],
     exports: [
         BookComponent,
@@ -51,14 +55,16 @@ import { RequestedBooksComponent} from './requested-books/requested-books.compon
         ReactiveFormsModule,
         MenuComponent,
         ReservationListComponent,
-        RequestedBooksComponent
+        RequestedBooksComponent,
+        ReturnBookListComponent
     ],
     entryComponents: [
         ToastComponent,
         ReservationHistoryComponent,
         ConfirmComponent,
         ReservationListComponent,
-        RequestedBooksComponent
+        RequestedBooksComponent,
+        ReturnBookListComponent
     ],
     imports: [
         BrowserModule,

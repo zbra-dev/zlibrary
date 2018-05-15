@@ -8,6 +8,8 @@ import { ErrorInterceptorProvider } from './interceptor/error.interceptor';
 import { ReservationRepository } from './reservation.repository';
 import { AuthorRepository } from './author.respository';
 import { PublisherRepository } from './publisher.repository';
+import { UserRepository } from './user.repository';
+import { LoanRepository } from './loan.repository';
 
 @NgModule({
     imports: [HttpClientModule],
@@ -19,7 +21,9 @@ import { PublisherRepository } from './publisher.repository';
         ReservationRepository,
         AuthRepository,
         AuthorRepository,
-        PublisherRepository
+        PublisherRepository,
+        UserRepository,
+        LoanRepository
     ]
 })
 export class RepositoryModule {

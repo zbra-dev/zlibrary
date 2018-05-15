@@ -1,5 +1,6 @@
 import { User } from './user';
 import { ReservationReason } from './reservation-reason';
+import { Loan } from './loan';
 
 export class Reservation {
     constructor(public id: number,
@@ -7,10 +8,6 @@ export class Reservation {
                 public bookId: number,
                 public reservationReason: ReservationReason,
                 public startDate: string,
-                public isReturned: boolean,
-                public isLoanExpired: boolean,
-                public canBorrow: boolean,
-                public loanStart: string,
-                public loanEnd: string) {
+                public loan: Loan) {
     }
 }

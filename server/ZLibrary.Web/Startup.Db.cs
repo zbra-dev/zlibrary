@@ -509,8 +509,13 @@ namespace ZLibrary.Web
                 context.SaveChanges();
 
                 var reservation3 = new Reservation(3, firstUser);
-                reservation3.Reason.Status = ReservationStatus.Waiting;
+                reservation3.Reason.Status = ReservationStatus.Approved;
                 context.Reservations.Add(reservation3);
+                context.SaveChanges();
+
+                var reservation4 = new Reservation(3, secondUser);
+                reservation4.Reason.Status = ReservationStatus.Approved;
+                context.Reservations.Add(reservation4);
                 context.SaveChanges();
 
                 var loan1 = new Loan(reservation1);
@@ -526,6 +531,10 @@ namespace ZLibrary.Web
 
                  var loan3 = new Loan(reservation3);
                  context.Loans.Add(loan3);
+                 context.SaveChanges();
+                 
+                 var loan4 = new Loan(reservation4);
+                 context.Loans.Add(loan4);
                  context.SaveChanges();
             }
         }

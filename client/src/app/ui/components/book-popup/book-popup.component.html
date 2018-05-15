@@ -20,16 +20,23 @@
             </div>
         </div>
     </div>
-    <div *ngIf="!isOrder && !user.isAdministrator" class="request-reservation-container">
+    <div *ngIf="user.isAdministrator" class="admin-options-container">
+        <div class="admin-options" (click)="canEdit = true">Editar</div>
+        <div *ngIf="canEdit" class="admin-options">Deletar</div>
+    </div>
+    <div *ngIf="(!isOrder && !user.isAdministrator) || (user.isAdministrator && !book.isAvailable)" class="request-reservation-container">
         <div class="availability-box">
-            <div *ngIf="book.isAvailable" class="available-text">Disponível</div>
+            <div *ngIf="book.isAvailable && !user.isAdministrator" class="available-text">Disponível</div>
             <div *ngIf="!book.isAvailable" class="unavailable-text">Indisponível</div>
         </div>
-        <div *ngIf="book.isAvailable" class="reservation-box-available" (click)="order()">
+        <div *ngIf="book.isAvailable && !user.isAdministrator" class="reservation-box-available" (click)="order()">
             <div class="available-button-text-available">Alugar</div>
         </div>
-        <div *ngIf="!book.isAvailable" class="reservation-box-unavailable" (click)="order()">
+        <div *ngIf="!book.isAvailable && !user.isAdministrator" class="reservation-box-unavailable" (click)="order()">
             <div class="available-button-text-unavailable">+ add na lista de espera</div>
+        </div>
+        <div *ngIf="!book.isAvailable && user.isAdministrator" class="reservation-box-unavailable" (click)="openReturnBookList()">
+            <div class="available-button-text-unavailable" >Disponibilizar para o público</div>
         </div>
     </div>
     <div *ngIf="isOrder && !isExpired && !user.isAdministrator" class="request-reservation-container">
@@ -39,14 +46,9 @@
         <div class="waiting-box">
             <div class="sucess-order-text">{{message}}</div>
         </div>
-
     </div>
     <div *ngIf="isExpired && !user.isAdministrator" class="expired-box">
         <div class="sucess-order-text">{{message}}</div>
-    </div>
-    <div *ngIf="user.isAdministrator" class="admin-options-container">
-        <div class="admin-options" (click)="canEdit = true">Editar</div>
-        <div *ngIf="canEdit" class="admin-options">Deletar</div>
     </div>
 </div>
 

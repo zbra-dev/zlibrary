@@ -16,7 +16,10 @@ namespace ZLibrary.Web.Extensions
                 ExpirationDate = loan.ExpirationDate,
                 EndDate = loan.LoanEnd,
                 StartDate = loan.LoanStart,
-                Status = loan.Status
+                CanBorrow = loan.CanBorrow,
+                IsExpired = loan.IsExpired,
+                IsReturned = loan.IsReturned
+
             };
         }
 

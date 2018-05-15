@@ -44,7 +44,7 @@ namespace ZLibrary.Web
             {
                 return NotFound($"Nenhuma reserva encontrada com o ID: {id}.");
             }
-            return Ok(reservation.ToReservationViewItem());
+            return Ok(await reservation.ToReservationViewItem(loanService));
         }
 
         [HttpGet("user/{userId:long}", Name = "FindReservationByUserId")]

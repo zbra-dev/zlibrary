@@ -16,7 +16,11 @@ namespace ZLibrary.Web.Controllers.Items
         public DateTime EndDate { get; set; }
         [DataMember(Name = "startDate")]
         public DateTime StartDate { get; set; }
-        [DataMember(Name = "status")]
-        public LoanStatus Status { get; set; }
+        [DataMember(Name = "isExpired")]
+        public bool IsExpired { get; set; }
+         [DataMember(Name = "isReturned")]
+        public bool IsReturned { get; set; }
+        [DataMember(Name = "canBorrow")]
+        public bool CanBorrow { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace ZLibrary.Web.Controllers.Items
 {
@@ -11,6 +12,7 @@ namespace ZLibrary.Web.Controllers.Items
        public string Name { get; set; }
 
        [DataMember(Name = "userAvatarUrl")]
+       [JsonProperty("image_512")]
        public string UserAvatarUrl { get; set; }
     }
 }

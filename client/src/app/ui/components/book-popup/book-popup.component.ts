@@ -21,6 +21,8 @@ import { AuthorSuggestionAdapter } from './author-suggestion.adapter';
 import { PublisherSuggestionAdapter } from './publisher-suggestion.adapter';
 import { BookComponent } from '../book/book.component';
 import { BookValidator } from '../../validators/book-validator';
+import { BsModalService } from 'ngx-bootstrap';
+import { ReturnBookListComponent } from '../return-book-list/return-book-list.component';
 
 const WAITINGMESSAGE = 'Aguardando aprovação';
 const EXPIREDMESSAGE = 'Reserva expirada';
@@ -73,7 +75,8 @@ export class BookPopupComponent implements OnInit {
         private toastMediator: ToastMediator,
         private authService: AuthService,
         public authorSuggestionAdapter: AuthorSuggestionAdapter,
-        public publisherSuggestionAdapter: PublisherSuggestionAdapter) {
+        public publisherSuggestionAdapter: PublisherSuggestionAdapter,
+        private modalService: BsModalService) {
         this.loaderMediator.onLoadChanged.subscribe(loading => this.isBusy = loading);
         this.bookForm = new FormGroup({
             imageControl: new FormControl(this.newCoverImage, Validators.compose([
@@ -136,7 +139,7 @@ export class BookPopupComponent implements OnInit {
     public refreshReservationStatus() {
 
         const currentReservations = this.book.reservations
-        .filter(r => r.userId === this.user.id && !r.isReturned);
+        .filter(r => r.userId === this.user.id && (!r.reservationReason.isRejected || r.reservationReason.isApproved && !!r.loan && !r.loan.isReturned));
 
         if (currentReservations.length === 0) {
             return;
@@ -159,18 +162,18 @@ export class BookPopupComponent implements OnInit {
     private printReservationState(reservation: Reservation | null) {
         if (!reservation) {
             return;
-        } else if (reservation.isLoanExpired) {
+        } else if (!!reservation.loan && reservation.loan.isExpired) {
             this.message = EXPIREDMESSAGE;
             this.isExpired = true;
-        } else if (reservation.reservationReason.status === ReservationStatus.Approved) {
-                    if (!reservation.canBorrow) {
+        } else if (reservation.reservationReason.isApproved) {
+                    if (!!reservation.loan && !reservation.loan.canBorrow) {
                         this.message = APPROVEDMESSAGE;
                     } else {
                         this.message = RENEWMESSAGE;
                     }
         } else if (reservation.reservationReason.status === ReservationStatus.Waiting) {
             this.message = WAITINGLISTMESSAGE;
-        } else if (reservation.reservationReason.status === ReservationStatus.Rejected) {
+        } else if (reservation.reservationReason.isRejected) {
             this.message = REJECTEDMESSAGE;
         } else {
             this.message = WAITINGMESSAGE;
@@ -206,7 +209,7 @@ export class BookPopupComponent implements OnInit {
     }
 
     public order(): void {
-        if (this.book !== null) {
+        if (!!this.book) {
             this.loaderMediator.execute(
                 this.reservationService.order(this.user, this.book).subscribe(
                     reservation => {
@@ -253,5 +256,31 @@ export class BookPopupComponent implements OnInit {
         if (this.isNew) {
             this.cancelEvent.emit(null);
         }
+    }
+
+    public openReturnBookList(){
+        const returnBookListModalControl = this.modalService.show(ReturnBookListComponent);
+        const returnBookListComponent = returnBookListModalControl.content as ReturnBookListComponent;
+        returnBookListComponent.initWith(this.book);
+        returnBookListComponent.modalControl = returnBookListModalControl;
+        this.modalService.onHide.subscribe(() => { 
+            if(returnBookListComponent.needRefreshBook){
+                returnBookListModalControl.hide();
+                this.refreshBook();
+            }
+        });
+    }
+
+    private refreshBook(){
+        this.loaderMediator.execute(
+            this.bookService.findById(this.book.id).subscribe(
+                book => {
+                    this.initWith(book);
+                    this.updateBookListEvent.emit(null);
+                }, error => {
+                    this.toastMediator.show(`Livro não encontrado: ${error}`);
+                }
+            )
+        );
     }
 }
