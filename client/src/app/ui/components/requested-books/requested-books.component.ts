@@ -7,6 +7,8 @@ import { User } from '../../../model/user';
 import { Book } from '../../../model/book';
 import index from '@angular/cli/lib/cli';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { LoaderMediator } from '../../mediators/loader.mediator';
+import { BookService } from './../../../service/book.service';
 
 @Component({
     selector: 'zli-requested-books',
@@ -22,6 +24,9 @@ export class RequestedBooksComponent implements OnInit {
     public modalControl: BsModalRef;
     public reservations: Reservation[];
     public reservationStatus : ReservationStatus;
+    public loaderMediator : LoaderMediator;
+    public bookService : BookService;
+    public book : Book;
 
     ngOnInit() {
         this.reservationService.findByStatus(ReservationStatus.Requested)
@@ -29,6 +34,14 @@ export class RequestedBooksComponent implements OnInit {
                 this.reservations = reservations;
             });
     }
+
+    /*public getBook(reservations : Reservation[])
+    {
+        this.book = this.reservations.bookId;
+                return
+    }*/
+
+
 
     public close(): void {
         this.modalControl.hide();
