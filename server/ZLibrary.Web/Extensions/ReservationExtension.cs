@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using ZLibrary.API;
 using ZLibrary.Model;
 using ZLibrary.Web.Controllers.Items;
+using ZLibrary.Web.LookUps;
 
 namespace ZLibrary.Web.Extensions
 {
@@ -22,7 +23,7 @@ namespace ZLibrary.Web.Extensions
             };
         }
 
-        public async static Task<ReservationResultDTO> ToReservationViewItem(this Reservation reservation, ILoanService loanService)
+        public async static Task<ReservationResultDTO> ToReservationViewItem(this Reservation reservation, IServiceDataLookUp serviceDataLookUp)
         {
             var reservationDTO = new ReservationResultDTO()
             {
@@ -34,7 +35,7 @@ namespace ZLibrary.Web.Extensions
                 StartDate = reservation.StartDate
             };
 
-            var loan = await loanService.FindByReservationId(reservation.Id);
+            var loan = await serviceDataLookUp.LookUp(reservation);
             if (loan != null)
             {
                 reservationDTO.Loan = loan.ToLoanViewItem();
@@ -43,10 +44,9 @@ namespace ZLibrary.Web.Extensions
             return reservationDTO;
         }
 
-        public async static Task<IEnumerable<ReservationResultDTO>> ToReservationViewItems(this IEnumerable<Reservation> reservations, ILoanService loanService)
+        public async static Task<IEnumerable<ReservationResultDTO>> ToReservationViewItems(this IEnumerable<Reservation> reservations, IServiceDataLookUp serviceDataLookUp)
         {
-            var tasks = reservations.Select(r => r.ToReservationViewItem(loanService));
-            return await Task.WhenAll(tasks);
+            return await Task.WhenAll(reservations.Select(r => r.ToReservationViewItem(serviceDataLookUp)));
         }
     }
 }

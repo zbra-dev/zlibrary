@@ -16,6 +16,7 @@ using Microsoft.Net.Http.Headers;
 using System.Text;
 using Newtonsoft.Json;
 using ZLibrary.Web.Utils;
+using ZLibrary.Web.LookUps;
 
 namespace ZLibrary.Web
 {
@@ -29,6 +30,7 @@ namespace ZLibrary.Web
         private readonly IPublisherService publisherService;
         private readonly IReservationService reservationService;
         private readonly ILoanService loanService;
+        private readonly IServiceDataLookUp serviceDataLookUp;
 
         public BooksController(IBookFacade bookFacade, IAuthorService authorService, IPublisherService publisherService, IReservationService reservationService, ILoanService loanService)
         {
@@ -37,13 +39,14 @@ namespace ZLibrary.Web
             this.publisherService = publisherService;
             this.reservationService = reservationService;
             this.loanService = loanService;
+            this.serviceDataLookUp = new DefaultServiceDataLookUp(loanService, reservationService);
         }
 
         [HttpGet]
         public async Task<IActionResult> FindAll()
         {
             var books = await bookFacade.FindAll();
-            return Ok(await books.ToBookViewItems(reservationService, loanService));
+            return Ok(await books.ToBookViewItems(serviceDataLookUp));
         }
 
         [HttpGet("{id:long}", Name = "FindBook")]
@@ -54,7 +57,7 @@ namespace ZLibrary.Web
             {
                 return NotFound();
             }
-            return Ok(await book.ToBookViewItem(reservationService, loanService));
+            return Ok(await book.ToBookViewItem(serviceDataLookUp));
         }
 
         [HttpDelete("{id:long}", Name = "DeleteBook")]
@@ -144,15 +147,14 @@ namespace ZLibrary.Web
 
             try
             {
-                var book = dto.FromBookViewItem(validationResult);
+                var book = dto.FromBookViewItem(new DefaultValidationResultDataLookUp(validationResult));
                 
                 book = await bookFacade.Save(book, targetFilePath);
 
-                return Ok(await book.ToBookViewItem(reservationService, loanService));
+                return Ok(await book.ToBookViewItem(serviceDataLookUp));
             }
             catch (BookSaveException ex)
             {
-
                 try
                 {
                     System.IO.File.Delete(targetFilePath);
@@ -161,7 +163,6 @@ namespace ZLibrary.Web
                 {
                     //Ignore
                 }
-
                 return BadRequest(ex.Message);
             }
             catch (ImageSaveException ex)
@@ -179,7 +180,7 @@ namespace ZLibrary.Web
                 OrderBy = orderBy
             };
             var books = await bookFacade.FindBy(bookSearchParameter);
-            return Ok(await books.ToBookViewItems(reservationService, loanService));
+            return Ok(await books.ToBookViewItems(serviceDataLookUp));
         }
     }
 }

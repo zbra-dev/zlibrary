@@ -70,10 +70,7 @@ namespace ZLibrary.Web.Controllers
                     else
                     {
                         user.AccessToken = slackUserDTO.AccessToken;
-                        if(!string.IsNullOrEmpty(slackUserDTO.User.UserAvatarUrl)){
-                            var imageurls = slackUserDTO.User.UserAvatarUrl.Split("https");
-                            user.UserAvatarUrl = "https" + Uri.UnescapeDataString(imageurls.FirstOrDefault(url => url.Contains(".png")));
-                        }
+                        user.UserAvatarUrl = slackUserDTO.GetUserAvatarUrl();
                         await userService.Update(user);
                     }
 
