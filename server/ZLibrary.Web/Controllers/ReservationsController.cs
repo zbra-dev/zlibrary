@@ -10,6 +10,7 @@ using ZLibrary.Web.Extensions;
 using System;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using ZLibrary.Web.LookUps;
 
 namespace ZLibrary.Web
 {
@@ -20,6 +21,7 @@ namespace ZLibrary.Web
         private readonly IUserService userService;
         private readonly IBookService bookService;
         private readonly ILoanService loanService;
+        private readonly IServiceDataLookUp serviceDataLookUp;
 
         public ReservationsController(IReservationService reservationService, IUserService userService, IBookService bookService, ILoanService loanService)
         {
@@ -27,13 +29,14 @@ namespace ZLibrary.Web
             this.userService = userService;
             this.bookService = bookService;
             this.loanService = loanService;
+            this.serviceDataLookUp = new DefaultServiceDataLookUp(loanService, reservationService);
         }
 
         [HttpGet]
         public async Task<IActionResult> FindAll()
         {
             var reservations = await reservationService.FindAll();
-            return Ok(await reservations.ToReservationViewItems(loanService));
+            return Ok(await reservations.ToReservationViewItems(serviceDataLookUp));
         }
 
         [HttpGet("{id:long}", Name = "FindReservation")]
@@ -44,7 +47,7 @@ namespace ZLibrary.Web
             {
                 return NotFound($"Nenhuma reserva encontrada com o ID: {id}.");
             }
-            return Ok(await reservation.ToReservationViewItem(loanService));
+            return Ok(await reservation.ToReservationViewItem(serviceDataLookUp));
         }
 
         [HttpGet("user/{userId:long}", Name = "FindReservationByUserId")]
@@ -55,7 +58,7 @@ namespace ZLibrary.Web
             {
                 return NotFound($"Nenhuma reserva encontrada com o ID do usuário: {userId}.");
             }
-            return Ok(await reservations.ToReservationViewItems(loanService));
+            return Ok(await reservations.ToReservationViewItems(serviceDataLookUp));
         }
 
         [HttpGet("status/{statusName}", Name = "FindReservationsByStatus")]
@@ -71,7 +74,7 @@ namespace ZLibrary.Web
             {
                 return NotFound($"Nenhuma reserva encontrada com o status: {reservationStatus}.");
             }
-            return Ok(await reservations.ToReservationViewItems(loanService));
+            return Ok(await reservations.ToReservationViewItems(serviceDataLookUp));
         }
 
         [HttpPost("order")]

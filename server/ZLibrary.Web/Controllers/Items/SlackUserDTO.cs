@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using System.Runtime.Serialization;
 
 namespace ZLibrary.Web.Controllers.Items
@@ -5,6 +7,9 @@ namespace ZLibrary.Web.Controllers.Items
     [DataContract (Name = "SlackUserDTO")]
     public class SlackUserDTO
     {
+        private const string ImageProtocol = "https";
+        private const string ImageExtension = ".png";
+
         [DataMember(Name = "ok")]
         public string Ok { get; set; }
 
@@ -19,5 +24,15 @@ namespace ZLibrary.Web.Controllers.Items
 
         [DataMember(Name = "error")]
         public string Error { get; set; }
+
+        internal string GetUserAvatarUrl()
+        {
+            if (!string.IsNullOrEmpty(User.UserAvatarUrl))
+            {
+                var imageURLs = User.UserAvatarUrl.Split(ImageProtocol);
+                return string.Concat(ImageProtocol, Uri.UnescapeDataString(imageURLs.FirstOrDefault(url => url.Contains(ImageExtension))));
+            }
+            return string.Empty;
+        }
     }
 }
