@@ -35,14 +35,14 @@ export class ReservationListComponent implements OnInit {
     public isExpired: boolean;
 
     public get showRenewButton(): boolean {
-        return this.reservation.canBorrow && !this.reservation.isLoanExpired && this.reservation.reservationReason.isApproved;
+        return !!this.reservation.loan && this.reservation.loan.canBorrow && !this.reservation.loan.isExpired && this.reservation.reservationReason.isApproved;
     }
 
     ngOnInit() {
         this.user = this.authService.getLoggedUser();
         this.isWaiting = this.reservation.reservationReason.status === ReservationStatus.Waiting;
         this.isRequested = this.reservation.reservationReason.status === ReservationStatus.Requested;
-        this.isExpired = this.reservation.isLoanExpired;
+        this.isExpired = !!this.reservation.loan && this.reservation.loan.isExpired;
         this.loaderMediator.execute(
             this.bookService.findById(this.reservation.bookId).subscribe(
                 book => {
@@ -61,7 +61,7 @@ export class ReservationListComponent implements OnInit {
         if (this.isWaiting || this.isRequested) {
             this.date = this.reservation.startDate;
         } else {
-            this.date = this.reservation.loanStart;
+            this.date = this.reservation.loan.startDate;
         }
     }
 

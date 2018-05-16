@@ -1,0 +1,9 @@
+<div *ngIf="loan">
+  <div class="modal-rectangle" style="display: flex;">
+      <img *ngIf="!!user && !!user.userAvatarUrl" class="user-avatar" [src]="user.userAvatarUrl">
+      <img *ngIf="!!user && !user.userAvatarUrl" class="user-avatar" src="../../../../assets/images/user_icon.png">
+      <div *ngIf="!!user" class="user-name">{{user.name}}</div>
+      <span class="loan-start-date">{{loan.startDate | date:'MM/dd/yyyy'}}</span>
+      <span class="loan-end-date">{{loan.expirationDate | date:'MM/dd/yyyy'}}</span>
+      <div class="return-button" (click)="returnBook()">Retornar</div>
+</div>

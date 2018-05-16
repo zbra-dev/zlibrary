@@ -5,6 +5,8 @@ import { ReservationService } from './reservation.service';
 import { AuthService } from './auth.service';
 import { AuthorService } from './author.service';
 import { PublisherService } from './publisher.service';
+import { UserService } from './user.service';
+import { LoanService } from './loan.service';
 
 @NgModule({
     providers: [
@@ -13,7 +15,9 @@ import { PublisherService } from './publisher.service';
         ReservationService,
         AuthorService,
         PublisherService,
-        AuthService
+        AuthService,
+        UserService,
+        LoanService
     ]
 })
 export class ServiceModule {

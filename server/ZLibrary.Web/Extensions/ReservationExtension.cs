@@ -35,21 +35,17 @@ namespace ZLibrary.Web.Extensions
             };
 
             var loan = await loanService.FindByReservationId(reservation.Id);
-
             if (loan != null)
             {
-                reservationDTO.IsLoanExpired = loan.IsExpired;
-                reservationDTO.CanBorrow = loan.CanBorrow;
-                reservationDTO.LoanStart = loan.LoanStart;
-                reservationDTO.LoanEnd = loan.LoanEnd;
-                reservationDTO.isReturned = loan.IsReturned;
+                reservationDTO.Loan = loan.ToLoanViewItem();
             }
+
             return reservationDTO;
         }
 
         public async static Task<IEnumerable<ReservationResultDTO>> ToReservationViewItems(this IEnumerable<Reservation> reservations, ILoanService loanService)
         {
-            var tasks =  reservations.Select(r => r.ToReservationViewItem(loanService));
+            var tasks = reservations.Select(r => r.ToReservationViewItem(loanService));
             return await Task.WhenAll(tasks);
         }
     }

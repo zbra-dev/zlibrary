@@ -39,11 +39,11 @@ export class ReservationHistoryComponent implements OnInit {
 
     public filterReservationsByStatus(reservationHistoryType: ReservationHistoryType, reservations: Reservation[]): Reservation[] {
         if (reservationHistoryType === ReservationHistoryType.Loaned) {
-            return reservations.filter(r => r.reservationReason.status === ReservationStatus.Approved && !r.isReturned);
+            return reservations.filter(r => r.reservationReason.status === ReservationStatus.Approved && !!r.loan && !r.loan.isReturned);
         }
         if (reservationHistoryType === ReservationHistoryType.Waiting) {
             return reservations.filter(r => (r.reservationReason.status === ReservationStatus.Waiting
-                    || r.reservationReason.status === ReservationStatus.Requested) && !r.canBorrow);
+                    || r.reservationReason.status === ReservationStatus.Requested) && !r.loan);
         }
         throw new Error('Status da Reserva Inválido');
     }
