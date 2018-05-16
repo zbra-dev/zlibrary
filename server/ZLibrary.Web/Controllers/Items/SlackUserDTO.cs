@@ -30,7 +30,11 @@ namespace ZLibrary.Web.Controllers.Items
             if (!string.IsNullOrEmpty(User.UserAvatarUrl))
             {
                 var imageURLs = User.UserAvatarUrl.Split(ImageProtocol);
-                return string.Concat(ImageProtocol, Uri.UnescapeDataString(imageURLs.FirstOrDefault(url => url.Contains(ImageExtension))));
+                var imageUrl = imageURLs.FirstOrDefault(url => url.Contains(ImageExtension));
+                if (!string.IsNullOrEmpty(imageUrl)) 
+                {
+                    return string.Concat(ImageProtocol, Uri.UnescapeDataString(imageUrl));
+                }
             }
             return string.Empty;
         }
