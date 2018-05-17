@@ -37,6 +37,36 @@
     border: solid 1px #ececec;
 }
 
+.book-cover{
+    width: 142px;
+    height: 100%;
+    opacity: 0.75;
+    margin: 0.3px;
+    border: solid 2px #e8dcdc14;
+}
+
+.book-title{
+    width: 565px;
+    height: 31px;
+    font-family: Roboto;
+    font-size: 18px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    letter-spacing: 1.3px;
+    color: #726e6e;
+    margin-top: 60px;
+    display: flex;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.book-information{
+    //style="display:flex; 
+    flex-direction:column;
+    margin-left: 50px;
+}
 .accept-button{
     font-size: 18px;
     font-family: Roboto;

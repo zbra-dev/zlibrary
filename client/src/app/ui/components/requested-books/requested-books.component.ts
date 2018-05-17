@@ -9,6 +9,7 @@ import index from '@angular/cli/lib/cli';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { LoaderMediator } from '../../mediators/loader.mediator';
 import { BookService } from './../../../service/book.service';
+import { ToastMediator } from '../../mediators/toast.mediator';
 
 @Component({
     selector: 'zli-requested-books',
@@ -18,14 +19,18 @@ import { BookService } from './../../../service/book.service';
 })
 export class RequestedBooksComponent implements OnInit {
     constructor(private authService: AuthService, 
-                private reservationService: ReservationService) {
+                private reservationService: ReservationService,
+                private bookService: BookService,
+                private loaderMediator: LoaderMediator,
+                private toastMediator: ToastMediator) {
     }
-
+    @Input() public reservations: Reservation[];
     public modalControl: BsModalRef;
-    public reservations: Reservation[];
+    //public reservations: Reservation[];
     public reservationStatus : ReservationStatus;
-    public loaderMediator : LoaderMediator;
-    public bookService : BookService;
+    //public reservation: Reservation;
+    //public loaderMediator : LoaderMediator;
+   // public bookService : BookService;
     public book : Book;
 
     ngOnInit() {
@@ -33,15 +38,16 @@ export class RequestedBooksComponent implements OnInit {
             .subscribe((reservations: Reservation[]) => {
                 this.reservations = reservations;
             });
+        this.loaderMediator.execute(
+            this.bookService.findById(this.reservations.bookId).subscribe(
+                    book => {
+                        this.book = book;
+                    }, error => {
+                        this.toastMediator.show(`Erro ao carregar os livros: ${error}`);
+                    }
+            )
+        );
     }
-
-    /*public getBook(reservations : Reservation[])
-    {
-        this.book = this.reservations.bookId;
-                return
-    }*/
-
-
 
     public close(): void {
         this.modalControl.hide();

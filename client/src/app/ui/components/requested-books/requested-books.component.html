@@ -8,7 +8,7 @@
         <div ng-repeat="reservation in reservations" class="modal-rectangle" style="display: flex;">
             <zli-book-image  class="book-cover" [book]="book"></zli-book-image>
             <div class="book-information">
-                <span class="book-title">{{reservations.bookId}}</span>
+                <span class="book-title">{{book?.title}}</span>
                 <span class="book-authors"*ngFor="let author of book?.authors; last as isLast">{{author.name}}{{isLast ? '' : ', '}}</span>
             </div>
             <button type="button" class="accept-button" (click)="accept">Aceitar</button>
