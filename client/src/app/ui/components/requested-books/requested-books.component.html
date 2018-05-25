@@ -5,17 +5,19 @@
         <button type="button" class="close" (click)="close()">x</button>
     </div>
     <div class="modal-body">
-        <div ng-repeat="reservation in reservations" class="modal-rectangle" style="display: flex;">
-            <zli-book-image  class="book-cover" [book]="book"></zli-book-image>
+        <div *ngFor="let order of orders" class="modal-rectangle" style="display: flex;">
+            <zli-book-image  class="book-cover" [book]="order.book"></zli-book-image>
             <div class="book-information">
-                <span class="book-title">{{book?.title}}</span>
-                <span class="book-authors"*ngFor="let author of book?.authors; last as isLast">{{author.name}}{{isLast ? '' : ', '}}</span>
+                <span class="book-title">{{order.book.title}}</span>
+                <span class="book-authors" *ngFor="let author of order.book.authors; last as isLast">{{author.name}}{{isLast ? '' : ', '}}</span>
             </div>
-            <button type="button" class="accept-button" (click)="accept">Aceitar</button>
+            <div class="user-information">
+                <img src="../../../../assets/images/user_icon.png" width="20" height="20">
+                <span class="user-name">{{order.user.name}}</span>
+            </div>
+            <button type="button" class="accept-button" (click)="acceptReservation()">Aprovar</button>
             <button type="button" class="reject-button" (click)="reject">Recusar</button>
         </div>
-
     </div>
-    
 </div>
 

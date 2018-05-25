@@ -16,7 +16,6 @@ export class LoanRepository {
   }
 
   public updateLoanStatusToReturned(loan: Loan){
-      console.log(`${URL}/returned/${loan.id}`);
     return this.httpClient.post(`${URL}/returned/${loan.id}`, ' ');
   }
 }

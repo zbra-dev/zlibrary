@@ -6,7 +6,7 @@
     z-index: 10;
     left: -330px;
     position: absolute;
-    overflow: auto;
+    overflow: overlay;
 
 }
 
@@ -46,7 +46,7 @@
 }
 
 .book-title{
-    width: 565px;
+    width: 442px;
     height: 31px;
     font-family: Roboto;
     font-size: 18px;
@@ -63,10 +63,22 @@
 }
 
 .book-information{
-    //style="display:flex; 
     flex-direction:column;
     margin-left: 50px;
+    width: 442px;
+
 }
+.user-information{
+    flex-direction:column;
+    margin-left: 50px;
+    margin:80px;
+}
+
+.user-name{
+    font-family: Roboto;
+    color: #726e6e;
+}
+
 .accept-button{
     font-size: 18px;
     font-family: Roboto;

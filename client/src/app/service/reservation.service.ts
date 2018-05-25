@@ -2,6 +2,7 @@ import { ReservationRepository } from '../repository/reservation.repository';
 import { Observable } from 'rxjs/Observable';
 import { Book } from '../model/book';
 import { User } from '../model/user';
+import { Order } from '../model/order';
 import { Reservation } from '../model/reservation';
 import { Injectable } from '@angular/core';
 import { ReservationStatus } from '../model/reservation-status';
@@ -22,5 +23,17 @@ export class ReservationService {
 
     public findByStatus(status: ReservationStatus): Observable<Reservation[]> {
         return this.repository.findByStatus(status);
+    }
+
+    public findOrdersByStatus(status: ReservationStatus): Observable<Order[]> {
+        return this.repository.findOrderByStatus(status);
+    }
+
+    public approve(reservationId: number) {
+        return this.repository.approve(reservationId);
+    }
+
+    public reject(reservationId: number) {
+        return this.repository.reject(reservationId);
     }
 }

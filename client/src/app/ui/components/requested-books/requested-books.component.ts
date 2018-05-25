@@ -7,9 +7,8 @@ import { User } from '../../../model/user';
 import { Book } from '../../../model/book';
 import index from '@angular/cli/lib/cli';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
-import { LoaderMediator } from '../../mediators/loader.mediator';
-import { BookService } from './../../../service/book.service';
 import { ToastMediator } from '../../mediators/toast.mediator';
+import { Order } from '../../../model/order';
 
 @Component({
     selector: 'zli-requested-books',
@@ -20,36 +19,41 @@ import { ToastMediator } from '../../mediators/toast.mediator';
 export class RequestedBooksComponent implements OnInit {
     constructor(private authService: AuthService, 
                 private reservationService: ReservationService,
-                private bookService: BookService,
-                private loaderMediator: LoaderMediator,
                 private toastMediator: ToastMediator) {
     }
-    @Input() public reservations: Reservation[];
+    @Input()  public orders: Order[];
     public modalControl: BsModalRef;
-    //public reservations: Reservation[];
     public reservationStatus : ReservationStatus;
-    //public reservation: Reservation;
-    //public loaderMediator : LoaderMediator;
-   // public bookService : BookService;
-    public book : Book;
 
     ngOnInit() {
-        this.reservationService.findByStatus(ReservationStatus.Requested)
-            .subscribe((reservations: Reservation[]) => {
-                this.reservations = reservations;
+        this.reservationService.findOrdersByStatus(ReservationStatus.Requested)
+            .subscribe((orders: Order[]) => {
+                this.orders = orders;
             });
-        this.loaderMediator.execute(
-            this.bookService.findById(this.reservations.bookId).subscribe(
-                    book => {
-                        this.book = book;
-                    }, error => {
-                        this.toastMediator.show(`Erro ao carregar os livros: ${error}`);
-                    }
-            )
-        );
     }
 
+    public acceptReservation() {
+        var order : Order;
+        return this.reservationService.approve(order.reservation.id);
+    }
+
+    public rejectReservation() {
+
+    }
+    
     public close(): void {
         this.modalControl.hide();
     }
 }
+
+
+/*var user = this.reservations[0].userId;
+        this.loaderMediator.execute(
+            this.reservationService.order(user, this.book).subscribe(
+                reservation => {
+                    
+                }, error => {
+                    this.toastMediator.show(`Erro ao aceitar a reserva: ${error}`);
+                }
+            )
+        );*/

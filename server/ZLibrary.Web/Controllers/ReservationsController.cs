@@ -77,6 +77,32 @@ namespace ZLibrary.Web
             return Ok(await reservations.ToReservationViewItems(serviceDataLookUp));
         }
 
+        [HttpGet("orders/{statusName}", Name = "FindOrdersByStatus")]
+        public async Task<IActionResult> FindOrdersByStatus(string statusName)
+        {
+            ReservationStatus reservationStatus;
+            if (!Enum.TryParse<ReservationStatus>(statusName, out reservationStatus)) 
+            {
+                return BadRequest($"Não foi possível converter o status [{statusName}]");
+            }
+            var reservations = await reservationService.FindByStatus(reservationStatus);
+            if (reservations == null || !reservations.Any())
+            {
+                return NotFound($"Nenhuma reserva encontrada com o status: {reservationStatus}.");
+            }
+            var orderList = new List<OrderDTO>();
+            var reservationResultList = await reservations.ToReservationViewItems(serviceDataLookUp);
+            foreach (var reservationResult in reservationResultList) 
+            {
+                var order = new OrderDTO();
+                order.Reservation = reservationResult;
+                order.Book = await (await bookService.FindById(reservationResult.BookId)).ToBookViewItem(serviceDataLookUp);
+                order.User = (await userService.FindById(reservationResult.UserId)).ToUserViewItem();
+                orderList.Add(order);
+            }
+            return Ok(orderList);
+        }
+
         [HttpPost("order")]
         public async Task<IActionResult> Order([FromBody]ReservationRequestDTO value)
         {
