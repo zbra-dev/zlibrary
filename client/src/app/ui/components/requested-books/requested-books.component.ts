@@ -8,6 +8,7 @@ import { Book } from '../../../model/book';
 import index from '@angular/cli/lib/cli';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { ToastMediator } from '../../mediators/toast.mediator';
+import { LoaderMediator } from '../../mediators/loader.mediator';
 import { Order } from '../../../model/order';
 
 @Component({
@@ -19,41 +20,47 @@ import { Order } from '../../../model/order';
 export class RequestedBooksComponent implements OnInit {
     constructor(private authService: AuthService, 
                 private reservationService: ReservationService,
-                private toastMediator: ToastMediator) {
+                private toastMediator: ToastMediator,
+                private loaderMediator: LoaderMediator) {
     }
+
     @Input()  public orders: Order[];
     public modalControl: BsModalRef;
     public reservationStatus : ReservationStatus;
 
     ngOnInit() {
+        this.showRequestedReservations();
+    }
+
+     public showRequestedReservations(){
         this.reservationService.findOrdersByStatus(ReservationStatus.Requested)
-            .subscribe((orders: Order[]) => {
-                this.orders = orders;
-            });
-    }
-
-    public acceptReservation() {
-        var order : Order;
-        return this.reservationService.approve(order.reservation.id);
-    }
-
-    public rejectReservation() {
-
+        .subscribe((orders: Order[]) => {
+            this.orders = orders;
+        });
     }
     
+    public acceptReservation(order: Order) : void {
+        if (confirm("Deseja aprovar está reserva?")) {
+            this.reservationService.approve(order.reservation.id).subscribe(() => {
+                console.log('Reserva Aprovada!');
+                this.reservationService.findOrdersByStatus(ReservationStatus.Requested)
+            });
+        }
+        //this.showRequestedReservations();
+        //console.log("Reserva Aprovada!");
+    }
+
+    public rejectReservation(order: Order) {
+        if (confirm("Deseja recusar está reserva?")) {
+            this.reservationService.reject(order.reservation.id).subscribe(() => {
+                console.log("Reserva Recusada!");
+            });
+        }
+        this.showRequestedReservations();
+    }
+   
+
     public close(): void {
         this.modalControl.hide();
     }
 }
-
-
-/*var user = this.reservations[0].userId;
-        this.loaderMediator.execute(
-            this.reservationService.order(user, this.book).subscribe(
-                reservation => {
-                    
-                }, error => {
-                    this.toastMediator.show(`Erro ao aceitar a reserva: ${error}`);
-                }
-            )
-        );*/
