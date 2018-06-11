@@ -1,3 +1,4 @@
 .vscode/
 server/ZLibrary.Web/BookCoverImages/
 server/ZLibrary.Web/Startup.Db.cs
+server/ZLibrary.Web/Startup.Db.cs
