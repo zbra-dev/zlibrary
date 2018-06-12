@@ -23,6 +23,7 @@ import { PipesModule } from '../pipes/pipes.module';
 import { RequestedBooksComponent} from './requested-books/requested-books.component';
 import { ReturnBookListComponent } from './return-book-list/return-book-list.component';
 import { LoanComponent } from './loan/loan.component';
+import { ApprovedBooksComponent } from './approved-books/approved-books.component';
 
 @NgModule({
     declarations: [
@@ -42,7 +43,8 @@ import { LoanComponent } from './loan/loan.component';
         BookImageComponent,
         RequestedBooksComponent,
         ReturnBookListComponent,
-        LoanComponent
+        LoanComponent,
+        ApprovedBooksComponent
     ],
     exports: [
         BookComponent,
@@ -64,7 +66,8 @@ import { LoanComponent } from './loan/loan.component';
         ConfirmComponent,
         ReservationListComponent,
         RequestedBooksComponent,
-        ReturnBookListComponent
+        ReturnBookListComponent,
+        ApprovedBooksComponent
     ],
     imports: [
         BrowserModule,

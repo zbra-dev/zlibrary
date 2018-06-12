@@ -5,6 +5,7 @@ import { BsModalService } from 'ngx-bootstrap';
 import { AuthService } from '../../../service/auth.service';
 import { User } from '../../../model/user';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
+import { ApprovedBooksComponent } from '../approved-books/approved-books.component';
 
 @Component({
     selector: 'zli-menu',
@@ -54,9 +55,15 @@ export class MenuComponent implements OnInit {
         reservationHistoryComponent.modalControl = reservationHistoryModalControl;
     }
 
-    public showRequestedBooks(){
+    public showRequestedBooks() {
         const requestedBooksModalControl = this.modalService.show(RequestedBooksComponent);
         const requestedBooksComponet = requestedBooksModalControl.content as RequestedBooksComponent;
         requestedBooksComponet.modalControl = requestedBooksModalControl;
+    }
+
+    public showApprovedBooks() {
+        const approvedBooksModalControl = this.modalService.show(ApprovedBooksComponent);
+        const approvedBooksComponent = approvedBooksModalControl.content as ApprovedBooksComponent;
+        approvedBooksComponent.modalControl = approvedBooksModalControl;
     }
 }
