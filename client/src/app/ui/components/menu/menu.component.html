@@ -7,6 +7,12 @@
         </div>
         <div class="user-menu" *ngIf="showUserMenu">
             <ul class="user-menu-list">
+                <li *ngIf="isAdmin">
+                   <img src="../../../../assets/images/green-notification.png">
+                   <button (click)="showApprovedBooks()" style="cursor:pointer" class="items-list">
+                       Livros Emprestados
+                   </button> 
+                </li>
                 <li class="user-menu-option">
                     <img src="../../../../assets/images/green-notification.png">
                     <button (click)="showRentedBooks()" style="cursor:pointer" class="items-list">
