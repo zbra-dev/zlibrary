@@ -39,15 +39,16 @@ export class RequestedBooksComponent implements OnInit {
         });
     }
     
+    
     public acceptReservation(order: Order) : void {
         if (confirm("Deseja aprovar está reserva?")) {
-            this.reservationService.approve(order.reservation.id).subscribe(() => {
+            this.reservationService.approve(order.reservation.id)
+            .subscribe((orders: Order) => {
                 console.log('Reserva Aprovada!');
-                this.reservationService.findOrdersByStatus(ReservationStatus.Requested)
+                
             });
         }
-        //this.showRequestedReservations();
-        //console.log("Reserva Aprovada!");
+        this.showRequestedReservations();
     }
 
     public rejectReservation(order: Order) {
