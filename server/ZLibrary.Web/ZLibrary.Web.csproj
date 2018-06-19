@@ -11,14 +11,14 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ZLibrary.API\ZLibrary.API.csproj" />
     <ProjectReference Include="..\ZLibrary.Core\ZLibrary.Core.csproj" />
     <ProjectReference Include="..\ZLibrary.Model\ZLibrary.Model.csproj" />
     <ProjectReference Include="..\ZLibrary.Persistence\ZLibrary.Persistence.csproj" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.0.3" />
     <Content Include="Startup.Db.cs" />
     <Content Include="Startup.Auth.cs" />
     <Content Include="Startup.cs" />

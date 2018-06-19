@@ -2,3 +2,7 @@
 server/ZLibrary.Web/BookCoverImages/
 server/ZLibrary.Web/Startup.Db.cs
 server/ZLibrary.Web/Startup.Db.cs
+server/ZLibrary.Web/Startup.Db.cs
+client/src/app/ui/components/book/book.component.ts
+client/src/app/ui/components/book/book.component.ts
+client/src/app/ui/components/confirm/confirm.component.html

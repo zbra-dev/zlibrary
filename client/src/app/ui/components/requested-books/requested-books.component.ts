@@ -18,48 +18,60 @@ import { Order } from '../../../model/order';
     encapsulation: ViewEncapsulation.Emulated
 })
 export class RequestedBooksComponent implements OnInit {
-    constructor(private authService: AuthService, 
-                private reservationService: ReservationService,
-                private toastMediator: ToastMediator,
-                private loaderMediator: LoaderMediator) {
+    constructor(private authService: AuthService,
+        private reservationService: ReservationService,
+        private toastMediator: ToastMediator,
+        private loaderMediator: LoaderMediator) {
     }
 
-    @Input()  public orders: Order[];
+    @Input() public orders: Order[];
     public modalControl: BsModalRef;
-    public reservationStatus : ReservationStatus;
+    public reservationStatus: ReservationStatus;
 
     ngOnInit() {
         this.showRequestedReservations();
     }
 
-     public showRequestedReservations(){
+    public showRequestedReservations() {
         this.reservationService.findOrdersByStatus(ReservationStatus.Requested)
-        .subscribe((orders: Order[]) => {
-            this.orders = orders;
-        });
-    }
-    
-    
-    public acceptReservation(order: Order) : void {
-        if (confirm("Deseja aprovar está reserva?")) {
-            this.reservationService.approve(order.reservation.id)
-            .subscribe((orders: Order) => {
-                console.log('Reserva Aprovada!');
-                
+            .subscribe((orders: Order[]) => {
+                this.orders = orders;
             });
+    }
+
+
+    public acceptReservation(order: Order) {
+        if (confirm("Deseja aprovar está reserva?")) {
+            this.loaderMediator.execute(
+                this.reservationService.approve(order.reservation.id)
+                    .subscribe(() => {
+                        console.log('Reserva Aprovada!');
+                        this.showRequestedReservations();
+                    }
+                        , error => {
+                            this.toastMediator.show(`Erro ao pedir o livro: ${error}`);
+                        }
+                    )
+            );
         }
-        this.showRequestedReservations();
     }
 
     public rejectReservation(order: Order) {
         if (confirm("Deseja recusar está reserva?")) {
-            this.reservationService.reject(order.reservation.id).subscribe(() => {
-                console.log("Reserva Recusada!");
-            });
+            this.loaderMediator.execute(
+                this.reservationService.reject(order.reservation.id)
+                    .subscribe(() => {
+                        console.log('Reserva Recusada!');
+                        this.showRequestedReservations();
+                    }
+                        , error => {
+                            this.toastMediator.show(`Erro ao pedir o livro: ${error}`);
+                        }
+                    )
+            );
         }
-        this.showRequestedReservations();
     }
-   
+
 
     public close(): void {
         this.modalControl.hide();

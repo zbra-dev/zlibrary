@@ -498,7 +498,7 @@ namespace ZLibrary.Web
                 var firstUser = users.SingleOrDefault(u => u.Id == 17);
                 var secondUser = users.SingleOrDefault(u => u.Id == 16);
 
-                var reservation1 = new Reservation(bookId, firstUser);
+                var reservation1 = new Reservation(bookId, secondUser);
                 reservation1.Reason.Status = ReservationStatus.Requested;
                 context.Reservations.Add(reservation1);
                 context.SaveChanges();
@@ -509,7 +509,7 @@ namespace ZLibrary.Web
                 context.SaveChanges();
 
                 var reservation3 = new Reservation(3, firstUser);
-                reservation3.Reason.Status = ReservationStatus.Waiting;
+                reservation3.Reason.Status = ReservationStatus.Requested;
                 context.Reservations.Add(reservation3);
                 context.SaveChanges();
 
@@ -518,6 +518,7 @@ namespace ZLibrary.Web
                 context.Reservations.Add(reservation4);
                 context.SaveChanges();
 
+                /*
                 var loan1 = new Loan(reservation1);
                 loan1.Status = LoanStatus.Borrowed;
                 //loan1.ExpirationDate = DateTime.Now.AddDays(-1);
@@ -536,6 +537,7 @@ namespace ZLibrary.Web
                  var loan4 = new Loan(reservation4);
                  context.Loans.Add(loan4);
                  context.SaveChanges();
+                 */
             }
         }
     }

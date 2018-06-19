@@ -23,6 +23,8 @@ export class BookRepository {
         const json = JSON.stringify(dto);
 
         //search/{keyword}/{orderByValue:int}
+        const headers = new HttpHeaders().set('Content-Type', 'application/json')
+        console.log(headers)
         return this.httpClient.post(URL + '/search/', json, {
             headers: new HttpHeaders().set('Content-Type', 'application/json')
         }).map((data: any) => data.map(b => BookViewModelConverter.fromDTO(b)));
