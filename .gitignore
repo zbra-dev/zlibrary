@@ -6,3 +6,8 @@ server/ZLibrary.Web/Startup.Db.cs
 client/src/app/ui/components/book/book.component.ts
 client/src/app/ui/components/book/book.component.ts
 client/src/app/ui/components/confirm/confirm.component.html
+client/src/app/ui/mediators/confirm.mediator.ts
+client/src/app/ui/components/confirm/confirm.component.ts
+client/src/app/ui/components/confirm/confirm.component.scss
+client/src/app/ui/components/confirm/confirm.component.html
+client/src/app/ui/components/book/book.component.ts

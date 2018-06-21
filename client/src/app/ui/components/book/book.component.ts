@@ -60,7 +60,7 @@ export class BookComponent implements OnInit {
         }
     }
     public deleteModal() {
-        this.confirmMediator.showDialog('Você tem certeza que gostaria de deletar esse livro?').subscribe(b => {
+        this.confirmMediator.showDialog('DELETAR', 'Deseja deletar este livro?').subscribe(b => {
             if (b) {
                 this.delete();
             }

@@ -13,6 +13,7 @@ export class ConfirmComponent implements OnInit {
     @Output() confirmed: EventEmitter<void> = new EventEmitter<void>();
     @Output() cancelled: EventEmitter<void> = new EventEmitter<void>();
     public message: string;
+    public title: string;
 
     constructor(private modalRef: BsModalRef) {
     }

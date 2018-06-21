@@ -9,13 +9,15 @@ export class ConfirmMediator {
     constructor(private modalService: BsModalService) {
     }
 
-    public showDialog(message: string): Observable<boolean> {
+    public showDialog(title: string, message: string): Observable<boolean> {
         return new Observable<boolean>(o => {
             const modalRef = this.modalService.show(ConfirmComponent);
             const confirmComponent = <ConfirmComponent>modalRef.content;
+            confirmComponent.title = title;
             confirmComponent.message = message;
             confirmComponent.confirmed.subscribe(() => o.next(true));
             confirmComponent.cancelled.subscribe(() => o.next(false));
         });
     }
+
 }

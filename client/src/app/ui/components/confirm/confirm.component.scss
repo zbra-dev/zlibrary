@@ -2,6 +2,7 @@
     display: block;
     padding: 15px;
     font-size: 1rem;
+    border: 2em;
 }
 
 .modal-body{
@@ -20,19 +21,19 @@
     width: 396px;
     height: 19px;
     font-family: SFUIText;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: normal;
     font-style: normal;
     font-stretch: normal;
     line-height: normal;
     letter-spacing: normal;
     text-align: center;
-    color: #a9a9a9;
+    color:#726e6e;
     position: absolute;
     top: 40%;
     left: 10%;
 }
-.delete-text {
+.title-text {
     width: 147px;
     height: 29px;
     font-family: SFUIDisplay;

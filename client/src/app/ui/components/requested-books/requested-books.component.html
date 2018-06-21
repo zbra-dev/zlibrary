@@ -18,9 +18,8 @@
             <button type="button" class="accept-button" (click)="acceptReservation(order)">Aprovar</button>
             <button type="button" class="reject-button" (click)="rejectReservation(order)">Recusar</button>
         </div>
+        <div *ngIf="!orders" class="modal-rectangle" style="display: flex;">
+            <div class="message">Não existe mais reservas no sistema!</div>
+        </div>
     </div>
 </div>
-
-<!--<div *ngIf="order == false" class="modal-rectangle" style="display: flex;">
-    <h5>Não existe mais reservas no sistema</h5>
-</div>-->
