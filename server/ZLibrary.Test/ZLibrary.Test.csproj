@@ -1,30 +1,13 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.2</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="1.1.11" />
     <PackageReference Include="MSTest.TestFramework" Version="1.1.11" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\ZLibrary.Model\ZLibrary.Model.csproj" />
-    <Content Include="obj\Debug\project.assets.json" />
-    <Content Include="obj\Debug\netcoreapp1.1\ZLibrary.Test.AssemblyInfo.cs" />
-    <Content Include="obj\Debug\netcoreapp1.1\CoreCompileInputs.cache" />
-    <Content Include="Model\TestAuthor.cs" />
-    <Content Include="Model\TestUser.cs" />
-    <Content Include="Model\TestBag.cs" />
-    <Content Include="Utils\AssertionExtensions.cs" />
-    <Content Include="Model\TestIsbn.cs" />
-    <Content Include="Model\TestPublisher.cs" />
-    <Content Include="Model\TestConverImage.cs" />
-    <Content Include="Model\TestCoverImage.cs" />
-    <Content Include="Model\TestBook.cs" />
-    <Content Include="Model\TestBookCopy.cs" />
-    <Content Include="Model\TestLoan.cs" />
-    <Content Include="Model\TestReservationReason.cs" />
-    <Content Include="Model\TestReservation.cs" />
-    <Content Include="Model\TestPublisherFactory.cs" />
-    <Content Include="Utils\AssertionUtils.cs" />
   </ItemGroup>
 </Project>
