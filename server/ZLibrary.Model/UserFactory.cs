@@ -34,7 +34,7 @@ namespace ZLibrary.Model
         private static IList<User> CreateAdminUsers()
         {
             var adminUsers = new List<User>();
-            adminUsers.Add(new User() { Name = "Bruno François", Email = "bruno.francois@zbra.com.br", IsAdministrator = false });
+            adminUsers.Add(new User() { Name = "Bruno François", Email = "bruno.francois@zbra.com.br", IsAdministrator = true });
             adminUsers.Add(new User() { Name = "Cinthya Vieira", Email = "cinthya.vieira@zbra.com.br", IsAdministrator = true, UserAvatarUrl="https://a.slack-edge.com/7fa9/img/avatars/ava_0007-512.png" });
             adminUsers.Add(new User() { Name = "Fabio Augusto Falavinha", Email = "fabio.falavinha@zbra.com.br", IsAdministrator = true });
             adminUsers.Add(new User() { Name = "Jayme Preto", Email = "jayme.preto@zbra.com.br", IsAdministrator = true });
