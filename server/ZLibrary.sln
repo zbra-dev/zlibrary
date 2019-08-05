@@ -1,4 +1,5 @@
-﻿Microsoft Visual Studio Solution File, Format Version 12.00
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 15.0.26124.0
@@ -8,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZLibrary.Core", "ZLibrary.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZLibrary.API", "ZLibrary.API\ZLibrary.API.csproj", "{9A021943-F3F6-4103-9304-BB9BB7F5D7A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZLibrary.Persistence", "ZLibrary.Persistence\ZLibrary.Persistence.csproj", "{B98517C3-EE35-410B-B2B9-9646079D270E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZLibrary.Persistence", "ZLibrary.Persistence\ZLibrary.Persistence.csproj", "{B98517C3-EE35-410B-B2B9-9646079D270E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZLibrary.Model", "ZLibrary.Model\ZLibrary.Model.csproj", "{291BE955-DA5F-4F61-85E0-A387582CB68A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZLibrary.Model", "ZLibrary.Model\ZLibrary.Model.csproj", "{291BE955-DA5F-4F61-85E0-A387582CB68A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZLibrary.Test", "ZLibrary.Test\ZLibrary.Test.csproj", "{0501BE73-5DEC-486D-8DAB-688F3C5C1104}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -82,8 +85,23 @@ Global
 		{291BE955-DA5F-4F61-85E0-A387582CB68A}.Release|x64.Build.0 = Release|Any CPU
 		{291BE955-DA5F-4F61-85E0-A387582CB68A}.Release|x86.ActiveCfg = Release|Any CPU
 		{291BE955-DA5F-4F61-85E0-A387582CB68A}.Release|x86.Build.0 = Release|Any CPU
+		{0501BE73-5DEC-486D-8DAB-688F3C5C1104}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0501BE73-5DEC-486D-8DAB-688F3C5C1104}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0501BE73-5DEC-486D-8DAB-688F3C5C1104}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0501BE73-5DEC-486D-8DAB-688F3C5C1104}.Debug|x64.Build.0 = Debug|Any CPU
+		{0501BE73-5DEC-486D-8DAB-688F3C5C1104}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0501BE73-5DEC-486D-8DAB-688F3C5C1104}.Debug|x86.Build.0 = Debug|Any CPU
+		{0501BE73-5DEC-486D-8DAB-688F3C5C1104}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0501BE73-5DEC-486D-8DAB-688F3C5C1104}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0501BE73-5DEC-486D-8DAB-688F3C5C1104}.Release|x64.ActiveCfg = Release|Any CPU
+		{0501BE73-5DEC-486D-8DAB-688F3C5C1104}.Release|x64.Build.0 = Release|Any CPU
+		{0501BE73-5DEC-486D-8DAB-688F3C5C1104}.Release|x86.ActiveCfg = Release|Any CPU
+		{0501BE73-5DEC-486D-8DAB-688F3C5C1104}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9DD98B4A-781E-4637-8A4E-0D0D1A234862}
 	EndGlobalSection
 EndGlobal

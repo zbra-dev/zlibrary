@@ -9,6 +9,7 @@ namespace ZLibrary.Test.Model
     [TestClass]
     public class TestBook
     {
+        //TODO: Test cover image key
         [TestMethod]
         public void TestBookProperties()
         {
@@ -16,23 +17,25 @@ namespace ZLibrary.Test.Model
             var publisher = new Publisher("Publisher Test");
             var author1 = new Author("Test Author");
             author1.Id = 2;
-            var a = new Author("Test"){
-                    Id = 1
-                };
-            var author2 = new Author("Author Test"){
-                    Id = 2
-                } ;
-            
-            var bookAuthors = new List<BookAuthor>() 
+            var a = new Author("Test")
+            {
+                Id = 1
+            };
+            var author2 = new Author("Author Test")
+            {
+                Id = 2
+            };
+
+            var bookAuthors = new List<BookAuthor>()
                 {
-                    new BookAuthor() 
+                    new BookAuthor()
                     {
                         Book = book,
                         BookId = book.Id,
                         Author = author1,
                         AuthorId = author1.Id
                     },
-                    new BookAuthor() 
+                    new BookAuthor()
                     {
                         Book = book,
                         BookId = book.Id,
@@ -42,7 +45,6 @@ namespace ZLibrary.Test.Model
                 };
             var isbn = Isbn.FromValue("9788574591865");
             var synopsis = "Synopsis";
-            var coverImage = new CoverImage();
             var numberOfCopies = 2;
             book.Title = "Test";
             book.Id = 3;
@@ -51,7 +53,6 @@ namespace ZLibrary.Test.Model
             book.Isbn = isbn;
             book.Synopsis = synopsis;
             book.PublicationYear = 2002;
-            book.CoverImage = coverImage;
             book.NumberOfCopies = numberOfCopies;
 
             Assert.IsNotNull(book);
@@ -61,7 +62,6 @@ namespace ZLibrary.Test.Model
             Assert.AreEqual(publisher, book.Publisher);
             Assert.AreEqual(isbn, book.Isbn);
             Assert.AreEqual(synopsis, book.Synopsis);
-            Assert.AreEqual(coverImage, book.CoverImage);
             Assert.AreEqual(numberOfCopies, book.NumberOfCopies);
             bookAuthors.AssertListEquals(book.Authors);
         }

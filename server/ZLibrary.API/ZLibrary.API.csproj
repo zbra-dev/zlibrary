@@ -1,21 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard1.4</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\ZLibrary.Model\ZLibrary.Model.csproj" />
-    <Content Include="IBookService.cs" />
-    <Content Include="IUserService.cs" />
-    <Content Include="IAuthorService.cs" />
-    <Content Include="IPublisherService.cs" />
-    <Content Include="BookSaveException.cs" />
-    <Content Include="IImageService.cs" />
-    <Content Include="ILoanService.cs" />
-    <Content Include="IReservationService.cs" />
-    <Content Include="BookDeleteException.cs" />
-    <Content Include="ImageExtesionException.cs" />
-    <Content Include="ImageSaveException.cs" />
-    <Content Include="IBookFacade.cs" />
   </ItemGroup>
 </Project>

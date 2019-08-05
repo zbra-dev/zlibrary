@@ -1,27 +1,11 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="1.1.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ZLibrary.Model\ZLibrary.Model.csproj" />
-    <Content Include="IBookRepository.cs" />
-    <Content Include="BookRepository.cs" />
-    <Content Include="IUserRepository.cs" />
-    <Content Include="IAuthorRepository.cs" />
-    <Content Include="UserRepository.cs" />
-    <Content Include="AuthorRepository.cs" />
-    <Content Include="IPublisherRepository.cs" />
-    <Content Include="PublisherRepository.cs" />
-    <Content Include="ZLibraryContext.cs" />
-    <Content Include="ILoanRepository.cs" />
-    <Content Include="LoanRepository.cs" />
-    <Content Include="ReservationRepository.cs" />
-    <Content Include="IReservationRepository.cs" />
-    <Content Include="ImageRepository.cs" />
-    <Content Include="IImageRepository.cs" />
   </ItemGroup>
-  <PropertyGroup>
-    <TargetFramework>netstandard1.4</TargetFramework>
-  </PropertyGroup>
 </Project>
