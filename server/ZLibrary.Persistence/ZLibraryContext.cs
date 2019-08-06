@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using ZLibrary.Model;
 
@@ -15,6 +14,9 @@ namespace ZLibrary.Persistence
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Loan> Loans { get; set; }
 
+        //Entity Framework Migration
+        public ZLibraryContext() { }
+
         public ZLibraryContext(DbContextOptions options)
             : base(options)
         {
@@ -22,6 +24,7 @@ namespace ZLibrary.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            
             modelBuilder.Entity<BookAuthor>()
                 .HasKey(bc => new { bc.BookId, bc.AuthorId });
 

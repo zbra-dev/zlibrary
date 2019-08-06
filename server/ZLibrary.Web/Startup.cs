@@ -28,14 +28,25 @@ namespace ZLibrary.Web
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
+
+            if (env.IsDevelopment())
+            {
+                builder.AddUserSecrets<Startup>();
+            }
+
+
             Configuration = builder.Build();
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Add InMemoryDbContext
+            //services.AddDbContext<ZLibraryContext>(o => o.UseInMemoryDatabase("ZLibrary_Dev"));
+
             // Add DbContext
-            services.AddDbContext<ZLibraryContext>(o => o.UseInMemoryDatabase("ZLibrary_Dev"));
+            var connectionString = Configuration.GetConnectionString("SqlServerDatabase");
+            services.AddDbContext<ZLibraryContext>(o => o.UseSqlServer(connectionString));
 
             var jwtOptions = BuildJwtOptions();
             var tokenValidationParameters = new TokenValidationParameters()
@@ -98,7 +109,14 @@ namespace ZLibrary.Web
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            SeedDatabase(app);
+            //InMemory DB
+            //SeedDatabase(app);
+
+            //Sql Server
+            var serviceScope = app.ApplicationServices.CreateScope();
+            var context = serviceScope.ServiceProvider.GetService<ZLibraryContext>();
+            context.Database.Migrate();
+
 
             // TODO: Stricter CORS rules in Production
             app.UseCors(builder =>
@@ -108,7 +126,7 @@ namespace ZLibrary.Web
                     .AllowAnyHeader()
                     .AllowAnyMethod();
             });
-            
+
             app.UseMvc();
         }
 
