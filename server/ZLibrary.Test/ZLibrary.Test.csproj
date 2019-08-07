@@ -1,4 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../PackageInfo/CommonVersionInfo.props" />
+  <Import Project="../PackageInfo/CommonPackageInfo.props" />
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.2</TargetFrameworks>
   </PropertyGroup>
