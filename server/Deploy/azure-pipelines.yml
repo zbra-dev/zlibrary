@@ -1,0 +1,57 @@
+name: $(SourceBranchName)_$(date:yyyyMMdd)$(rev:.r)
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: PowerShell@2
+    displayName: 'Increase Build Number'
+    inputs:
+      targetType: filePath
+      filePath: 'server/Deploy/IncreaseBuildNumber.ps1'
+      arguments: $(Pat)
+      workingDirectory: 'server/Deploy'
+
+  - task: PowerShell@2
+    displayName: 'Update BuildNumber in files'
+    inputs:
+      targetType: filePath
+      filePath: 'server/Deploy/UpdateBuildNumber.ps1'
+      arguments: $(Build.SourcesDirectory)/server $(BuildNumber) $(Build.SourceVersion)
+      workingDirectory: 'server/Deploy'
+
+  - task: DotNetCoreCLI@2
+    displayName: Restore
+    inputs:
+      command: restore
+      projects: '$(Parameters.RestoreBuildProjects)'
+
+  - task: DotNetCoreCLI@2
+    displayName: Build
+    inputs:
+      command: build
+      projects: '$(Parameters.RestoreBuildProjects)'
+      arguments: '--configuration $(BuildConfiguration)'
+
+  - task: DotNetCoreCLI@2
+    displayName: Test
+    inputs:
+      command: test
+      projects: '$(Parameters.TestProjects)'
+      arguments: '--configuration $(BuildConfiguration)'
+
+  - task: DotNetCoreCLI@2
+    displayName: Publish
+    inputs:
+      command: publish
+      publishWebProjects: false
+      projects: '$(Parameters.RestoreBuildProjects)'
+      arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact'
+    inputs:
+      PathtoPublish: '$(build.artifactstagingdirectory)'
+    condition: succeededOrFailed()

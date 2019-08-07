@@ -15,6 +15,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZLibrary.Model", "ZLibrary.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZLibrary.Test", "ZLibrary.Test\ZLibrary.Test.csproj", "{0501BE73-5DEC-486D-8DAB-688F3C5C1104}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy", "Deploy", "{FAFB223D-B3C9-4820-9FBA-181A1A4B218C}"
+	ProjectSection(SolutionItems) = preProject
+		Deploy\azure-pipelines.yml = Deploy\azure-pipelines.yml
+		Deploy\IncreaseBuildNumber.ps1 = Deploy\IncreaseBuildNumber.ps1
+		Deploy\UpdateBuildNumber.ps1 = Deploy\UpdateBuildNumber.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PackageInfo", "PackageInfo", "{B2AC5AD8-B6D8-4075-BED0-85E74D3148E6}"
+	ProjectSection(SolutionItems) = preProject
+		PackageInfo\CommonPackageInfo.props = PackageInfo\CommonPackageInfo.props
+		PackageInfo\CommonVersionInfo.props = PackageInfo\CommonVersionInfo.props
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
