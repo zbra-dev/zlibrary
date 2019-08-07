@@ -79,10 +79,6 @@ export class BookPopupComponent implements OnInit {
         private modalService: BsModalService) {
         this.loaderMediator.onLoadChanged.subscribe(loading => this.isBusy = loading);
         this.bookForm = new FormGroup({
-            //* imageControl: new FormControl(this.newCoverImage, Validators.compose([
-            //*     Validators.required,
-            //*     BookValidator.validateImageExtension(this.book)
-            //* ])),
             titleControl: new FormControl(this.book.title, Validators.compose([
                 Validators.required,
                 BookValidator.validateEmptyString()
@@ -120,8 +116,6 @@ export class BookPopupComponent implements OnInit {
         this.originalBook = Object.assign(new Book(), book);
         this.isNew = !book.id;
         this.isOrder = book.hasBookReservation(this.user);
-        //Set Image validate again because book reference has changed
-        //this.bookForm.get('imageControl').setValidators(BookValidator.validateImageExtension(this.book));
         if (!this.isNew) {
             this.refreshReservationStatus();
         }

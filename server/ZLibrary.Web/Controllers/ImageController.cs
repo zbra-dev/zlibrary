@@ -33,10 +33,6 @@ namespace ZLibrary.Web.Controllers
             }
 
             var imageArray = imageService.LoadImage(key);
-            //*if (!imageArray.Any())
-            //*{
-            //*   return BadRequest($"Nenhum arquivo encontrado com a chave: {key}");
-            //*}
             return Ok(imageArray);
         }
     }
