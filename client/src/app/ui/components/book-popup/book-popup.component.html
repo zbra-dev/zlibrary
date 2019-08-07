@@ -56,7 +56,7 @@
     <div class="book-container">
         <h1 *ngIf="canEdit && !isNew" class="about-book-title">Editar Livro</h1>
         <h1 *ngIf="isNew" class="about-book-title">Adicionar Livro</h1>
-        <div class="image-validation-alert" *ngIf="imageControl.invalid && !imageControl.errors?.extensionInvalid && (imageControl.dirty || imageControl.touched)">
+        <!-- <div class="image-validation-alert" *ngIf="imageControl.invalid && !imageControl.errors?.extensionInvalid && (imageControl.dirty || imageControl.touched)">
             Imagem obrigatória
         </div>
         <div class="image-validation-alert" *ngIf="imageControl.errors?.extensionInvalid">
@@ -73,7 +73,7 @@
             <div class="add-image-button">Adicionar
                 <br>Foto
             </div>
-        </div>
+        </div> -->
         <div class="book-inputs-container">
             <label class="input-label" style="margin-top: 0;">Nome do Livro:
                 <div class="validation-alert" *ngIf="titleControl.invalid && (titleControl.dirty || titleControl.touched) && !titleControl.errors?.emptyString">

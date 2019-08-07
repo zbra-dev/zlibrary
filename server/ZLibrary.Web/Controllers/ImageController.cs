@@ -29,14 +29,14 @@ namespace ZLibrary.Web.Controllers
 
             if (book == null)
             {
-                return BadRequest("Não foi encontrado nenhum livro com está imagem.");
+                return BadRequest("Não foi encontrado nenhum livro com esta imagem.");
             }
 
             var imageArray = imageService.LoadImage(key);
-            if (!imageArray.Any())
-            {
-                return BadRequest($"Nenhum arquivo encontrado com a chave: {key}");
-            }
+            //*if (!imageArray.Any())
+            //*{
+            //*   return BadRequest($"Nenhum arquivo encontrado com a chave: {key}");
+            //*}
             return Ok(imageArray);
         }
     }
