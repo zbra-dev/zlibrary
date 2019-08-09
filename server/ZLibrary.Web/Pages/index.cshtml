@@ -1,0 +1,24 @@
+﻿@page
+@{
+    ViewData["Title"] = "ZLibrary";
+    var assembly = typeof(ZLibrary.Web.Startup).Assembly;
+    var assemblyInformationalVersion = (System.Reflection.AssemblyInformationalVersionAttribute)assembly.GetCustomAttributes(typeof(System.Reflection.AssemblyInformationalVersionAttribute), false).FirstOrDefault();
+    var version = assemblyInformationalVersion != null
+        ? assemblyInformationalVersion.InformationalVersion
+        : assembly.GetName().Version.ToString();
+}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head id="Head1">
+    <title>ZLibrary Backend Server</title>
+</head>
+<body>
+    <main>
+        <div style="font-family: 'Work Sans', sans-serif;">
+            ZLibrary Backend Server Version: @version
+        </div>
+    </main>
+</body>
+</html>
+
