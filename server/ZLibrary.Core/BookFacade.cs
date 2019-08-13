@@ -38,7 +38,12 @@ namespace ZLibrary.Core
 
         public async Task<Book> Save(Book book, string imagePath)
         {
-            var bookSaved =  await bookService.Save(book);
+            if (string.IsNullOrEmpty(imagePath) && book.Id == 0)
+            {
+                throw new ImageSaveException("Imagem é obrigatória.");
+            }
+            var bookSaved = await bookService.Save(book);
+            imageService.SaveImage(book.CoverImageKey, imagePath);
             return bookSaved;
         }
 

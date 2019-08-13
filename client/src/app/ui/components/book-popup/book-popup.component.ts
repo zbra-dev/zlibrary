@@ -79,6 +79,10 @@ export class BookPopupComponent implements OnInit {
         private modalService: BsModalService) {
         this.loaderMediator.onLoadChanged.subscribe(loading => this.isBusy = loading);
         this.bookForm = new FormGroup({
+            imageControl: new FormControl(this.newCoverImage, Validators.compose([
+                Validators.required,
+                BookValidator.validateImageExtension(this.book)
+            ])),
             titleControl: new FormControl(this.book.title, Validators.compose([
                 Validators.required,
                 BookValidator.validateEmptyString()
@@ -116,6 +120,8 @@ export class BookPopupComponent implements OnInit {
         this.originalBook = Object.assign(new Book(), book);
         this.isNew = !book.id;
         this.isOrder = book.hasBookReservation(this.user);
+        //Set Image validate again because book reference has changed
+        this.bookForm.get('imageControl').setValidators(BookValidator.validateImageExtension(this.book));
         if (!this.isNew) {
             this.refreshReservationStatus();
         }
@@ -133,7 +139,7 @@ export class BookPopupComponent implements OnInit {
     public refreshReservationStatus() {
 
         const currentReservations = this.book.reservations
-        .filter(r => r.userId === this.user.id && (!r.reservationReason.isRejected || r.reservationReason.isApproved && !!r.loan && !r.loan.isReturned));
+            .filter(r => r.userId === this.user.id && (!r.reservationReason.isRejected || r.reservationReason.isApproved && !!r.loan && !r.loan.isReturned));
 
         if (currentReservations.length === 0) {
             return;
@@ -160,11 +166,11 @@ export class BookPopupComponent implements OnInit {
             this.message = EXPIREDMESSAGE;
             this.isExpired = true;
         } else if (reservation.reservationReason.isApproved) {
-                    if (!!reservation.loan && !reservation.loan.canBorrow) {
-                        this.message = APPROVEDMESSAGE;
-                    } else {
-                        this.message = RENEWMESSAGE;
-                    }
+            if (!!reservation.loan && !reservation.loan.canBorrow) {
+                this.message = APPROVEDMESSAGE;
+            } else {
+                this.message = RENEWMESSAGE;
+            }
         } else if (reservation.reservationReason.status === ReservationStatus.Waiting) {
             this.message = WAITINGLISTMESSAGE;
         } else if (reservation.reservationReason.isRejected) {
@@ -252,20 +258,20 @@ export class BookPopupComponent implements OnInit {
         }
     }
 
-    public openReturnBookList(){
+    public openReturnBookList() {
         const returnBookListModalControl = this.modalService.show(ReturnBookListComponent);
         const returnBookListComponent = returnBookListModalControl.content as ReturnBookListComponent;
         returnBookListComponent.initWith(this.book);
         returnBookListComponent.modalControl = returnBookListModalControl;
-        this.modalService.onHide.subscribe(() => { 
-            if(returnBookListComponent.needRefreshBook){
+        this.modalService.onHide.subscribe(() => {
+            if (returnBookListComponent.needRefreshBook) {
                 returnBookListModalControl.hide();
                 this.refreshBook();
             }
         });
     }
 
-    private refreshBook(){
+    private refreshBook() {
         this.loaderMediator.execute(
             this.bookService.findById(this.book.id).subscribe(
                 book => {
