@@ -20,7 +20,7 @@ namespace ZLibrary.Model
 
             if (!CheckValue(value))
             {
-                throw new IsbnException($"ISBN-13 Inválido: {value}");
+                throw new IsbnException($"ISBN Inválido: {value}");
             }
 
             return new Isbn(value);
@@ -33,19 +33,37 @@ namespace ZLibrary.Model
 
             var isbn = value.Select(s => int.Parse(s.ToString())).ToArray();
             var productor = new int[isbn.Length];
-            for (int i = 0; i < isbn.Length; i++)
+
+            if (isbn.Length.Equals(13))
             {
-                if (i % 2 == 0)
+                for (var i = 0; i < isbn.Length; i++)
                 {
-                    productor[i] = isbn[i] * WeightType1;
+                    if (i % 2 == 0)
+                    {
+                        productor[i] = isbn[i] * WeightType1;
+                    }
+                    else
+                    {
+                        productor[i] = isbn[i] * WeightType2;
+                    }
                 }
-                else
-                {
-                    productor[i] = isbn[i] * WeightType2;
-                }
+
+                return productor.Sum() % 10 == 0;
             }
 
-            return productor.Sum() % 10 == 0;   
+            else if (isbn.Length.Equals(10))
+            {
+                var factor = 10;
+                for (var i = 0; i < isbn.Length; i++)
+                {
+                    productor[i] = value[i] * factor;
+                    factor--;
+                }
+
+                return productor.Sum() % 11 == 0;
+            }
+
+            return false;
         }
 
         public static bool CheckFormatString(string value)

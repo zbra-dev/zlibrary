@@ -93,8 +93,8 @@
                     Dado preenchido inválido
                 </div>
             </div>
-            <input [(ngModel)]="book.isbn" [ngClass]="{ 'input-invalid': isbnControl.invalid && (isbnControl.dirty || isbnControl.touched)}"
-                name="isbn" maxlength="13" type="number" class="textbox-input" formControlName="isbnControl">
+            <input numeric [(ngModel)]="book.isbn" [ngClass]="{ 'input-invalid': isbnControl.invalid && (isbnControl.dirty || isbnControl.touched)}"
+                name="isbn" maxlength="13" numericType ="number" class="textbox-input" formControlName="isbnControl">
             <label class="input-label">Sinopse:</label>
             <textarea [(ngModel)]="book.synopsis" name="synopsis" type="text" class="synopsis-textarea" [ngModelOptions]="{standalone: true}"> </textarea>
             <label class="input-label">Autor(es):

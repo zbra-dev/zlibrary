@@ -44,27 +44,43 @@ export class BookValidator {
                 };
             }
             const value = c.value.toString();
-            const isbnLength = 13;
+            const isbnThirteenLength = 13;
+            const isbnTenLength = 10;
 
-            if (value.length !== isbnLength) {
+            if (value.length !== isbnThirteenLength && value.length !== isbnTenLength) {
                 return {
-                    invalidIsbn: { 'minLength': isbnLength, 'actualLenght': value.length }
+                    invalidIsbn: { 'minLength': isbnTenLength, 'actualLength': value.length }
                 };
             }
-            const weightType1 = 1;
-            const weightType2 = 3;
-            const productor = new Array(isbnLength);
-            for (let i = 0; i < isbnLength; i++) {
-                if (i % 2 === 0) {
-                    productor[i] = value[i] * weightType1;
-                } else {
-                    productor[i] = value[i] * weightType2;
+            if (value.length == isbnThirteenLength) {
+                const weightType1 = 1;
+                const weightType2 = 3;
+                const productor = new Array(isbnThirteenLength);
+                for (let i = 0; i < isbnThirteenLength; i++) {
+                    if (i % 2 === 0) {
+                        productor[i] = value[i] * weightType1;
+                    } else {
+                        productor[i] = value[i] * weightType2;
+                    }
+                }
+                if (!(productor.reduce((a, b) => a + b) % 10 === 0)) {
+                    return {
+                        invalidIsbn: { inputValue: value }
+                    };
                 }
             }
-            if (!(productor.reduce((a, b) => a + b) % 10 === 0)) {
-                return {
-                    invalidIsbn: { inputValue: value }
-                };
+            else if(value.length == isbnTenLength) {
+                const productor = new Array(isbnTenLength);
+                let factor = 10;
+                for (let i = 0; i < isbnTenLength; i++) {
+                    productor[i] = value[i] * factor;
+                    factor--;
+                }
+                if (!(productor.reduce((a, b) => a + b) % 11 === 0)) {
+                    return {
+                        invalidIsbn: { inputValue: value }
+                    };
+                }
             }
             return null;
         };

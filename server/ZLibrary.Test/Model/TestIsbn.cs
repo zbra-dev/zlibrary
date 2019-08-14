@@ -62,5 +62,34 @@ namespace ZLibrary.Test.Model
             Assert.AreEqual("9788574591865", isbn.Value);
             Assert.AreEqual(3, isbn.Id);
         }
+
+        [TestMethod]
+        public void TestValidIsbnTenCreation()
+        {
+            var isbn = Isbn.FromValue("0321127420");
+
+            Assert.IsNotNull(isbn);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IsbnException))]
+        public void TestInvalidIsbnTenCreation()
+        {
+            var isbn = Isbn.FromValue("1234567890");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IsbnException))]
+        public void TestIsbnNineCreation()
+        {
+            var isbn = Isbn.FromValue("123456789");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(IsbnException))]
+        public void TestIsbnElevenCreation()
+        {
+            var isbn = Isbn.FromValue("12345678999");
+        }
     }
 }
