@@ -7,55 +7,58 @@ namespace ZLibrary.Test.Model
     [TestClass]
     public class TestIsbn
     {
-      
+
         [TestMethod]
         public void TestCreateIsbnFromValue()
         {
-            var isbn = Isbn.FromValue("9788574591865");
-            Assert.IsNotNull(isbn);
+            Isbn.FromString("9788574591865");
+            Isbn.FromString("0201485672");
+            Isbn.FromString("0321186125");
+            Isbn.FromString("1590593898");
+            Isbn.FromString("9780321127426");
+            Isbn.FromString("9789087532321");
+            Isbn.FromString("0321127420");
         }
 
         [TestMethod]
         [ExpectedException(typeof(IsbnException))]
         public void TestCreateNewIsbnFromValueWithNullConstructorShouldThrowException()
         {
-            var isbn = Isbn.FromValue(null);
+            Isbn.FromString(null);
         }
 
         [TestMethod]
         [ExpectedException(typeof(IsbnException))]
         public void TestCreateNewIsbnFromValueWithEmptyConstructorShouldThrowException()
         {
-             var isbn = Isbn.FromValue("");
+            Isbn.FromString("");
         }
 
         [TestMethod]
         [ExpectedException(typeof(IsbnException))]
         public void TestCreateNewIsbnFromValueWithWhiteSpaceConstructorShouldThrowException()
         {
-           var isbn = Isbn.FromValue("   ");
+            Isbn.FromString("   ");
         }
-
 
         [TestMethod]
         [ExpectedException(typeof(IsbnException))]
         public void TestCreateNewIsbnFromValueWithFormatValueShouldFormatException()
         {
-           var isbn = Isbn.FromValue("Teste");
+            Isbn.FromString("Teste");
         }
 
         [TestMethod]
         [ExpectedException(typeof(IsbnException))]
         public void TestCreateNewIsbnFromValueWithFormatValueShouldInvalidOperationException()
         {
-           var isbn = Isbn.FromValue("9728574591865");
+            Isbn.FromString("9728574591865");
         }
 
-       
         [TestMethod]
         public void TestGetIsbnCheckValueProperties()
         {
-            var isbn = Isbn.FromValue("9788574591865");
+            var isbn = Isbn.FromString("9788574591865");
             isbn.Id = 3;
 
             Assert.IsNotNull(isbn);
@@ -64,32 +67,24 @@ namespace ZLibrary.Test.Model
         }
 
         [TestMethod]
-        public void TestValidIsbnTenCreation()
-        {
-            var isbn = Isbn.FromValue("0321127420");
-
-            Assert.IsNotNull(isbn);
-        }
-
-        [TestMethod]
         [ExpectedException(typeof(IsbnException))]
         public void TestInvalidIsbnTenCreation()
         {
-            var isbn = Isbn.FromValue("1234567890");
+            Isbn.FromString("1234567890");
         }
 
         [TestMethod]
         [ExpectedException(typeof(IsbnException))]
         public void TestIsbnNineCreation()
         {
-            var isbn = Isbn.FromValue("123456789");
+            Isbn.FromString("123456789");
         }
 
         [TestMethod]
         [ExpectedException(typeof(IsbnException))]
         public void TestIsbnElevenCreation()
         {
-            var isbn = Isbn.FromValue("12345678999");
+            Isbn.FromString("12345678999");
         }
     }
 }

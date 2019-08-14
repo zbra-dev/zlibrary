@@ -1,14 +1,21 @@
 using System;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace ZLibrary.Model
 {
     public class Isbn
     {
-        public static Isbn FromValue(string value) 
+        const int EvenWeight = 1;
+        const int OddWeight = 3;
+        const int OldInitialWeight = 10;
+        const int IsbnModernLength = 13;
+        const int IsbnOldLength = 10;
+        const int IsbnOldDivisor = 11;
+        const int IsbnModernDivisor = 10;
+
+        public static Isbn FromString(string value)
         {
-            if (string.IsNullOrWhiteSpace(value)) 
+            if (string.IsNullOrWhiteSpace(value))
             {
                 throw new IsbnException($"O parâmetro {nameof(value)} não pode ser nulo ou vazio.");
             }
@@ -26,49 +33,56 @@ namespace ZLibrary.Model
             return new Isbn(value);
         }
 
-        private static bool CheckValue(string value) 
+        private static bool CheckValue(string value)
         {
-            const int WeightType1 = 1;
-            const int WeightType2 = 3;
-
             var isbn = value.Select(s => int.Parse(s.ToString())).ToArray();
-            var productor = new int[isbn.Length];
 
-            if (isbn.Length.Equals(13))
+            if (isbn.Length.Equals(IsbnModernLength))
             {
-                for (var i = 0; i < isbn.Length; i++)
-                {
-                    if (i % 2 == 0)
-                    {
-                        productor[i] = isbn[i] * WeightType1;
-                    }
-                    else
-                    {
-                        productor[i] = isbn[i] * WeightType2;
-                    }
-                }
-
-                return productor.Sum() % 10 == 0;
+                return ValidateModernIsbn(isbn);
             }
-
-            else if (isbn.Length.Equals(10))
+            else if (isbn.Length.Equals(IsbnOldLength))
             {
-                var factor = 10;
-                for (var i = 0; i < isbn.Length; i++)
-                {
-                    productor[i] = value[i] * factor;
-                    factor--;
-                }
-
-                return productor.Sum() % 11 == 0;
+                return ValidateOldIsbn(isbn);
             }
 
             return false;
         }
 
-        public static bool CheckFormatString(string value)
+        private static bool ValidateModernIsbn(int[] isbn)
         {
-            return value.ToCharArray().All(c => Char.IsNumber(c));    
+            var sum = 0;
+            for (var i = 0; i < isbn.Length; i++)
+            {
+                if (i % 2 == 0)
+                {
+                    sum += isbn[i] * EvenWeight;
+                }
+                else
+                {
+                    sum += isbn[i] * OddWeight;
+                }
+            }
+
+            return sum % IsbnModernDivisor == 0;
+        }
+
+        private static bool ValidateOldIsbn(int[] isbn)
+        {
+            var weight = OldInitialWeight;
+            var sum = 0;
+
+            for (var i = 0; i < isbn.Length; i++, weight--)
+            {
+                sum += isbn[i] * weight;
+            }
+
+            return sum % IsbnOldDivisor == 0;
+        }
+
+        private static bool CheckFormatString(string value)
+        {
+            return value.ToCharArray().All(c => Char.IsNumber(c));
         }
 
         public string Value { get; set; }

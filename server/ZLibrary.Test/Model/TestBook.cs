@@ -43,7 +43,7 @@ namespace ZLibrary.Test.Model
                         AuthorId = author2.Id
                     },
                 };
-            var isbn = Isbn.FromValue("9788574591865");
+            var isbn = Isbn.FromString("9788574591865");
             var synopsis = "Synopsis";
             var numberOfCopies = 2;
             book.Title = "Test";
