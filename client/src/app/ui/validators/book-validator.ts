@@ -4,6 +4,8 @@ import { Book } from '../../model/book';
 
 const INTEGER_REGEX = new RegExp(`^\\d+$`);
 const IMAGE_TYPE = 'image/png';
+const isbnModernLength = 13;
+const isbnOldLength = 10;
 
 export class BookValidator {
 
@@ -44,32 +46,53 @@ export class BookValidator {
                 };
             }
             const value = c.value.toString();
-            const isbnLength = 13;
 
-            if (value.length !== isbnLength) {
+            if (value.length !== isbnModernLength && value.length !== isbnOldLength) {
                 return {
-                    invalidIsbn: { 'minLength': isbnLength, 'actualLenght': value.length }
+                    invalidIsbn: { 'minLength': isbnOldLength, 'actualLength': value.length }
                 };
             }
-            const weightType1 = 1;
-            const weightType2 = 3;
-            const productor = new Array(isbnLength);
-            for (let i = 0; i < isbnLength; i++) {
-                if (i % 2 === 0) {
-                    productor[i] = value[i] * weightType1;
-                } else {
-                    productor[i] = value[i] * weightType2;
-                }
+            if (value.length == isbnModernLength) {
+                return this.ValidateModernIsbn(value);
             }
-            if (!(productor.reduce((a, b) => a + b) % 10 === 0)) {
-                return {
-                    invalidIsbn: { inputValue: value }
-                };
+            else if (value.length == isbnOldLength) {
+                return this.ValidateOldIsbn(value);
             }
             return null;
         };
     }
 
+    private static ValidateModernIsbn(value) {
+        const evenWeight = 1;
+        const oddWeight = 3;
+        let sum = 0;
+        for (let i = 0; i < isbnModernLength; i++) {
+            if (i % 2 === 0) {
+                sum += value[i] * evenWeight;
+            } else {
+                sum += value[i] * oddWeight;
+            }
+        }
+        if (sum % 10 != 0) {
+            return {
+                invalidIsbn: { inputValue: value }
+            };
+        }
+    }
+
+    private static ValidateOldIsbn(value) {
+        const maxWeight = 10;
+        let factor = maxWeight;
+        let sum = 0;
+        for (let i = 0; i < isbnOldLength; i++, factor--) {
+            sum += value[i] * factor;
+        }
+        if (sum % 11 != 0) {
+            return {
+                invalidIsbn: { inputValue: value }
+            };
+        }
+    }
     public static validateTypeahead() {
         return (c: AbstractControl) => {
             const value = c.value;

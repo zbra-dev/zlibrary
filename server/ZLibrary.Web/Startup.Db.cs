@@ -46,7 +46,7 @@ namespace ZLibrary.Web
 
                 var book = new Book()
                 {
-                    Isbn = Isbn.FromValue("9780321127426"),
+                    Isbn = Isbn.FromString("9780321127426"),
                     PublicationYear = 2014,
                     Publisher = publishers.Where<Publisher>(p => p.Name == "Editora Futura").SingleOrDefault(),
                     Synopsis = "HTML5 Unleashed is the authoritative guide that covers the key web components driving the future of the Web",
@@ -72,7 +72,7 @@ namespace ZLibrary.Web
 
                 var book2 = new Book()
                 {
-                    Isbn = Isbn.FromValue("9780672336270"),
+                    Isbn = Isbn.FromString("9780672336270"),
                     PublicationYear = 2014,
                     Publisher = publishers.FirstOrDefault(),
                     Synopsis = "Java 2 for professional development and best practices.",
@@ -111,7 +111,7 @@ namespace ZLibrary.Web
 
                 var book3 = new Book()
                 {
-                    Isbn = Isbn.FromValue("9780316037723"),
+                    Isbn = Isbn.FromString("9780316037723"),
                     PublicationYear = 2014,
                     Publisher = publishers.Where<Publisher>(p => p.Name == "Addison - Wesley").SingleOrDefault(),
                     Synopsis = "The practice of enterprise application development has benefited from the emergence of many new enabling technologies.",
@@ -144,7 +144,7 @@ namespace ZLibrary.Web
 
                    var book4 = new Book()
                 {
-                    Isbn = Isbn.FromValue("9780316037723"),
+                    Isbn = Isbn.FromString("9780316037723"),
                     PublicationYear = 2014,
                     Publisher = publishers.Where<Publisher>(p => p.Name == "Addison - Wesley").SingleOrDefault(),
                     Synopsis = "The practice of enterprise application development has benefited from the emergence of many new enabling technologies.",
@@ -177,7 +177,7 @@ namespace ZLibrary.Web
 
                    var book5 = new Book()
                 {
-                    Isbn = Isbn.FromValue("9780316037723"),
+                    Isbn = Isbn.FromString("9780316037723"),
                     PublicationYear = 2014,
                     Publisher = publishers.Where<Publisher>(p => p.Name == "Addison - Wesley").SingleOrDefault(),
                     Synopsis = "The practice of enterprise application development has benefited from the emergence of many new enabling technologies.",
@@ -210,7 +210,7 @@ namespace ZLibrary.Web
 
                  var book6 = new Book()
                 {
-                    Isbn = Isbn.FromValue("9780672336270"),
+                    Isbn = Isbn.FromString("9780672336270"),
                     PublicationYear = 2014,
                     Publisher = publishers.FirstOrDefault(),
                     Synopsis = "Java 2 for professional development and best practices.",
@@ -242,7 +242,7 @@ namespace ZLibrary.Web
 
                 var book7 = new Book()
                 {
-                    Isbn = Isbn.FromValue("9780672336270"),
+                    Isbn = Isbn.FromString("9780672336270"),
                     PublicationYear = 2014,
                     Publisher = publishers.FirstOrDefault(),
                     Synopsis = "Java 2 for professional development and best practices.",
@@ -274,7 +274,7 @@ namespace ZLibrary.Web
 
                 var book8 = new Book()
                 {
-                    Isbn = Isbn.FromValue("9780672336270"),
+                    Isbn = Isbn.FromString("9780672336270"),
                     PublicationYear = 2014,
                     Publisher = publishers.FirstOrDefault(),
                     Synopsis = "Java 2 for professional development and best practices.",
@@ -306,7 +306,7 @@ namespace ZLibrary.Web
 
                 var book9 = new Book()
                 {
-                    Isbn = Isbn.FromValue("9780672336270"),
+                    Isbn = Isbn.FromString("9780672336270"),
                     PublicationYear = 2014,
                     Publisher = publishers.FirstOrDefault(),
                     Synopsis = "Java 2 for professional development and best practices.",
@@ -338,7 +338,7 @@ namespace ZLibrary.Web
 
                 var book10 = new Book()
                 {
-                    Isbn = Isbn.FromValue("9780672336270"),
+                    Isbn = Isbn.FromString("9780672336270"),
                     PublicationYear = 2014,
                     Publisher = publishers.FirstOrDefault(),
                     Synopsis = "Java 2 for professional development and best practices.",
@@ -370,7 +370,7 @@ namespace ZLibrary.Web
 
                 var book11 = new Book()
                 {
-                    Isbn = Isbn.FromValue("9780672336270"),
+                    Isbn = Isbn.FromString("9780672336270"),
                     PublicationYear = 2014,
                     Publisher = publishers.FirstOrDefault(),
                     Synopsis = "Java 2 for professional development and best practices.",
@@ -402,7 +402,7 @@ namespace ZLibrary.Web
 
                 var book12 = new Book()
                 {
-                    Isbn = Isbn.FromValue("9780672336270"),
+                    Isbn = Isbn.FromString("9780672336270"),
                     PublicationYear = 2014,
                     Publisher = publishers.FirstOrDefault(),
                     Synopsis = "Java 2 for professional development and best practices.",
