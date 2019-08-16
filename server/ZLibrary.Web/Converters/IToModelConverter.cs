@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace ZLibrary.Web.Converters
 {
-    public interface IConverter<TModel, TViewItem> : IToModelConverter<TModel, TViewItem>, IFromModelConverter<TModel, TViewItem>
+    public interface IToModelConverter<TModel, TViewItem>
     {
+        TModel ConvertToModel(TViewItem dto);
     }
 }

@@ -6,6 +6,7 @@ import { AuthService } from '../../../service/auth.service';
 import { User } from '../../../model/user';
 import { ApprovedBooksComponent } from '../approved-books/approved-books.component';
 import { AuthorPopupComponent } from '../author-popup/author-popup.component';
+import { PublisherPopupComponent } from '../publisher-popup/publisher-popup.component';
 
 @Component({
     selector: 'zli-menu',
@@ -16,6 +17,9 @@ import { AuthorPopupComponent } from '../author-popup/author-popup.component';
 export class MenuComponent implements OnInit {
     @ViewChild(AuthorPopupComponent)
     authorPopupComponent: AuthorPopupComponent;
+
+    @ViewChild(PublisherPopupComponent)
+    publisherPopupComponent: PublisherPopupComponent;
 
     public user: User;
     public showUserMenu: boolean;
@@ -69,6 +73,11 @@ export class MenuComponent implements OnInit {
         this.toggleAuthorSidebar();
     }
 
+    public addNewPublisher() {
+        this.publisherPopupComponent.initNewPublisher();
+        this.togglePublisherSidebar();
+    }
+
     public showApprovedBooks() {
         const approvedBooksModalControl = this.modalService.show(ApprovedBooksComponent);
         const approvedBooksComponent = approvedBooksModalControl.content as ApprovedBooksComponent;
@@ -78,6 +87,13 @@ export class MenuComponent implements OnInit {
     public toggleAuthorSidebar(): void {
         document.getElementById('background-author').classList.toggle('active');
         if (document.getElementById('sidebar-author').classList.toggle('active') === false) {
+            this.isBusy = false;
+        }
+    }
+
+    public togglePublisherSidebar(): void {
+        document.getElementById('background-publisher').classList.toggle('active');
+        if (document.getElementById('sidebar-publisher').classList.toggle('active') === false) {
             this.isBusy = false;
         }
     }

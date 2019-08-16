@@ -10,6 +10,7 @@ using ZLibrary.Web.Extensions;
 using System;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using ZLibrary.Web.Converters;
 
 namespace ZLibrary.Web
 {
@@ -17,17 +18,26 @@ namespace ZLibrary.Web
     public class PublishersController : Controller
     {
         private readonly IPublisherService publisherService;
+        private readonly PublisherConverter publisherConverter;
 
-        public PublishersController(IPublisherService publisherService)
+        public PublishersController(IPublisherService publisherService, PublisherConverter publisherConverter)
         {
             this.publisherService = publisherService;
+            this.publisherConverter = publisherConverter;
         }
 
         [HttpGet("{name}", Name = "FindPublisherByName")]
         public async Task<IActionResult> FindByName(string name)
         {
-            var Publisher = await publisherService.FindByName(name);
-            return Ok(Publisher.ToPublisherViewItems());
+            var publisher = await publisherService.FindByName(name);
+            return Ok(publisher.ToPublisherViewItems());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Save([FromBody]PublisherDTO dto)
+        {
+            var publisherSaved = await publisherService.Save(publisherConverter.ConvertToModel(dto));
+            return Ok(publisherConverter.ConvertFromModel(publisherSaved));
         }
     }
 }

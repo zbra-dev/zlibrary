@@ -37,6 +37,12 @@
                         Adicionar Autor
                     </button>
                 </li>
+                <li *ngIf="isAdmin == true"> 
+                    <img src="../../../../assets/images/Shape.svg">
+                    <button  (click)="addNewPublisher()" style="cursor:pointer" class="items-list">
+                        Adicionar Editora
+                    </button>
+                </li>
                 <li>
                     <img src="../../../../assets/images/out.png">
                     <button (click)="onLogout()" style="cursor:pointer" class="items-list">
@@ -50,6 +56,13 @@
             <div>
                 <div id="close" (click)="toggleAuthorSidebar()"></div>
                 <zli-author-popup (cancelEvent)="toggleAuthorSidebar()"></zli-author-popup>
+            </div>
+        </div>
+        <div id="background-publisher" (click)="togglePublisherSidebar()"></div>
+        <div id="sidebar-publisher">
+            <div>
+                <div id="close" (click)="togglePublisherSidebar()"></div>
+                <zli-publisher-popup (cancelEvent)="togglePublisherSidebar()"></zli-publisher-popup>
             </div>
         </div>
     </div>

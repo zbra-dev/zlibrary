@@ -34,5 +34,39 @@ namespace ZLibrary.Persistence
 
             return publishers;
         }
+
+        public async Task<Publisher> Save(Publisher publisher)
+        {
+            if (!ExistsOther(publisher))
+            {
+
+                if (publisher.Id <= 0)
+                {
+                    context.Publishers.Add(publisher);
+                }
+                else
+                {
+                    context.Publishers.Update(publisher);
+                }
+
+            }
+            else
+            {
+                throw new Exception("Editora já existe.");
+            }
+
+            await context.SaveChangesAsync();
+            await context.Entry(publisher).ReloadAsync();
+            return publisher;
+        }
+
+        private bool ExistsOther(Publisher publisher)
+        {
+            return context.Publishers
+                .Where(p => p.Name == publisher.Name)
+                .Where(p => p.Id != publisher.Id)
+                .Any();
+        }
+    
     }
 }

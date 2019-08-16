@@ -77,29 +77,33 @@ namespace ZLibrary.Web
 
             services.Add(new ServiceDescriptor(typeof(ClientOptions), provider => BuildClientOptions(), ServiceLifetime.Singleton));
 
+            services.AddTransient<ITokenFactory, JsonWebTokenFactory>();
+            services.AddTransient<IAuthenticationApi, SlackApi>();
 
-            // Add application services
+            //services
+            services.AddTransient<IBookFacade, BookFacade>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IBookService, BookService>();
-            services.AddTransient<IBookFacade, BookFacade>();
             services.AddTransient<IAuthorService, AuthorService>();
             services.AddTransient<IPublisherService, PublisherService>();
             services.AddTransient<IReservationService, ReservationService>();
+            services.AddTransient<IImageService, ImageService>();
+            services.AddTransient<ILoanService, LoanService>();
+
+            //repositories
             services.AddTransient<IBookRepository, BookRepository>();
             services.AddTransient<IReservationRepository, ReservationRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IAuthorRepository, AuthorRepository>();
             services.AddTransient<IPublisherRepository, PublisherRepository>();
-            services.AddTransient<ITokenFactory, JsonWebTokenFactory>();
-            services.AddTransient<IImageService, ImageService>();
             services.AddTransient<IImageRepository, ImageRepository>();
-            services.AddTransient<IAuthenticationApi, SlackApi>();
-            services.AddTransient<ILoanService, LoanService>();
             services.AddTransient<ILoanRepository, LoanRepository>();
             
-
+            //converters
             services.AddTransient<AuthorConverter, AuthorConverter>();
+            services.AddTransient<PublisherConverter, PublisherConverter>();
 
+            //validators
             services.AddTransient<AuthorDTOValidator, AuthorDTOValidator>();
 
 

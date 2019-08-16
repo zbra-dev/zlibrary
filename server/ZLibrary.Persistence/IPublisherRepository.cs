@@ -9,5 +9,6 @@ namespace ZLibrary.Persistence
         Task<IList<Publisher>> FindAll();
         Publisher FindById(long id);
         Task<IList<Publisher>> FindByName(string name);
+        Task<Publisher> Save(Publisher publisher);
     }
 }
