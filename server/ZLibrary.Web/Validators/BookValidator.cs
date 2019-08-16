@@ -33,7 +33,7 @@ namespace ZLibrary.Web.Validators
 
             try
             {
-                var isbn = Isbn.FromValue(value.Isbn);
+                var isbn = Isbn.FromString(value.Isbn);
                 validationResult.AddResult(isbn);
             }
             catch (IsbnException ex)
