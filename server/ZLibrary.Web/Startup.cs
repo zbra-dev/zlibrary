@@ -14,6 +14,10 @@ using ZLibrary.Web.Factory;
 using ZLibrary.Web.Factory.Impl;
 using ZLibrary.Web.Options;
 using ZLibrary.Web.Controllers;
+using ZLibrary.Web.Converters;
+using ZLibrary.Model;
+using ZLibrary.Web.Controllers.Items;
+using ZLibrary.Web.Validators;
 
 namespace ZLibrary.Web
 {
@@ -71,6 +75,9 @@ namespace ZLibrary.Web
                 options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
 
+            services.Add(new ServiceDescriptor(typeof(ClientOptions), provider => BuildClientOptions(), ServiceLifetime.Singleton));
+
+
             // Add application services
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IBookService, BookService>();
@@ -89,7 +96,12 @@ namespace ZLibrary.Web
             services.AddTransient<IAuthenticationApi, SlackApi>();
             services.AddTransient<ILoanService, LoanService>();
             services.AddTransient<ILoanRepository, LoanRepository>();
-            services.Add(new ServiceDescriptor(typeof(ClientOptions), provider => BuildClientOptions(), ServiceLifetime.Singleton));
+            
+
+            services.AddTransient<AuthorConverter, AuthorConverter>();
+
+            services.AddTransient<AuthorDTOValidator, AuthorDTOValidator>();
+
 
             services.Configure<JwtOptions>(o =>
             {

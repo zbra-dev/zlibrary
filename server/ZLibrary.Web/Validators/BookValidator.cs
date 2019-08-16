@@ -61,9 +61,9 @@ namespace ZLibrary.Web.Validators
             var authorIds = value.Authors.Select(d => d.Id).ToArray();
             var authorList = new List<BookAuthor>(authorIds.Length);
 
-            foreach (var authorId in authorIds)
+            foreach (var authorId in authorIds.Where( id => id.HasValue))
             {
-                var author = context.AuthorService.FindById(authorId);
+                var author = context.AuthorService.FindById(authorId.Value);
 
                 if (author == null)
                 {

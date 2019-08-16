@@ -35,5 +35,10 @@ namespace ZLibrary.Core
             }
             return await authorRepository.FindByName(name);
         }
+
+        public async Task<Author> Save(Author author)
+        {
+            return await authorRepository.Save(author);
+        }
     }
 }

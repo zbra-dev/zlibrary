@@ -8,4 +8,7 @@
     <ProjectReference Include="..\ZLibrary.API\ZLibrary.API.csproj" />
     <ProjectReference Include="..\ZLibrary.Persistence\ZLibrary.Persistence.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Validators\" />
+  </ItemGroup>
 </Project>

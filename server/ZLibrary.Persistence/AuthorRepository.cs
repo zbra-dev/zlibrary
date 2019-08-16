@@ -34,5 +34,37 @@ namespace ZLibrary.Persistence
 
             return authors;
         }
+
+        public async Task<Author> Save(Author author)
+        {
+            if (!ExistsOther(author)) {
+
+                if (author.Id <= 0)
+                {
+                    context.Authors.Add(author);
+                }
+                else
+                {
+                    context.Authors.Update(author);
+                }
+
+            }
+            else
+            {
+                throw new Exception("Autor já existe.");
+            }
+            
+            await context.SaveChangesAsync();
+            await context.Entry(author).ReloadAsync();
+            return author;
+        }
+
+        public bool ExistsOther(Author author)
+        {
+            return context.Authors
+                .Where(a => a.Name == author.Name)
+                .Where(a => a.Id != author.Id)
+                .Any();
+        }
     }
 }
