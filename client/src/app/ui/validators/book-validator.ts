@@ -38,6 +38,12 @@ export class BookValidator {
         };
     }
 
+    public static noImageValidation() {
+        return (c: AbstractControl) => {
+            return null;
+        };
+    }
+
     public static validateIsbn() {
         return (c: AbstractControl) => {
             if (!c.value) {

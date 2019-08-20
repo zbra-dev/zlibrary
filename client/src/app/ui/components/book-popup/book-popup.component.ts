@@ -23,6 +23,7 @@ import { BookComponent } from '../book/book.component';
 import { BookValidator } from '../../validators/book-validator';
 import { BsModalService } from 'ngx-bootstrap';
 import { ReturnBookListComponent } from '../return-book-list/return-book-list.component';
+import { FeatureSettingsService } from '../../../service/feature-settings.service';
 
 const WAITINGMESSAGE = 'Aguardando aprovação';
 const EXPIREDMESSAGE = 'Reserva expirada';
@@ -52,6 +53,7 @@ export class BookPopupComponent implements OnInit {
     public reservations: Reservation[];
     public message: string;
     public isExpired = false;
+    public allowCoverImage: boolean;
 
     @ViewChild('bookImage')
     imageElement: ElementRef;
@@ -76,7 +78,8 @@ export class BookPopupComponent implements OnInit {
         private authService: AuthService,
         public authorSuggestionAdapter: AuthorSuggestionAdapter,
         public publisherSuggestionAdapter: PublisherSuggestionAdapter,
-        private modalService: BsModalService) {
+        private modalService: BsModalService,
+        private featureSettingsService: FeatureSettingsService) {
         this.loaderMediator.onLoadChanged.subscribe(loading => this.isBusy = loading);
         this.bookForm = new FormGroup({
             imageControl: new FormControl(this.newCoverImage, Validators.compose([
@@ -107,6 +110,12 @@ export class BookPopupComponent implements OnInit {
 
     ngOnInit() {
         this.user = this.authService.getLoggedUser();
+        this.featureSettingsService.getFeatureSettings().subscribe(
+            featureSettings => {
+                this.allowCoverImage = featureSettings.allowCoverImage;
+            }, error => {
+                this.toastMediator.show(`${error}`);
+            });
     }
 
     public initWith(book: Book) {
@@ -114,14 +123,19 @@ export class BookPopupComponent implements OnInit {
             throw new Error('Livro não pode ser nulo.');
         }
         this.canEdit = false;
+        //Set Image validate again because book reference has changed
+        if (this.allowCoverImage) {
+            this.bookForm.get('imageControl').setValidators(BookValidator.validateImageExtension(this.book));
+        } else {
+            this.bookForm.get('imageControl').setValidators(BookValidator.noImageValidation());
+        }
         //Ensures clean validation errors
         this.bookForm.reset();
         this.book = book;
         this.originalBook = Object.assign(new Book(), book);
         this.isNew = !book.id;
         this.isOrder = book.hasBookReservation(this.user);
-        //Set Image validate again because book reference has changed
-        this.bookForm.get('imageControl').setValidators(BookValidator.validateImageExtension(this.book));
+
         if (!this.isNew) {
             this.refreshReservationStatus();
         }
