@@ -9,5 +9,6 @@ namespace ZLibrary.API
         Task<IList<Author>> FindAll();
         Author FindById(long id);
         Task<IList<Author>> FindByName(string name);
+        Task<Author> Save(Author author);
     }
 }

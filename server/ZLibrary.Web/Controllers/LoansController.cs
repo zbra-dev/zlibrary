@@ -1,13 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using ZLibrary.API;
-using ZLibrary.Model;
-using System.Collections.Generic;
 using System.Linq;
-using ZLibrary.Web.Controllers.Items;
-using ZLibrary.Web.Validators;
-using ZLibrary.Web.Extensions;
-using System;
+using ZLibrary.Web.Converters;
 
 namespace ZLibrary.Web.Controllers
 {
@@ -16,18 +11,20 @@ namespace ZLibrary.Web.Controllers
     {
         private readonly ILoanService loanService;
         private readonly IReservationService reservationService;
+        private readonly LoanConverter loanConverter;
 
-        public LoansController(ILoanService loanService, IReservationService reservationService)
+        public LoansController(ILoanService loanService, IReservationService reservationService, LoanConverter loanConverter)
         {
             this.loanService = loanService;
             this.reservationService = reservationService;
+            this.loanConverter = loanConverter;
         }
 
         [HttpGet]
         public async Task<IActionResult> FindAll()
         {
             var loans = await loanService.FindAll();
-            return Ok(loans.ToLoanViewItems());
+            return Ok(loans.Select(l => loanConverter.ConvertFromModel(l)));
         }
 
         [HttpGet("{id:long}", Name = "FindLoan")]
@@ -38,7 +35,7 @@ namespace ZLibrary.Web.Controllers
             {
                 return NotFound($"Nenhum empréstimo encontrado com o ID: {id}.");
             }
-            return Ok(loan.ToLoanViewItem());
+            return Ok(loanConverter.ConvertFromModel(loan));
         }
 
         [HttpGet("user/{userId:long}", Name = "FindLoanByUser")]
@@ -49,7 +46,7 @@ namespace ZLibrary.Web.Controllers
             {
                 return NotFound($"Nenhum empréstimo encontrado com o userId: {userId}");
             }
-            return Ok(loans.ToLoanViewItems());
+            return Ok(loans.Select(l => loanConverter.ConvertFromModel(l)));
         }
 
         [HttpPost("expired/{id:long}")]

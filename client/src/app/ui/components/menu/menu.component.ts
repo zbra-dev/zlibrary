@@ -1,11 +1,11 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { ReservationHistoryComponent, ReservationHistoryType } from '../reservation-history/reservation-history.component';
 import { RequestedBooksComponent} from '../requested-books/requested-books.component';
 import { BsModalService } from 'ngx-bootstrap';
 import { AuthService } from '../../../service/auth.service';
 import { User } from '../../../model/user';
-import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { ApprovedBooksComponent } from '../approved-books/approved-books.component';
+import { AuthorPopupComponent } from '../author-popup/author-popup.component';
 
 @Component({
     selector: 'zli-menu',
@@ -14,9 +14,12 @@ import { ApprovedBooksComponent } from '../approved-books/approved-books.compone
     encapsulation: ViewEncapsulation.None
 })
 export class MenuComponent implements OnInit {
+    @ViewChild(AuthorPopupComponent)
+    authorPopupComponent: AuthorPopupComponent;
 
     public user: User;
     public showUserMenu: boolean;
+    public isBusy = false;
 
     constructor(private modalService: BsModalService,
         private service: AuthService) {
@@ -61,9 +64,22 @@ export class MenuComponent implements OnInit {
         requestedBooksComponet.modalControl = requestedBooksModalControl;
     }
 
+    public addNewAuthor() {
+        this.authorPopupComponent.initNewAuthor();
+        this.toggleAuthorSidebar();
+    }
+
     public showApprovedBooks() {
         const approvedBooksModalControl = this.modalService.show(ApprovedBooksComponent);
         const approvedBooksComponent = approvedBooksModalControl.content as ApprovedBooksComponent;
         approvedBooksComponent.modalControl = approvedBooksModalControl;
     }
+
+    public toggleAuthorSidebar(): void {
+        document.getElementById('background-author').classList.toggle('active');
+        if (document.getElementById('sidebar-author').classList.toggle('active') === false) {
+            this.isBusy = false;
+        }
+    }
+
 }

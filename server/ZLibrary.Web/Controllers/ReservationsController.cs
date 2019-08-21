@@ -5,12 +5,9 @@ using ZLibrary.Model;
 using System.Collections.Generic;
 using System.Linq;
 using ZLibrary.Web.Controllers.Items;
-using ZLibrary.Web.Validators;
-using ZLibrary.Web.Extensions;
 using System;
-using Microsoft.AspNetCore.Http;
-using System.IO;
 using ZLibrary.Web.LookUps;
+using ZLibrary.Web.Converters;
 
 namespace ZLibrary.Web
 {
@@ -22,21 +19,31 @@ namespace ZLibrary.Web
         private readonly IBookService bookService;
         private readonly ILoanService loanService;
         private readonly IServiceDataLookUp serviceDataLookUp;
+        private readonly UserConverter userConverter;
+        private readonly ReservationConverter reservationConverter;
+        private readonly BookConverter bookConverter;
+        private readonly LoanConverter loanConverter;
 
-        public ReservationsController(IReservationService reservationService, IUserService userService, IBookService bookService, ILoanService loanService)
+        public ReservationsController(IReservationService reservationService, IUserService userService, 
+            IBookService bookService, ILoanService loanService, UserConverter userConverter, ReservationConverter reservationConverter,
+            BookConverter bookConverter, LoanConverter loanConverter)
         {
             this.reservationService = reservationService;
             this.userService = userService;
             this.bookService = bookService;
             this.loanService = loanService;
             this.serviceDataLookUp = new DefaultServiceDataLookUp(loanService, reservationService);
+            this.userConverter = userConverter;
+            this.reservationConverter = reservationConverter;
+            this.bookConverter = bookConverter;
+            this.loanConverter = loanConverter;
         }
 
         [HttpGet]
         public async Task<IActionResult> FindAll()
         {
             var reservations = await reservationService.FindAll();
-            return Ok(await reservations.ToReservationViewItems(serviceDataLookUp));
+            return Ok(reservations.Select(r => reservationConverter.ConvertFromModel(r)));
         }
 
         [HttpGet("{id:long}", Name = "FindReservation")]
@@ -47,7 +54,7 @@ namespace ZLibrary.Web
             {
                 return NotFound($"Nenhuma reserva encontrada com o ID: {id}.");
             }
-            return Ok(await reservation.ToReservationViewItem(serviceDataLookUp));
+            return Ok(reservationConverter.ConvertFromModel(reservation));
         }
 
         [HttpGet("user/{userId:long}", Name = "FindReservationByUserId")]
@@ -58,7 +65,16 @@ namespace ZLibrary.Web
             {
                 return NotFound($"Nenhuma reserva encontrada com o ID do usuário: {userId}.");
             }
-            return Ok(await reservations.ToReservationViewItems(serviceDataLookUp));
+
+            var reservationsDto = new List<ReservationResultDto>();
+            foreach (var reservation in reservations)
+            {
+                var loan = await serviceDataLookUp.LookUp(reservation);
+                var reservationDto = reservationConverter.ConvertFromModel(reservation);
+                reservationDto.Loan = loanConverter.ConvertFromModel(loan);
+                reservationsDto.Add(reservationDto);
+            }
+            return Ok(reservationsDto);
         }
 
         [HttpGet("status/{statusName}", Name = "FindReservationsByStatus")]
@@ -74,7 +90,7 @@ namespace ZLibrary.Web
             {
                 return NotFound($"Nenhuma reserva encontrada com o status: {reservationStatus}.");
             }
-            return Ok(await reservations.ToReservationViewItems(serviceDataLookUp));
+            return Ok(reservations.Select(r => reservationConverter.ConvertFromModel(r)));
         }
 
         [HttpGet("orders/{statusName}", Name = "FindOrdersByStatus")]
@@ -90,21 +106,21 @@ namespace ZLibrary.Web
             {
                 return NotFound($"Nenhuma reserva encontrada com o status: {reservationStatus}.");
             }
-            var orderList = new List<OrderDTO>();
-            var reservationResultList = await reservations.ToReservationViewItems(serviceDataLookUp);
+            var orderList = new List<OrderDto>();
+            var reservationResultList = reservations.Select(r => reservationConverter.ConvertFromModel(r));
             foreach (var reservationResult in reservationResultList) 
             {
-                var order = new OrderDTO();
+                var order = new OrderDto();
                 order.Reservation = reservationResult;
-                order.Book = await (await bookService.FindById(reservationResult.BookId)).ToBookViewItem(serviceDataLookUp);
-                order.User = (await userService.FindById(reservationResult.UserId)).ToUserViewItem();
+                order.Book = bookConverter.ConvertFromModel(await bookService.FindById(reservationResult.BookId));
+                order.User = userConverter.ConvertFromModel(await userService.FindById(reservationResult.UserId));
                 orderList.Add(order);
             }
             return Ok(orderList);
         }
 
         [HttpPost("order")]
-        public async Task<IActionResult> Order([FromBody]ReservationRequestDTO value)
+        public async Task<IActionResult> Order([FromBody]ReservationRequestDto value)
         {
             var user = await userService.FindById(value.UserId);
             if (user == null)
@@ -118,8 +134,9 @@ namespace ZLibrary.Web
                 return NotFound($"Nenhum livro encontrado com o ID: {value.BookId}.");
             }
 
-            var reservation = await reservationService.Order(book, user);
-            return Ok(reservation.ToReservationViewItem());
+            return Ok(reservationConverter.ConvertFromModel(
+                await reservationService.Order(book, user)
+            ));
         }
 
         [HttpPost("approved/{id:long}")]
@@ -151,7 +168,7 @@ namespace ZLibrary.Web
         }
 
         [HttpPost("rejected")]
-        public async Task<IActionResult> UpdateLoanStatusToRejected([FromBody]ReservationRejectDTO value)
+        public async Task<IActionResult> UpdateLoanStatusToRejected([FromBody]ReservationRejectDto value)
         {
             var reservation = await reservationService.FindById(value.Id);
             if (reservation == null)

@@ -24,6 +24,7 @@ import { RequestedBooksComponent} from './requested-books/requested-books.compon
 import { ReturnBookListComponent } from './return-book-list/return-book-list.component';
 import { LoanComponent } from './loan/loan.component';
 import { ApprovedBooksComponent } from './approved-books/approved-books.component';
+import { AuthorPopupComponent } from './author-popup/author-popup.component';
 
 @NgModule({
     declarations: [
@@ -44,7 +45,8 @@ import { ApprovedBooksComponent } from './approved-books/approved-books.componen
         RequestedBooksComponent,
         ReturnBookListComponent,
         LoanComponent,
-        ApprovedBooksComponent
+        ApprovedBooksComponent,
+        AuthorPopupComponent
     ],
     exports: [
         BookComponent,
@@ -58,7 +60,8 @@ import { ApprovedBooksComponent } from './approved-books/approved-books.componen
         MenuComponent,
         ReservationListComponent,
         RequestedBooksComponent,
-        ReturnBookListComponent
+        ReturnBookListComponent,
+        AuthorPopupComponent
     ],
     entryComponents: [
         ToastComponent,

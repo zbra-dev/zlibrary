@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 namespace ZLibrary.Web.Controllers.Items
 {
     [DataContract(Name = "SlackUserDTO")]
-    public class SlackUserDTO
+    public class SlackUserDto
     {
         private const string ImageProtocol = "https";
         private const string PNGExtension = ".png";
@@ -21,7 +21,7 @@ namespace ZLibrary.Web.Controllers.Items
         public string AccessToken { get; set; }
 
         [DataMember(Name = "user")]
-        public SlackUserInfoDTO User { get; set; }
+        public SlackUserInfoDto User { get; set; }
 
         [DataMember(Name = "error")]
         public string Error { get; set; }
