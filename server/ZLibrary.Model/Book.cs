@@ -20,6 +20,7 @@ namespace ZLibrary.Model
         public Book()
         {
             Created = DateTime.Now;
+            Authors = new List<BookAuthor>();
         }
 
         public int AddCopy()

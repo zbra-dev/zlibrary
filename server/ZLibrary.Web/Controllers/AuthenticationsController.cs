@@ -1,20 +1,14 @@
-using System;
 using System.IO;
 using System.Net.Http;
-using System.Text;
-using System.Linq;
-using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using ZLibrary.API;
 using ZLibrary.Model;
 using ZLibrary.Web.Controllers.Items;
-using ZLibrary.Web.Extensions;
 using ZLibrary.Web.Options;
 using ZLibrary.Web.Validators;
+using ZLibrary.Web.Converters;
 
 namespace ZLibrary.Web.Controllers
 {
@@ -22,16 +16,16 @@ namespace ZLibrary.Web.Controllers
     public class AuthenticationsController : Controller
     {
         private readonly IUserService userService;
-
         private readonly IAuthenticationApi authenticationApi;
-
         private readonly ClientOptions clientOptions;
+        private readonly UserConverter userConverter;
 
-        public AuthenticationsController(IUserService userService, IAuthenticationApi authenticationApi, ClientOptions clientOptions)
+        public AuthenticationsController(IUserService userService, IAuthenticationApi authenticationApi, ClientOptions clientOptions, UserConverter userConverter)
         {
             this.userService = userService;
             this.authenticationApi = authenticationApi;
             this.clientOptions = clientOptions;
+            this.userConverter = userConverter;
         }
 
         [HttpGet("redirect/{code?}")]
@@ -45,7 +39,7 @@ namespace ZLibrary.Web.Controllers
                 using (var textReader = new StringReader(result))
                 using (var reader = new JsonTextReader(textReader))
                 {
-                    var slackUserDTO = new JsonSerializer().Deserialize<SlackUserDTO>(reader);
+                    var slackUserDTO = new JsonSerializer().Deserialize<SlackUserDto>(reader);
                     var validator = new SlackAuthenticationDataValidator();
                     var validationResult = validator.Validate(slackUserDTO);
                     if (validationResult.HasError)
@@ -74,7 +68,7 @@ namespace ZLibrary.Web.Controllers
                         await userService.Update(user);
                     }
 
-                    Response.Cookies.Append("user", JsonConvert.SerializeObject(user.ToUserViewItem()));
+                    Response.Cookies.Append("user", JsonConvert.SerializeObject(userConverter.ConvertFromModel(user)));
                     return Redirect($"{clientOptions.ClientUrl}/books");
                 }
             }

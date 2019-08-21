@@ -1,22 +1,20 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using ZLibrary.API;
-using ZLibrary.Model;
-using System.Collections.Generic;
 using System.Linq;
 using ZLibrary.Web.Controllers.Items;
 using ZLibrary.Web.Validators;
-using ZLibrary.Web.Extensions;
 using System;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Net.Http.Headers;
-using System.Text;
 using Newtonsoft.Json;
 using ZLibrary.Web.Utils;
 using ZLibrary.Web.LookUps;
+using ZLibrary.Web.Converters;
+using ZLibrary.Model;
+using System.Collections.Generic;
 
 namespace ZLibrary.Web
 {
@@ -28,26 +26,30 @@ namespace ZLibrary.Web
         private readonly IBookFacade bookFacade;
         private readonly IAuthorService authorService;
         private readonly IPublisherService publisherService;
-        private readonly IReservationService reservationService;
-        private readonly ILoanService loanService;
-        private readonly IServiceDataLookUp serviceDataLookUp;
+        private readonly IServiceDataLookUp serviceDataLookup;
+        private readonly BookConverter bookConverter;
+        private readonly ReservationConverter reservationConverter;
 
-        public BooksController(IBookFacade bookFacade, IAuthorService authorService, IPublisherService publisherService, IReservationService reservationService, ILoanService loanService)
+        public BooksController(IBookFacade bookFacade, IAuthorService authorService, IPublisherService publisherService, 
+            IServiceDataLookUp serviceDataLookup, BookConverter bookConverter, ReservationConverter reservationConverter)
         {
             this.bookFacade = bookFacade;
             this.authorService = authorService;
             this.publisherService = publisherService;
-            this.reservationService = reservationService;
-            this.loanService = loanService;
-            this.serviceDataLookUp = new DefaultServiceDataLookUp(loanService, reservationService);
+            this.serviceDataLookup = serviceDataLookup;
+            this.bookConverter = bookConverter;
+            this.reservationConverter = reservationConverter;
         }
 
         [HttpGet]
         public async Task<IActionResult> FindAll()
         {
             var books = await bookFacade.FindAll();
-            return Ok(await books.ToBookViewItems(serviceDataLookUp));
+
+            return Ok(EnrichBooks(books));
         }
+
+        
 
         [HttpGet("{id:long}", Name = "FindBook")]
         public async Task<IActionResult> FindById(long id)
@@ -57,7 +59,8 @@ namespace ZLibrary.Web
             {
                 return NotFound();
             }
-            return Ok(await book.ToBookViewItem(serviceDataLookUp));
+
+            return Ok(EnrichBook(book));
         }
 
         [HttpDelete("{id:long}", Name = "DeleteBook")]
@@ -78,7 +81,7 @@ namespace ZLibrary.Web
         public async Task<IActionResult> Save()
         {
             string targetFilePath = null;
-            BookDTO dto = null;
+            BookDto dto = null;
 
             if (!MultipartRequestHelper.IsMultipartContentType(Request.ContentType))
             {
@@ -122,7 +125,7 @@ namespace ZLibrary.Web
                             using (var streamReader = new StreamReader(section.Body))
                             {
                                 var json = await streamReader.ReadToEndAsync();
-                                dto = JsonConvert.DeserializeObject<BookDTO>(json);
+                                dto = JsonConvert.DeserializeObject<BookDto>(json);
                             }
                         }
 
@@ -147,11 +150,11 @@ namespace ZLibrary.Web
 
             try
             {
-                var book = dto.FromBookViewItem(new DefaultValidationResultDataLookUp(validationResult));
+                var book = bookConverter.ConvertToModel(dto);
                 
                 book = await bookFacade.Save(book, targetFilePath);
 
-                return Ok(await book.ToBookViewItem(serviceDataLookUp));
+                return Ok(EnrichBook(book));
             }
             catch (BookSaveException ex)
             {
@@ -172,7 +175,7 @@ namespace ZLibrary.Web
         }
 
         [HttpPost("search/", Name = "FindBookBy")]
-        public async Task<IActionResult> FindBy([FromBody]SearchParametersDTO value)
+        public async Task<IActionResult> FindBy([FromBody]SearchParametersDto value)
         {
             var orderBy = (SearchOrderBy)Enum.ToObject(typeof(SearchOrderBy), value.OrderByValue);
             var bookSearchParameter = new BookSearchParameter(value.Keyword)
@@ -180,7 +183,30 @@ namespace ZLibrary.Web
                 OrderBy = orderBy
             };
             var books = await bookFacade.FindBy(bookSearchParameter);
-            return Ok(await books.ToBookViewItems(serviceDataLookUp));
+            return Ok(EnrichBooks(books));
+        }
+
+        private List<BookDto> EnrichBooks(IList<Book> books)
+        {
+            var booksDto = new List<BookDto>();
+            foreach (var book in books)
+            {
+                booksDto.Add(EnrichBook(book));
+            }
+
+            return booksDto;
+        }
+
+        private BookDto EnrichBook(Book book)
+        {
+            var bookDto = bookConverter.ConvertFromModel(book);
+            bookDto.Reservations = GetReservationsFromBook(book).Result.Select(r => reservationConverter.ConvertFromModel(r));
+            return bookDto;
+        }
+
+        private async Task<IEnumerable<Reservation>> GetReservationsFromBook(Book model)
+        {
+            return await serviceDataLookup.LookUp(model);
         }
     }
 }

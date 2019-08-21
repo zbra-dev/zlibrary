@@ -2,10 +2,10 @@ using ZLibrary.Web.Controllers.Items;
 
 namespace ZLibrary.Web.Validators
 {
-    public class SlackAuthenticationDataValidator : IValidator<SlackUserDTO>
+    public class SlackAuthenticationDataValidator : IValidator<SlackUserDto>
     {
         
-        public ValidationResult Validate(SlackUserDTO value)
+        public ValidationResult Validate(SlackUserDto value)
         {
             var validationResult = new ValidationResult();
 

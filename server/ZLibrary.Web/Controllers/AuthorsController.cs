@@ -1,19 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using ZLibrary.API;
-using ZLibrary.Model;
-using System.Collections.Generic;
 using System.Linq;
 using ZLibrary.Web.Controllers.Items;
 using ZLibrary.Web.Validators;
-using ZLibrary.Web.Extensions;
-using System;
-using Microsoft.AspNetCore.Http;
-using System.IO;
-using ZLibrary.Web.Utils;
-using Microsoft.Net.Http.Headers;
-using Newtonsoft.Json;
-using Microsoft.AspNetCore.WebUtilities;
 using ZLibrary.Web.Converters;
 
 namespace ZLibrary.Web
@@ -23,9 +13,9 @@ namespace ZLibrary.Web
     {
         private readonly IAuthorService authorService;
         private readonly AuthorConverter authorConverter;
-        private readonly AuthorDTOValidator authorValidator;
+        private readonly AuthorDtoValidator authorValidator;
 
-        public AuthorsController(IAuthorService authorService, AuthorConverter authorConverter, AuthorDTOValidator authorValidator)
+        public AuthorsController(IAuthorService authorService, AuthorConverter authorConverter, AuthorDtoValidator authorValidator)
         {
             this.authorService = authorService;
             this.authorConverter = authorConverter;
@@ -36,11 +26,12 @@ namespace ZLibrary.Web
         public async Task<IActionResult> FindByName(string name)
         {
             var authors = await authorService.FindByName(name);
-            return Ok(authors.ToAuthorViewItems());
+
+            return Ok(authors.Select(a => authorConverter.ConvertFromModel(a)));
         }
 
         [HttpPost]
-        public async Task<IActionResult> Save([FromBody] AuthorDTO dto)
+        public async Task<IActionResult> Save([FromBody] AuthorDto dto)
         {
 
             var validationResult = authorValidator.Validate(dto);
@@ -49,8 +40,11 @@ namespace ZLibrary.Web
                 return BadRequest(validationResult.ErrorMessage);
             }
             
-            var authorSaved = await authorService.Save(authorConverter.ConvertToModel(dto));
-            return Ok(authorSaved.ToAuthorViewItem());
+            var authorSaved = authorConverter.ConvertFromModel(
+                await authorService.Save(authorConverter.ConvertToModel(dto))
+            );
+
+            return Ok(authorSaved);
         }
     }
 }

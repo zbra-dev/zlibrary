@@ -1,9 +1,8 @@
 using System.Runtime.Serialization;
-using ZLibrary.Model;
 
 namespace ZLibrary.Web.Controllers.Items
 {
-    public class AuthorDTO
+    public class AuthorDto
     {
         [DataMember(Name = "id")]
         public long? Id { get; set; }
