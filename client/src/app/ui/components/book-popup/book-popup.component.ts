@@ -1,3 +1,4 @@
+import { FeatureSettings } from './../../../model/feature-settings';
 import { ReservationStatus } from './../../../model/reservation-status';
 import { User } from './../../../model/user';
 import { Book } from './../../../model/book';
@@ -53,7 +54,7 @@ export class BookPopupComponent implements OnInit {
     public reservations: Reservation[];
     public message: string;
     public isExpired = false;
-    public allowCoverImage: boolean;
+    public featureSettings: FeatureSettings;
 
     @ViewChild('bookImage')
     imageElement: ElementRef;
@@ -112,7 +113,7 @@ export class BookPopupComponent implements OnInit {
         this.user = this.authService.getLoggedUser();
         this.featureSettingsService.getFeatureSettings().subscribe(
             featureSettings => {
-                this.allowCoverImage = featureSettings.allowCoverImage;
+                this.featureSettings = featureSettings;
             }, error => {
                 this.toastMediator.show(`${error}`);
             });
@@ -124,7 +125,7 @@ export class BookPopupComponent implements OnInit {
         }
         this.canEdit = false;
         //Set Image validate again because book reference has changed
-        if (this.allowCoverImage) {
+        if (this.featureSettings) {
             this.bookForm.get('imageControl').setValidators(BookValidator.validateImageExtension(this.book));
         } else {
             this.bookForm.get('imageControl').setValidators(BookValidator.noImageValidation());
@@ -148,6 +149,193 @@ export class BookPopupComponent implements OnInit {
         this.coverImageURL = null;
         this.newCoverImage = null;
         this.initWith(book);
+    }
+
+    public get imageControl() {
+        return this.bookForm.get('imageControl');
+    }
+
+    public get titleControl() {
+        return this.bookForm.get('titleControl');
+    }
+
+    public get isbnControl() {
+        return this.bookForm.get('isbnControl');
+    }
+
+    public get authorsControl() {
+        return this.bookForm.get('authorsControl');
+    }
+
+    public get publisherControl() {
+        return this.bookForm.get('publisherControl');
+    }
+
+    public get publicationYearControl() {
+        return this.bookForm.get('publicationYearControl');
+    }
+
+    public get numberOfCopiesControl() {
+        return this.bookForm.get('numberOfCopiesControl');
+    }
+
+    public get canRequestReservation(): boolean {
+        return (!this.isOrder && !this.isAdmin)
+            || (this.isAdmin && !this.book.isAvailable);
+    }
+
+    public get isBookAvailable(): boolean {
+        return this.book.isAvailable;
+    }
+
+    public get isAdmin(): boolean {
+        return this.user.isAdministrator;
+    }
+
+    public get canRequestBookRental(): boolean {
+        return this.isBookAvailable
+            && !this.isAdmin;
+    }
+
+    public get hasCoverImageUrl(): boolean {
+        return !!this.coverImageURL;
+    }
+
+    public get requestedForReservation(): boolean {
+        return this.isOrder
+            && !this.isExpired
+            && !this.isAdmin
+    }
+
+    public get isUploadedImageInvalid(): boolean {
+        return this.allowCoverImage
+            && this.isImageInvalid
+            && !!this.imageControl.errors;
+    }
+
+    public get isImageInvalid(): boolean {
+        return this.imageControl.invalid
+            && (this.imageControl.dirty || this.imageControl.touched);
+    }
+
+    public get isImageExtensionInvalid(): boolean {
+        return this.imageControl.errors ? this.imageControl.errors.extensionInvalid : false;
+    }
+
+    public get canAddToWaitingList(): boolean {
+        return !this.book.isAvailable
+            && !this.isAdmin;
+    }
+
+    public get canAdminProvideBookToUsers(): boolean {
+        return !this.book.isAvailable
+            && this.isAdmin;
+    }
+
+    public get wasOrderSuccesfull(): boolean {
+        return this.isExpired
+            && !this.isAdmin;
+    }
+
+    public get canManageBook(): boolean {
+        return this.isNew
+            || this.canEdit;
+    }
+
+    public get isBookTitleEmpty(): boolean {
+        return this.isBookTitleInvalid
+            && !this.titleControl.value;
+    }
+
+    public get isBookTitleInvalid(): boolean {
+        return this.titleControl.invalid
+            && (this.titleControl.dirty || this.titleControl.touched);
+    }
+
+    public get isIsbnEmpty(): boolean {
+        return this.isIsbnInvalid
+            && !this.isbnControl.value;
+    }
+
+    public get isIsbnInvalid(): boolean {
+        return this.isbnControl.invalid
+            && (this.isbnControl.dirty || this.isbnControl.touched);
+    }
+
+    public get isIsbnIncorrect(): boolean {
+        return this.isbnControl.dirty
+            && !!this.isbnControl.errors
+            && !!this.isbnControl.value;
+    }
+
+    public get isAuthorEmpty(): boolean {
+        return this.isAuthorInvalid
+            && !this.authorsControl.value;
+    }
+
+    public get isAuthorInvalid(): boolean {
+        return this.authorsControl.invalid
+            && (this.authorsControl.touched || this.authorsControl.dirty);
+    }
+
+    public get isPublisherEmpty(): boolean {
+        return this.isPublisherInvalid
+            && !this.publisherControl.value;
+    }
+
+    public get isPublisherInvalid(): boolean {
+        return this.publisherControl.invalid
+            && (this.publisherControl.touched || this.publisherControl.dirty);
+    }
+
+    public get isPublicationYearEmpty(): boolean {
+        return this.isPublicationYearInvalid
+            && !this.publicationYearControl.value;
+    }
+
+    public get isPublicationYearInvalid(): boolean {
+        return this.publicationYearControl.invalid
+            && (this.publicationYearControl.dirty || this.publicationYearControl.touched);
+    }
+
+    public get isPublicationYearIncorrect(): boolean {
+        return this.publicationYearControl.dirty
+            && !!this.publicationYearControl.errors
+            && !!this.publicationYearControl.value;
+    }
+
+    public get isNumberOfCopiesEmpty(): boolean {
+        return this.isNumberOfCopiesInvalid
+            && !this.numberOfCopiesControl.value;
+    }
+
+    public get isNumberOfCopiesInvalid(): boolean {
+        return this.numberOfCopiesControl.invalid
+            && (this.numberOfCopiesControl.dirty || this.numberOfCopiesControl.touched);
+    }
+
+    public get isNumberOfCopiesIncorrect(): boolean {
+        return this.numberOfCopiesControl.dirty
+            && this.numberOfCopiesControl.errors
+            && !!this.numberOfCopiesControl.value;
+    }
+
+    public get existingBook(): boolean {
+        return this.canEdit && !this.isNew;
+    }
+
+    public get isImageSelected(): boolean {
+        return !this.isNew || !!this.newCoverImage;
+    }
+
+    public get isImageLoaded(): boolean {
+        return !this.coverImageURL && !this.isNew;
+    }
+
+    public get allowCoverImage(): boolean {
+        if (this.featureSettings) {
+            return this.featureSettings.allowCoverImage;
+        }
     }
 
     public refreshReservationStatus() {
@@ -194,34 +382,6 @@ export class BookPopupComponent implements OnInit {
         }
     }
 
-    get imageControl() {
-        return this.bookForm.get('imageControl');
-    }
-
-    get titleControl() {
-        return this.bookForm.get('titleControl');
-    }
-
-    get isbnControl() {
-        return this.bookForm.get('isbnControl');
-    }
-
-    get authorsControl() {
-        return this.bookForm.get('authorsControl');
-    }
-
-    get publisherControl() {
-        return this.bookForm.get('publisherControl');
-    }
-
-    get publicationYearControl() {
-        return this.bookForm.get('publicationYearControl');
-    }
-
-    get numberOfCopiesControl() {
-        return this.bookForm.get('numberOfCopiesControl');
-    }
-
     public order(): void {
         if (!!this.book) {
             this.loaderMediator.execute(
@@ -238,7 +398,7 @@ export class BookPopupComponent implements OnInit {
         }
     }
 
-    setCoverImage(image) {
+    public setCoverImage(image) {
         this.newCoverImage = image;
         if (!!image) {
             const reader = new FileReader();
@@ -297,4 +457,5 @@ export class BookPopupComponent implements OnInit {
             )
         );
     }
+
 }

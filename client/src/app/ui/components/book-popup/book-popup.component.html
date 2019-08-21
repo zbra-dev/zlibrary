@@ -1,4 +1,4 @@
-<div *ngIf="!isNew && !canEdit" class="popup-container">
+<div *ngIf="!canManageBook" class="popup-container">
     <div class="book-container">
         <h1 class="about-book-title">Sobre o Livro</h1>
         <zli-book-image class="book-image" [book]="book"></zli-book-image>
@@ -20,26 +20,26 @@
             </div>
         </div>
     </div>
-    <div *ngIf="user.isAdministrator" class="admin-options-container">
+    <div *ngIf="isAdmin" class="admin-options-container">
         <div class="admin-options" (click)="canEdit = true">Editar</div>
         <div *ngIf="canEdit" class="admin-options">Deletar</div>
     </div>
-    <div *ngIf="(!isOrder && !user.isAdministrator) || (user.isAdministrator && !book.isAvailable)" class="request-reservation-container">
+    <div *ngIf="canRequestReservation" class="request-reservation-container">
         <div class="availability-box">
-            <div *ngIf="book.isAvailable && !user.isAdministrator" class="available-text">Disponível</div>
-            <div *ngIf="!book.isAvailable" class="unavailable-text">Indisponível</div>
+            <div *ngIf="canRequestBookRental" class="available-text">Disponível</div>
+            <div *ngIf="!isBookAvailable" class="unavailable-text">Indisponível</div>
         </div>
-        <div *ngIf="book.isAvailable && !user.isAdministrator" class="reservation-box-available" (click)="order()">
+        <div *ngIf="canRequestBookRental" class="reservation-box-available" (click)="order()">
             <div class="available-button-text-available">Alugar</div>
         </div>
-        <div *ngIf="!book.isAvailable && !user.isAdministrator" class="reservation-box-unavailable" (click)="order()">
+        <div *ngIf="canAddToWaitingList" class="reservation-box-unavailable" (click)="order()">
             <div class="available-button-text-unavailable">+ add na lista de espera</div>
         </div>
-        <div *ngIf="!book.isAvailable && user.isAdministrator" class="reservation-box-unavailable" (click)="openReturnBookList()">
+        <div *ngIf="canAdminProvideBookToUsers" class="reservation-box-unavailable" (click)="openReturnBookList()">
             <div class="available-button-text-unavailable" >Disponibilizar para o público</div>
         </div>
     </div>
-    <div *ngIf="isOrder && !isExpired && !user.isAdministrator" class="request-reservation-container">
+    <div *ngIf="requestedForReservation" class="request-reservation-container">
         <div class="availability-box">
             <div class="suggestion-message">Para mais informações, verifique sua lista de livros</div>
         </div>
@@ -47,99 +47,96 @@
             <div class="sucess-order-text">{{message}}</div>
         </div>
     </div>
-    <div *ngIf="isExpired && !user.isAdministrator" class="expired-box">
+    <div *ngIf="wasOrderSuccesfull" class="expired-box">
         <div class="sucess-order-text">{{message}}</div>
     </div>
 </div>
 
-<form *ngIf="isNew || canEdit" class="popup-container" [formGroup]="bookForm">
+<form *ngIf="canManageBook" class="popup-container" [formGroup]="bookForm">
     <div class="book-container">
-        <h1 *ngIf="canEdit && !isNew" class="about-book-title">Editar Livro</h1>
+        <h1 *ngIf="existingBook" class="about-book-title">Editar Livro</h1>
         <h1 *ngIf="isNew" class="about-book-title">Adicionar Livro</h1>
-        <div class="image-validation-alert" *ngIf="allowCoverImage && imageControl.invalid && !imageControl.errors?.extensionInvalid && (imageControl.dirty || imageControl.touched)">
+        <div class="image-validation-alert" *ngIf="isUploadedImageInvalid">
             Imagem obrigatória
         </div>
-        <div class="image-validation-alert" *ngIf="imageControl.errors?.extensionInvalid">
+        <div class="image-validation-alert" *ngIf="isImageExtensionInvalid">
             Imagem tem que ter extensão '. png'
         </div>
-        <div *ngIf="allowCoverImage" class="placeholder-image-container" [ngClass]="{'input-image-hover': !isNew || !!newCoverImage, 'input-invalid':  imageControl.invalid && (imageControl.dirty || imageControl.touched)}">
-            <img class="book-image-loaded" #bookImage *ngIf="!!coverImageURL" [src]="coverImageURL">
+        <div *ngIf="allowCoverImage" class="placeholder-image-container" [ngClass]="{'input-image-hover': isImageSelected, 'input-invalid':  isImageInvalid}">
+            <img class="book-image-loaded" #bookImage *ngIf="hasCoverImageUrl" [src]="coverImageURL">
             <div class="edit-image">
-                <div class="edit-image-text" *ngIf=" !isNew || !!newCoverImage">Editar</div>
+                <div class="edit-image-text" *ngIf="isImageSelected">Editar</div>
             </div>
             <div class="image-hover"></div>
             <zli-load-image class="input-image" #loadImage [formControlName]="'imageControl'" (ngModelChange)="setCoverImage($event)"></zli-load-image>
-            <zli-book-image class="book-image-loaded" *ngIf="!coverImageURL && !isNew" [book]="book"></zli-book-image>
+            <zli-book-image class="book-image-loaded" *ngIf="isImageLoaded" [book]="book"></zli-book-image>
             <div class="add-image-button">Adicionar
                 <br>Foto
             </div>
         </div>
         <div class="book-inputs-container">
             <label class="input-label" style="margin-top: 0;">Nome do Livro:
-                <div class="validation-alert" *ngIf="titleControl.invalid && (titleControl.dirty || titleControl.touched) && !titleControl.errors?.emptyString">
+                <div class="validation-alert" *ngIf="isBookTitleEmpty">
                     Campo obrigatório
-                </div>
-                <div class="validation-alert" *ngIf="titleControl.dirty && !!titleControl.errors?.emptyString">
-                    Campo não deve estar vazio
                 </div>
             </label>
-            <input [(ngModel)]="book.title" [ngClass]="{ 'input-invalid': titleControl.invalid && (titleControl.dirty || titleControl.touched)}"
+            <input [(ngModel)]="book.title" [ngClass]="{ 'input-invalid': isBookTitleInvalid}"
                 name="title" type="text" class="textbox-input" formControlName="titleControl">
             <div class="input-label">ISBN:
-                <div class="validation-alert" *ngIf="isbnControl.invalid && (isbnControl.dirty || isbnControl.touched) && !isbnControl.value">
+                <div class="validation-alert" *ngIf="isIsbnEmpty">
                     Campo obrigatório
                 </div>
-                <div class="validation-alert" *ngIf="isbnControl.dirty && !!isbnControl.errors?.invalidIsbn && !!isbnControl.value">
-                    Dado preenchido inválido
+                <div class="validation-alert" *ngIf="isIsbnIncorrect">
+                    ISBN inválido
                 </div>
             </div>
-            <input numeric [(ngModel)]="book.isbn" [ngClass]="{ 'input-invalid': isbnControl.invalid && (isbnControl.dirty || isbnControl.touched)}"
+            <input numeric [(ngModel)]="book.isbn" [ngClass]="{ 'input-invalid': isIsbnInvalid}"
                 name="isbn" maxlength="13" numericType ="number" class="textbox-input" formControlName="isbnControl">
             <label class="input-label">Sinopse:</label>
             <textarea [(ngModel)]="book.synopsis" name="synopsis" type="text" class="synopsis-textarea" [ngModelOptions]="{standalone: true}"> </textarea>
             <label class="input-label">Autor(es):
-                <div class="validation-alert" *ngIf="authorsControl.invalid && (authorsControl.touched || authorsControl.dirty)">
+                <div class="validation-alert" *ngIf="isAuthorEmpty">
                     Campo obrigatório
                 </div>
             </label>
-            <zli-multi-selection-typeahead [ngClass]="{ 'input-invalid': authorsControl.invalid && (authorsControl.dirty || authorsControl.touched)}"
+            <zli-multi-selection-typeahead [ngClass]="{ 'input-invalid': isAuthorInvalid}"
                 [suggestionAdapter]="authorSuggestionAdapter" [(ngModel)]="book.authors" [formControlName]="'authorsControl'">
             </zli-multi-selection-typeahead>
             <label class="input-label">Editora:
-                <div class="validation-alert" *ngIf="publisherControl.invalid && (publisherControl.touched || publisherControl.dirty)">
+                <div class="validation-alert" *ngIf="isPublisherEmpty">
                     Campo obrigatório
                 </div>
             </label>
-            <zli-single-selection-typeahead [ngClass]="{ 'input-invalid': publisherControl.invalid && (publisherControl.dirty || publisherControl.touched)}"
+            <zli-single-selection-typeahead [ngClass]="{ 'input-invalid': isPublisherInvalid}"
                 [suggestionAdapter]="publisherSuggestionAdapter" [(ngModel)]="book.publisher" [formControlName]="'publisherControl'">
             </zli-single-selection-typeahead>
             <label class="input-label">Publicado em:
-                <div class="validation-alert" *ngIf="publicationYearControl.invalid && (publicationYearControl.dirty || publicationYearControl.touched)  &&  !!publicationYearControl.errors?.emptyField">
+                <div class="validation-alert" *ngIf="isPublicationYearEmpty">
                     Campo obrigatório
                 </div>
-                <div class="validation-alert" *ngIf="publicationYearControl.dirty && !!publicationYearControl.errors?.notValide">
+                <div class="validation-alert" *ngIf="isPublicationYearIncorrect">
                     Ano de publicação inválido.
                 </div>
             </label>
-            <input [(ngModel)]="book.publicationYear" type="number" [ngClass]="{ 'input-invalid': publicationYearControl.invalid && (publicationYearControl.dirty || publicationYearControl.touched)}"
-                maxlength="4" mim="0" class="textbox-input" formControlName="publicationYearControl">
+            <input numeric numericType ="number" [(ngModel)]="book.publicationYear" [ngClass]="{ 'input-invalid': isPublicationYearInvalid}"
+                maxlength="4" min="0" class="textbox-input" formControlName="publicationYearControl">
             <label class="input-label">Número de Cópias:
-                <div class="validation-alert" *ngIf="numberOfCopiesControl.invalid && (numberOfCopiesControl.dirty || numberOfCopiesControl.touched) && !!numberOfCopiesControl.errors?.emptyField">
+                <div class="validation-alert" *ngIf="isNumberOfCopiesEmpty">
                     Campo obrigatório
                 </div>
-                <div class="validation-alert" *ngIf="numberOfCopiesControl.dirty && !!numberOfCopiesControl.errors?.outOfRange">
-                    Número de copias deve ser inteiro e estar entre 1 e 5.
+                <div class="validation-alert" *ngIf="isNumberOfCopiesIncorrect">
+                    Número de copias deve ser no mínimo 1 e no máximo 5.
                 </div>
             </label>
-            <input [(ngModel)]="book.numberOfCopies" type="number" [ngClass]="{ 'input-invalid': numberOfCopiesControl.invalid && (numberOfCopiesControl.dirty || numberOfCopiesControl.touched)}"
-                min="1" max="5" class="textbox-input" formControlName="numberOfCopiesControl">
+            <input numeric numericType ="number" [(ngModel)]="book.numberOfCopies" [ngClass]="{ 'input-invalid': isNumberOfCopiesInvalid}"
+            maxlength="1" class="textbox-input" formControlName="numberOfCopiesControl">
         </div>
     </div>
     <div class="create-buttons-container">
-        <div *ngIf="isNew || canEdit" class="cancel-button" (click)="onCancel()">
+        <div *ngIf="canManageBook" class="cancel-button" (click)="onCancel()">
             <div class="available-button-text-available">Cancelar</div>
         </div>
-        <button *ngIf="isNew || canEdit" class="create-button" [disabled]="!bookForm.valid" (click)="saveBook()">
+        <button *ngIf="canManageBook" class="create-button" [disabled]="!bookForm.valid" (click)="saveBook()">
             <div class="available-button-text-available">Salvar</div>
         </button>
     </div>
