@@ -125,7 +125,7 @@ export class BookPopupComponent implements OnInit {
         }
         this.canEdit = false;
         //Set Image validate again because book reference has changed
-        if (this.featureSettings) {
+        if (this.allowCoverImage) {
             this.bookForm.get('imageControl').setValidators(BookValidator.validateImageExtension(this.book));
         } else {
             this.bookForm.get('imageControl').setValidators(BookValidator.noImageValidation());
