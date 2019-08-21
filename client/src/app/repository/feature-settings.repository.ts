@@ -23,6 +23,6 @@ export class FeatureSettingsRepository extends AbstractRepository {
     }
 
     private fromDto(dto: FeatureSettingsResources): FeatureSettings {
-        return this.Copy(dto, new FeatureSettings());
+        return this.copy(dto, new FeatureSettings());
     }
 }
