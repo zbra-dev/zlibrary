@@ -1,3 +1,4 @@
+import { FeatureSettingsRepository } from './feature-settings.repository';
 import { NgModule } from '@angular/core';
 import { BookRepository } from './book.repository';
 import { CoverImageRepository } from './cover-image.repository';
@@ -23,7 +24,8 @@ import { LoanRepository } from './loan.repository';
         AuthorRepository,
         PublisherRepository,
         UserRepository,
-        LoanRepository
+        LoanRepository,
+        FeatureSettingsRepository
     ]
 })
 export class RepositoryModule {

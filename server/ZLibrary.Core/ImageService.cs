@@ -17,6 +17,10 @@ namespace ZLibrary.Core
 
         public Guid SaveImage(Guid key, string filePath)
         {
+            if (string.IsNullOrEmpty(filePath))
+            {
+                throw new ImageSaveException("Imagem é obrigatória.");
+            }
             return imageRepository.SaveFile(key, filePath);
         }
 
