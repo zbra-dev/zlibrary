@@ -5,10 +5,10 @@ namespace ZLibrary.Model
     public class Reservation
     {
         public long Id { get; set; }
-        public User User { get; private set; }
-        public long BookId { get; private set; }
-        public ReservationReason Reason { get; private set; }
-        public DateTime StartDate { get; private set; }
+        public User User { get; set; }
+        public long BookId { get; set; }
+        public ReservationReason Reason { get; set; }
+        public DateTime StartDate { get; set; }
 
         public bool IsRequested => Reason.Status == ReservationStatus.Requested;
         public bool IsApproved => Reason.Status == ReservationStatus.Approved;
@@ -31,7 +31,7 @@ namespace ZLibrary.Model
             Reason = new ReservationReason();
         }
 
-        private Reservation()
+        public Reservation()
         {
         }
 

@@ -4,15 +4,15 @@ using ZLibrary.Model;
 
 namespace ZLibrary.Web.Controllers.Items
 {
-    public class OrderDTO
+    public class OrderDto
     {
         [DataMember(Name = "reservation")]
-        public ReservationResultDTO Reservation { get; set; }
+        public ReservationResultDto Reservation { get; set; }
 
         [DataMember(Name = "book")]
-        public BookDTO Book { get; set; }
+        public BookDto Book { get; set; }
 
         [DataMember(Name = "user")]
-        public UserDTO User { get; set; }
+        public UserDto User { get; set; }
     }
 }

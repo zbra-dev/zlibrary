@@ -4,7 +4,7 @@ using ZLibrary.Model;
 
 namespace ZLibrary.Web.Controllers.Items
 {
-    public class SearchParametersDTO
+    public class SearchParametersDto
     {
         [DataMember(Name = "keyword")]
         public string Keyword { get; set; }

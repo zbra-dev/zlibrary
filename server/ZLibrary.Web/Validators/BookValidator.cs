@@ -6,7 +6,7 @@ using ZLibrary.Web.Controllers.Items;
 
 namespace ZLibrary.Web.Validators
 {
-    public class BookValidator : IValidator<BookDTO>
+    public class BookValidator : IValidator<BookDto>
     {
         private readonly ValidationContext context;
 
@@ -15,7 +15,7 @@ namespace ZLibrary.Web.Validators
             this.context = context;
         }
 
-        public ValidationResult Validate(BookDTO value)
+        public ValidationResult Validate(BookDto value)
         {
             var validationResult = new ValidationResult();
 
@@ -61,9 +61,9 @@ namespace ZLibrary.Web.Validators
             var authorIds = value.Authors.Select(d => d.Id).ToArray();
             var authorList = new List<BookAuthor>(authorIds.Length);
 
-            foreach (var authorId in authorIds)
+            foreach (var authorId in authorIds.Where( id => id.HasValue))
             {
-                var author = context.AuthorService.FindById(authorId);
+                var author = context.AuthorService.FindById(authorId.Value);
 
                 if (author == null)
                 {

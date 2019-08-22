@@ -16,4 +16,8 @@ export class AuthorService {
     public search(keyword: string): Observable<Author[]> {
         return this.repository.search(keyword);
     }
+
+    public save(author: Author): Observable<Author> {
+        return this.repository.save(author);
+    }
 }

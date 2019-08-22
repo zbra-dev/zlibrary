@@ -14,6 +14,11 @@ using ZLibrary.Web.Factory;
 using ZLibrary.Web.Factory.Impl;
 using ZLibrary.Web.Options;
 using ZLibrary.Web.Controllers;
+using ZLibrary.Web.Converters;
+using ZLibrary.Model;
+using ZLibrary.Web.Controllers.Items;
+using ZLibrary.Web.Validators;
+using ZLibrary.Web.LookUps;
 
 namespace ZLibrary.Web
 {
@@ -75,25 +80,45 @@ namespace ZLibrary.Web
                 options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
 
-            // Add application services
+            services.Add(new ServiceDescriptor(typeof(ClientOptions), provider => BuildClientOptions(), ServiceLifetime.Singleton));
+
+
+            //services
+            services.AddTransient<IBookFacade, BookFacade>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IBookService, BookService>();
-            services.AddTransient<IBookFacade, BookFacade>();
             services.AddTransient<IAuthorService, AuthorService>();
             services.AddTransient<IPublisherService, PublisherService>();
             services.AddTransient<IReservationService, ReservationService>();
+            services.AddTransient<ILoanService, LoanService>();
+            services.AddTransient<IServiceDataLookUp, DefaultServiceDataLookUp>();
+
+            //repositories
             services.AddTransient<IBookRepository, BookRepository>();
             services.AddTransient<IReservationRepository, ReservationRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IAuthorRepository, AuthorRepository>();
             services.AddTransient<IPublisherRepository, PublisherRepository>();
-            services.AddTransient<ITokenFactory, JsonWebTokenFactory>();
-      
             services.AddTransient<IImageRepository, ImageRepository>();
-            services.AddTransient<IAuthenticationApi, SlackApi>();
-            services.AddTransient<ILoanService, LoanService>();
             services.AddTransient<ILoanRepository, LoanRepository>();
-            services.Add(new ServiceDescriptor(typeof(ClientOptions), provider => BuildClientOptions(), ServiceLifetime.Singleton));
+
+            services.AddTransient<ITokenFactory, JsonWebTokenFactory>();
+            services.AddTransient<IAuthenticationApi, SlackApi>();
+            
+            services.AddTransient<IValidationResultDataLookUp, DefaultValidationResultDataLookUp>();
+            services.AddTransient<ValidationResult, ValidationResult>();
+
+            //converters
+            services.AddTransient<AuthorConverter, AuthorConverter>();
+            services.AddTransient<PublisherConverter, PublisherConverter>();
+            services.AddTransient<BookConverter, BookConverter>();
+            services.AddTransient<LoanConverter, LoanConverter>();
+            services.AddTransient<ReservationConverter, ReservationConverter>();
+            services.AddTransient<UserConverter, UserConverter>();
+
+            //validators
+            services.AddTransient<AuthorDtoValidator, AuthorDtoValidator>();
+
 
             var featureSettings = new FeatureSettings();
             Configuration.GetSection("FeatureSettings").Bind(featureSettings);

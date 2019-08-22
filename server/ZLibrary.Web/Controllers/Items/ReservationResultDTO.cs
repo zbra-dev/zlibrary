@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace ZLibrary.Web.Controllers.Items
 {
-    public class ReservationResultDTO
+    public class ReservationResultDto
     {
         [DataMember(Name = "id")]
         public long Id { get; set; }
@@ -18,6 +18,6 @@ namespace ZLibrary.Web.Controllers.Items
         [DataMember(Name = "startDate")]
         public DateTime StartDate { get; set; }
         [DataMember(Name = "loan")]
-        public LoanDTO Loan { get; set; }
+        public LoanDto Loan { get; set; }
     }
 }

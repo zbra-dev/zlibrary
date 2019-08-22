@@ -1,10 +1,8 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { BookService } from '../../../service/book.service';
 import { Book } from '../../../model/book';
-import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { LoaderMediator } from '../../mediators/loader.mediator';
 import { ToastMediator } from '../../mediators/toast.mediator';
-import { Input, EventEmitter } from '@angular/core';
 import { User } from '../../../model/user';
 import { AuthService } from '../../../service/auth.service';
 import { BookPopupComponent } from '../../components/book-popup/book-popup.component';
@@ -39,7 +37,6 @@ export class BookListComponent implements OnInit {
         this.searchBy(this.keyword, 0);
         this.user = this.authService.getLoggedUser();
     }
-
 
     public search(): void {
         this.searchBy(this.keyword, 0);

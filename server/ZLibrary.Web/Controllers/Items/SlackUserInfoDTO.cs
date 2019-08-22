@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace ZLibrary.Web.Controllers.Items
 {
-    public class SlackUserInfoDTO
+    public class SlackUserInfoDto
     { 
        [DataMember(Name = "email")]
        public string Email { get; set; }
