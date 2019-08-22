@@ -38,8 +38,8 @@ namespace ZLibrary.Core
 
         public async Task<Book> Save(Book book, string imagePath)
         {
-            var bookSaved = await bookService.Save(book);
             imageService.SaveImage(book.CoverImageKey, imagePath);
+            var bookSaved = await bookService.Save(book);
             return bookSaved;
         }
 
