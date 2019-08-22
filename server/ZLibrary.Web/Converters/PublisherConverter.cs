@@ -3,23 +3,23 @@ using ZLibrary.Web.Controllers.Items;
 
 namespace ZLibrary.Web.Converters
 {
-    public class PublisherConverter : IConverter<Publisher, PublisherDTO>
+    public class PublisherConverter : AbstractConverter<Publisher, PublisherDto>
     {
-        public PublisherDTO ConvertFromModel(Publisher model)
+        protected override PublisherDto NullSafeConvertFromModel(Publisher model)
         {
-            return new PublisherDTO
+            return new PublisherDto
             {
                 Id = model.Id,
                 Name = model.Name
             };
         }
 
-        public Publisher ConvertToModel(PublisherDTO dto)
+        protected override Publisher NullSafeConvertToModel(PublisherDto viewItem)
         {
             return new Publisher
             {
-                Id = dto.Id ?? 0,
-                Name = dto.Name
+                Id = viewItem.Id ?? 0,
+                Name = viewItem.Name
             };
         }
     }

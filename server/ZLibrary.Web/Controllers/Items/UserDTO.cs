@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace ZLibrary.Web.Controllers.Items
 {
-    public class UserDTO
+    public class UserDto
     {
         [DataMember(Name = "id")]
         [JsonProperty("id")]

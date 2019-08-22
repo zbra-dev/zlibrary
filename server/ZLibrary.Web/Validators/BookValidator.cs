@@ -6,7 +6,7 @@ using ZLibrary.Web.Controllers.Items;
 
 namespace ZLibrary.Web.Validators
 {
-    public class BookValidator : IValidator<BookDTO>
+    public class BookValidator : IValidator<BookDto>
     {
         private readonly ValidationContext context;
 
@@ -15,7 +15,7 @@ namespace ZLibrary.Web.Validators
             this.context = context;
         }
 
-        public ValidationResult Validate(BookDTO value)
+        public ValidationResult Validate(BookDto value)
         {
             var validationResult = new ValidationResult();
 

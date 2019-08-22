@@ -4,7 +4,7 @@ using ZLibrary.Model;
 
 namespace ZLibrary.Web.Controllers.Items
 {
-    public class LoanDTO
+    public class LoanDto
     {
         [DataMember(Name = "id")]
         public long Id { get; set; }

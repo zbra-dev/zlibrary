@@ -3,7 +3,7 @@ using ZLibrary.Model;
 
 namespace ZLibrary.Web.Controllers.Items
 {
-    public class PublisherDTO
+    public class PublisherDto
     {
         [DataMember(Name = "id")]
         public long? Id { get; set; }

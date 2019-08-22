@@ -1,16 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using ZLibrary.API;
-using ZLibrary.Model;
-using System.Collections.Generic;
 using System.Linq;
-using ZLibrary.Web.Controllers.Items;
-using ZLibrary.Web.Validators;
-using ZLibrary.Web.Extensions;
-using System;
-using Microsoft.AspNetCore.Http;
-using System.IO;
 using ZLibrary.Web.Converters;
+using ZLibrary.Web.Converters;
+using ZLibrary.Web.Controllers.Items;
 
 namespace ZLibrary.Web
 {
@@ -29,12 +23,12 @@ namespace ZLibrary.Web
         [HttpGet("{name}", Name = "FindPublisherByName")]
         public async Task<IActionResult> FindByName(string name)
         {
-            var publisher = await publisherService.FindByName(name);
-            return Ok(publisher.ToPublisherViewItems());
+            var publishers = await publisherService.FindByName(name);
+            return Ok(publishers.Select(p => publisherConverter.ConvertFromModel(p)));
         }
 
         [HttpPost]
-        public async Task<IActionResult> Save([FromBody]PublisherDTO dto)
+        public async Task<IActionResult> Save([FromBody]PublisherDto dto)
         {
             var publisherSaved = await publisherService.Save(publisherConverter.ConvertToModel(dto));
             return Ok(publisherConverter.ConvertFromModel(publisherSaved));

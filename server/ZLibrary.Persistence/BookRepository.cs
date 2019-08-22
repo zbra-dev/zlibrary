@@ -80,6 +80,11 @@ namespace ZLibrary.Persistence
 
         public async Task<Book> Save(Book book)
         {
+            if (book.Publisher != null)
+            {
+                book.Publisher = context.Publishers.Where(p => p.Id == book.Publisher.Id).FirstOrDefault();
+            }
+
             if (book.Id == 0)
             {
                 context.Books.Add(book);

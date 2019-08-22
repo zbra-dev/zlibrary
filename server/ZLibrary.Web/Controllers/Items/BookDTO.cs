@@ -5,7 +5,7 @@ using ZLibrary.Model;
 
 namespace ZLibrary.Web.Controllers.Items
 {
-    public class BookDTO
+    public class BookDto
     {
         [DataMember(Name = "id")]
         public long Id { get; set; }
@@ -14,10 +14,10 @@ namespace ZLibrary.Web.Controllers.Items
         public string Title { get; set; }
 
         [DataMember(Name = "publisher")]
-        public PublisherDTO Publisher { get; set; }
+        public PublisherDto Publisher { get; set; }
         
         [DataMember(Name = "authors")]
-        public AuthorDTO[] Authors { get; set; }
+        public AuthorDto[] Authors { get; set; }
         
         [DataMember(Name = "isbn")]
         public string Isbn { get; set; }
@@ -35,6 +35,6 @@ namespace ZLibrary.Web.Controllers.Items
         public int NumberOfCopies { get; set; }
 
         [DataMember(Name = "reservations")]
-        public IEnumerable<ReservationResultDTO> Reservations { get; set; }
+        public IEnumerable<ReservationResultDto> Reservations { get; set; }
     }
 }

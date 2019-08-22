@@ -18,6 +18,7 @@ using ZLibrary.Web.Converters;
 using ZLibrary.Model;
 using ZLibrary.Web.Controllers.Items;
 using ZLibrary.Web.Validators;
+using ZLibrary.Web.LookUps;
 
 namespace ZLibrary.Web
 {
@@ -77,8 +78,6 @@ namespace ZLibrary.Web
 
             services.Add(new ServiceDescriptor(typeof(ClientOptions), provider => BuildClientOptions(), ServiceLifetime.Singleton));
 
-            services.AddTransient<ITokenFactory, JsonWebTokenFactory>();
-            services.AddTransient<IAuthenticationApi, SlackApi>();
 
             //services
             services.AddTransient<IBookFacade, BookFacade>();
@@ -89,6 +88,7 @@ namespace ZLibrary.Web
             services.AddTransient<IReservationService, ReservationService>();
             services.AddTransient<IImageService, ImageService>();
             services.AddTransient<ILoanService, LoanService>();
+            services.AddTransient<IServiceDataLookUp, DefaultServiceDataLookUp>();
 
             //repositories
             services.AddTransient<IBookRepository, BookRepository>();
@@ -98,13 +98,23 @@ namespace ZLibrary.Web
             services.AddTransient<IPublisherRepository, PublisherRepository>();
             services.AddTransient<IImageRepository, ImageRepository>();
             services.AddTransient<ILoanRepository, LoanRepository>();
+
+            services.AddTransient<ITokenFactory, JsonWebTokenFactory>();
+            services.AddTransient<IAuthenticationApi, SlackApi>();
             
+            services.AddTransient<IValidationResultDataLookUp, DefaultValidationResultDataLookUp>();
+            services.AddTransient<ValidationResult, ValidationResult>();
+
             //converters
             services.AddTransient<AuthorConverter, AuthorConverter>();
             services.AddTransient<PublisherConverter, PublisherConverter>();
+            services.AddTransient<BookConverter, BookConverter>();
+            services.AddTransient<LoanConverter, LoanConverter>();
+            services.AddTransient<ReservationConverter, ReservationConverter>();
+            services.AddTransient<UserConverter, UserConverter>();
 
             //validators
-            services.AddTransient<AuthorDTOValidator, AuthorDTOValidator>();
+            services.AddTransient<AuthorDtoValidator, AuthorDtoValidator>();
 
 
             services.Configure<JwtOptions>(o =>
