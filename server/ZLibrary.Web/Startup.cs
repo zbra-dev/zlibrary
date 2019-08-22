@@ -51,6 +51,10 @@ namespace ZLibrary.Web
 
             // Add DbContext
             var connectionString = Configuration.GetConnectionString("SqlServerDatabase");
+
+            var featureSettingsSection = Configuration.GetSection("FeatureSettings");
+            services.Configure<FeatureSettings>(featureSettingsSection);
+
             services.AddDbContext<ZLibraryContext>(o => o.UseSqlServer(connectionString));
 
             var jwtOptions = BuildJwtOptions();
@@ -86,7 +90,6 @@ namespace ZLibrary.Web
             services.AddTransient<IAuthorService, AuthorService>();
             services.AddTransient<IPublisherService, PublisherService>();
             services.AddTransient<IReservationService, ReservationService>();
-            services.AddTransient<IImageService, ImageService>();
             services.AddTransient<ILoanService, LoanService>();
             services.AddTransient<IServiceDataLookUp, DefaultServiceDataLookUp>();
 
@@ -117,6 +120,18 @@ namespace ZLibrary.Web
             services.AddTransient<AuthorDtoValidator, AuthorDtoValidator>();
 
 
+            var featureSettings = new FeatureSettings();
+            Configuration.GetSection("FeatureSettings").Bind(featureSettings);
+
+            if (featureSettings.AllowCoverImage)
+            {
+                services.AddTransient<IImageService, ImageService>();
+            }
+            else
+            {
+                services.AddTransient<IImageService, NoImageService>();
+            }
+
             services.Configure<JwtOptions>(o =>
             {
                 var options = BuildJwtOptions();
@@ -127,14 +142,18 @@ namespace ZLibrary.Web
                 o.Expires = options.Expires;
                 o.SigningCredentials = options.SigningCredentials;
             });
+
+            services.AddLogging(loggingBuilder =>
+            {
+                loggingBuilder.AddConfiguration(Configuration.GetSection("Logging"));
+                loggingBuilder.AddConsole();
+                loggingBuilder.AddDebug();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
-
             //InMemory DB
             //SeedDatabase(app);
 
