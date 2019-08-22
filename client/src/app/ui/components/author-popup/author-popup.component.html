@@ -1,20 +1,17 @@
-<form *ngIf="isNew || canEdit" class="popup-container" [formGroup]="authorForm">
+<form *ngIf="isNewAuthor" class="popup-container" [formGroup]="authorForm">
 
     <div id="background-author">
-        <h1 *ngIf="canEdit && !isNew" class="about-book-title">Editar Autor</h1>
-        <h1 *ngIf="isNew" class="about-book-title">Adicionar Autor</h1>
+        <h1 *ngIf="!isNewAuthor" class="about-book-title">Editar Autor</h1>
+        <h1 *ngIf="isNewAuthor" class="about-book-title">Adicionar Autor</h1>
         
         <div class="author-container">
             <div class="book-inputs-container">
                 <label class="input-label" style="margin-top: 0;">Nome:
-                    <div class="validation-alert" *ngIf="nameControl.invalid && (nameControl.dirty || nameControl.touched) && !nameControl.errors?.emptyString">
+                    <div class="validation-alert" *ngIf="isEmpty">
                         Campo obrigatório
                     </div>
-                    <div class="validation-alert" *ngIf="nameControl.dirty && !!nameControl.errors?.emptyString">
-                        Campo não deve estar vazio
-                    </div>
                 </label>
-                <input [(ngModel)]="author.name" type="text" [ngClass]="{ 'input-invalid': nameControl.invalid && (nameControl.dirty || nameControl.touched)}"
+                <input [(ngModel)]="author.name" type="text" [ngClass]="{ 'input-invalid': isInvalid }"
                     class="textbox-input" formControlName="nameControl">
             </div>
         </div>
@@ -22,10 +19,10 @@
     </div>
 
     <div class="create-buttons-container">
-        <div *ngIf="isNew || canEdit" class="cancel-button" (click)="onCancel()">
+        <div *ngIf="isNewAuthor" class="cancel-button" (click)="onCancel()">
             <div class="available-button-text-available">Cancelar</div>
         </div>
-        <button *ngIf="isNew || canEdit" class="create-button" [disabled]="!authorForm.valid" (click)="saveAuthor()">
+        <button *ngIf="isNewAuthor" class="create-button" [disabled]="!authorForm.valid" (click)="saveAuthor()">
             <div class="available-button-text-available">Salvar</div>
         </button>
     </div>

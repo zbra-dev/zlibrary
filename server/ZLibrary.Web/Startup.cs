@@ -115,7 +115,7 @@ namespace ZLibrary.Web
 
             //validators
             services.AddTransient<AuthorDtoValidator, AuthorDtoValidator>();
-
+            services.AddTransient<PublisherDtoValidator, PublisherDtoValidator>();
 
             services.Configure<JwtOptions>(o =>
             {

@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { LoaderMediator } from '../../mediators/loader.mediator';
 import { ToastMediator } from '../../mediators/toast.mediator';
 import { Publisher } from '../../../model/publisher';
@@ -13,7 +13,7 @@ import { PublisherValidator } from '../../validators/publisher-validator';
 })
 
 export class PublisherPopupComponent implements OnInit {
-    
+
     public publisher = new Publisher(null, null);
     public publisherForm: FormGroup;
     isNew = false;
@@ -36,12 +36,28 @@ export class PublisherPopupComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    get nameControl() {
+    public get nameControl(): AbstractControl {
         return this.publisherForm.get('nameControl');
     }
 
+    public get isNewPublisher(): boolean {
+        return this.isNew;
+    }
+
+    public get isEmpty(): boolean {
+        return this.isInvalid
+            && !!this.nameControl.errors;
+    }
+
+    public get isInvalid(): boolean {
+        return this.nameControl.invalid
+            && (this.nameControl.dirty || this.nameControl.touched);
+    }
+
+
     public initNewPublisher() {
         this.isNew = true;
+        this.publisherForm.reset();
     }
 
     public savePublisher() {
