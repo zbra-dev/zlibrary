@@ -5,6 +5,7 @@ import { AuthorValidator } from '../../validators/author-validator';
 import { LoaderMediator } from '../../mediators/loader.mediator';
 import { AuthorService } from '../../../service/author.service';
 import { ToastMediator } from '../../mediators/toast.mediator';
+import { AbstractControl } from '@angular/forms';
 
 @Component({
     selector: 'zli-author-popup',
@@ -13,7 +14,7 @@ import { ToastMediator } from '../../mediators/toast.mediator';
 })
 
 export class AuthorPopupComponent implements OnInit {
-    
+
     public author = new Author(null, null);
     public authorForm: FormGroup;
     isNew = false;
@@ -36,12 +37,25 @@ export class AuthorPopupComponent implements OnInit {
     ngOnInit(): void {
     }
 
-    get nameControl() {
+    public get nameControl(): AbstractControl {
         return this.authorForm.get('nameControl');
+    }
+
+    public get isNewAuthor(): boolean {
+        return this.isNew;
+    }
+
+    public get isEmpty(): boolean {
+        return this.isInvalid && !!this.nameControl.errors;
+    }
+
+    public get isInvalid(): boolean {
+        return this.nameControl.invalid && (this.nameControl.dirty || this.nameControl.touched);
     }
 
     public initNewAuthor() {
         this.isNew = true;
+        this.authorForm.reset();
     }
 
     public saveAuthor() {

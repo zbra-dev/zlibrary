@@ -18,7 +18,7 @@ namespace ZLibrary.Web.Converters
         {
             return new Publisher
             {
-                Id = viewItem.Id,
+                Id = viewItem.Id ?? 0,
                 Name = viewItem.Name
             };
         }

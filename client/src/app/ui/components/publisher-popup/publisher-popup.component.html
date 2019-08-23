@@ -1,17 +1,17 @@
-<form *ngIf="isNewAuthor" class="popup-container" [formGroup]="authorForm">
+<form *ngIf="isNewPublisher" class="popup-container" [formGroup]="publisherForm">
 
-    <div id="background-author">
-        <h1 *ngIf="!isNewAuthor" class="about-book-title">Editar Autor</h1>
-        <h1 *ngIf="isNewAuthor" class="about-book-title">Adicionar Autor</h1>
+    <div id="background-publisher">
+        <h1 *ngIf="!isNewPublisher" class="about-book-title">Editar Editora</h1>
+        <h1 *ngIf="isNewPublisher" class="about-book-title">Adicionar Editora</h1>
         
-        <div class="author-container">
+        <div class="publisher-container">
             <div class="book-inputs-container">
                 <label class="input-label" style="margin-top: 0;">Nome:
                     <div class="validation-alert" *ngIf="isEmpty">
                         Campo obrigatório
                     </div>
                 </label>
-                <input [(ngModel)]="author.name" type="text" [ngClass]="{ 'input-invalid': isInvalid }"
+                <input [(ngModel)]="publisher.name" type="text" [ngClass]="{ 'input-invalid': isInvalid }"
                     class="textbox-input" formControlName="nameControl">
             </div>
         </div>
@@ -19,10 +19,10 @@
     </div>
 
     <div class="create-buttons-container">
-        <div *ngIf="isNewAuthor" class="cancel-button" (click)="onCancel()">
+        <div *ngIf="isNewPublisher" class="cancel-button" (click)="onCancel()">
             <div class="available-button-text-available">Cancelar</div>
         </div>
-        <button *ngIf="isNewAuthor" class="create-button" [disabled]="!authorForm.valid" (click)="saveAuthor()">
+        <button *ngIf="isNewPublisher" class="create-button" [disabled]="!publisherForm.valid" (click)="savePublisher()">
             <div class="available-button-text-available">Salvar</div>
         </button>
     </div>

@@ -1,3 +1,4 @@
+import { FeatureSettingsService } from './feature-settings.service';
 import { NgModule } from '@angular/core';
 import { BookService } from './book.service';
 import { CoverImageService } from './cover-image.service';
@@ -17,7 +18,8 @@ import { LoanService } from './loan.service';
         PublisherService,
         AuthService,
         UserService,
-        LoanService
+        LoanService,
+        FeatureSettingsService
     ]
 })
 export class ServiceModule {
