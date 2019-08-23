@@ -3,7 +3,7 @@
     <div id="background" (click)="toggleSidebar()"></div>
     <div class="book-window">
         <div class="search-container">
-        <input [(ngModel)]="keyword" class="search-bar" type="text" placeholder="Procurar" (keyup.enter)="search()" />
+        <input [(ngModel)]="keyword" class="search-bar" type="text" placeholder="{{ 'Books.Find' | translate }}" (keyup.enter)="search()" />
         <button (click)="search()" style="cursor:pointer" class="search-button">
             <img src="../../../../assets/images/ic-search.png" />
         </button>

@@ -10,8 +10,9 @@ import { AuthGuard } from './ui/guards/auth.guard';
 import { LoginComponent } from './ui/pages/login/login.component';
 import { Toast } from './ui/components/toast/toast';
 import { CookieService } from 'ngx-cookie-service';
-import { ScrollIntoViewDirective } from './ui/directives/scroll-into-view.directive';
-import { IsbnPipe } from './ui/pipes/isbn.pipe';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
 
 const appRoutes: Routes = [
     {
@@ -34,6 +35,10 @@ const appRoutes: Routes = [
     }
 ];
 
+export function HttpLoaderFactory(http: HttpClient){
+    return new TranslateHttpLoader(http);
+}
+
 @NgModule({
     declarations: [
         AppComponent
@@ -45,7 +50,14 @@ const appRoutes: Routes = [
         ),
         ModalModule.forRoot(),
         BrowserModule,
-        PagesModule
+        PagesModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: HttpLoaderFactory,
+                deps: [HttpClient]
+            }
+        })
     ],
     providers: [
         AuthGuard,

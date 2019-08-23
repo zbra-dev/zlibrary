@@ -10,37 +10,37 @@
                 <li *ngIf="isAdmin">
                    <img src="../../../../assets/images/green-notification.png">
                    <button (click)="showApprovedBooks()" style="cursor:pointer" class="items-list">
-                       Livros Emprestados
+                       {{ 'Menu.Books.Borrowed' | translate }}
                    </button> 
                 </li>
                 <li class="user-menu-option">
                     <img src="../../../../assets/images/green-notification.png">
                     <button (click)="showRentedBooks()" style="cursor:pointer" class="items-list">
-                        Livros Alugados
+                        {{ 'Books.Rented' | translate }}
                     </button>
                 </li>
                 <li> 
                     <img src="../../../../assets/images/yellow-notification.png">
                     <button  (click)="showWaitingList()" style="cursor:pointer" class="items-list">
-                        Livros em Espera
+                        {{ 'Books.Waiting' | translate }}
                     </button>
                 </li>
                 <li *ngIf="isAdmin == true"> 
                     <img src="../../../../assets/images/Shape.svg">
                     <button  (click)="showRequestedBooks()" style="cursor:pointer" class="items-list">
-                        Aprovar / Recusar
+                        {{ 'Books.Request' | translate }}
                     </button>
                 </li>
                 <li *ngIf="isAdmin == true"> 
                     <img src="../../../../assets/images/Shape.svg">
                     <button  (click)="addNewAuthor()" style="cursor:pointer" class="items-list">
-                        Adicionar Autor
+                        {{ 'Authors.New' | translate }}
                     </button>
                 </li>
                 <li>
                     <img src="../../../../assets/images/out.png">
                     <button (click)="onLogout()" style="cursor:pointer" class="items-list">
-                        Sair
+                        {{ 'Logout' | translate }}
                     </button>
                 </li>
             </ul>

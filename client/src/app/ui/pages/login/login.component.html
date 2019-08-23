@@ -2,7 +2,7 @@
     <div class="column-left">
         <div class="login-image">
             <div class="login-title">
-                <span class="system-title-prefix">BEM-VINDO</span>
+                <span class="system-title-prefix">{{ 'Login.Welcome' | translate }}</span>
                 <span class="system-title">AO <span class="text-style">Z</span>LIBRARY</span>
             </div>
         </div>
@@ -14,7 +14,7 @@
             <div class="login-button-container">
                 <a class="login-button" href="https://slack.com/oauth/authorize?scope=identity.basic,identity.email,identity.team,identity.avatar&client_id=6575166742.236473063552" (click)="deleteLoginError()">
                     <div class="slack-logo"></div>
-                    <span class="login-text">Entrar com slack</span>
+                    <span class="login-text">{{ 'Login.SlackLogin' | translate }}</span>
                 </a>
             </div>
             <div class="login-error-container">
