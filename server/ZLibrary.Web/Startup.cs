@@ -118,7 +118,7 @@ namespace ZLibrary.Web
 
             //validators
             services.AddTransient<AuthorDtoValidator, AuthorDtoValidator>();
-
+            services.AddTransient<PublisherDtoValidator, PublisherDtoValidator>();
 
             var featureSettings = new FeatureSettings();
             Configuration.GetSection("FeatureSettings").Bind(featureSettings);

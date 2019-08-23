@@ -50,7 +50,7 @@ namespace ZLibrary.Web.Validators
 
             var publisherId = value.Publisher.Id;
 
-            var publisher = context.PublisherService.FindById(publisherId);
+            var publisher = context.PublisherService.FindById(publisherId.Value);
 
             if (publisher == null)
             {

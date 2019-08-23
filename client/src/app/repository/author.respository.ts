@@ -2,7 +2,7 @@ import { Observable } from 'rxjs/Observable';
 import { Author } from '../model/author';
 import 'rxjs/add/observable/of';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { AuthorViewModelConverter } from './converter/author.view-model-converter';
 import 'rxjs/add/operator/map';
