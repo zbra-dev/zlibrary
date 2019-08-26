@@ -5,9 +5,9 @@
     </button>
     <div class="modal-title">{{message}}</div>
     <div class="cancel"(click)="cancel()">
-        <div class="cancel-text">CANCELAR</div>
+        <div class="cancel-text">{{ 'BUTTON.CANCEL' | translate }}</div>
     </div>
     <div class="sure" (click)="confirm()" >
-        <div class="sure-text" >SIM</div>
+        <div class="sure-text" >{{ 'BUTTON.YES' | translate }}</div>
     </div>
 </div>

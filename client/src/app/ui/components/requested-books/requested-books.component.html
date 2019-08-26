@@ -1,7 +1,7 @@
 <div class="modal-history">
     <div class="modal-header">
         {{index}}
-        <h4 class="modal-title">LIVROS REQUISITADOS</h4>
+        <h4 class="modal-title">{{ 'BOOKS.REQUESTED' | translate }}</h4>
         <button type="button" class="close" (click)="close()">x</button>
     </div>
     <div class="modal-body">
@@ -15,11 +15,11 @@
                 <img src="../../../../assets/images/user_icon.png" width="20" height="20">
                 <span class="user-name">{{order.user.name}}</span>
             </div>
-            <button type="button" class="accept-button" (click)="acceptReservation(order)">Aprovar</button>
-            <button type="button" class="reject-button" (click)="rejectReservation(order)">Recusar</button>
+            <button type="button" class="accept-button" (click)="acceptReservation(order)">{{ 'BOOKS.APPROVE' | translate }}</button>
+            <button type="button" class="reject-button" (click)="rejectReservation(order)">{{ 'BOOKS.REJECT' | translate }}</button>
         </div>
         <div *ngIf="!orders" class="modal-rectangle" style="display: flex;">
-            <div class="message">Não existe mais reservas no sistema!</div>
+            <div class="message">{{ 'BOOKS.NORESERVATIONS' | translate }}</div>
         </div>
     </div>
 </div>
