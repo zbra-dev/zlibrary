@@ -90,5 +90,13 @@
         "EDIT": "Editar",
         "INVALID": "Imagem tem que ter extensão '.png'",
         "REQUIRED": "Imagem obrigatória"
+    },
+    "MESSAGE": {
+        "EXPIRED": "Reserva expirada",
+        "WAITING": "Aguardando Aprovação",
+        "APPROVED": "Reserva aprovada",
+        "WAITINGLIST": "Reserva na lista de espera",
+        "REJECTED": "Reserva rejeitada",
+        "RENEW": "Vá para sua lista de livros para renovar"
     }
 }
