@@ -9,7 +9,6 @@ namespace ZLibrary.Persistence
         public DbSet<Book> Books { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<BookAuthor> BookAuthors { get; set; }
-        public DbSet<Isbn> Isbns { get; set; }
         public DbSet<Publisher> Publishers { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Loan> Loans { get; set; }
@@ -37,6 +36,10 @@ namespace ZLibrary.Persistence
                 .HasOne(ba => ba.Author)
                 .WithMany(a => a.Books)
                 .HasForeignKey(bc => bc.AuthorId);
+
+            modelBuilder.Entity<Book>()
+              .Ignore(b => b.Isbn)
+              .Property(b => b.IsbnCode).HasColumnName("ISBN");
         }
     }
 }

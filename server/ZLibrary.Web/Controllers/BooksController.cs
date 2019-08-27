@@ -29,9 +29,11 @@ namespace ZLibrary.Web
         private readonly IServiceDataLookUp serviceDataLookup;
         private readonly BookConverter bookConverter;
         private readonly ReservationConverter reservationConverter;
+        private readonly IsbnValidator isbnValidator;
 
         public BooksController(IBookFacade bookFacade, IAuthorService authorService, IPublisherService publisherService, 
-            IServiceDataLookUp serviceDataLookup, BookConverter bookConverter, ReservationConverter reservationConverter)
+            IServiceDataLookUp serviceDataLookup, BookConverter bookConverter, ReservationConverter reservationConverter,
+            IsbnValidator isbnValidator)
         {
             this.bookFacade = bookFacade;
             this.authorService = authorService;
@@ -39,6 +41,7 @@ namespace ZLibrary.Web
             this.serviceDataLookup = serviceDataLookup;
             this.bookConverter = bookConverter;
             this.reservationConverter = reservationConverter;
+            this.isbnValidator = isbnValidator;
         }
 
         [HttpGet]
@@ -134,7 +137,7 @@ namespace ZLibrary.Web
                 section = await reader.ReadNextSectionAsync();
             }
             var validationContext = new ValidationContext(bookFacade, authorService, publisherService);
-            var bookValidator = new BookValidator(validationContext);
+            var bookValidator = new BookValidator(validationContext, isbnValidator);
             var validationResult = bookValidator.Validate(dto);
 
             if (validationResult.HasError)

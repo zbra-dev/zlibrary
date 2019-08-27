@@ -15,5 +15,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ZLibrary.Model\ZLibrary.Model.csproj" />
+    <ProjectReference Include="..\ZLibrary.Web\ZLibrary.Web.csproj" />
   </ItemGroup>
 </Project>
