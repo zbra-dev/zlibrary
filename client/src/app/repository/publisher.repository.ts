@@ -19,4 +19,8 @@ export class PublisherRepository {
     public search(name: string): Observable<Publisher[]> {
         return this.httpClient.get(`${URL}/${name}`).map((data: any) => data.map(p => PublisherViewModelConverter.fromDTO(p)));
     }
+
+    public save(publisher: Publisher): Observable<Publisher> {
+        return this.httpClient.post(URL, publisher).map((data: any) => data);
+    }
 }

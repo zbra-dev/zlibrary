@@ -116,6 +116,7 @@ namespace ZLibrary.Web
 
             //validators
             services.AddTransient<AuthorDtoValidator, AuthorDtoValidator>();
+            services.AddTransient<PublisherDtoValidator, PublisherDtoValidator>();
             services.AddTransient<IsbnValidator, IsbnValidator>();
 
             var featureSettings = new FeatureSettings();

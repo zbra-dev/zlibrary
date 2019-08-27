@@ -16,4 +16,8 @@ export class PublisherService {
     public search(keyword: string): Observable<Publisher[]> {
         return this.repository.search(keyword);
     }
+
+    public save(publisher: Publisher): Observable<Publisher> {
+        return this.repository.save(publisher);
+    }
 }
