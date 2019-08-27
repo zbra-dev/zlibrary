@@ -19,7 +19,7 @@
         "WAITING": "Livros em Espera",
         "REQUEST": "Aprovar / Recusar",
         "REQUESTED": "Livros Requisitados",
-        "RENTEDDATE": "Alugado em: ",
+        "RENTEDDATE": "Alugado em: {{ date }}",
         "AVAILABLE": "Disponível",
         "RENT": "Alugar",
         "ADD": "Adicionar Livro",
@@ -43,7 +43,7 @@
         "ABOUT": "Sobre o Livro",
         "RESERVATION": {
             "APPROVED": "Solicitação aprovada, aguarde a disponibilidade do livro.",
-            "ACCEPT": "Aceita em ",
+            "ACCEPT": "Aceita em {{ date }}",
             "WAITING": "Aguardando Aprovação",
             "RENEW": "Renovar",
             "RENEWALREQUESTED": "Renovação Solicitada",

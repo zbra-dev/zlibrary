@@ -27,12 +27,6 @@ import { ReturnBookListComponent } from '../return-book-list/return-book-list.co
 import { FeatureSettingsService } from '../../../service/feature-settings.service';
 import { TranslateService } from '@ngx-translate/core';
 
-const WAITINGMESSAGE = 'Aguardando aprovação';
-const APPROVEDMESSAGE = 'Reserva aprovada';
-const WAITINGLISTMESSAGE = '';
-const REJECTEDMESSAGE = 'Reserva rejeitada';
-const RENEWMESSAGE = '';
-
 @Component({
     selector: 'zli-book-popup',
     templateUrl: './book-popup.component.html',
@@ -370,16 +364,16 @@ export class BookPopupComponent implements OnInit {
             this.isExpired = true;
         } else if (reservation.reservationReason.isApproved) {
             if (!!reservation.loan && !reservation.loan.canBorrow) {
-                this.message = APPROVEDMESSAGE;
+                this.message = this.translate.instant('MESSAGE.APPROVED');
             } else {
-                this.message = RENEWMESSAGE;
+                this.message = this.translate.instant('MESSAGE.RENEW');
             }
         } else if (reservation.reservationReason.status === ReservationStatus.Waiting) {
-            this.message = WAITINGLISTMESSAGE;
+            this.message = this.translate.instant('MESSAGE.WAITINGLIST');
         } else if (reservation.reservationReason.isRejected) {
-            this.message = REJECTEDMESSAGE;
+            this.message = this.translate.instant('MESSAGE.REJECTED');
         } else {
-            this.message = WAITINGMESSAGE;
+            this.message = this.translate.instant('MESSAGE.WAITING');
         }
     }
 

@@ -9,6 +9,9 @@ import { AuthService } from '../../../service/auth.service';
 import { Book } from '../../../model/book';
 import { User } from '../../../model/user';
 import { CoverImageService } from '../../../service/cover-image.service';
+import { DatePipe, getLocaleDateTimeFormat } from '@angular/common';
+import { Locale } from 'ngx-bootstrap/bs-moment/locale/locale.class';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'zli-reservation-list',
