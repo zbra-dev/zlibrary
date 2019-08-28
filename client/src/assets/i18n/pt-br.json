@@ -20,19 +20,20 @@
         "REQUEST": "Aprovar / Recusar",
         "REQUESTED": "Livros Requisitados",
         "RENTEDDATE": "Alugado em: {{ date }}",
+        "RENTEDBY": "Alugado por: ",
+        "RENTEDEXPIRE": "Expira em: ",
         "AVAILABLE": "Disponível",
         "RENT": "Alugar",
         "ADD": "Adicionar Livro",
         "FIND": "Procurar...",
         "EDIT": "Editar Livro",
         "DELETE": "Deletar",
+        "DELETEQUESTION": "Deseja deletar este livro?",
         "SIMPLEEDIT": "Editar",
         "APPROVE": "Aprovar",
         "APPROVEQUESTION": "Deseja aprovar esta reserva?",
-        "APPROVEERROR": "Erro ao aprovar a reserva: ",
         "REJECT": "Recusar",
         "REJECTQUESTION": "Deseja recusar esta reserva?",
-        "REJECTERROR": "Erro ao recusar a reserva: ",
         "NORESERVATIONS": "Não existe mais reservas no sistema!",
         "UNAVAILABLE": "Indisponível",
         "ENTERWAITINGLIST": "Entrar na fila de espera",
@@ -41,6 +42,8 @@
         "WAITINGLIST": "Lista de Espera",
         "ADDWAITINGLIST": "+ add na lista de espera",
         "ABOUT": "Sobre o Livro",
+        "RENTEDCOPIES": "Cópias alugadas",
+        "BORROWEDCOPIES": "O Livro não pode ser deletado pois possui copias emprestadas.",
         "RESERVATION": {
             "APPROVED": "Solicitação aprovada, aguarde a disponibilidade do livro.",
             "ACCEPT": "Aceita em {{ date }}",
@@ -68,12 +71,16 @@
     "AUTHORS": {
         "NEW": "Adicionar Autor",
         "EDIT": "Editar Autor",
-        "NAME": "Nome:"
+        "NAME": "Nome:",
+        "ADD": "Autor adicionado com sucesso.",
+        "EXISTS": "Autor já existe."
     },
     "PUBLISHERS": {
         "NEW": "Adicionar Editora",
         "EDIT": "Editar Editora",
-        "NAME": "Nome:"
+        "NAME": "Nome:",
+        "ADD": "Editora adicionada com sucesso.",
+        "EXISTS": "Editora já existe."
     },
     "BUTTON": {
         "CANCEL": "Cancelar",

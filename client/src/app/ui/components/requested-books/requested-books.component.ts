@@ -47,7 +47,7 @@ export class RequestedBooksComponent implements OnInit {
                         .subscribe(() => {
                             this.showRequestedReservations();
                         }, error => {
-                            this.toastMediator.show(this.translate.instant('BOOKS.APPROVEERROR') + "${error}");
+                            this.toastMediator.show(error);
                         }
                     )
                 );
@@ -63,7 +63,7 @@ export class RequestedBooksComponent implements OnInit {
                         .subscribe(() => {
                             this.showRequestedReservations();
                         }, error => {
-                            this.toastMediator.show(this.translate.instant('BOOKS.REJECTERROR') + "${error}");
+                            this.toastMediator.show(error);
                         }
                     )
                 );

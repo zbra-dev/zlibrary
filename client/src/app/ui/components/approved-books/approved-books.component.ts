@@ -21,6 +21,7 @@ export class ApprovedBooksComponent implements OnInit {
 
   @Input() public orders: Order[];
   public modalControl: BsModalRef;
+  public date: string;
 
   ngOnInit() {
     this.loaderMediator.execute(
@@ -32,7 +33,13 @@ export class ApprovedBooksComponent implements OnInit {
         }
       )
     );
+    // this.setDate();
   }
+
+
+  // setDate() {
+  //   throw new Error("Method not implemented.");
+  // }
 
   public close(): void {
     this.modalControl.hide();

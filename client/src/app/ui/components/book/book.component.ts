@@ -12,6 +12,7 @@ import { ConfirmMediator } from '../../mediators/confirm.mediator';
 import { User } from '../../../model/user';
 import { ReservationService } from '../../../service/reservation.service';
 import { ReservationStatus } from '../../../model/reservation-status';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'zli-book',
@@ -35,7 +36,8 @@ export class BookComponent implements OnInit {
         private bookService: BookService,
         private toastMediator: ToastMediator,
         private confirmMediator: ConfirmMediator,
-        private reservationService: ReservationService) {
+        private reservationService: ReservationService,
+        private translate: TranslateService) {
         this.loaderMediator.onLoadChanged.subscribe(loading => this.isBusy = loading);
     }
 
@@ -53,14 +55,14 @@ export class BookComponent implements OnInit {
                         this.deleted.emit();
                     },
                     error => {
-                        this.toastMediator.show(`O Livro não pode ser deletado pois possui copias emprestadas.`);
+                        this.toastMediator.show(error);
                     }
                 )
             );
         }
     }
     public deleteModal() {
-        this.confirmMediator.showDialog('DELETAR', 'Deseja deletar este livro?').subscribe(b => {
+        this.confirmMediator.showDialog(this.translate.instant('BOOKS.DELETE').toUpperCase(), this.translate.instant('BOOKS.DELETEQUESTION')).subscribe(b => {
             if (b) {
                 this.delete();
             }
@@ -79,7 +81,7 @@ export class BookComponent implements OnInit {
 
                     },
                     error => {
-                        this.toastMediator.show(`Erro ao pedir o livro: ${error}`);
+                        this.toastMediator.show(error);
                     }
                 )
             );

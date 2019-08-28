@@ -5,6 +5,7 @@ import { ToastMediator } from '../../mediators/toast.mediator';
 import { Publisher } from '../../../model/publisher';
 import { PublisherService } from '../../../service/publisher.service';
 import { PublisherValidator } from '../../validators/publisher-validator';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'zli-publisher-popup',
@@ -22,7 +23,7 @@ export class PublisherPopupComponent implements OnInit {
     @Output()
     cancelEvent = new EventEmitter();
 
-    constructor(private publisherService: PublisherService, private loaderMediator: LoaderMediator, private toastMediator: ToastMediator) {
+    constructor(private publisherService: PublisherService, private loaderMediator: LoaderMediator, private toastMediator: ToastMediator, private translate: TranslateService) {
         this.loaderMediator.onLoadChanged.subscribe(loading => this.isBusy = loading);
         this.publisherForm = new FormGroup({
             nameControl: new FormControl(this.publisher.name, Validators.compose([
@@ -66,10 +67,10 @@ export class PublisherPopupComponent implements OnInit {
                 publisher => {
                     this.initNewPublisher();
                     this.publisherForm.reset();
-                    this.toastMediator.show("Editora adicionada com sucesso.");
+                    this.toastMediator.show(this.translate.instant('PUBLISHER.ADD'));
                     this.onCancel();
                 }, error => {
-                    this.toastMediator.show("Editora já existe.");
+                    this.toastMediator.show(error);
                 }
             )
         );
