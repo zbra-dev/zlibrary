@@ -33,13 +33,7 @@ export class ApprovedBooksComponent implements OnInit {
         }
       )
     );
-    // this.setDate();
   }
-
-
-  // setDate() {
-  //   throw new Error("Method not implemented.");
-  // }
 
   public close(): void {
     this.modalControl.hide();
