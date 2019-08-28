@@ -10,7 +10,7 @@ namespace ZLibrary.Model
         {
             if(isbnCode == null)
             {
-                throw new ArgumentNullException("Isbn is not defined");
+                throw new ArgumentNullException("Isbn code is not defined");
             }
             return new Isbn(isbnCode);
         }

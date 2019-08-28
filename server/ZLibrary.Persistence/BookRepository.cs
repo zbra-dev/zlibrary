@@ -132,10 +132,10 @@ namespace ZLibrary.Persistence
             return books;
         }
 
-        public async Task<bool> HasBookWithIsbn(string isbn)
+        public async Task<bool> HasBookWithIsbn(Isbn isbn)
         {
             return await context.Books
-                         .AnyAsync(b => b.IsbnCode == isbn);
+                         .AnyAsync(b => b.IsbnCode == isbn.ToString());
         }
 
         public async Task<IList<Book>> FindByAuthor(string author)

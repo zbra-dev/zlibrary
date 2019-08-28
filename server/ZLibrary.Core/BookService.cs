@@ -90,7 +90,7 @@ namespace ZLibrary.Core
                 bookOriginal = await bookRepository.FindById(book.Id);
             }
 
-            if ((book.Id == 0 || bookOriginal != null && book.Isbn != null && bookOriginal.Isbn != null && !book.Isbn.Equals(bookOriginal.Isbn)) && await bookRepository.HasBookWithIsbn(book.Isbn.ToString()))
+            if ((book.Id == 0 || bookOriginal != null && book.Isbn != null && bookOriginal.Isbn != null && !book.Isbn.Equals(bookOriginal.Isbn)) && await bookRepository.HasBookWithIsbn(book.Isbn))
             {
                 throw new BookSaveException("ISBN já cadastrado.");
             }

@@ -4,7 +4,7 @@ using ZLibrary.Model;
 
 namespace ZLibrary.Web.Validators
 {
-    public class IsbnValidator : IValidator<string>
+    public class IsbnValidator : IValidator<Isbn>
     {
         const int EvenWeight = 1;
         const int OddWeight = 3;
@@ -14,23 +14,23 @@ namespace ZLibrary.Web.Validators
         const int IsbnOldDivisor = 11;
         const int IsbnModernDivisor = 10;
 
-        public ValidationResult Validate(string value)
+        public ValidationResult Validate(Isbn isbn)
         {
             var result = new ValidationResult();
 
-            if (string.IsNullOrWhiteSpace(value))
+            if (string.IsNullOrWhiteSpace(isbn.ToString()))
             {
                 result.ErrorMessage = "ISBN obrigatório";
                 return result;
             }
 
-            if (!CheckFormatString(value))
+            if (!CheckFormatString(isbn.ToString()))
             {
                 result.ErrorMessage = "ISBN deve conter somente números";
                 return result;
             }
 
-            if (!CheckValue(value))
+            if (!CheckValue(isbn.ToString()))
             {
                 result.ErrorMessage = "ISBN inválido";
                 return result;
