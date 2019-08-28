@@ -21,7 +21,6 @@ export class ApprovedBooksComponent implements OnInit {
 
   @Input() public orders: Order[];
   public modalControl: BsModalRef;
-  public date: string;
 
   ngOnInit() {
     this.loaderMediator.execute(
