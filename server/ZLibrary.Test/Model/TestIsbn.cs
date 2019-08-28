@@ -15,35 +15,34 @@ namespace ZLibrary.Test.Model
         public void TestMultipleValidIsbns()
         {
             ValidationResult validationResult;
-            validationResult = isbnValidator.Validate("9788574591865");
+            validationResult = isbnValidator.Validate(Isbn.FromString("9788574591865"));
             Assert.IsTrue(!validationResult.HasError);
-            validationResult = isbnValidator.Validate("0201485672");
+            validationResult = isbnValidator.Validate(Isbn.FromString("0201485672"));
             Assert.IsTrue(!validationResult.HasError);
-            validationResult = isbnValidator.Validate("0321186125");
+            validationResult = isbnValidator.Validate(Isbn.FromString("0321186125"));
             Assert.IsTrue(!validationResult.HasError);
-            validationResult = isbnValidator.Validate("1590593898");
+            validationResult = isbnValidator.Validate(Isbn.FromString("1590593898"));
             Assert.IsTrue(!validationResult.HasError);
-            validationResult = isbnValidator.Validate("9780321127426");
+            validationResult = isbnValidator.Validate(Isbn.FromString("9780321127426"));
             Assert.IsTrue(!validationResult.HasError);
-            validationResult = isbnValidator.Validate("9789087532321");
+            validationResult = isbnValidator.Validate(Isbn.FromString("9789087532321"));
             Assert.IsTrue(!validationResult.HasError);
-            validationResult = isbnValidator.Validate("0321127420");
+            validationResult = isbnValidator.Validate(Isbn.FromString("0321127420"));
             Assert.IsTrue(!validationResult.HasError);
         }
 
         [TestMethod]
-        public void TestCreateNewIsbnFromValueWithNullConstructor()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TestCreateNewIsbnFromValueWithNullConstructorThrowsArgumentNullException()
         {
-            ValidationResult validationResult;
-            validationResult = isbnValidator.Validate(null);
-            Assert.IsTrue(validationResult.HasError);
+            isbnValidator.Validate(Isbn.FromString(null));
         }
 
         [TestMethod]
         public void TestCreateNewIsbnFromValueWithEmptyConstructor()
         {
             ValidationResult validationResult;
-            validationResult = isbnValidator.Validate("");
+            validationResult = isbnValidator.Validate(Isbn.FromString(""));
             Assert.IsTrue(validationResult.HasError);
         }
 
@@ -52,7 +51,7 @@ namespace ZLibrary.Test.Model
         public void TestCreateNewIsbnFromValueWithWhiteSpaceConstructor()
         {
             ValidationResult validationResult;
-            validationResult = isbnValidator.Validate("   ");
+            validationResult = isbnValidator.Validate(Isbn.FromString("   "));
             Assert.IsTrue(validationResult.HasError);
         }
 
@@ -60,7 +59,7 @@ namespace ZLibrary.Test.Model
         public void TestCreateNewIsbnFromValueWithFormatValue()
         {
             ValidationResult validationResult;
-            validationResult = isbnValidator.Validate("Teste");
+            validationResult = isbnValidator.Validate(Isbn.FromString("Teste"));
             Assert.IsTrue(validationResult.HasError);
         }
 
@@ -68,7 +67,7 @@ namespace ZLibrary.Test.Model
         public void TestCreateNewIsbnFromValueWithInvalidLength()
         {
             ValidationResult validationResult;
-            validationResult = isbnValidator.Validate("9728574591865");
+            validationResult = isbnValidator.Validate(Isbn.FromString("9728574591865"));
             Assert.IsTrue(validationResult.HasError);
         }
 
@@ -76,7 +75,7 @@ namespace ZLibrary.Test.Model
         public void TestGetIsbnCheckValueProperties()
         {
             ValidationResult validationResult;
-            validationResult = isbnValidator.Validate("9788574591865");
+            validationResult = isbnValidator.Validate(Isbn.FromString("9788574591865"));
             Assert.IsTrue(!validationResult.HasError);
         }
 
@@ -84,7 +83,7 @@ namespace ZLibrary.Test.Model
         public void TestInvalidIsbnTenCreation()
         {
             ValidationResult validationResult;
-            validationResult = isbnValidator.Validate("1234567890");
+            validationResult = isbnValidator.Validate(Isbn.FromString("1234567890"));
             Assert.IsTrue(validationResult.HasError);
         }
 
@@ -92,7 +91,7 @@ namespace ZLibrary.Test.Model
         public void TestIsbnNineCreation()
         {
             ValidationResult validationResult;
-            validationResult = isbnValidator.Validate("123456789");
+            validationResult = isbnValidator.Validate(Isbn.FromString("123456789"));
             Assert.IsTrue(validationResult.HasError);
         }
 
@@ -100,7 +99,7 @@ namespace ZLibrary.Test.Model
         public void TestIsbnElevenCreation()
         {
             ValidationResult validationResult;
-            validationResult = isbnValidator.Validate("12345678999");
+            validationResult = isbnValidator.Validate(Isbn.FromString("12345678999"));
             Assert.IsTrue(validationResult.HasError);
         }
     }
