@@ -42,7 +42,8 @@ namespace ZLibrary.Persistence.Migrations
 
                     b.Property<DateTime>("Created");
 
-                    b.Property<long?>("IsbnId");
+                    b.Property<string>("IsbnCode")
+                        .HasColumnName("ISBN");
 
                     b.Property<int>("NumberOfCopies");
 
@@ -55,8 +56,6 @@ namespace ZLibrary.Persistence.Migrations
                     b.Property<string>("Title");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("IsbnId");
 
                     b.HasIndex("PublisherId");
 
@@ -74,19 +73,6 @@ namespace ZLibrary.Persistence.Migrations
                     b.HasIndex("AuthorId");
 
                     b.ToTable("BookAuthors");
-                });
-
-            modelBuilder.Entity("ZLibrary.Model.Isbn", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Value");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Isbns");
                 });
 
             modelBuilder.Entity("ZLibrary.Model.Loan", b =>
@@ -186,10 +172,6 @@ namespace ZLibrary.Persistence.Migrations
 
             modelBuilder.Entity("ZLibrary.Model.Book", b =>
                 {
-                    b.HasOne("ZLibrary.Model.Isbn", "Isbn")
-                        .WithMany()
-                        .HasForeignKey("IsbnId");
-
                     b.HasOne("ZLibrary.Model.Publisher", "Publisher")
                         .WithMany()
                         .HasForeignKey("PublisherId");

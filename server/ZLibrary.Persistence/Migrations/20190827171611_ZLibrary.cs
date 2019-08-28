@@ -22,19 +22,6 @@ namespace ZLibrary.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Isbns",
-                columns: table => new
-                {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Value = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Isbns", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Publishers",
                 columns: table => new
                 {
@@ -86,7 +73,7 @@ namespace ZLibrary.Persistence.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Title = table.Column<string>(nullable: true),
                     PublisherId = table.Column<long>(nullable: true),
-                    IsbnId = table.Column<long>(nullable: true),
+                    ISBN = table.Column<string>(nullable: true),
                     Synopsis = table.Column<string>(nullable: true),
                     PublicationYear = table.Column<int>(nullable: false),
                     NumberOfCopies = table.Column<int>(nullable: false),
@@ -96,12 +83,6 @@ namespace ZLibrary.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Books", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Books_Isbns_IsbnId",
-                        column: x => x.IsbnId,
-                        principalTable: "Isbns",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Books_Publishers_PublisherId",
                         column: x => x.PublisherId,
@@ -191,11 +172,6 @@ namespace ZLibrary.Persistence.Migrations
                 column: "AuthorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Books_IsbnId",
-                table: "Books",
-                column: "IsbnId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Books_PublisherId",
                 table: "Books",
                 column: "PublisherId");
@@ -232,9 +208,6 @@ namespace ZLibrary.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Reservations");
-
-            migrationBuilder.DropTable(
-                name: "Isbns");
 
             migrationBuilder.DropTable(
                 name: "Publishers");

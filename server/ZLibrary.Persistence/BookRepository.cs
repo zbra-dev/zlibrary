@@ -20,7 +20,6 @@ namespace ZLibrary.Persistence
         {
             var books = await context.Books
                 .Include(book => book.Publisher)
-                .Include(book => book.Isbn)
                 .ToListAsync();
 
             foreach (var book in books)
@@ -37,7 +36,6 @@ namespace ZLibrary.Persistence
         {
             var book = await context.Books
                 .Include(b => b.Publisher)
-                .Include(b => b.Isbn)
                 .SingleOrDefaultAsync(b => b.Id == id);
 
             if (book != null)
@@ -54,7 +52,6 @@ namespace ZLibrary.Persistence
         {
             var book = await context.Books
                 .Include(b => b.Publisher)
-                .Include(b => b.Isbn)
                 .SingleOrDefaultAsync(b => b.CoverImageKey == key);
 
             if (book != null)
@@ -107,7 +104,6 @@ namespace ZLibrary.Persistence
         {
             var books = await context.Books
                 .Include(book => book.Publisher)
-                .Include(book => book.Isbn)
                 .Where(b => b.Title.Contains(text) || b.Synopsis.Contains(text))
                 .ToListAsync();
 
@@ -124,8 +120,7 @@ namespace ZLibrary.Persistence
         {
             var books = await context.Books
                 .Include(book => book.Publisher)
-                .Include(book => book.Isbn)
-                .Where(b => b.Isbn.Value.Contains(isbn))
+                .Where(b => b.IsbnCode.Contains(isbn))
                 .ToListAsync();
 
             foreach (var book in books)
@@ -140,15 +135,13 @@ namespace ZLibrary.Persistence
         public async Task<bool> HasBookWithIsbn(string isbn)
         {
             return await context.Books
-                         .Include(b => b.Isbn)
-                         .AnyAsync(b => b.Isbn.Value == isbn);
+                         .AnyAsync(b => b.IsbnCode == isbn);
         }
 
         public async Task<IList<Book>> FindByAuthor(string author)
         {
             var books = await context.Books
                .Include(book => book.Publisher)
-               .Include(book => book.Isbn)
                .Where(b => b.Authors.Any(a => a.Author.Name.Contains(author)))
                .ToListAsync();
 
@@ -164,7 +157,6 @@ namespace ZLibrary.Persistence
         {
             var books = await context.Books
                 .Include(book => book.Publisher)
-                .Include(book => book.Isbn)
                 .Where(b => b.Publisher.Name.Contains(publisher))
                 .ToListAsync();
 

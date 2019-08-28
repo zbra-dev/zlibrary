@@ -15,8 +15,6 @@ using ZLibrary.Web.Factory.Impl;
 using ZLibrary.Web.Options;
 using ZLibrary.Web.Controllers;
 using ZLibrary.Web.Converters;
-using ZLibrary.Model;
-using ZLibrary.Web.Controllers.Items;
 using ZLibrary.Web.Validators;
 using ZLibrary.Web.LookUps;
 
@@ -119,6 +117,7 @@ namespace ZLibrary.Web
             //validators
             services.AddTransient<AuthorDtoValidator, AuthorDtoValidator>();
             services.AddTransient<PublisherDtoValidator, PublisherDtoValidator>();
+            services.AddTransient<IsbnValidator, IsbnValidator>();
 
             var featureSettings = new FeatureSettings();
             Configuration.GetSection("FeatureSettings").Bind(featureSettings);
