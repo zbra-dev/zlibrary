@@ -17,6 +17,7 @@ export class Book {
     public coverImageKey: string;
     public created: Date;
     public reservations: Reservation[];
+    public edition: string;
 
     public get isAvailable(): boolean {
         return this.numberOfCopies > 0 && this.reservations.filter(r => r.reservationReason.isApproved && !!r.loan && !r.loan.isReturned).length < this.numberOfCopies;

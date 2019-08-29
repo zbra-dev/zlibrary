@@ -36,5 +36,8 @@ namespace ZLibrary.Web.Controllers.Items
 
         [DataMember(Name = "reservations")]
         public IEnumerable<ReservationResultDto> Reservations { get; set; }
+
+        [DataMember(Name = "edition")]
+        public string Edition { get; set; }
     }
 }

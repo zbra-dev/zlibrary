@@ -100,6 +100,10 @@ export class BookPopupComponent implements OnInit {
                 Validators.required,
                 Validators.maxLength(1),
                 BookValidator.validateNumberOfCopies(1, 5)
+            ])),
+            editionControl: new FormControl(this.book.edition, Validators.compose([
+                Validators.required,
+                BookValidator.validateEmptyString()
             ]))
         });
     }
@@ -174,6 +178,10 @@ export class BookPopupComponent implements OnInit {
         return this.bookForm.get('numberOfCopiesControl');
     }
 
+    public get editionControl() {
+        return this.bookForm.get('editionControl');
+    }
+
     public get canRequestReservation(): boolean {
         return (!this.isOrder && !this.isAdmin)
             || (this.isAdmin && !this.book.isAvailable);
@@ -245,6 +253,11 @@ export class BookPopupComponent implements OnInit {
     public get isBookTitleInvalid(): boolean {
         return this.titleControl.invalid
             && (this.titleControl.dirty || this.titleControl.touched);
+    }
+
+    public get isBookEditionInvalid(): boolean {
+        return this.editionControl.invalid
+            && (this.editionControl.dirty || this.editionControl.touched);
     }
 
     public get isIsbnEmpty(): boolean {

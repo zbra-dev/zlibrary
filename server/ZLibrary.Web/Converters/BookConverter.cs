@@ -27,7 +27,8 @@ namespace ZLibrary.Web.Converters
                 Publisher = publisherConverter.ConvertFromModel(model.Publisher),
                 Authors = model.Authors.Select(ba => authorConverter.ConvertFromModel(ba.Author)).ToArray(),
                 NumberOfCopies = model.NumberOfCopies,
-                CoverImageKey = model.CoverImageKey
+                CoverImageKey = model.CoverImageKey,
+                Edition =  model.Edition
             };
         }
 
@@ -42,7 +43,8 @@ namespace ZLibrary.Web.Converters
                 Isbn = Isbn.FromString(viewItem.Isbn),
                 Publisher = publisherConverter.ConvertToModel(viewItem.Publisher),
                 NumberOfCopies = viewItem.NumberOfCopies,
-                CoverImageKey = viewItem.CoverImageKey
+                CoverImageKey = viewItem.CoverImageKey,
+                Edition = viewItem.Edition
             };
 
             foreach (var author in viewItem.Authors)
