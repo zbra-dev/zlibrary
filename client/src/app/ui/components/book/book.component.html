@@ -1,6 +1,6 @@
 <div *ngIf="book.isAvailable"class="book">
     <div *ngIf="user.isAdministrator"class="admin-modify">
-        <div class="admin-edit-text" (click)="viewBookDetails()">{{ 'BOOKS.SIMPLEEDIT' | translate }}</div>
+        <div class="admin-edit-text" (click)="viewBookDetails()">{{ 'BOOKS.SIMPLE_EDIT' | translate }}</div>
         <div class="admin-delete-text" (click)="deleteModal()">{{ 'BOOKS.DELETE' | translate }}</div>
     </div>
     <zli-book-image  class="book-cover" [book]="book"></zli-book-image>
@@ -24,13 +24,13 @@
                 <div class="unavailable-text">{{ 'BOOKS.UNAVAILABLE' | translate }}</div>
             </div>
             <div *ngIf="!user.isAdministrator"class="book-waiting-list">
-                <div class="waiting-list-text">{{ 'BOOKS.ENTERWAITINGLIST' | translate }}</div>
+                <div class="waiting-list-text">{{ 'BOOKS.ENTER_WAITING_LIST' | translate }}</div>
             </div>
             <div class="not-available"></div>
         </div>
     </div>
     <div *ngIf="user.isAdministrator"class="admin-modify">
-        <div class="admin-edit-text" (click)="viewBookDetails()">{{ 'BOOKS.SIMPLEEDIT' | translate }}</div>
+        <div class="admin-edit-text" (click)="viewBookDetails()">{{ 'BOOKS.SIMPLE_EDIT' | translate }}</div>
         <div class="admin-delete-text" (click)="deleteModal()">{{ 'BOOKS.DELETE' | translate }}</div>
     </div>
     <zli-book-image  class="book-cover" [book]="book"></zli-book-image>

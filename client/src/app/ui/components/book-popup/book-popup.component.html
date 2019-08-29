@@ -15,13 +15,13 @@
             <div class="book-information-label">{{ 'BOOKS.FIELD.PUBLISHER' | translate }}
                 <div class="book-information-content">{{book.publisher.name}}</div>
             </div>
-            <div class="book-information-label">{{ 'BOOKS.FIELD.PUBLICATIONYEAR' | translate }}
+            <div class="book-information-label">{{ 'BOOKS.FIELD.PUBLICATION_YEAR' | translate }}
                 <div class="book-information-content">{{book.publicationYear}}</div>
             </div>
         </div>
     </div>
     <div *ngIf="isAdmin" class="admin-options-container">
-        <div class="admin-options" (click)="canEdit = true">{{ 'BOOKS.SIMPLEEDIT' | translate }}</div>
+        <div class="admin-options" (click)="canEdit = true">{{ 'BOOKS.SIMPLE_EDIT' | translate }}</div>
         <div *ngIf="canEdit" class="admin-options">{{ 'BOOKS.DELETE' | translate }}</div>
     </div>
     <div *ngIf="canRequestReservation" class="request-reservation-container">
@@ -33,15 +33,15 @@
             <div class="available-button-text-available">{{ 'BOOKS.RENT' | translate }}</div>
         </div>
         <div *ngIf="canAddToWaitingList" class="reservation-box-unavailable" (click)="order()">
-            <div class="available-button-text-unavailable">{{ 'BOOKS.ADDWAITINGLIST' | translate }}</div>
+            <div class="available-button-text-unavailable">{{ 'BOOKS.ADD_WAITING_LIST' | translate }}</div>
         </div>
         <div *ngIf="canAdminProvideBookToUsers" class="reservation-box-unavailable" (click)="openReturnBookList()">
-            <div class="available-button-text-unavailable">{{ 'BOOKS.PROVIDETOUSERS' | translate }}</div>
+            <div class="available-button-text-unavailable">{{ 'BOOKS.PROVIDE_TO_USERS' | translate }}</div>
         </div>
     </div>
     <div *ngIf="requestedForReservation" class="request-reservation-container">
         <div class="availability-box">
-            <div class="suggestion-message">{{ 'BOOKS.MOREINFORMATION' | translate }}</div>
+            <div class="suggestion-message">{{ 'BOOKS.MORE_INFORMATION' | translate }}</div>
         </div>
         <div class="waiting-box">
             <div class="sucess-order-text">{{message}}</div>
@@ -108,20 +108,20 @@
             <zli-single-selection-typeahead [ngClass]="{ 'input-invalid': isPublisherInvalid}"
                 [suggestionAdapter]="publisherSuggestionAdapter" [(ngModel)]="book.publisher" [formControlName]="'publisherControl'">
             </zli-single-selection-typeahead>
-            <label class="input-label">{{ 'BOOKS.FIELD.PUBLICATIONYEAR' | translate }}
+            <label class="input-label">{{ 'BOOKS.FIELD.PUBLICATION_YEAR' | translate }}
                 <div class="validation-alert" *ngIf="isPublicationYearEmpty">
                     {{ 'BOOKS.FIELD.REQUIRED' | translate }}
                 </div>
                 <div class="validation-alert" *ngIf="isPublicationYearIncorrect">
-                    {{ 'BOOKS.INVALID.PUBLICATIONYEAR' | translate }}
+                    {{ 'BOOKS.INVALID.PUBLICATION_YEAR' | translate }}
                 </div>
             </label>
             <input numeric numericType ="number" [(ngModel)]="book.publicationYear" [ngClass]="{ 'input-invalid': isPublicationYearInvalid}"
                 maxlength="4" min="0" class="textbox-input" formControlName="publicationYearControl">
-            <label class="input-label">{{ 'BOOKS.FIELD.NUMBEROFCOPIES' | translate }}
+            <label class="input-label">{{ 'BOOKS.FIELD.NUMBER_OF_COPIES' | translate }}
                 <div class="validation-alert" *ngIf="isNumberOfCopiesEmpty">{{ 'BOOKS.FIELD.REQUIRED' | translate }}</div>
                 <div class="validation-alert" *ngIf="isNumberOfCopiesIncorrect">
-                    {{ 'BOOKS.INVALID.NUMBEROFCOPIES' | translate }}
+                    {{ 'BOOKS.INVALID.NUMBER_OF_COPIES' | translate }}
                 </div>
             </label>
             <input numeric numericType ="number" [(ngModel)]="book.numberOfCopies" [ngClass]="{ 'input-invalid': isNumberOfCopiesInvalid}"

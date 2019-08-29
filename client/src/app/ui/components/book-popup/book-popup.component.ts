@@ -369,7 +369,7 @@ export class BookPopupComponent implements OnInit {
                 this.message = this.translate.instant('MESSAGE.RENEW');
             }
         } else if (reservation.reservationReason.status === ReservationStatus.Waiting) {
-            this.message = this.translate.instant('MESSAGE.WAITINGLIST');
+            this.message = this.translate.instant('MESSAGE.WAITING_LIST');
         } else if (reservation.reservationReason.isRejected) {
             this.message = this.translate.instant('MESSAGE.REJECTED');
         } else {

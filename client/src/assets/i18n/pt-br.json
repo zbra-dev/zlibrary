@@ -4,10 +4,10 @@
         "TO": "Ao",
         "Z": "Z",
         "APP": "Library",
-        "SLACKLOGIN": "Entrar com slack"
+        "SLACK_LOGIN": "Entrar com slack"
     },
     "NAVBAR": {
-        "RENTYOUR":  "Alugue seus ",
+        "RENT_YOUR":  "Alugue seus ",
         "BOOKS": "Livros Favoritos"
     },
     "MENU": {
@@ -19,51 +19,51 @@
         "WAITING": "Livros em Espera",
         "REQUEST": "Aprovar / Recusar",
         "REQUESTED": "Livros Requisitados",
-        "RENTEDDATE": "Alugado em: {{ date }}",
-        "RENTEDBY": "Alugado por: ",
-        "RENTEDEXPIRE": "Expira em: ",
+        "RENTED_DATE": "Alugado em: {{ date }}",
+        "RENTED_BY": "Alugado por: ",
+        "RENTED_EXPIRE": "Expira em: ",
         "AVAILABLE": "Disponível",
         "RENT": "Alugar",
         "ADD": "Adicionar Livro",
         "FIND": "Procurar...",
         "EDIT": "Editar Livro",
         "DELETE": "Deletar",
-        "DELETEQUESTION": "Deseja deletar este livro?",
-        "SIMPLEEDIT": "Editar",
+        "DELETE_QUESTION": "Deseja deletar este livro?",
+        "SIMPLE_EDIT": "Editar",
         "APPROVE": "Aprovar",
-        "APPROVEQUESTION": "Deseja aprovar esta reserva?",
+        "APPROVE_QUESTION": "Deseja aprovar esta reserva?",
         "REJECT": "Recusar",
-        "REJECTQUESTION": "Deseja recusar esta reserva?",
-        "NORESERVATIONS": "Não existe mais reservas no sistema!",
+        "REJECT_QUESTION": "Deseja recusar esta reserva?",
+        "NO_RESERVATIONS": "Não existe mais reservas no sistema!",
         "UNAVAILABLE": "Indisponível",
-        "ENTERWAITINGLIST": "Entrar na fila de espera",
-        "MOREINFORMATION": "Para mais informações, verifique sua lista de livros",
-        "PROVIDETOUSERS": "Disponibilizar para o público",
-        "WAITINGLIST": "Lista de Espera",
-        "ADDWAITINGLIST": "+ add na lista de espera",
+        "ENTER_WAITING_LIST": "Entrar na fila de espera",
+        "MORE_INFORMATION": "Para mais informações, verifique sua lista de livros",
+        "PROVIDE_TO_USERS": "Disponibilizar para o público",
+        "WAITING_LIST": "Lista de Espera",
+        "ADD_WAITING_LIST": "+ add na lista de espera",
         "ABOUT": "Sobre o Livro",
-        "RENTEDCOPIES": "Cópias alugadas",
-        "BORROWEDCOPIES": "O Livro não pode ser deletado pois possui copias emprestadas.",
+        "RENTED_COPIES": "Cópias alugadas",
+        "BORROWED_COPIES": "O Livro não pode ser deletado pois possui copias emprestadas.",
         "RESERVATION": {
             "APPROVED": "Solicitação aprovada, aguarde a disponibilidade do livro.",
             "ACCEPT": "Aceita em {{ date }}",
             "WAITING": "Aguardando Aprovação",
             "RENEW": "Renovar",
-            "RENEWALREQUESTED": "Renovação Solicitada",
+            "RENEWAL_REQUESTED": "Renovação Solicitada",
             "EXPIRED": "Reserva Expirada"
         },
         "INVALID": {
             "ISBN": "ISBN inválido",
-            "NUMBEROFCOPIES": "Número de copias deve ser no mínimo 1 e no máximo 5.",
-            "PUBLICATIONYEAR": "Ano de publicação inválido"
+            "NUMBER_OF_COPIES": "Número de copias deve ser no mínimo 1 e no máximo 5.",
+            "PUBLICATION_YEAR": "Ano de publicação inválido"
         },
         "FIELD": {
             "NAME": "Nome:",
             "SYNOPSIS": "Sinopse:",
             "AUTHORS": "Autor(es):",
             "PUBLISHER": "Editora:",
-            "PUBLICATIONYEAR": "Publicado em:",
-            "NUMBEROFCOPIES": "Número de Cópias:",
+            "PUBLICATION_YEAR": "Publicado em:",
+            "NUMBER_OF_COPIES": "Número de Cópias:",
             "ISBN": "ISBN",
             "REQUIRED": "Campo obrigatório"
         }
@@ -102,7 +102,7 @@
         "EXPIRED": "Reserva expirada",
         "WAITING": "Aguardando Aprovação",
         "APPROVED": "Reserva aprovada",
-        "WAITINGLIST": "Reserva na lista de espera",
+        "WAITING_LIST": "Reserva na lista de espera",
         "REJECTED": "Reserva rejeitada",
         "RENEW": "Vá para sua lista de livros para renovar"
     }

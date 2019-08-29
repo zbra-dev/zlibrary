@@ -40,7 +40,7 @@ export class RequestedBooksComponent implements OnInit {
     }
 
     public acceptReservation(order: Order) {
-        this.confirmMediator.showDialog(this.translate.instant('BOOKS.APPROVE').toUpperCase(), this.translate.instant('BOOKS.APPROVEQUESTION')).subscribe(r => {
+        this.confirmMediator.showDialog(this.translate.instant('BOOKS.APPROVE').toUpperCase(), this.translate.instant('BOOKS.APPROVE_QUESTION')).subscribe(r => {
             if (r) {
                 this.loaderMediator.execute(
                     this.reservationService.approve(order.reservation.id)
@@ -56,7 +56,7 @@ export class RequestedBooksComponent implements OnInit {
     }
 
     public rejectReservation(order: Order) {
-        this.confirmMediator.showDialog(this.translate.instant('BOOKS.REJECT').toUpperCase(), this.translate.instant('BOOKS.REJECTQUESTION')).subscribe(r => {
+        this.confirmMediator.showDialog(this.translate.instant('BOOKS.REJECT').toUpperCase(), this.translate.instant('BOOKS.REJECT_QUESTION')).subscribe(r => {
             if (r) {
                 this.loaderMediator.execute(
                     this.reservationService.reject(order.reservation.id)

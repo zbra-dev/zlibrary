@@ -5,13 +5,9 @@ import { CoverImageService } from '../../../service/cover-image.service';
 import { LoaderMediator } from '../../mediators/loader.mediator';
 import { ToastMediator } from '../../mediators/toast.mediator';
 import { BookService } from '../../../service/book.service';
-import { ConfirmComponent } from '../confirm/confirm.component';
-import { BsModalService } from 'ngx-bootstrap';
-import { modalConfigDefaults } from 'ngx-bootstrap/modal/modal-options.class';
 import { ConfirmMediator } from '../../mediators/confirm.mediator';
 import { User } from '../../../model/user';
 import { ReservationService } from '../../../service/reservation.service';
-import { ReservationStatus } from '../../../model/reservation-status';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -31,8 +27,7 @@ export class BookComponent implements OnInit {
     @Output() deleted: EventEmitter<void> = new EventEmitter<void>();
     @Output() view: EventEmitter<Book> = new EventEmitter<Book>();
 
-    constructor(private coverImageService: CoverImageService,
-        private loaderMediator: LoaderMediator,
+    constructor(private loaderMediator: LoaderMediator,
         private bookService: BookService,
         private toastMediator: ToastMediator,
         private confirmMediator: ConfirmMediator,
@@ -51,7 +46,7 @@ export class BookComponent implements OnInit {
         if (this.book != null) {
             this.loaderMediator.execute(
                 this.bookService.delete(this.book).subscribe(
-                    res => {
+                    () => {
                         this.deleted.emit();
                     },
                     error => {
@@ -62,7 +57,7 @@ export class BookComponent implements OnInit {
         }
     }
     public deleteModal() {
-        this.confirmMediator.showDialog(this.translate.instant('BOOKS.DELETE').toUpperCase(), this.translate.instant('BOOKS.DELETEQUESTION')).subscribe(b => {
+        this.confirmMediator.showDialog(this.translate.instant('BOOKS.DELETE').toUpperCase(), this.translate.instant('BOOKS.DELETE_QUESTION')).subscribe(b => {
             if (b) {
                 this.delete();
             }
@@ -77,7 +72,7 @@ export class BookComponent implements OnInit {
         if (this.book != null && this.user != null) {
             this.loaderMediator.execute(
                 this.reservationService.order(this.user, this.book).subscribe(
-                    res => {
+                    () => {
 
                     },
                     error => {
