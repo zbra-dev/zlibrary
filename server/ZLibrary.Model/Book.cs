@@ -10,12 +10,30 @@ namespace ZLibrary.Model
         public string Title { get; set; }
         public Publisher Publisher { get; set; }
         public List<BookAuthor> Authors { get; set; }
-        public Isbn Isbn { get; set; }
+        public string IsbnCode { get; set; }
         public string Synopsis { get; set; }
         public int PublicationYear { get; set; }
         public int NumberOfCopies { get; set; }
         public Guid CoverImageKey { get; set; }
         public DateTime Created { get; set; }
+
+        public Isbn Isbn {
+            get
+            {
+                return IsbnCode == null ? null : Isbn.FromString(IsbnCode);
+            }
+            set
+            {
+                if (value == null)
+                {
+                    IsbnCode = null;
+                }
+                else
+                {
+                    IsbnCode = value.ToString();
+                }
+            }
+        }
 
         public Book()
         {
@@ -42,14 +60,14 @@ namespace ZLibrary.Model
         {
             var other = obj as Book;
             if (other == null) return false;
-            if (!object.Equals(Isbn, other.Isbn)) return false;
+            if (!object.Equals(Id, other.Id)) return false;
             return true;
         }
 
         public override int GetHashCode()
         {
             var hash = 3;
-            hash += 17 * Isbn.GetHashCode();
+            hash += 17 * Id.GetHashCode();
             return hash;
         }
     }

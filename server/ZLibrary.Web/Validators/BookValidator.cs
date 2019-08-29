@@ -9,10 +9,12 @@ namespace ZLibrary.Web.Validators
     public class BookValidator : IValidator<BookDto>
     {
         private readonly ValidationContext context;
+        private readonly IsbnValidator isbnValidator;
 
-        public BookValidator(ValidationContext context)
+        public BookValidator(ValidationContext context, IsbnValidator isbnValidator)
         {
             this.context = context;
+            this.isbnValidator = isbnValidator;
         }
 
         public ValidationResult Validate(BookDto value)
@@ -31,16 +33,13 @@ namespace ZLibrary.Web.Validators
                 return validationResult;
             }
 
-            try
+            var isbn = isbnValidator.Validate(Isbn.FromString(value.Isbn));
+            if (isbn.HasError)
             {
-                var isbn = Isbn.FromString(value.Isbn);
-                validationResult.AddResult(isbn);
-            }
-            catch (IsbnException ex)
-            {
-                validationResult.ErrorMessage = ex.Message;
+                validationResult.ErrorMessage = isbn.ErrorMessage;
                 return validationResult;
             }
+            validationResult.AddResult(isbn);
 
             if (value.PublicationYear < 0 || value.PublicationYear > DateTime.Today.Year)
             {
@@ -61,7 +60,7 @@ namespace ZLibrary.Web.Validators
             var authorIds = value.Authors.Select(d => d.Id).ToArray();
             var authorList = new List<BookAuthor>(authorIds.Length);
 
-            foreach (var authorId in authorIds.Where( id => id.HasValue))
+            foreach (var authorId in authorIds.Where(id => id.HasValue))
             {
                 var author = context.AuthorService.FindById(authorId.Value);
 

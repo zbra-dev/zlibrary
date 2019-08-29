@@ -23,7 +23,7 @@ namespace ZLibrary.Web.Converters
                 Title = model.Title,
                 Synopsis = model.Synopsis,
                 PublicationYear = model.PublicationYear,
-                Isbn = model.Isbn.Value,
+                Isbn = model.Isbn.ToString(),
                 Publisher = publisherConverter.ConvertFromModel(model.Publisher),
                 Authors = model.Authors.Select(ba => authorConverter.ConvertFromModel(ba.Author)).ToArray(),
                 NumberOfCopies = model.NumberOfCopies,

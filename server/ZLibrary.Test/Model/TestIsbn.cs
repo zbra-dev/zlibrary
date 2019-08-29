@@ -1,6 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using ZLibrary.Model;
+using ZLibrary.Web.Validators;
 
 namespace ZLibrary.Test.Model
 {
@@ -8,83 +9,98 @@ namespace ZLibrary.Test.Model
     public class TestIsbn
     {
 
+        private readonly IsbnValidator isbnValidator = new IsbnValidator();
+
         [TestMethod]
-        public void TestCreateIsbnFromValue()
+        public void TestMultipleValidIsbns()
         {
-            Isbn.FromString("9788574591865");
-            Isbn.FromString("0201485672");
-            Isbn.FromString("0321186125");
-            Isbn.FromString("1590593898");
-            Isbn.FromString("9780321127426");
-            Isbn.FromString("9789087532321");
-            Isbn.FromString("0321127420");
+            ValidationResult validationResult;
+            validationResult = isbnValidator.Validate(Isbn.FromString("9788574591865"));
+            Assert.IsTrue(!validationResult.HasError);
+            validationResult = isbnValidator.Validate(Isbn.FromString("0201485672"));
+            Assert.IsTrue(!validationResult.HasError);
+            validationResult = isbnValidator.Validate(Isbn.FromString("0321186125"));
+            Assert.IsTrue(!validationResult.HasError);
+            validationResult = isbnValidator.Validate(Isbn.FromString("1590593898"));
+            Assert.IsTrue(!validationResult.HasError);
+            validationResult = isbnValidator.Validate(Isbn.FromString("9780321127426"));
+            Assert.IsTrue(!validationResult.HasError);
+            validationResult = isbnValidator.Validate(Isbn.FromString("9789087532321"));
+            Assert.IsTrue(!validationResult.HasError);
+            validationResult = isbnValidator.Validate(Isbn.FromString("0321127420"));
+            Assert.IsTrue(!validationResult.HasError);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(IsbnException))]
-        public void TestCreateNewIsbnFromValueWithNullConstructorShouldThrowException()
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void TestCreateNewIsbnFromValueWithNullConstructorThrowsArgumentNullException()
         {
-            Isbn.FromString(null);
+            isbnValidator.Validate(Isbn.FromString(null));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(IsbnException))]
-        public void TestCreateNewIsbnFromValueWithEmptyConstructorShouldThrowException()
+        public void TestCreateNewIsbnFromValueWithEmptyConstructor()
         {
-            Isbn.FromString("");
+            ValidationResult validationResult;
+            validationResult = isbnValidator.Validate(Isbn.FromString(""));
+            Assert.IsTrue(validationResult.HasError);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(IsbnException))]
-        public void TestCreateNewIsbnFromValueWithWhiteSpaceConstructorShouldThrowException()
+        
+        public void TestCreateNewIsbnFromValueWithWhiteSpaceConstructor()
         {
-            Isbn.FromString("   ");
+            ValidationResult validationResult;
+            validationResult = isbnValidator.Validate(Isbn.FromString("   "));
+            Assert.IsTrue(validationResult.HasError);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(IsbnException))]
-        public void TestCreateNewIsbnFromValueWithFormatValueShouldFormatException()
+        public void TestCreateNewIsbnFromValueWithFormatValue()
         {
-            Isbn.FromString("Teste");
+            ValidationResult validationResult;
+            validationResult = isbnValidator.Validate(Isbn.FromString("Teste"));
+            Assert.IsTrue(validationResult.HasError);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(IsbnException))]
-        public void TestCreateNewIsbnFromValueWithFormatValueShouldInvalidOperationException()
+        public void TestCreateNewIsbnFromValueWithInvalidLength()
         {
-            Isbn.FromString("9728574591865");
+            ValidationResult validationResult;
+            validationResult = isbnValidator.Validate(Isbn.FromString("9728574591865"));
+            Assert.IsTrue(validationResult.HasError);
         }
 
         [TestMethod]
         public void TestGetIsbnCheckValueProperties()
         {
-            var isbn = Isbn.FromString("9788574591865");
-            isbn.Id = 3;
-
-            Assert.IsNotNull(isbn);
-            Assert.AreEqual("9788574591865", isbn.Value);
-            Assert.AreEqual(3, isbn.Id);
+            ValidationResult validationResult;
+            validationResult = isbnValidator.Validate(Isbn.FromString("9788574591865"));
+            Assert.IsTrue(!validationResult.HasError);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(IsbnException))]
         public void TestInvalidIsbnTenCreation()
         {
-            Isbn.FromString("1234567890");
+            ValidationResult validationResult;
+            validationResult = isbnValidator.Validate(Isbn.FromString("1234567890"));
+            Assert.IsTrue(validationResult.HasError);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(IsbnException))]
         public void TestIsbnNineCreation()
         {
-            Isbn.FromString("123456789");
+            ValidationResult validationResult;
+            validationResult = isbnValidator.Validate(Isbn.FromString("123456789"));
+            Assert.IsTrue(validationResult.HasError);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(IsbnException))]
         public void TestIsbnElevenCreation()
         {
-            Isbn.FromString("12345678999");
+            ValidationResult validationResult;
+            validationResult = isbnValidator.Validate(Isbn.FromString("12345678999"));
+            Assert.IsTrue(validationResult.HasError);
         }
     }
 }
