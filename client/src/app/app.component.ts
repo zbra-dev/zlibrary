@@ -1,4 +1,5 @@
 import { Component, ViewContainerRef } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'zli-root',
@@ -6,6 +7,9 @@ import { Component, ViewContainerRef } from '@angular/core';
 })
 export class AppComponent {
     // ViewContainerRef is necessary for dynamic component creation (e.g.: ToastComponent)
-    constructor(public viewContainerRef: ViewContainerRef) {
+    constructor(public viewContainerRef: ViewContainerRef, private translate: TranslateService) {
+        translate.addLangs(["pt-br"]);
+
+        translate.setDefaultLang("pt-br");
     }
 }

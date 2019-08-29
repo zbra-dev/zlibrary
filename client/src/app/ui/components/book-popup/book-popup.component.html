@@ -1,47 +1,47 @@
 <div *ngIf="!canManageBook" class="popup-container">
     <div class="book-container">
-        <h1 class="about-book-title">Sobre o Livro</h1>
+        <h1 class="about-book-title">{{ 'BOOKS.ABOUT' | translate }}</h1>
         <zli-book-image class="book-image" [book]="book"></zli-book-image>
         <div class="book-information-container">
             <h2 class="book-title">{{ book.title }}</h2>
-            <div class="book-information-label">ISBN:
+            <div class="book-information-label">{{ 'BOOKS.FIELD.ISBN' | translate }}
                 <div class="book-information-content">{{book.isbn | isbn}}</div>
             </div>
-            <div class="book-information-label">Sinopse: </div>
+            <div class="book-information-label">{{ 'BOOKS.FIELD.SYNOPSIS' | translate }}</div>
             <div class="book-synopsis">{{book.synopsis}}</div>
-            <div class="book-information-label">Autor(es):
+            <div class="book-information-label">{{ 'BOOKS.FIELD.AUTHORS' | translate }}
                 <div class="book-authors" *ngFor="let author of book.authors; last as isLast">{{author.name}}{{isLast ? '' : ', '}}</div>
             </div>
-            <div class="book-information-label">Editora:
+            <div class="book-information-label">{{ 'BOOKS.FIELD.PUBLISHER' | translate }}
                 <div class="book-information-content">{{book.publisher.name}}</div>
             </div>
-            <div class="book-information-label">Publicado em:
+            <div class="book-information-label">{{ 'BOOKS.FIELD.PUBLICATION_YEAR' | translate }}
                 <div class="book-information-content">{{book.publicationYear}}</div>
             </div>
         </div>
     </div>
     <div *ngIf="isAdmin" class="admin-options-container">
-        <div class="admin-options" (click)="canEdit = true">Editar</div>
-        <div *ngIf="canEdit" class="admin-options">Deletar</div>
+        <div class="admin-options" (click)="canEdit = true">{{ 'BOOKS.SIMPLE_EDIT' | translate }}</div>
+        <div *ngIf="canEdit" class="admin-options">{{ 'BOOKS.DELETE' | translate }}</div>
     </div>
     <div *ngIf="canRequestReservation" class="request-reservation-container">
         <div class="availability-box">
-            <div *ngIf="canRequestBookRental" class="available-text">Disponível</div>
-            <div *ngIf="!isBookAvailable" class="unavailable-text">Indisponível</div>
+            <div *ngIf="canRequestBookRental" class="available-text">{{ 'BOOKS.AVAILABLE' | translate }}</div>
+            <div *ngIf="!isBookAvailable" class="unavailable-text">{{ 'BOOKS.UNAVAILABLE' | translate }}</div>
         </div>
         <div *ngIf="canRequestBookRental" class="reservation-box-available" (click)="order()">
-            <div class="available-button-text-available">Alugar</div>
+            <div class="available-button-text-available">{{ 'BOOKS.RENT' | translate }}</div>
         </div>
         <div *ngIf="canAddToWaitingList" class="reservation-box-unavailable" (click)="order()">
-            <div class="available-button-text-unavailable">+ add na lista de espera</div>
+            <div class="available-button-text-unavailable">{{ 'BOOKS.ADD_WAITING_LIST' | translate }}</div>
         </div>
         <div *ngIf="canAdminProvideBookToUsers" class="reservation-box-unavailable" (click)="openReturnBookList()">
-            <div class="available-button-text-unavailable" >Disponibilizar para o público</div>
+            <div class="available-button-text-unavailable">{{ 'BOOKS.PROVIDE_TO_USERS' | translate }}</div>
         </div>
     </div>
     <div *ngIf="requestedForReservation" class="request-reservation-container">
         <div class="availability-box">
-            <div class="suggestion-message">Para mais informações, verifique sua lista de livros</div>
+            <div class="suggestion-message">{{ 'BOOKS.MORE_INFORMATION' | translate }}</div>
         </div>
         <div class="waiting-box">
             <div class="sucess-order-text">{{message}}</div>
@@ -54,78 +54,74 @@
 
 <form *ngIf="canManageBook" class="popup-container" [formGroup]="bookForm">
     <div class="book-container">
-        <h1 *ngIf="existingBook" class="about-book-title">Editar Livro</h1>
-        <h1 *ngIf="isNew" class="about-book-title">Adicionar Livro</h1>
+        <h1 *ngIf="existingBook" class="about-book-title">{{ 'BOOKS.EDIT' | translate }}</h1>
+        <h1 *ngIf="isNew" class="about-book-title">{{ 'BOOKS.ADD' | translate }}</h1>
         <div class="image-validation-alert" *ngIf="isUploadedImageInvalid">
-            Imagem obrigatória
+            {{ 'IMAGE.REQUIRED' | translate }}
         </div>
         <div class="image-validation-alert" *ngIf="isImageExtensionInvalid">
-            Imagem tem que ter extensão '. png'
+            {{ 'IMAGE.INVALID' | translate }}
         </div>
         <div *ngIf="allowCoverImage" class="placeholder-image-container" [ngClass]="{'input-image-hover': isImageSelected, 'input-invalid':  isImageInvalid}">
             <img class="book-image-loaded" #bookImage *ngIf="hasCoverImageUrl" [src]="coverImageURL">
             <div class="edit-image">
-                <div class="edit-image-text" *ngIf="isImageSelected">Editar</div>
+                <div class="edit-image-text" *ngIf="isImageSelected">{{ 'IMAGE.EDIT' | translate }}</div>
             </div>
             <div class="image-hover"></div>
             <zli-load-image class="input-image" #loadImage [formControlName]="'imageControl'" (ngModelChange)="setCoverImage($event)"></zli-load-image>
             <zli-book-image class="book-image-loaded" *ngIf="isImageLoaded" [book]="book"></zli-book-image>
-            <div class="add-image-button">Adicionar
-                <br>Foto
-            </div>
+            <div class="add-image-button" [innerHTML]="'IMAGE.NEW' | translate"></div>
         </div>
         <div class="book-inputs-container">
-            <label class="input-label" style="margin-top: 0;">Nome do Livro:
+            <label class="input-label" style="margin-top: 0;">{{ 'BOOKS.FIELD.NAME' | translate }}
                 <div class="validation-alert" *ngIf="isBookTitleEmpty">
-                    Campo obrigatório
+                    {{ 'BOOKS.FIELD.REQUIRED' | translate }}
                 </div>
             </label>
             <input [(ngModel)]="book.title" [ngClass]="{ 'input-invalid': isBookTitleInvalid}"
                 name="title" type="text" class="textbox-input" formControlName="titleControl">
-            <div class="input-label">ISBN:
+            <div class="input-label">{{ 'BOOKS.FIELD.ISBN' | translate }}
                 <div class="validation-alert" *ngIf="isIsbnEmpty">
-                    Campo obrigatório
+                    {{ 'BOOKS.FIELD.REQUIRED' | translate }}
                 </div>
                 <div class="validation-alert" *ngIf="isIsbnIncorrect">
-                    ISBN inválido
+                    {{ 'BOOKS.INVALID.ISBN' | translate }}
                 </div>
             </div>
             <input numeric [(ngModel)]="book.isbn" [ngClass]="{ 'input-invalid': isIsbnInvalid}"
                 name="isbn" maxlength="13" numericType ="number" class="textbox-input" formControlName="isbnControl">
-            <label class="input-label">Sinopse:</label>
+            <label class="input-label">{{ 'BOOKS.FIELD.SYNOPSIS' | translate }}</label>
             <textarea [(ngModel)]="book.synopsis" name="synopsis" type="text" class="synopsis-textarea" [ngModelOptions]="{standalone: true}"> </textarea>
-            <label class="input-label">Autor(es):
+            <label class="input-label">{{ 'BOOKS.FIELD.AUTHORS' | translate }}
                 <div class="validation-alert" *ngIf="isAuthorEmpty">
-                    Campo obrigatório
+                    {{ 'BOOKS.FIELD.REQUIRED' | translate }}
                 </div>
             </label>
             <zli-multi-selection-typeahead [ngClass]="{ 'input-invalid': isAuthorInvalid}"
                 [suggestionAdapter]="authorSuggestionAdapter" [(ngModel)]="book.authors" [formControlName]="'authorsControl'">
             </zli-multi-selection-typeahead>
-            <label class="input-label">Editora:
+            <label class="input-label">{{ 'BOOKS.FIELD.PUBLISHER' | translate }}
                 <div class="validation-alert" *ngIf="isPublisherEmpty">
-                    Campo obrigatório
+                    {{ 'BOOKS.FIELD.REQUIRED' | translate }}
                 </div>
             </label>
             <zli-single-selection-typeahead [ngClass]="{ 'input-invalid': isPublisherInvalid}"
                 [suggestionAdapter]="publisherSuggestionAdapter" [(ngModel)]="book.publisher" [formControlName]="'publisherControl'">
             </zli-single-selection-typeahead>
-            <label class="input-label">Publicado em:
+            <label class="input-label">{{ 'BOOKS.FIELD.PUBLICATION_YEAR' | translate }}
                 <div class="validation-alert" *ngIf="isPublicationYearEmpty">
-                    Campo obrigatório
+                    {{ 'BOOKS.FIELD.REQUIRED' | translate }}
                 </div>
                 <div class="validation-alert" *ngIf="isPublicationYearIncorrect">
-                    Ano de publicação inválido.
+                    {{ 'BOOKS.INVALID.PUBLICATION_YEAR' | translate }}
                 </div>
             </label>
             <input numeric numericType ="number" [(ngModel)]="book.publicationYear" [ngClass]="{ 'input-invalid': isPublicationYearInvalid}"
                 maxlength="4" min="0" class="textbox-input" formControlName="publicationYearControl">
-            <label class="input-label">Número de Cópias:
-                <div class="validation-alert" *ngIf="isNumberOfCopiesEmpty">
-                    Campo obrigatório
-                </div>
+            <label class="input-label">{{ 'BOOKS.FIELD.NUMBER_OF_COPIES' | translate }}
+                <div class="validation-alert" *ngIf="isNumberOfCopiesEmpty">{{ 'BOOKS.FIELD.REQUIRED' | translate }}</div>
                 <div class="validation-alert" *ngIf="isNumberOfCopiesIncorrect">
-                    Número de copias deve ser no mínimo 1 e no máximo 5.
+                    {{ 'BOOKS.INVALID.NUMBER_OF_COPIES' | translate }}
                 </div>
             </label>
             <input numeric numericType ="number" [(ngModel)]="book.numberOfCopies" [ngClass]="{ 'input-invalid': isNumberOfCopiesInvalid}"
@@ -134,10 +130,10 @@
     </div>
     <div class="create-buttons-container">
         <div *ngIf="canManageBook" class="cancel-button" (click)="onCancel()">
-            <div class="available-button-text-available">Cancelar</div>
+            <div class="available-button-text-available">{{ 'BUTTON.CANCEL' | translate }}</div>
         </div>
         <button *ngIf="canManageBook" class="create-button" [disabled]="!bookForm.valid" (click)="saveBook()">
-            <div class="available-button-text-available">Salvar</div>
+            <div class="available-button-text-available">{{ 'BUTTON.SAVE' | translate }}</div>
         </button>
     </div>
 </form>

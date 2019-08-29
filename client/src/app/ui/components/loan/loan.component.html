@@ -5,5 +5,5 @@
       <div *ngIf="!!user" class="user-name">{{user.name}}</div>
       <span class="loan-start-date">{{loan.startDate | date:'MM/dd/yyyy'}}</span>
       <span class="loan-end-date">{{loan.expirationDate | date:'MM/dd/yyyy'}}</span>
-      <div class="return-button" (click)="returnBook()">Retornar</div>
+      <div class="return-button" (click)="returnBook()">{{ 'BUTTON.RETURN' | translate }}</div>
 </div>

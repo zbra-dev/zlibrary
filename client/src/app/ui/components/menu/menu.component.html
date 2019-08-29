@@ -10,43 +10,43 @@
                 <li *ngIf="isAdmin">
                    <img src="../../../../assets/images/green-notification.png">
                    <button (click)="showApprovedBooks()" style="cursor:pointer" class="items-list">
-                       Livros Emprestados
+                       {{ 'BOOKS.BORROWED' | translate }}
                    </button> 
                 </li>
                 <li class="user-menu-option">
                     <img src="../../../../assets/images/green-notification.png">
                     <button (click)="showRentedBooks()" style="cursor:pointer" class="items-list">
-                        Livros Alugados
+                        {{ 'BOOKS.RENTED' | translate }}
                     </button>
                 </li>
                 <li> 
                     <img src="../../../../assets/images/yellow-notification.png">
                     <button  (click)="showWaitingList()" style="cursor:pointer" class="items-list">
-                        Livros em Espera
+                        {{ 'BOOKS.WAITING' | translate }}
                     </button>
                 </li>
                 <li *ngIf="isAdmin"> 
                     <img src="../../../../assets/images/Shape.svg">
                     <button  (click)="showRequestedBooks()" style="cursor:pointer" class="items-list">
-                        Aprovar / Recusar
+                        {{ 'BOOKS.REQUEST' | translate }}
                     </button>
                 </li>
                 <li *ngIf="isAdmin"> 
                     <img src="../../../../assets/images/Shape.svg">
                     <button  (click)="addNewAuthor()" style="cursor:pointer" class="items-list">
-                        Adicionar Autor
+                        {{ 'AUTHORS.NEW' | translate }}
                     </button>
                 </li>
                 <li *ngIf="isAdmin"> 
                     <img src="../../../../assets/images/Shape.svg">
                     <button  (click)="addNewPublisher()" style="cursor:pointer" class="items-list">
-                        Adicionar Editora
+                        {{ 'PUBLISHERS.NEW' | translate }}
                     </button>
                 </li>
                 <li>
                     <img src="../../../../assets/images/out.png">
                     <button (click)="onLogout()" style="cursor:pointer" class="items-list">
-                        Sair
+                        {{ 'MENU.LOGOUT' | translate }}
                     </button>
                 </li>
             </ul>

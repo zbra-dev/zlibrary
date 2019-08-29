@@ -1,0 +1,109 @@
+{
+    "LOGIN": {
+        "WELCOME": "Bem-vindo",
+        "TO": "Ao",
+        "Z": "Z",
+        "APP": "Library",
+        "SLACK_LOGIN": "Entrar com slack"
+    },
+    "NAVBAR": {
+        "RENT_YOUR":  "Alugue seus ",
+        "BOOKS": "Livros Favoritos"
+    },
+    "MENU": {
+        "LOGOUT": "Sair"
+    },
+    "BOOKS": {
+        "BORROWED": "Livros Emprestados",
+        "RENTED": "Livros Alugados",
+        "WAITING": "Livros em Espera",
+        "REQUEST": "Aprovar / Recusar",
+        "REQUESTED": "Livros Requisitados",
+        "RENTED_DATE": "Alugado em: {{ date }}",
+        "RENTED_BY": "Alugado por: ",
+        "RENTED_EXPIRE": "Expira em: ",
+        "AVAILABLE": "Disponível",
+        "RENT": "Alugar",
+        "ADD": "Adicionar Livro",
+        "FIND": "Procurar...",
+        "EDIT": "Editar Livro",
+        "DELETE": "Deletar",
+        "DELETE_QUESTION": "Deseja deletar este livro?",
+        "SIMPLE_EDIT": "Editar",
+        "APPROVE": "Aprovar",
+        "APPROVE_QUESTION": "Deseja aprovar esta reserva?",
+        "REJECT": "Recusar",
+        "REJECT_QUESTION": "Deseja recusar esta reserva?",
+        "NO_RESERVATIONS": "Não existe mais reservas no sistema!",
+        "UNAVAILABLE": "Indisponível",
+        "ENTER_WAITING_LIST": "Entrar na fila de espera",
+        "MORE_INFORMATION": "Para mais informações, verifique sua lista de livros",
+        "PROVIDE_TO_USERS": "Disponibilizar para o público",
+        "WAITING_LIST": "Lista de Espera",
+        "ADD_WAITING_LIST": "+ add na lista de espera",
+        "ABOUT": "Sobre o Livro",
+        "RENTED_COPIES": "Cópias alugadas",
+        "BORROWED_COPIES": "O Livro não pode ser deletado pois possui copias emprestadas.",
+        "RESERVATION": {
+            "APPROVED": "Solicitação aprovada, aguarde a disponibilidade do livro.",
+            "ACCEPT": "Aceita em {{ date }}",
+            "WAITING": "Aguardando Aprovação",
+            "RENEW": "Renovar",
+            "RENEWAL_REQUESTED": "Renovação Solicitada",
+            "EXPIRED": "Reserva Expirada"
+        },
+        "INVALID": {
+            "ISBN": "ISBN inválido",
+            "NUMBER_OF_COPIES": "Número de copias deve ser no mínimo 1 e no máximo 5.",
+            "PUBLICATION_YEAR": "Ano de publicação inválido"
+        },
+        "FIELD": {
+            "NAME": "Nome:",
+            "SYNOPSIS": "Sinopse:",
+            "AUTHORS": "Autor(es):",
+            "PUBLISHER": "Editora:",
+            "PUBLICATION_YEAR": "Publicado em:",
+            "NUMBER_OF_COPIES": "Número de Cópias:",
+            "ISBN": "ISBN",
+            "REQUIRED": "Campo obrigatório"
+        }
+    },
+    "AUTHORS": {
+        "NEW": "Adicionar Autor",
+        "EDIT": "Editar Autor",
+        "NAME": "Nome:",
+        "ADD": "Autor adicionado com sucesso.",
+        "EXISTS": "Autor já existe."
+    },
+    "PUBLISHERS": {
+        "NEW": "Adicionar Editora",
+        "EDIT": "Editar Editora",
+        "NAME": "Nome:",
+        "ADD": "Editora adicionada com sucesso.",
+        "EXISTS": "Editora já existe."
+    },
+    "BUTTON": {
+        "CANCEL": "Cancelar",
+        "SAVE": "Salvar",
+        "CLOSE": "x",
+        "YES": "Sim",
+        "RETURN": "Retornar"
+    },
+    "FIELD": {
+        "REQUIRED": "Campo obrigatório"
+    },
+    "IMAGE": {
+        "NEW": "Adicionar<br>Foto",
+        "EDIT": "Editar",
+        "INVALID": "Imagem tem que ter extensão '.png'",
+        "REQUIRED": "Imagem obrigatória"
+    },
+    "MESSAGE": {
+        "EXPIRED": "Reserva expirada",
+        "WAITING": "Aguardando Aprovação",
+        "APPROVED": "Reserva aprovada",
+        "WAITING_LIST": "Reserva na lista de espera",
+        "REJECTED": "Reserva rejeitada",
+        "RENEW": "Vá para sua lista de livros para renovar"
+    }
+}

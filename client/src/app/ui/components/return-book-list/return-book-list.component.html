@@ -1,13 +1,13 @@
 <div class="modal-history">
   <div class="modal-header">
       {{index}}
-      <h4 class="modal-title">CÓPIAS ALUGADAS</h4>
-      <button type="button" class="close" (click)="close()">x</button>
+      <h4 class="modal-title">{{ 'BOOKS.RENTED_COPIES' | translate }}</h4>
+      <button type="button" class="close" (click)="close()">{{ 'BUTTON.CLOSE' | translate }}</button>
   </div>
   <div class="columns-container">
-      <span class="column-title">Alugado por:</span>
-      <span class="column-title">Alugado em:</span>
-      <span class="column-title">Expira em:</span>
+      <span class="column-title">{{ 'BOOKS.RENTED_BY' | translate }}</span>
+      <span class="column-title">{{ 'BOOKS.RENTED_DATE' | translate:{'date': date | date:'MM/dd/yyyy' } }}</span>
+      <span class="column-title">{{ 'BOOKS.RENTED_EXPIRE' | translate }}</span>
   </div>
  <zli-loan *ngFor="let reservation of reservations;" [reservation]="reservation" (refreshReservations)="refreshReservations()"></zli-loan>
 </div>

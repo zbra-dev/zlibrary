@@ -25,13 +25,7 @@ import { BookValidator } from '../../validators/book-validator';
 import { BsModalService } from 'ngx-bootstrap';
 import { ReturnBookListComponent } from '../return-book-list/return-book-list.component';
 import { FeatureSettingsService } from '../../../service/feature-settings.service';
-
-const WAITINGMESSAGE = 'Aguardando aprovação';
-const EXPIREDMESSAGE = 'Reserva expirada';
-const APPROVEDMESSAGE = 'Reserva aprovada';
-const WAITINGLISTMESSAGE = 'Reserva na lista de espera';
-const REJECTEDMESSAGE = 'Reserva rejeitada';
-const RENEWMESSAGE = 'Vá para sua lista de livros para renovar';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'zli-book-popup',
@@ -80,7 +74,8 @@ export class BookPopupComponent implements OnInit {
         public authorSuggestionAdapter: AuthorSuggestionAdapter,
         public publisherSuggestionAdapter: PublisherSuggestionAdapter,
         private modalService: BsModalService,
-        private featureSettingsService: FeatureSettingsService) {
+        private featureSettingsService: FeatureSettingsService,
+        private translate: TranslateService) {
         this.loaderMediator.onLoadChanged.subscribe(loading => this.isBusy = loading);
         this.bookForm = new FormGroup({
             imageControl: new FormControl(this.newCoverImage, Validators.compose([
@@ -365,20 +360,20 @@ export class BookPopupComponent implements OnInit {
         if (!reservation) {
             return;
         } else if (!!reservation.loan && reservation.loan.isExpired) {
-            this.message = EXPIREDMESSAGE;
+            this.message = this.translate.instant('MESSAGE.EXPIRED');
             this.isExpired = true;
         } else if (reservation.reservationReason.isApproved) {
             if (!!reservation.loan && !reservation.loan.canBorrow) {
-                this.message = APPROVEDMESSAGE;
+                this.message = this.translate.instant('MESSAGE.APPROVED');
             } else {
-                this.message = RENEWMESSAGE;
+                this.message = this.translate.instant('MESSAGE.RENEW');
             }
         } else if (reservation.reservationReason.status === ReservationStatus.Waiting) {
-            this.message = WAITINGLISTMESSAGE;
+            this.message = this.translate.instant('MESSAGE.WAITING_LIST');
         } else if (reservation.reservationReason.isRejected) {
-            this.message = REJECTEDMESSAGE;
+            this.message = this.translate.instant('MESSAGE.REJECTED');
         } else {
-            this.message = WAITINGMESSAGE;
+            this.message = this.translate.instant('MESSAGE.WAITING');
         }
     }
 

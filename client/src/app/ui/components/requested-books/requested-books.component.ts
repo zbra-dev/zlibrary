@@ -7,6 +7,7 @@ import { ToastMediator } from '../../mediators/toast.mediator';
 import { LoaderMediator } from '../../mediators/loader.mediator';
 import { Order } from '../../../model/order';
 import { ConfirmMediator } from '../../mediators/confirm.mediator';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'zli-requested-books',
@@ -18,7 +19,8 @@ export class RequestedBooksComponent implements OnInit {
     constructor(private reservationService: ReservationService,
         private toastMediator: ToastMediator,
         private confirmMediator: ConfirmMediator,
-        private loaderMediator: LoaderMediator) {
+        private loaderMediator: LoaderMediator,
+        private translate: TranslateService) {
     }
 
     @Input() public orders: Order[];
@@ -38,34 +40,32 @@ export class RequestedBooksComponent implements OnInit {
     }
 
     public acceptReservation(order: Order) {
-        this.confirmMediator.showDialog('APROVAR', 'Deseja aprovar está reserva?').subscribe(r => {
+        this.confirmMediator.showDialog(this.translate.instant('BOOKS.APPROVE').toUpperCase(), this.translate.instant('BOOKS.APPROVE_QUESTION')).subscribe(r => {
             if (r) {
                 this.loaderMediator.execute(
                     this.reservationService.approve(order.reservation.id)
                         .subscribe(() => {
                             this.showRequestedReservations();
+                        }, error => {
+                            this.toastMediator.show(error);
                         }
-                            , error => {
-                                this.toastMediator.show(`Erro ao aprovar a reserva: ${error}`);
-                            }
-                        )
+                    )
                 );
             }
         });
     }
 
     public rejectReservation(order: Order) {
-        this.confirmMediator.showDialog('RECUSAR', 'Deseja recusar está reserva?').subscribe(r => {
+        this.confirmMediator.showDialog(this.translate.instant('BOOKS.REJECT').toUpperCase(), this.translate.instant('BOOKS.REJECT_QUESTION')).subscribe(r => {
             if (r) {
                 this.loaderMediator.execute(
                     this.reservationService.reject(order.reservation.id)
                         .subscribe(() => {
                             this.showRequestedReservations();
+                        }, error => {
+                            this.toastMediator.show(error);
                         }
-                            , error => {
-                                this.toastMediator.show(`Erro ao recusar a reserva: ${error}`);
-                            }
-                        )
+                    )
                 );
             }
         });

@@ -6,6 +6,7 @@ import { LoaderMediator } from '../../mediators/loader.mediator';
 import { AuthorService } from '../../../service/author.service';
 import { ToastMediator } from '../../mediators/toast.mediator';
 import { AbstractControl } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'zli-author-popup',
@@ -23,7 +24,7 @@ export class AuthorPopupComponent implements OnInit {
     @Output()
     cancelEvent = new EventEmitter();
 
-    constructor(private authorService: AuthorService, private loaderMediator: LoaderMediator, private toastMediator: ToastMediator) {
+    constructor(private authorService: AuthorService, private loaderMediator: LoaderMediator, private toastMediator: ToastMediator, private translate: TranslateService) {
         this.loaderMediator.onLoadChanged.subscribe(loading => this.isBusy = loading);
         this.authorForm = new FormGroup({
             nameControl: new FormControl(this.author.name, Validators.compose([
@@ -64,10 +65,10 @@ export class AuthorPopupComponent implements OnInit {
                 author => {
                     this.initNewAuthor();
                     this.authorForm.reset();
-                    this.toastMediator.show("Autor adicionado com sucesso.");
+                    this.toastMediator.show(this.translate.instant('AUTHORS.ADD'));
                     this.onCancel();
                 }, error => {
-                    this.toastMediator.show("Autor já existe.");
+                    this.toastMediator.show(error);
                 }
             )
         );

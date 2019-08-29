@@ -5,13 +5,10 @@ import { CoverImageService } from '../../../service/cover-image.service';
 import { LoaderMediator } from '../../mediators/loader.mediator';
 import { ToastMediator } from '../../mediators/toast.mediator';
 import { BookService } from '../../../service/book.service';
-import { ConfirmComponent } from '../confirm/confirm.component';
-import { BsModalService } from 'ngx-bootstrap';
-import { modalConfigDefaults } from 'ngx-bootstrap/modal/modal-options.class';
 import { ConfirmMediator } from '../../mediators/confirm.mediator';
 import { User } from '../../../model/user';
 import { ReservationService } from '../../../service/reservation.service';
-import { ReservationStatus } from '../../../model/reservation-status';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'zli-book',
@@ -30,12 +27,12 @@ export class BookComponent implements OnInit {
     @Output() deleted: EventEmitter<void> = new EventEmitter<void>();
     @Output() view: EventEmitter<Book> = new EventEmitter<Book>();
 
-    constructor(private coverImageService: CoverImageService,
-        private loaderMediator: LoaderMediator,
+    constructor(private loaderMediator: LoaderMediator,
         private bookService: BookService,
         private toastMediator: ToastMediator,
         private confirmMediator: ConfirmMediator,
-        private reservationService: ReservationService) {
+        private reservationService: ReservationService,
+        private translate: TranslateService) {
         this.loaderMediator.onLoadChanged.subscribe(loading => this.isBusy = loading);
     }
 
@@ -49,18 +46,18 @@ export class BookComponent implements OnInit {
         if (this.book != null) {
             this.loaderMediator.execute(
                 this.bookService.delete(this.book).subscribe(
-                    res => {
+                    () => {
                         this.deleted.emit();
                     },
                     error => {
-                        this.toastMediator.show(`O Livro não pode ser deletado pois possui copias emprestadas.`);
+                        this.toastMediator.show(error);
                     }
                 )
             );
         }
     }
     public deleteModal() {
-        this.confirmMediator.showDialog('DELETAR', 'Deseja deletar este livro?').subscribe(b => {
+        this.confirmMediator.showDialog(this.translate.instant('BOOKS.DELETE').toUpperCase(), this.translate.instant('BOOKS.DELETE_QUESTION')).subscribe(b => {
             if (b) {
                 this.delete();
             }
@@ -75,11 +72,11 @@ export class BookComponent implements OnInit {
         if (this.book != null && this.user != null) {
             this.loaderMediator.execute(
                 this.reservationService.order(this.user, this.book).subscribe(
-                    res => {
+                    () => {
 
                     },
                     error => {
-                        this.toastMediator.show(`Erro ao pedir o livro: ${error}`);
+                        this.toastMediator.show(error);
                     }
                 )
             );
