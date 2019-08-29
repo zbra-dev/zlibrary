@@ -13,13 +13,13 @@
                        {{ 'BOOKS.BORROWED' | translate }}
                    </button> 
                 </li>
-                <li class="user-menu-option">
+                <li *ngIf="!isAdmin" class="user-menu-option">
                     <img src="../../../../assets/images/green-notification.png">
                     <button (click)="showRentedBooks()" style="cursor:pointer" class="items-list">
                         {{ 'BOOKS.RENTED' | translate }}
                     </button>
                 </li>
-                <li> 
+                <li *ngIf="!isAdmin"> 
                     <img src="../../../../assets/images/yellow-notification.png">
                     <button  (click)="showWaitingList()" style="cursor:pointer" class="items-list">
                         {{ 'BOOKS.WAITING' | translate }}
@@ -28,7 +28,13 @@
                 <li *ngIf="isAdmin"> 
                     <img src="../../../../assets/images/Shape.svg">
                     <button  (click)="showRequestedBooks()" style="cursor:pointer" class="items-list">
-                        {{ 'BOOKS.REQUEST' | translate }}
+                        {{ 'BOOKS.REQUESTED' | translate }}
+                    </button>
+                </li>
+                <li *ngIf="isAdmin"> 
+                    <img src="../../../../assets/images/Shape.svg">
+                    <button  (click)="addNewBook()" style="cursor:pointer" class="items-list">
+                        {{ 'BOOKS.ADD' | translate }}
                     </button>
                 </li>
                 <li *ngIf="isAdmin"> 
@@ -50,6 +56,13 @@
                     </button>
                 </li>
             </ul>
+        </div>
+        <div id="background-book" (click)="toggleBookSidebar()"></div>
+        <div id="sidebar-book">
+            <div>
+                <div id="close" (click)="toggleBookSidebar()"></div>
+                <book-popup (cancelEvent)="toggleBookSidebar()"></book-popup>
+            </div>
         </div>
         <div id="background-author" (click)="toggleAuthorSidebar()"></div>
         <div id="sidebar-author">
