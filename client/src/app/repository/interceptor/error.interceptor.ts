@@ -18,7 +18,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             .catch(errorResponse => {
                 let errorMessage: string;
                 if (errorResponse instanceof HttpErrorResponse) {
-                    errorMessage = errorResponse.message || JSON.stringify(errorResponse.error);
+                    errorMessage = errorResponse.error || errorResponse.message;
                 } else {
                     errorMessage = !!errorResponse.message ? errorResponse.message : errorResponse.toString();
                 }
