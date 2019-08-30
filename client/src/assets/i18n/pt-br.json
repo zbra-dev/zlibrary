@@ -65,7 +65,8 @@
             "PUBLICATION_YEAR": "Publicado em:",
             "NUMBER_OF_COPIES": "Número de Cópias:",
             "ISBN": "ISBN",
-            "REQUIRED": "Campo obrigatório"
+            "REQUIRED": "Campo obrigatório",
+            "EDITION": "Edição"
         }
     },
     "AUTHORS": {

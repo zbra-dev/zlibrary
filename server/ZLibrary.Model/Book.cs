@@ -16,6 +16,7 @@ namespace ZLibrary.Model
         public int NumberOfCopies { get; set; }
         public Guid CoverImageKey { get; set; }
         public DateTime Created { get; set; }
+        public string Edition { get; set; }
 
         public Isbn Isbn {
             get

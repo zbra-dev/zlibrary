@@ -33,6 +33,12 @@ namespace ZLibrary.Web.Validators
                 return validationResult;
             }
 
+            if (string.IsNullOrWhiteSpace(value.Edition))
+            {
+                validationResult.ErrorMessage = "Edição não pode estar em branco.";
+                return validationResult;
+            }
+
             var isbn = isbnValidator.Validate(Isbn.FromString(value.Isbn));
             if (isbn.HasError)
             {
