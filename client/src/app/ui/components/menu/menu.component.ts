@@ -7,14 +7,18 @@ import { User } from '../../../model/user';
 import { ApprovedBooksComponent } from '../approved-books/approved-books.component';
 import { AuthorPopupComponent } from '../author-popup/author-popup.component';
 import { PublisherPopupComponent } from '../publisher-popup/publisher-popup.component';
+import { BookPopupComponent } from '../book-popup/book-popup.component';
 
 @Component({
-    selector: 'zli-menu',
+    selector: 'menu',
     templateUrl: './menu.component.html',
     styleUrls: ['./menu.component.scss'],
     encapsulation: ViewEncapsulation.None
 })
 export class MenuComponent implements OnInit {
+    @ViewChild(BookPopupComponent)
+    bookPopupComponent: BookPopupComponent;
+
     @ViewChild(AuthorPopupComponent)
     authorPopupComponent: AuthorPopupComponent;
 
@@ -53,6 +57,7 @@ export class MenuComponent implements OnInit {
         const reservationHistoryComponent = reservationHistoryModalControl.content as ReservationHistoryComponent;
         reservationHistoryComponent.reservationHistoryType = ReservationHistoryType.Loaned;
         reservationHistoryComponent.modalControl = reservationHistoryModalControl;
+        this.toggleMenu();
     }
 
     public showWaitingList() {
@@ -60,28 +65,46 @@ export class MenuComponent implements OnInit {
         const reservationHistoryComponent = reservationHistoryModalControl.content as ReservationHistoryComponent;
         reservationHistoryComponent.reservationHistoryType = ReservationHistoryType.Waiting;
         reservationHistoryComponent.modalControl = reservationHistoryModalControl;
+        this.toggleMenu();
     }
 
     public showRequestedBooks() {
         const requestedBooksModalControl = this.modalService.show(RequestedBooksComponent);
         const requestedBooksComponet = requestedBooksModalControl.content as RequestedBooksComponent;
         requestedBooksComponet.modalControl = requestedBooksModalControl;
+        this.toggleMenu();
+    }
+
+    public addNewBook() {
+        this.bookPopupComponent.initNewBook();
+        this.toggleBookSidebar();
+        this.toggleMenu();
     }
 
     public addNewAuthor() {
         this.authorPopupComponent.initNewAuthor();
         this.toggleAuthorSidebar();
+        this.toggleMenu();
     }
 
     public addNewPublisher() {
         this.publisherPopupComponent.initNewPublisher();
         this.togglePublisherSidebar();
+        this.toggleMenu();
     }
 
     public showApprovedBooks() {
         const approvedBooksModalControl = this.modalService.show(ApprovedBooksComponent);
         const approvedBooksComponent = approvedBooksModalControl.content as ApprovedBooksComponent;
         approvedBooksComponent.modalControl = approvedBooksModalControl;
+        this.toggleMenu();
+    }
+
+    public toggleBookSidebar(): void {
+        document.getElementById('background-book').classList.toggle('active');
+        if (document.getElementById('sidebar-book').classList.toggle('active') === false) {
+            this.isBusy = false;
+        }
     }
 
     public toggleAuthorSidebar(): void {

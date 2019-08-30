@@ -28,7 +28,7 @@ import { FeatureSettingsService } from '../../../service/feature-settings.servic
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-    selector: 'zli-book-popup',
+    selector: 'book-popup',
     templateUrl: './book-popup.component.html',
     styleUrls: ['./book-popup.component.scss']
 })
