@@ -52,18 +52,25 @@ export class ReservationRepository {
   public approve(reservationId: number) {
     return this.httpClient.post(`${URL}/approved/${reservationId}`, ' ', {
       headers: new HttpHeaders().set('Content-Type', 'application/json'),
-      responseType: 'text' 
-   });
+      responseType: 'text'
+    });
   }
 
   public reject(reservationId: number) {
     const orderUrl = `${URL}/rejected`;
     const dto = { id: reservationId, description: '' }
     const json = JSON.stringify(dto);
-    return this.httpClient.post(orderUrl, json, { 
-      headers: new HttpHeaders().set('Content-Type', 'application/json'), 
-      responseType: 'text' 
-   });
-    
+    return this.httpClient.post(orderUrl, json, {
+      headers: new HttpHeaders().set('Content-Type', 'application/json'),
+      responseType: 'text'
+    });
   }
+
+  public returnBook(reservationId: number) {
+    return this.httpClient.post(`${URL}/returned/${reservationId}`, ' ', {
+      headers: new HttpHeaders().set('Content-Type', 'application/json'),
+      responseType: 'text'
+    });
+  }
+
 }

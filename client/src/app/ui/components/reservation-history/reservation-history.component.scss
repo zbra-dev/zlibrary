@@ -25,3 +25,21 @@
 .close{
     object-fit: contain;
 }
+
+.modal-body{
+    padding: 0px;
+    max-height: 85%;
+    overflow: auto;
+    position: absolute;
+}
+
+.message{
+    width: 1178px;
+    font-size: 1em;
+    font-family: Roboto;
+    text-align: center;
+    line-height: 3.5;
+    letter-spacing: 5px;
+    color: #726e6e;
+    margin: 50px;
+}

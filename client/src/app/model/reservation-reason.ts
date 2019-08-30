@@ -10,6 +10,10 @@ export class ReservationReason {
         return this.status !== null && this.status === ReservationStatus.Rejected;
     }
 
+    public get isReturned(): boolean {
+        return this.status !== null && this.status === ReservationStatus.Returned;
+    }
+
 
     constructor(public status: ReservationStatus,
         public description: string) {

@@ -361,7 +361,7 @@ export class BookPopupComponent implements OnInit {
             .subscribe((reservations: Reservation[]) => {
 
                 const userReservations = reservations
-                    .filter(r => r.id === currentReservation.id);
+                    .filter(r => r.id === currentReservation.id && !r.reservationReason.isReturned);
 
                 if (userReservations.length !== 0) {
                     this.printReservationState(userReservations[0]);

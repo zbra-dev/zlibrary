@@ -89,3 +89,26 @@
     color: #979595;
     font-family: Roboto;
 }
+
+.return-button{
+    font-size: 18px;
+    font-family: Roboto;
+    color: #4a90e2;
+    background-color: transparent;
+    border-color: transparent;
+    right: 3%;
+    position: absolute;
+    margin-top: 6%;
+    cursor: pointer;
+}
+
+.message{
+    width: 1178px;
+    font-size: 1em;
+    font-family: Roboto;
+    text-align: center;
+    line-height: 3.5;
+    letter-spacing: 5px;
+    color: #726e6e;
+    margin: 50px;
+}

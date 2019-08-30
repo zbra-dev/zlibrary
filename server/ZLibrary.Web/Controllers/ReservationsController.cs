@@ -167,6 +167,26 @@ namespace ZLibrary.Web
             }
         }
 
+        [HttpPost("returned/{id:long}")]
+        public async Task<IActionResult> UpdateReservationStatusToReturned(long id)
+        {
+            var reservation = await reservationService.FindById(id);
+            if (reservation == null)
+            {
+                return NotFound($"Nenhuma reserva encontrada com o ID: {id}.");
+            }
+            try
+            {
+                var book = await bookService.FindById(reservation.BookId);
+                await reservationService.ReturnReservation(reservation, book);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost("rejected")]
         public async Task<IActionResult> UpdateLoanStatusToRejected([FromBody]ReservationRejectDto value)
         {
