@@ -18,6 +18,10 @@
               </div>
               <span class="reservation-start-date">{{ 'BOOKS.RENTED_DATE' | translate:{'date': order.reservation.startDate | date:'MM/dd/yyyy' } }}</span>
           </div>
+          <button type="button" class="return-button" (click)="returnBook(order.reservation.id)">{{ 'BUTTON.RETURN' | translate}}</button>
       </div>
+      <div *ngIf="!orders" class="modal-rectangle" style="display: flex;">
+        <div class="message">{{ 'BOOKS.NOT_APPROVED_RESERVATIONS' | translate }}</div>
+    </div>
     </div>
 </div>

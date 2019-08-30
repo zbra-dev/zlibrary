@@ -34,7 +34,8 @@
         "APPROVE_QUESTION": "Deseja aprovar esta reserva?",
         "REJECT": "Recusar",
         "REJECT_QUESTION": "Deseja recusar esta reserva?",
-        "NO_RESERVATIONS": "Não existe mais reservas no sistema!",
+        "NO_RESERVATIONS": "Não existem mais reservas no sistema!",
+        "NOT_APPROVED_RESERVATIONS": "Nenhum livro foi emprestado!",
         "UNAVAILABLE": "Indisponível",
         "ENTER_WAITING_LIST": "Entrar na fila de espera",
         "MORE_INFORMATION": "Para mais informações, verifique sua lista de livros",
@@ -44,6 +45,9 @@
         "ABOUT": "Sobre o Livro",
         "RENTED_COPIES": "Cópias alugadas",
         "BORROWED_COPIES": "O Livro não pode ser deletado pois possui copias emprestadas.",
+        "RETURN": "Devolver",
+        "RETURN_QUESTION": "Deseja devolver o livro?",
+        "WITHOUT_RESERVATION": "Nenhuma reserva feita!",
         "RESERVATION": {
             "APPROVED": "Solicitação aprovada, aguarde a disponibilidade do livro.",
             "ACCEPT": "Aceita em {{ date }}",
@@ -88,7 +92,7 @@
         "SAVE": "Salvar",
         "CLOSE": "x",
         "YES": "Sim",
-        "RETURN": "Retornar"
+        "RETURN": "Devolver"
     },
     "FIELD": {
         "REQUIRED": "Campo obrigatório"

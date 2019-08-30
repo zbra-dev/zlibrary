@@ -5,5 +5,8 @@
         <h4 *ngIf="isWaiting" class="modal-title">{{ 'BOOKS.WAITING_LIST' | translate }}</h4>
         <button type="button" class="close" (click)="close()">{{ 'BUTTON.CLOSE' | translate }}</button>
     </div>
-   <zli-reservation-list *ngFor="let reservation of reservations;" [reservation]="reservation"></zli-reservation-list>
+    <zli-reservation-list *ngFor="let reservation of reservations;" [reservation]="reservation"></zli-reservation-list>
+    <div class="modal-body" *ngIf="!reservations" class="modal-rectangle" style="display: flex;">
+        <div class="message">{{ 'BOOKS.WITHOUT_RESERVATION' | translate }}</div>
+    </div>
 </div>

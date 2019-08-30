@@ -96,6 +96,29 @@ namespace ZLibrary.Core
             }
         }
 
+        public async Task ReturnReservation(Reservation reservation, Book book)
+        {
+            if (!reservation.IsApproved)
+            {
+                throw new ReservationApprovedException($"O Status da reserversa precisa ser Aprovada.");
+            }
+
+            if (book == null)
+            {
+                throw new InvalidOperationException("Livro indefinido.");
+            }
+
+            var loans = await loanService.FindByBookId(reservation.BookId);
+            var loanBorrowedByUser = loans.SingleOrDefault(l => l.Reservation.User.Id == reservation.User.Id && l.Status == LoanStatus.Borrowed);
+            if (loanBorrowedByUser == null)
+            {
+                throw new ReservationApprovedException($"Status inválido do emprestimo");
+            }
+            await loanService.ReturnLoan(loanBorrowedByUser.Id);
+            reservation.Reason.Status = ReservationStatus.Returned;
+            await reservationRepository.Update(reservation);
+        }
+
         public async Task RejectedReservation(Reservation reservation)
         {
             if (!reservation.IsRequested)
