@@ -118,7 +118,7 @@ export class BookPopupComponent implements OnInit {
         if (!book) {
             throw new Error('Livro não pode ser nulo.');
         }
-        this.canEdit = false;
+        this.canEdit = this.isAdmin;
         //Set Image validate again because book reference has changed
         if (this.allowCoverImage) {
             this.bookForm.get('imageControl').setValidators(BookValidator.validateImageExtension(this.book));
@@ -412,6 +412,7 @@ export class BookPopupComponent implements OnInit {
                 book => {
                     this.initWith(book);
                     this.updateBookListEvent.emit(null);
+                    this.onCancel();
                 }, error => {
                     this.toastMediator.show(`Erro ao salvar o livro: ${error}`);
                 }
@@ -420,11 +421,9 @@ export class BookPopupComponent implements OnInit {
     }
 
     public onCancel(): void {
-        this.canEdit = false;
         this.book = this.originalBook;
-        if (this.isNew) {
-            this.cancelEvent.emit(null);
-        }
+        // this.bookForm.reset();
+        this.cancelEvent.emit(null);
     }
 
     public openReturnBookList() {

@@ -26,6 +26,7 @@ export class BookComponent implements OnInit {
 
     @Output() deleted: EventEmitter<void> = new EventEmitter<void>();
     @Output() view: EventEmitter<Book> = new EventEmitter<Book>();
+    @Output() edit: EventEmitter<Book> = new EventEmitter<Book>();
 
     constructor(private loaderMediator: LoaderMediator,
         private bookService: BookService,
@@ -41,6 +42,13 @@ export class BookComponent implements OnInit {
         this.isExpired = this.book.calculateExpired(this.user);
     }
 
+    public get isbookAvailable(): boolean {
+        return this.book.isAvailable;
+    }
+
+    public get isAdmin(): boolean {
+        return this.user.isAdministrator;
+    }
 
     public delete() {
         if (this.book != null) {
@@ -56,6 +64,7 @@ export class BookComponent implements OnInit {
             );
         }
     }
+
     public deleteModal() {
         this.confirmMediator.showDialog(this.translate.instant('BOOKS.DELETE').toUpperCase(), this.translate.instant('BOOKS.DELETE_QUESTION')).subscribe(b => {
             if (b) {
@@ -66,6 +75,10 @@ export class BookComponent implements OnInit {
 
     public viewBookDetails() {
         this.view.emit(this.book);
+    }
+
+    public editBook() {
+        this.edit.emit(this.book);
     }
 
     public orderBook() {
