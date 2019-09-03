@@ -1,7 +1,6 @@
 <div *ngIf="isbookAvailable"class="book">
     <div *ngIf="isAdmin"class="admin-modify">
         <div class="admin-edit-text" (click)="editBook()">{{ 'BOOKS.SIMPLE_EDIT' | translate }}</div>
-        <div class="admin-delete-text" (click)="deleteModal()">{{ 'BOOKS.DELETE' | translate }}</div>
     </div>
     <zli-book-image  class="book-cover" [book]="book"></zli-book-image>
     <div class="book-info">
@@ -31,7 +30,6 @@
     </div>
     <div *ngIf="isAdmin"class="admin-modify">
         <div class="admin-edit-text" (click)="viewBookDetails()">{{ 'BOOKS.SIMPLE_EDIT' | translate }}</div>
-        <div class="admin-delete-text" (click)="deleteModal()">{{ 'BOOKS.DELETE' | translate }}</div>
     </div>
     <zli-book-image  class="book-cover" [book]="book"></zli-book-image>
     <div class="book-info">
