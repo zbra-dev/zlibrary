@@ -4,7 +4,7 @@ import { User } from './../../../model/user';
 import { Book } from './../../../model/book';
 import { Reservation } from './../../../model/reservation';
 import { LoanStatus } from './../../../model/loan-status';
-import { Component, OnInit, ElementRef, keyframes, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, keyframes, Output, EventEmitter, ViewChild, OnDestroy, OnChanges } from '@angular/core';
 import { BookService } from '../../../service/book.service';
 import { CoverImageService } from '../../../service/cover-image.service';
 import { ReservationService } from '../../../service/reservation.service';
@@ -17,7 +17,7 @@ import { Publisher } from '../../../model/publisher';
 import { Isbn } from '../../../model/isbn';
 import { Guid } from '../../../model/guid';
 import { PublisherService } from '../../../service/publisher.service';
-import { FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
+import { FormGroup, Validators, FormControl, AbstractControl, FormGroupDirective } from '@angular/forms';
 import { AuthorSuggestionAdapter } from './author-suggestion.adapter';
 import { PublisherSuggestionAdapter } from './publisher-suggestion.adapter';
 import { BookComponent } from '../book/book.component';
@@ -28,12 +28,12 @@ import { FeatureSettingsService } from '../../../service/feature-settings.servic
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-    selector: 'zli-book-popup',
+    selector: 'book-popup',
     templateUrl: './book-popup.component.html',
     styleUrls: ['./book-popup.component.scss']
 })
 
-export class BookPopupComponent implements OnInit {
+export class BookPopupComponent implements OnInit, OnChanges {
 
     public book = new Book();
     public originalBook: Book;
@@ -100,6 +100,10 @@ export class BookPopupComponent implements OnInit {
                 Validators.required,
                 Validators.maxLength(1),
                 BookValidator.validateNumberOfCopies(1, 5)
+            ])),
+            editionControl: new FormControl(this.book.edition, Validators.compose([
+                Validators.required,
+                BookValidator.validateEmptyString()
             ]))
         });
     }
@@ -112,6 +116,10 @@ export class BookPopupComponent implements OnInit {
             }, error => {
                 this.toastMediator.show(`${error}`);
             });
+    }
+
+    ngOnChanges() {
+        this.titleControl.reset();
     }
 
     public initWith(book: Book) {
@@ -172,6 +180,10 @@ export class BookPopupComponent implements OnInit {
 
     public get numberOfCopiesControl() {
         return this.bookForm.get('numberOfCopiesControl');
+    }
+
+    public get editionControl() {
+        return this.bookForm.get('editionControl');
     }
 
     public get canRequestReservation(): boolean {
@@ -245,6 +257,11 @@ export class BookPopupComponent implements OnInit {
     public get isBookTitleInvalid(): boolean {
         return this.titleControl.invalid
             && (this.titleControl.dirty || this.titleControl.touched);
+    }
+
+    public get isBookEditionInvalid(): boolean {
+        return this.editionControl.invalid
+            && (this.editionControl.dirty || this.editionControl.touched);
     }
 
     public get isIsbnEmpty(): boolean {
@@ -348,7 +365,7 @@ export class BookPopupComponent implements OnInit {
             .subscribe((reservations: Reservation[]) => {
 
                 const userReservations = reservations
-                    .filter(r => r.id === currentReservation.id);
+                    .filter(r => r.id === currentReservation.id && !r.reservationReason.isReturned);
 
                 if (userReservations.length !== 0) {
                     this.printReservationState(userReservations[0]);
@@ -422,7 +439,6 @@ export class BookPopupComponent implements OnInit {
 
     public onCancel(): void {
         this.book = this.originalBook;
-        // this.bookForm.reset();
         this.cancelEvent.emit(null);
     }
 

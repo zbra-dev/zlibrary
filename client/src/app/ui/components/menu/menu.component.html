@@ -13,13 +13,13 @@
                        {{ 'BOOKS.BORROWED' | translate }}
                    </button> 
                 </li>
-                <li class="user-menu-option">
+                <li *ngIf="!isAdmin" class="user-menu-option">
                     <img src="../../../../assets/images/green-notification.png">
                     <button (click)="showRentedBooks()" style="cursor:pointer" class="items-list">
                         {{ 'BOOKS.RENTED' | translate }}
                     </button>
                 </li>
-                <li> 
+                <li *ngIf="!isAdmin"> 
                     <img src="../../../../assets/images/yellow-notification.png">
                     <button  (click)="showWaitingList()" style="cursor:pointer" class="items-list">
                         {{ 'BOOKS.WAITING' | translate }}
@@ -28,7 +28,13 @@
                 <li *ngIf="isAdmin"> 
                     <img src="../../../../assets/images/Shape.svg">
                     <button  (click)="showRequestedBooks()" style="cursor:pointer" class="items-list">
-                        {{ 'BOOKS.REQUEST' | translate }}
+                        {{ 'BOOKS.REQUESTED' | translate }}
+                    </button>
+                </li>
+                <li *ngIf="isAdmin"> 
+                    <img src="../../../../assets/images/Shape.svg">
+                    <button  (click)="addNewBook()" style="cursor:pointer" class="items-list">
+                        {{ 'BOOKS.ADD' | translate }}
                     </button>
                 </li>
                 <li *ngIf="isAdmin"> 
@@ -51,6 +57,13 @@
                 </li>
             </ul>
         </div>
+        <div id="background-book" (click)="toggleBookSidebar()"></div>
+        <div id="sidebar-book">
+            <div>
+                <div id="close" (click)="toggleBookSidebar()"></div>
+                <book-popup (cancelEvent)="toggleBookSidebar()"></book-popup>
+            </div>
+        </div>
         <div id="background-author" (click)="toggleAuthorSidebar()"></div>
         <div id="sidebar-author">
             <div>
@@ -66,36 +79,3 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--<div class="dropdown">
-    <div class="dropdown-menu">
-        <a class="loan-books" href="#">Livros Alugados</a>
-        <a class="waiting-list" href="#">Livros em Espera</a>
-        <a class="logout" href="#">>Sair</a>
-    </div>
-</div>-->
-
-
-<!--<div class="dropdown">
-    <ul class="dropdown-menu">
-        <li> <a  [routerLink]="" (click)= "viewReservationHistory()">
-            <img src="../../../../assets/images/ic-rednotifications.png">Livros Alugado</a>
-        </li>
-        <li> <a  [routerLink]="" (click)= "viewReservationHistory()"><img src="../../../../assets/images/ic-rednotifications_yellow.png">Livros em Espera</a></li>
-        <li> <a  [routerLink]="" (click)= "onLogout()"><img src="../../../../assets/images/out.png">Sair</a></li>
-    </ul>
-</div>-->
-
-

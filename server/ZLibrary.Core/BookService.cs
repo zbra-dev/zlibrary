@@ -151,6 +151,7 @@ namespace ZLibrary.Core
             bookToSave.Authors = newBook.Authors;
             bookToSave.NumberOfCopies = newBook.NumberOfCopies;
             bookToSave.CoverImageKey = newBook.CoverImageKey;
+            bookToSave.Edition = newBook.Edition;
 
             foreach (var bookAuthor in bookToSave.Authors)
             {

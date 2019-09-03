@@ -7,7 +7,7 @@
         <button (click)="search()" style="cursor:pointer" class="search-button">
             <img src="../../../../assets/images/ic-search.png" />
         </button>
-        <button *ngIf="isAdmin == true" (click)="onSelect()" style="cursor:pointer" class="add-button">
+        <button *ngIf="isAdmin" (click)="onSelect()" style="cursor:pointer" class="add-button">
             <img src="../../../../assets/images/ic-add-book.png" />
         </button>
         </div>
@@ -17,7 +17,7 @@
             <div id="sidebar">
                 <div>
                     <div id="close" (click)="toggleSidebar()"></div>
-                    <zli-book-popup (updateBookListEvent)="updateBookStatus($event)" (cancelEvent)="toggleSidebar()"></zli-book-popup>
+                    <book-popup (updateBookListEvent)="updateBookStatus($event)" (cancelEvent)="toggleSidebar()"></book-popup>
                 </div>
             </div>
         </div>

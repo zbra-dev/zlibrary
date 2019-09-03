@@ -9,8 +9,11 @@
             </div>
             <div class="book-information-label">{{ 'BOOKS.FIELD.SYNOPSIS' | translate }}</div>
             <div class="book-synopsis">{{book.synopsis}}</div>
+            <div class="book-information-label">{{ 'BOOKS.FIELD.EDITION' | translate }}</div>
+            <div class="book-synopsis">{{book.edition}}</div>
             <div class="book-information-label">{{ 'BOOKS.FIELD.AUTHORS' | translate }}
-                <div class="book-authors" *ngFor="let author of book.authors; last as isLast">{{author.name}}{{isLast ? '' : ', '}}</div>
+                <div class="book-authors" *ngFor="let author of book.authors; last as isLast">
+                    {{author.name}}{{isLast ? '' : ', '}}</div>
             </div>
             <div class="book-information-label">{{ 'BOOKS.FIELD.PUBLISHER' | translate }}
                 <div class="book-information-content">{{book.publisher.name}}</div>
@@ -62,13 +65,15 @@
         <div class="image-validation-alert" *ngIf="isImageExtensionInvalid">
             {{ 'IMAGE.INVALID' | translate }}
         </div>
-        <div *ngIf="allowCoverImage" class="placeholder-image-container" [ngClass]="{'input-image-hover': isImageSelected, 'input-invalid':  isImageInvalid}">
+        <div *ngIf="allowCoverImage" class="placeholder-image-container"
+            [ngClass]="{'input-image-hover': isImageSelected, 'input-invalid':  isImageInvalid}">
             <img class="book-image-loaded" #bookImage *ngIf="hasCoverImageUrl" [src]="coverImageURL">
             <div class="edit-image">
                 <div class="edit-image-text" *ngIf="isImageSelected">{{ 'IMAGE.EDIT' | translate }}</div>
             </div>
             <div class="image-hover"></div>
-            <zli-load-image class="input-image" #loadImage [formControlName]="'imageControl'" (ngModelChange)="setCoverImage($event)"></zli-load-image>
+            <zli-load-image class="input-image" #loadImage [formControlName]="'imageControl'"
+                (ngModelChange)="setCoverImage($event)"></zli-load-image>
             <zli-book-image class="book-image-loaded" *ngIf="isImageLoaded" [book]="book"></zli-book-image>
             <div class="add-image-button" [innerHTML]="'IMAGE.NEW' | translate"></div>
         </div>
@@ -88,17 +93,26 @@
                     {{ 'BOOKS.INVALID.ISBN' | translate }}
                 </div>
             </div>
-            <input numeric [(ngModel)]="book.isbn" [ngClass]="{ 'input-invalid': isIsbnInvalid}"
-                name="isbn" maxlength="13" numericType ="number" class="textbox-input" [ngModelOptions]="{standalone: true}">
+            <input numeric [(ngModel)]="book.isbn" [ngClass]="{ 'input-invalid': isIsbnInvalid}" name="isbn"
+                maxlength="13" numericType="number" class="textbox-input" formControlName="isbnControl">
+            <label class="input-label">{{ 'BOOKS.FIELD.EDITION' | translate }}
+                <div class="validation-alert" *ngIf="isBookTitleEmpty">
+                    {{ 'BOOKS.FIELD.REQUIRED' | translate }}
+                </div>
+            </label>
+            <input [(ngModel)]="book.edition" [ngClass]="{ 'input-invalid': isBookEditionInvalid}" name="title"
+                type="text" class="textbox-input" formControlName="editionControl">
             <label class="input-label">{{ 'BOOKS.FIELD.SYNOPSIS' | translate }}</label>
-            <textarea [(ngModel)]="book.synopsis" name="synopsis" type="text" class="synopsis-textarea" [ngModelOptions]="{standalone: true}"></textarea>
+            <textarea [(ngModel)]="book.synopsis" name="synopsis" type="text" class="synopsis-textarea"
+                [ngModelOptions]="{standalone: true}"> </textarea>
             <label class="input-label">{{ 'BOOKS.FIELD.AUTHORS' | translate }}
                 <div class="validation-alert" *ngIf="isAuthorEmpty">
                     {{ 'BOOKS.FIELD.REQUIRED' | translate }}
                 </div>
             </label>
             <zli-multi-selection-typeahead [ngClass]="{ 'input-invalid': isAuthorInvalid}"
-                [suggestionAdapter]="authorSuggestionAdapter" [(ngModel)]="book.authors" [formControlName]="'authorsControl'">
+                [suggestionAdapter]="authorSuggestionAdapter" [(ngModel)]="book.authors"
+                [formControlName]="'authorsControl'">
             </zli-multi-selection-typeahead>
             <label class="input-label">{{ 'BOOKS.FIELD.PUBLISHER' | translate }}
                 <div class="validation-alert" *ngIf="isPublisherEmpty">
@@ -106,7 +120,8 @@
                 </div>
             </label>
             <zli-single-selection-typeahead [ngClass]="{ 'input-invalid': isPublisherInvalid}"
-                [suggestionAdapter]="publisherSuggestionAdapter" [(ngModel)]="book.publisher" [formControlName]="'publisherControl'">
+                [suggestionAdapter]="publisherSuggestionAdapter" [(ngModel)]="book.publisher"
+                [formControlName]="'publisherControl'">
             </zli-single-selection-typeahead>
             <label class="input-label">{{ 'BOOKS.FIELD.PUBLICATION_YEAR' | translate }}
                 <div class="validation-alert" *ngIf="isPublicationYearEmpty">
@@ -116,16 +131,19 @@
                     {{ 'BOOKS.INVALID.PUBLICATION_YEAR' | translate }}
                 </div>
             </label>
-            <input numeric numericType ="number" [(ngModel)]="book.publicationYear" [ngClass]="{ 'input-invalid': isPublicationYearInvalid}"
-                maxlength="4" min="0" class="textbox-input" formControlName="publicationYearControl">
+            <input numeric numericType="number" [(ngModel)]="book.publicationYear"
+                [ngClass]="{ 'input-invalid': isPublicationYearInvalid}" maxlength="4" min="0" class="textbox-input"
+                formControlName="publicationYearControl">
             <label class="input-label">{{ 'BOOKS.FIELD.NUMBER_OF_COPIES' | translate }}
-                <div class="validation-alert" *ngIf="isNumberOfCopiesEmpty">{{ 'BOOKS.FIELD.REQUIRED' | translate }}</div>
+                <div class="validation-alert" *ngIf="isNumberOfCopiesEmpty">{{ 'BOOKS.FIELD.REQUIRED' | translate }}
+                </div>
                 <div class="validation-alert" *ngIf="isNumberOfCopiesIncorrect">
                     {{ 'BOOKS.INVALID.NUMBER_OF_COPIES' | translate }}
                 </div>
             </label>
-            <input numeric numericType ="number" [(ngModel)]="book.numberOfCopies" [ngClass]="{ 'input-invalid': isNumberOfCopiesInvalid}"
-            maxlength="1" class="textbox-input" formControlName="numberOfCopiesControl">
+            <input numeric numericType="number" [(ngModel)]="book.numberOfCopies"
+                [ngClass]="{ 'input-invalid': isNumberOfCopiesInvalid}" maxlength="1" class="textbox-input"
+                formControlName="numberOfCopiesControl">
         </div>
     </div>
     <div class="create-buttons-container">

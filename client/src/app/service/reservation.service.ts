@@ -36,4 +36,8 @@ export class ReservationService {
     public reject(reservationId: number) {
         return this.repository.reject(reservationId);
     }
+
+    public returnBook(reservationId: number) {
+        return this.repository.returnBook(reservationId);
+    }
 }
