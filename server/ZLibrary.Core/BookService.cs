@@ -75,9 +75,10 @@ namespace ZLibrary.Core
         public async Task<Book> Save(Book book)
         {
             Book bookOriginal = null;
-            if (book.NumberOfCopies <= 0)
+            //TODO bookValidator
+            if (book.NumberOfCopies < 0)
             {
-                throw new BookSaveException("Número de cópias deve ser positivo maior que zero.");
+                throw new BookSaveException("Número de cópias inválido.");
             }
 
             if (book.Id > 0)
