@@ -6,7 +6,6 @@ import { ToastMediator } from '../../mediators/toast.mediator';
 import { User } from '../../../model/user';
 import { AuthService } from '../../../service/auth.service';
 import { BookPopupComponent } from '../../components/book-popup/book-popup.component';
-import { $ } from 'protractor';
 
 @Component({
     selector: 'zli-book-list',

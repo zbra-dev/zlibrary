@@ -4,7 +4,7 @@ import { User } from './../../../model/user';
 import { Book } from './../../../model/book';
 import { Reservation } from './../../../model/reservation';
 import { LoanStatus } from './../../../model/loan-status';
-import { Component, OnInit, ElementRef, keyframes, Output, EventEmitter, ViewChild, OnDestroy, OnChanges } from '@angular/core';
+import { Component, OnInit, ElementRef, keyframes, Output, EventEmitter, ViewChild } from '@angular/core';
 import { BookService } from '../../../service/book.service';
 import { CoverImageService } from '../../../service/cover-image.service';
 import { ReservationService } from '../../../service/reservation.service';
@@ -17,7 +17,7 @@ import { Publisher } from '../../../model/publisher';
 import { Isbn } from '../../../model/isbn';
 import { Guid } from '../../../model/guid';
 import { PublisherService } from '../../../service/publisher.service';
-import { FormGroup, Validators, FormControl, AbstractControl, FormGroupDirective } from '@angular/forms';
+import { FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { AuthorSuggestionAdapter } from './author-suggestion.adapter';
 import { PublisherSuggestionAdapter } from './publisher-suggestion.adapter';
 import { BookComponent } from '../book/book.component';
@@ -33,7 +33,7 @@ import { TranslateService } from '@ngx-translate/core';
     styleUrls: ['./book-popup.component.scss']
 })
 
-export class BookPopupComponent implements OnInit, OnChanges {
+export class BookPopupComponent implements OnInit {
 
     public book = new Book();
     public originalBook: Book;
@@ -116,10 +116,6 @@ export class BookPopupComponent implements OnInit, OnChanges {
             }, error => {
                 this.toastMediator.show(`${error}`);
             });
-    }
-
-    ngOnChanges() {
-        this.titleControl.reset();
     }
 
     public initWith(book: Book) {
@@ -429,7 +425,6 @@ export class BookPopupComponent implements OnInit, OnChanges {
                 book => {
                     this.initWith(book);
                     this.updateBookListEvent.emit(null);
-                    this.onCancel();
                 }, error => {
                     this.toastMediator.show(`Erro ao salvar o livro: ${error}`);
                 }
