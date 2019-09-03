@@ -189,6 +189,19 @@ namespace ZLibrary.Web
             return Ok(EnrichBooks(books));
         }
 
+        [HttpPost("search/admin", Name = "FindAdminBookBy")]
+        public async Task<IActionResult> FindForAdminBy([FromBody]SearchParametersDto value)
+        {
+            var orderBy = (SearchOrderBy)Enum.ToObject(typeof(SearchOrderBy), value.OrderByValue);
+            var bookSearchParameter = new BookSearchParameter(value.Keyword)
+            {
+                OrderBy = orderBy,
+                ShowNoCopies = true
+            };
+            var books = await bookFacade.FindBy(bookSearchParameter);
+            return Ok(EnrichBooks(books));
+        }
+
         private List<BookDto> EnrichBooks(IList<Book> books)
         {
             var booksDto = new List<BookDto>();

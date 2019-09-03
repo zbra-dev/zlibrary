@@ -138,7 +138,13 @@ namespace ZLibrary.Core
                 orderBySelector = b => b.Title;
             }
 
-            return bookSet.OrderBy(orderBySelector).ToArray();
+            var bookList = bookSet.OrderBy(orderBySelector).ToArray();
+            if (!parameters.ShowNoCopies)
+            {
+                bookList = bookList.Where(b => b.NumberOfCopies > 0).ToArray();
+            }
+
+            return bookList;
         }
 
         private void UpdateBookInformation(Book bookToSave, Book newBook)

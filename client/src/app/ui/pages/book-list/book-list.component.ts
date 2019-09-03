@@ -46,7 +46,7 @@ export class BookListComponent implements OnInit {
         this.loaderMediator.execute(
             this.service.search(this.keyword, 0).subscribe(
                 books => {
-                    this.isAdmin ? this.books = books : this.books = books.filter(b => b.numberOfCopies > 0);
+                    this.books = books;
                 }, error => {
                     this.toastMediator.show(`Erro ao carregar os livros: ${error}`);
                 }

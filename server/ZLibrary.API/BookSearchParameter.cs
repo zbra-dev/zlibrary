@@ -7,6 +7,7 @@ namespace ZLibrary.API
         public string Keyword {get; private set;}
 
         public SearchOrderBy OrderBy { get; set; }
+        public bool ShowNoCopies { get; set; }
 
         public BookSearchParameter(string keyword)
         {
