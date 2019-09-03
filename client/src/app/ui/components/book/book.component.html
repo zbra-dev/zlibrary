@@ -1,6 +1,6 @@
-<div *ngIf="book.isAvailable"class="book">
-    <div *ngIf="user.isAdministrator"class="admin-modify">
-        <div class="admin-edit-text" (click)="viewBookDetails()">{{ 'BOOKS.SIMPLE_EDIT' | translate }}</div>
+<div *ngIf="isbookAvailable"class="book">
+    <div *ngIf="isAdmin"class="admin-modify">
+        <div class="admin-edit-text" (click)="editBook()">{{ 'BOOKS.SIMPLE_EDIT' | translate }}</div>
         <div class="admin-delete-text" (click)="deleteModal()">{{ 'BOOKS.DELETE' | translate }}</div>
     </div>
     <zli-book-image  class="book-cover" [book]="book"></zli-book-image>
@@ -10,26 +10,26 @@
             <span class="book-info__author" *ngFor="let author of book.authors; last as isLast">{{author.name}}{{isLast ? '' : ', '}}</span>
         </div>
     </div>
-    <button *ngIf="!user.isAdministrator" style="cursor:pointer" class="ic-add" (click)="viewBookDetails()">
+    <button *ngIf="!isAdmin" style="cursor:pointer" class="ic-add" (click)="viewBookDetails()">
         <img *ngIf="!hasBook"src="../../../../assets/images/ic-add.png" />
         <img *ngIf="hasBook && !isExpired"src="../../../../assets/images/ic-checked.png" />
         <img *ngIf="hasBook && isExpired"src="../../../../assets/images/ic-expired.png" />
     </button>
 </div>
 
-<div *ngIf="!book.isAvailable"class="book">
+<div *ngIf="!isbookAvailable"class="book">
     <div *ngIf="!hasBook">
         <div class="book-box-not-available">
             <div class="book-unavailable">
                 <div class="unavailable-text">{{ 'BOOKS.UNAVAILABLE' | translate }}</div>
             </div>
-            <div *ngIf="!user.isAdministrator"class="book-waiting-list">
+            <div *ngIf="!isAdmin"class="book-waiting-list">
                 <div class="waiting-list-text">{{ 'BOOKS.ENTER_WAITING_LIST' | translate }}</div>
             </div>
             <div class="not-available"></div>
         </div>
     </div>
-    <div *ngIf="user.isAdministrator"class="admin-modify">
+    <div *ngIf="isAdmin"class="admin-modify">
         <div class="admin-edit-text" (click)="viewBookDetails()">{{ 'BOOKS.SIMPLE_EDIT' | translate }}</div>
         <div class="admin-delete-text" (click)="deleteModal()">{{ 'BOOKS.DELETE' | translate }}</div>
     </div>
@@ -40,7 +40,7 @@
             <span class="book-info__author" *ngFor="let author of book.authors; last as isLast">{{author.name}}{{isLast ? '' : ', '}}</span>
         </div>
     </div>
-    <button *ngIf="!user.isAdministrator" style="cursor:pointer" class="ic-add" (click)="viewBookDetails()">
+    <button *ngIf="!isAdmin" style="cursor:pointer" class="ic-add" (click)="viewBookDetails()">
         <img *ngIf="!hasBook"src="../../../../assets/images/ic-add.png" />
         <img *ngIf="hasBook && !isExpired"src="../../../../assets/images/ic-checked.png" />
         <img *ngIf="hasBook && isExpired"src="../../../../assets/images/ic-expired.png" />

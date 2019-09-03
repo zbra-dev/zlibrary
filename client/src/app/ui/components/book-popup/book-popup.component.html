@@ -83,8 +83,8 @@
                     {{ 'BOOKS.FIELD.REQUIRED' | translate }}
                 </div>
             </label>
-            <input [(ngModel)]="book.title" [ngClass]="{ 'input-invalid': isBookTitleInvalid}" name="title" type="text"
-                class="textbox-input" formControlName="titleControl">
+            <input [(ngModel)]="book.title" [ngClass]="{ 'input-invalid': isBookTitleInvalid}"
+                name="title" type="text" class="textbox-input" formControlName="titleControl" >
             <div class="input-label">{{ 'BOOKS.FIELD.ISBN' | translate }}
                 <div class="validation-alert" *ngIf="isIsbnEmpty">
                     {{ 'BOOKS.FIELD.REQUIRED' | translate }}
