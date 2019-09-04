@@ -8,6 +8,7 @@ import { BookViewModelConverter } from './converter/book.view-model-converter';
 import 'rxjs/add/operator/map';
 import { User } from '../model/user';
 import { SearchParametersDTO } from './dto/searchParametersDTO';
+import { AuthRepository } from './auth.repository';
 
 const BOOKS_PATH = 'books';
 const URL = `${environment.apiUrl}/${BOOKS_PATH}`;
@@ -15,14 +16,21 @@ const URL = `${environment.apiUrl}/${BOOKS_PATH}`;
 @Injectable()
 export class BookRepository {
 
-    constructor(private httpClient: HttpClient) {
+    constructor(private httpClient: HttpClient,
+        private authRepository: AuthRepository) {
     }
 
     public search(keyword, orderby) {
         const dto = new SearchParametersDTO(keyword, orderby);
         const json = JSON.stringify(dto);
 
-        return this.httpClient.post(URL + '/search/', json, {
+        var URL_COMPLETE = URL + '/search/';
+        var user = this.authRepository.getLoggedUser();
+        if(user.isAdministrator){
+            URL_COMPLETE += 'admin/'
+        }
+
+        return this.httpClient.post(URL_COMPLETE, json, {
             headers: new HttpHeaders().set('Content-Type', 'application/json')
         }).map((data: any) => data.map(b => BookViewModelConverter.fromDTO(b)));
     }

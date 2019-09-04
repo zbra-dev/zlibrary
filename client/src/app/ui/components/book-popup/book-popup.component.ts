@@ -99,7 +99,7 @@ export class BookPopupComponent implements OnInit {
             numberOfCopiesControl: new FormControl(this.book.numberOfCopies, Validators.compose([
                 Validators.required,
                 Validators.maxLength(1),
-                BookValidator.validateNumberOfCopies(1, 5)
+                BookValidator.validateNumberOfCopies(0, 5)
             ])),
             editionControl: new FormControl(this.book.edition, Validators.compose([
                 Validators.required,
@@ -423,8 +423,8 @@ export class BookPopupComponent implements OnInit {
         this.loaderMediator.execute(
             this.bookService.save(this.book, this.newCoverImage).subscribe(
                 book => {
-                    this.initWith(book);
                     this.updateBookListEvent.emit(null);
+                    this.onCancel();
                 }, error => {
                     this.toastMediator.show(`Erro ao salvar o livro: ${error}`);
                 }

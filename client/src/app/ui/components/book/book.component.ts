@@ -65,14 +65,6 @@ export class BookComponent implements OnInit {
         }
     }
 
-    public deleteModal() {
-        this.confirmMediator.showDialog(this.translate.instant('BOOKS.DELETE').toUpperCase(), this.translate.instant('BOOKS.DELETE_QUESTION')).subscribe(b => {
-            if (b) {
-                this.delete();
-            }
-        });
-    }
-
     public viewBookDetails() {
         this.view.emit(this.book);
     }

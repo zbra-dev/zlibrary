@@ -10,7 +10,7 @@ namespace ZLibrary.API
         Task<IList<Book>> FindAll();
         Task<Book> FindById(long id);
         Task<Book> FindByCoverImageKey(Guid key);
-        Task<IList<Book>> FindBy(BookSearchParameter bookSearchParameter);
+        Task<IList<Book>> FindBy(BookFilter filter);
         Task Delete(long id);
         Task<Book> Save(Book book);
     }
