@@ -28,6 +28,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PackageInfo", "PackageInfo"
 		PackageInfo\CommonVersionInfo.props = PackageInfo\CommonVersionInfo.props
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZLibrary.Utils", "ZLibrary.Utils\ZLibrary.Utils.csproj", "{683FA9B6-D390-48C0-A7D8-BFB1234EC81B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -110,6 +112,18 @@ Global
 		{0501BE73-5DEC-486D-8DAB-688F3C5C1104}.Release|x64.Build.0 = Release|Any CPU
 		{0501BE73-5DEC-486D-8DAB-688F3C5C1104}.Release|x86.ActiveCfg = Release|Any CPU
 		{0501BE73-5DEC-486D-8DAB-688F3C5C1104}.Release|x86.Build.0 = Release|Any CPU
+		{683FA9B6-D390-48C0-A7D8-BFB1234EC81B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{683FA9B6-D390-48C0-A7D8-BFB1234EC81B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{683FA9B6-D390-48C0-A7D8-BFB1234EC81B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{683FA9B6-D390-48C0-A7D8-BFB1234EC81B}.Debug|x64.Build.0 = Debug|Any CPU
+		{683FA9B6-D390-48C0-A7D8-BFB1234EC81B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{683FA9B6-D390-48C0-A7D8-BFB1234EC81B}.Debug|x86.Build.0 = Debug|Any CPU
+		{683FA9B6-D390-48C0-A7D8-BFB1234EC81B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{683FA9B6-D390-48C0-A7D8-BFB1234EC81B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{683FA9B6-D390-48C0-A7D8-BFB1234EC81B}.Release|x64.ActiveCfg = Release|Any CPU
+		{683FA9B6-D390-48C0-A7D8-BFB1234EC81B}.Release|x64.Build.0 = Release|Any CPU
+		{683FA9B6-D390-48C0-A7D8-BFB1234EC81B}.Release|x86.ActiveCfg = Release|Any CPU
+		{683FA9B6-D390-48C0-A7D8-BFB1234EC81B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

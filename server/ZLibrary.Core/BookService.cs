@@ -1,3 +1,4 @@
+using Impress;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,7 +46,7 @@ namespace ZLibrary.Core
         {
             var reservations = await reservationService.FindBookReservations(book.Id);
 
-            if (reservations == null)
+            if (!reservations.ToMaybe().HasValue)
             {
                 return true;
             }
@@ -65,7 +66,7 @@ namespace ZLibrary.Core
                 throw new BookDeleteException("O Livro não pode ser deletado pois possui copias emprestadas.");
             }
             var book = await FindById(id);
-            if (book != null)
+            if (book.ToMaybe().HasValue)
             {
                 imageService.DeleteFile(book.CoverImageKey);
                 await bookRepository.Delete(id);
@@ -95,7 +96,7 @@ namespace ZLibrary.Core
             {
                 throw new BookSaveException("ISBN já cadastrado.");
             }
-            if (bookOriginal != null)
+            if (bookOriginal.ToMaybe().HasValue)
             {
                 UpdateBookInformation(bookOriginal, book);
                 //keep Id in only one instance
@@ -105,46 +106,9 @@ namespace ZLibrary.Core
             return await bookRepository.Save(book);
         }
 
-        public async Task<IList<Book>> FindBy(BookSearchParameter parameters)
+        public async Task<IList<Book>> FindBy(BookFilter filter)
         {
-            var bookSet = new HashSet<Book>();
-
-            if (string.IsNullOrEmpty(parameters.Keyword))
-            {
-                bookSet.UnionWith(await FindAll());
-            }
-            else
-            {
-                var booksByTitle = await bookRepository.FindByTitleOrSynopsis(parameters.Keyword);
-                bookSet.UnionWith(booksByTitle);
-
-                var booksByIsbn = await bookRepository.FindByIsbn(parameters.Keyword);
-                bookSet.UnionWith(booksByIsbn);
-
-                var booksByPublisher = await bookRepository.FindByPublisher(parameters.Keyword);
-                bookSet.UnionWith(booksByPublisher);
-
-                var booksByAuthor = await bookRepository.FindByAuthor(parameters.Keyword);
-                bookSet.UnionWith(booksByAuthor);
-            }
-            Func<Book, object> orderBySelector;
-
-            if (parameters.OrderBy == SearchOrderBy.Created)
-            {
-                orderBySelector = b => b.Created;
-            }
-            else
-            {
-                orderBySelector = b => b.Title;
-            }
-
-            var bookList = bookSet.OrderBy(orderBySelector).ToArray();
-            if (!parameters.ShowNoCopies)
-            {
-                bookList = bookList.Where(b => b.NumberOfCopies > 0).ToArray();
-            }
-
-            return bookList;
+            return await bookRepository.FindByFilter(filter);
         }
 
         private void UpdateBookInformation(Book bookToSave, Book newBook)

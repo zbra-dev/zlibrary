@@ -423,8 +423,8 @@ export class BookPopupComponent implements OnInit {
         this.loaderMediator.execute(
             this.bookService.save(this.book, this.newCoverImage).subscribe(
                 book => {
-                    this.initWith(book);
                     this.updateBookListEvent.emit(null);
+                    this.onCancel();
                 }, error => {
                     this.toastMediator.show(`Erro ao salvar o livro: ${error}`);
                 }

@@ -113,6 +113,7 @@ namespace ZLibrary.Web
             services.AddTransient<LoanConverter, LoanConverter>();
             services.AddTransient<ReservationConverter, ReservationConverter>();
             services.AddTransient<UserConverter, UserConverter>();
+            services.AddTransient<BookFilterConverter, BookFilterConverter>();
 
             //validators
             services.AddTransient<AuthorDtoValidator, AuthorDtoValidator>();

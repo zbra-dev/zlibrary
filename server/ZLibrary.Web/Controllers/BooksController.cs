@@ -4,7 +4,6 @@ using ZLibrary.API;
 using System.Linq;
 using ZLibrary.Web.Controllers.Items;
 using ZLibrary.Web.Validators;
-using System;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.AspNetCore.WebUtilities;
@@ -29,11 +28,12 @@ namespace ZLibrary.Web
         private readonly IServiceDataLookUp serviceDataLookup;
         private readonly BookConverter bookConverter;
         private readonly ReservationConverter reservationConverter;
+        private readonly BookFilterConverter bookFilterConverter;
         private readonly IsbnValidator isbnValidator;
 
         public BooksController(IBookFacade bookFacade, IAuthorService authorService, IPublisherService publisherService, 
             IServiceDataLookUp serviceDataLookup, BookConverter bookConverter, ReservationConverter reservationConverter,
-            IsbnValidator isbnValidator)
+            BookFilterConverter bookFilterConverter, IsbnValidator isbnValidator)
         {
             this.bookFacade = bookFacade;
             this.authorService = authorService;
@@ -41,6 +41,7 @@ namespace ZLibrary.Web
             this.serviceDataLookup = serviceDataLookup;
             this.bookConverter = bookConverter;
             this.reservationConverter = reservationConverter;
+            this.bookFilterConverter = bookFilterConverter;
             this.isbnValidator = isbnValidator;
         }
 
@@ -180,25 +181,17 @@ namespace ZLibrary.Web
         [HttpPost("search/", Name = "FindBookBy")]
         public async Task<IActionResult> FindBy([FromBody]SearchParametersDto value)
         {
-            var orderBy = (SearchOrderBy)Enum.ToObject(typeof(SearchOrderBy), value.OrderByValue);
-            var bookSearchParameter = new BookSearchParameter(value.Keyword)
-            {
-                OrderBy = orderBy
-            };
-            var books = await bookFacade.FindBy(bookSearchParameter);
+            var books = await bookFacade.FindBy(bookFilterConverter.ConvertToModel(value));
             return Ok(EnrichBooks(books));
         }
 
         [HttpPost("search/admin", Name = "FindAdminBookBy")]
         public async Task<IActionResult> FindForAdminBy([FromBody]SearchParametersDto value)
         {
-            var orderBy = (SearchOrderBy)Enum.ToObject(typeof(SearchOrderBy), value.OrderByValue);
-            var bookSearchParameter = new BookSearchParameter(value.Keyword)
-            {
-                OrderBy = orderBy,
-                ShowNoCopies = true
-            };
-            var books = await bookFacade.FindBy(bookSearchParameter);
+            var bookFilter = bookFilterConverter.ConvertToModel(value);
+            bookFilter.AllowNoCopies = true;
+
+            var books = await bookFacade.FindBy(bookFilter);
             return Ok(EnrichBooks(books));
         }
 

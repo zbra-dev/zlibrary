@@ -43,7 +43,7 @@ namespace ZLibrary.Core
             return bookSaved;
         }
 
-        public async Task<IList<Book>> FindBy(BookSearchParameter bookSearchParameter)
+        public async Task<IList<Book>> FindBy(BookFilter bookSearchParameter)
         {
             return await bookService.FindBy(bookSearchParameter);
         }
