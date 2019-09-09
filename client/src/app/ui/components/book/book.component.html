@@ -2,7 +2,7 @@
     <div *ngIf="isAdmin"class="admin-modify">
         <div class="admin-edit-text" (click)="editBook()">{{ 'BOOKS.SIMPLE_EDIT' | translate }}</div>
     </div>
-    <zli-book-image  class="book-cover" [book]="book"></zli-book-image>
+    <book-image  class="book-cover" [book]="book"></book-image>
     <div class="book-info">
         <div class="book-info__title">{{book.title}}</div>
         <div class="book-info__authors">
@@ -31,7 +31,7 @@
     <div *ngIf="isAdmin"class="admin-modify">
         <div class="admin-edit-text" (click)="viewBookDetails()">{{ 'BOOKS.SIMPLE_EDIT' | translate }}</div>
     </div>
-    <zli-book-image  class="book-cover" [book]="book"></zli-book-image>
+    <book-image  class="book-cover" [book]="book"></book-image>
     <div class="book-info">
         <div class="book-info__title">{{book.title}}</div>
         <div class="book-info__authors">

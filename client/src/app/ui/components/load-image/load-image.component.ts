@@ -3,7 +3,7 @@ import { NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl, ControlValueAccessor, Va
 import { ToastMediator } from '../../mediators/toast.mediator';
 
 @Component({
-    selector: 'zli-load-image',
+    selector: 'load-image',
     templateUrl: './load-image.component.html',
     styleUrls: ['./load-image.component.scss'],
     providers: [

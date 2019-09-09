@@ -1,7 +1,7 @@
 <div *ngIf="!canManageBook" class="popup-container">
     <div class="book-container">
         <h1 class="about-book-title">{{ 'BOOKS.ABOUT' | translate }}</h1>
-        <zli-book-image class="book-image" [book]="book"></zli-book-image>
+        <book-image class="book-image" [book]="book"></book-image>
         <div class="book-information-container">
             <h2 class="book-title">{{ book.title }}</h2>
             <div class="book-information-label">{{ 'BOOKS.FIELD.ISBN' | translate }}
@@ -68,11 +68,11 @@
                 <div class="edit-image-text" *ngIf="isImageSelected">{{ 'IMAGE.EDIT' | translate }}</div>
             </div>
             <div class="image-hover"></div>
-            <zli-load-image class="input-image" #loadImage [formControlName]="'imageControl'"
-                (ngModelChange)="setCoverImage($event)"></zli-load-image>
-            <zli-book-image class="book-image-loaded" *ngIf="isImageLoaded" [book]="book"></zli-book-image>
-            <div class="add-image-button" [innerHTML]="'IMAGE.NEW' | translate"></div>
-        </div>
+            <load-image class="input-image" #loadImage [formControlName]="'imageControl'"
+                (ngModelChange)="setCoverImage($event)"></load-image>
+            <book-image class="book-image-loaded" *ngIf="isImageLoaded" [book]="book"></book-image>
+            <div *ngIf="!isImageLoaded" class="add-image-button" [innerHTML]="'IMAGE.NEW' | translate"></div>
+        </div>       
         <div class="book-inputs-container">
             <label class="input-label" style="margin-top: 0;">{{ 'BOOKS.FIELD.NAME' | translate }}
                 <div class="validation-alert" *ngIf="isBookTitleEmpty">
