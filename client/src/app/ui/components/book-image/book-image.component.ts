@@ -39,7 +39,7 @@ export class BookImageComponent implements OnInit {
             this.loaderMediator.execute(
                 this.coverImageService.loadImage(coverImageKey).subscribe(
                     image => {
-                        image ? this.coverImageURL = `${BASE64_BASE_URL}${image}` : this.coverImageURL = null;
+                        this.coverImageURL = image ? `${BASE64_BASE_URL}${image}` : null;
                     }, error => {
                         this.coverImageURL = null;
                         this.toastMediator.show(`Erro ao carregar a imagem: ${error}`);
