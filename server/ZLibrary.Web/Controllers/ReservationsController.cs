@@ -119,6 +119,35 @@ namespace ZLibrary.Web
             return Ok(orderList);
         }
 
+        [HttpPost("orders", Name = "FindOrdersByMultipleStatus")]
+        public async Task<IActionResult> FindOrdersByMultipleStatus([FromBody]ReservationStatus[] statusNames)
+        {
+            var orderList = new List<OrderDto>();
+            foreach (var statusName in statusNames)
+            {
+                ReservationStatus reservationStatus;
+                if (!Enum.TryParse<ReservationStatus>(statusName.ToString(), out reservationStatus))
+                {
+                    return BadRequest($"Não foi possível converter o status [{statusName}]");
+                }
+                var reservations = await reservationService.FindByStatus(reservationStatus);
+                if (reservations == null)
+                {
+                    return NotFound($"Nenhuma reserva encontrada com o status: {reservationStatus}.");
+                }
+                var reservationResultList = reservations.Select(r => reservationConverter.ConvertFromModel(r));
+                foreach (var reservationResult in reservationResultList)
+                {
+                    var order = new OrderDto();
+                    order.Reservation = reservationResult;
+                    order.Book = bookConverter.ConvertFromModel(await bookService.FindById(reservationResult.BookId));
+                    order.User = userConverter.ConvertFromModel(await userService.FindById(reservationResult.UserId));
+                    orderList.Add(order);
+                }
+            }
+            return Ok(orderList);
+        }
+
         [HttpPost("order")]
         public async Task<IActionResult> Order([FromBody]ReservationRequestDto value)
         {
@@ -167,6 +196,34 @@ namespace ZLibrary.Web
             }
         }
 
+        [HttpPost("waiting/{id:long}")]
+        public async Task<IActionResult> UpdateReservationStatusToWaiting(long id)
+        {
+            var reservation = await reservationService.FindById(id);
+            if (reservation == null)
+            {
+                return NotFound($"Nenhuma reserva encontrada com o ID: {id}.");
+            }
+            try
+            {
+                var book = await bookService.FindById(reservation.BookId);
+                if (book == null)
+                {
+                    return NotFound($"Nenhum livro encontrado com o ID: {reservation.BookId}.");
+                }
+                await reservationService.AddToWaitingList(reservation, book);
+                return Ok();
+            }
+            catch (ReservationApprovedException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost("returned/{id:long}")]
         public async Task<IActionResult> UpdateReservationStatusToReturned(long id)
         {
@@ -187,8 +244,8 @@ namespace ZLibrary.Web
             }
         }
 
-        [HttpPost("rejected")]
-        public async Task<IActionResult> UpdateLoanStatusToRejected([FromBody]ReservationRejectDto value)
+        [HttpPost("canceled")]
+        public async Task<IActionResult> UpdateReservationStatusToCanceled([FromBody]ReservationRejectDto value)
         {
             var reservation = await reservationService.FindById(value.Id);
             if (reservation == null)
@@ -198,7 +255,7 @@ namespace ZLibrary.Web
             reservation.Reason.Description = value.Description;
             try
             {
-                await reservationService.RejectedReservation(reservation);
+                await reservationService.CancelReservation(reservation);
                 return Ok();
             }
             catch (ReservationApprovedException ex)

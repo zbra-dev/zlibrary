@@ -29,12 +29,20 @@ export class ReservationService {
         return this.repository.findOrderByStatus(status);
     }
 
+    public findOrdersByMultipleStatus(status: ReservationStatus[]): Observable<Order[]> {
+        return this.repository.findOrderByMultipleStatus(status);
+    }
+
     public approve(reservationId: number) {
         return this.repository.approve(reservationId);
     }
 
-    public reject(reservationId: number) {
-        return this.repository.reject(reservationId);
+    public wait (reservationId: number) {
+        return this.repository.wait(reservationId);
+    }
+
+    public cancel(reservationId: number) {
+        return this.repository.cancel(reservationId);
     }
 
     public returnBook(reservationId: number) {

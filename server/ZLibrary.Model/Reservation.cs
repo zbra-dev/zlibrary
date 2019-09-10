@@ -12,7 +12,8 @@ namespace ZLibrary.Model
 
         public bool IsRequested => Reason.Status == ReservationStatus.Requested;
         public bool IsApproved => Reason.Status == ReservationStatus.Approved;
-        public bool IsRejected =>  Reason.Status == ReservationStatus.Rejected;
+        public bool IsRejected =>  Reason.Status == ReservationStatus.Canceled;
+        public bool IsWaiting => Reason.Status == ReservationStatus.Waiting;
         
         public Reservation(long bookId, User user)
         {

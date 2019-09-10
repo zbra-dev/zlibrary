@@ -66,20 +66,18 @@
 .book-information {
     flex-direction:column;
     margin-left: 50px;
-    width: 442px;
+    width: 300px;
 }
 
 .reservation-information {
     display: flex;
     flex-direction:column;
-    width: 500px;
     margin-left: 50px;
 }
 
 .reservation-by-user {
     word-wrap: break-word;
     margin-top: 60px;
-    text-align: center;
     color: #979595;
     font-family: Roboto;
 }
@@ -97,8 +95,6 @@
     background-color: transparent;
     border-color: transparent;
     right: 3%;
-    position: absolute;
-    margin-top: 6%;
     cursor: pointer;
 }
 

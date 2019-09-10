@@ -34,6 +34,12 @@ namespace ZLibrary.Web.Controllers.Items
         [DataMember(Name = "numberOfCopies")]
         public int NumberOfCopies { get; set; }
 
+        [DataMember(Name = "numberOfLoanedCopies")]
+        public int NumberOfLoanedCopies { get; set; }
+
+        [DataMember(Name = "numberOfAvailableCopies")]
+        public int NumberOfAvailableCopies { get; set; }
+
         [DataMember(Name = "reservations")]
         public IEnumerable<ReservationResultDto> Reservations { get; set; }
 

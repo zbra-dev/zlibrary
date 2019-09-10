@@ -89,11 +89,17 @@ namespace ZLibrary.Core
             {
                 await CreateLoan(reservation);
             }
-            else
+        }
+
+        public async Task AddToWaitingList(Reservation reservation, Book book)
+        {
+            if (book == null)
             {
-                reservation.Reason.Status = ReservationStatus.Waiting;
-                await reservationRepository.Update(reservation);
+                throw new InvalidOperationException("Livro indefinido.");
             }
+
+            reservation.Reason.Status = ReservationStatus.Waiting;
+            await reservationRepository.Update(reservation);
         }
 
         public async Task ReturnReservation(Reservation reservation, Book book)
@@ -119,13 +125,13 @@ namespace ZLibrary.Core
             await reservationRepository.Update(reservation);
         }
 
-        public async Task RejectedReservation(Reservation reservation)
+        public async Task CancelReservation(Reservation reservation)
         {
-            if (!reservation.IsRequested)
+            if (!reservation.IsRequested && !reservation.IsWaiting)
             {
-                throw new ReservationApprovedException($"O Status da reserversa precsisa ser Solicitado.");
+                throw new ReservationApprovedException($"O Status da reserversa precsisa ser Solicitado ou na Lista de Espera.");
             }
-            reservation.Reason.Status = ReservationStatus.Rejected;
+            reservation.Reason.Status = ReservationStatus.Canceled;
             await reservationRepository.Update(reservation);
         }
 

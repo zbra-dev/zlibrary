@@ -1,6 +1,6 @@
 import { ReservationStatus } from './../../../model/reservation-status';
 import { BookService } from './../../../service/book.service';
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, EventEmitter, Output } from '@angular/core';
 import { ReservationService } from '../../../service/reservation.service';
 import { Reservation } from '../../../model/reservation';
 import { LoaderMediator } from '../../mediators/loader.mediator';
@@ -12,6 +12,7 @@ import { CoverImageService } from '../../../service/cover-image.service';
 import { DatePipe, getLocaleDateTimeFormat } from '@angular/common';
 import { Locale } from 'ngx-bootstrap/bs-moment/locale/locale.class';
 import { TranslateService } from '@ngx-translate/core';
+import { ConfirmMediator } from '../../mediators/confirm.mediator';
 
 @Component({
     selector: 'zli-reservation-list',
@@ -24,7 +25,9 @@ export class ReservationListComponent implements OnInit {
                 private bookService: BookService,
                 private loaderMediator: LoaderMediator,
                 private toastMediator: ToastMediator,
-                private authService: AuthService ) {
+                private authService: AuthService,
+                private translate: TranslateService,
+                private confirmMediator: ConfirmMediator ) {
     }
 
     @Input() reservation: Reservation;
@@ -37,9 +40,8 @@ export class ReservationListComponent implements OnInit {
     public date: string;
     public isExpired: boolean;
 
-    public get showRenewButton(): boolean {
-        return !!this.reservation.loan && this.reservation.loan.canBorrow && !this.reservation.loan.isExpired && this.reservation.reservationReason.isApproved;
-    }
+    @Output()
+    updateBookListEvent = new EventEmitter();
 
     ngOnInit() {
         this.user = this.authService.getLoggedUser();
@@ -60,6 +62,26 @@ export class ReservationListComponent implements OnInit {
         this.setDate();
     }
 
+    public get showRenewButton(): boolean {
+        return !!this.reservation.loan && this.reservation.loan.canBorrow && !this.reservation.loan.isExpired && this.reservation.reservationReason.isApproved;
+    }
+
+    public get canRenewBook(): boolean {
+        return this.showRenewButton && !this.isOrdered && !this.isWaiting;
+    }
+
+    public get isRenewalRequested(): boolean {
+        return this.isOrdered && !this.isRequested;
+    }
+
+    public get isBookRented(): boolean {
+        return !this.showRenewButton && !this.isWaiting && !this.isRequested && !this.isExpired;
+    }
+
+    public get isReservationAccepted(): boolean {
+        return !this.showRenewButton && this.isWaiting;
+    }
+
     public setDate() {
         if (this.isWaiting || this.isRequested) {
             this.date = this.reservation.startDate;
@@ -78,5 +100,21 @@ export class ReservationListComponent implements OnInit {
                 }
             )
         );
+    }
+
+     public cancelReservation() {
+        this.confirmMediator.showDialog(this.translate.instant('BOOKS.REJECT').toUpperCase(), this.translate.instant('BOOKS.REJECT_QUESTION')).subscribe(r => {
+            if (r) {
+                this.loaderMediator.execute(
+                    this.reservationService.cancel(this.reservation.id)
+                        .subscribe(() => {
+                            this.updateBookListEvent.emit(null);
+                        }, error => {
+                            this.toastMediator.show(error);
+                        }
+                        )
+                );
+            }
+        });
     }
 }

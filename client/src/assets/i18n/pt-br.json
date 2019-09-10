@@ -15,6 +15,7 @@
     },
     "BOOKS": {
         "BORROWED": "Livros Emprestados",
+        "BORROW": "Emprestar Livro",
         "RENTED": "Livros Alugados",
         "WAITING": "Livros em Espera",
         "REQUEST": "Aprovar / Recusar",
@@ -40,7 +41,9 @@
         "ENTER_WAITING_LIST": "Entrar na fila de espera",
         "MORE_INFORMATION": "Para mais informações, verifique sua lista de livros",
         "PROVIDE_TO_USERS": "Disponibilizar para o público",
+        "CANCEL_RESERVATION": "Sair da Lista de Espera", 
         "WAITING_LIST": "Lista de Espera",
+        "WAITING_LIST_QUESTION": "Deseja adicionar à lista de espera?",
         "ADD_WAITING_LIST": "+ add na lista de espera",
         "ABOUT": "Sobre o Livro",
         "RENTED_COPIES": "Cópias alugadas",

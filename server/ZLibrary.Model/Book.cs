@@ -14,6 +14,8 @@ namespace ZLibrary.Model
         public string Synopsis { get; set; }
         public int PublicationYear { get; set; }
         public int NumberOfCopies { get; set; }
+        public int NumberOfLoanedCopies { get; set; }
+        public int NumberOfAvailableCopies { get; }
         public Guid CoverImageKey { get; set; }
         public DateTime Created { get; set; }
         public string Edition { get; set; }
@@ -70,6 +72,11 @@ namespace ZLibrary.Model
             var hash = 3;
             hash += 17 * Id.GetHashCode();
             return hash;
+        }
+
+        public int CalculateNumberOfAvailableCopies()
+        {
+            return NumberOfCopies - NumberOfLoanedCopies;
         }
     }
 }

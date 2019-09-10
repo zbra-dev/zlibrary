@@ -1,6 +1,6 @@
+import { User } from './../../../model/user';
 import { Component, OnInit, Input } from '@angular/core';
 import { ToastMediator } from '../../mediators/toast.mediator';
-import { AuthService } from '../../../service/auth.service';
 import { ReservationService } from '../../../service/reservation.service';
 import { LoaderMediator } from '../../mediators/loader.mediator';
 import { ReservationStatus } from '../../../model/reservation-status';
@@ -8,6 +8,9 @@ import { Order } from '../../../model/order';
 import { BsModalRef } from 'ngx-bootstrap';
 import { ConfirmMediator } from '../../mediators/confirm.mediator';
 import { TranslateService } from '@ngx-translate/core';
+import { GroupedOrder } from '../../../model/grouped-order';
+import { Book } from '../../../model/book';
+import { Reservation } from '../../../model/reservation';
 
 @Component({
   selector: 'zli-approved-books',
@@ -23,7 +26,7 @@ export class ApprovedBooksComponent implements OnInit {
     private translate: TranslateService) {
   }
 
-  @Input() public orders: Order[];
+  public orders: GroupedOrder[];
   public modalControl: BsModalRef;
 
   ngOnInit() {
@@ -33,9 +36,36 @@ export class ApprovedBooksComponent implements OnInit {
   public refreshList() {
     this.reservationService.findOrdersByStatus(ReservationStatus.Approved)
       .subscribe((orders: Order[]) => {
-        this.orders = orders;
+        this.orders = this.convertToGroupedOrders(orders);
       }
       )
+  }
+
+  private convertToGroupedOrders(orders: Order[]): GroupedOrder[] {
+
+    let groups = orders.reduce((g: Array<Order[]>, order: Order) => {
+      g[order.book.id] = g[order.book.id] || [];
+      g[order.book.id].push(order);
+      return g;
+    }, []).filter(g => g.length > 0);
+
+    let groupedOrders: GroupedOrder[] = new Array<GroupedOrder>();
+
+    for (let i = 0; i < groups.length; i++) {
+      let book: Book;
+      let reservations = new Array<Reservation>();
+      let users = new Array<User>();
+      let groupedOrder: GroupedOrder;
+      for (let j = 0; j < groups[i].length; j++) {
+        book = groups[i][j].book;
+        users.push(groups[i][j].user);
+        reservations.push(groups[i][j].reservation);
+      }
+      groupedOrder = new GroupedOrder(reservations, book, users);
+      groupedOrders.push(groupedOrder);
+    }
+
+    return groupedOrders;
   }
 
   public returnBook(reservationId: number) {

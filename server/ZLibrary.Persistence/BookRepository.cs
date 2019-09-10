@@ -27,9 +27,19 @@ namespace ZLibrary.Persistence
                 book.Authors = context.BookAuthors.Where(ba => ba.BookId == book.Id)
                 .Include(a => a.Author)
                 .ToList();
+
+                book.NumberOfLoanedCopies = GetNumberOfLoanedCopies(book);
             }
 
             return books;
+        }
+
+        private int GetNumberOfLoanedCopies(Book book)
+        {
+            return context.Loans
+                    .Where(l => l.Reservation.Reason.Status == ReservationStatus.Approved
+                                && l.Reservation.BookId == book.Id)
+                    .Count();
         }
 
         public async Task<Book> FindById(long id)
@@ -43,6 +53,8 @@ namespace ZLibrary.Persistence
                 book.Authors = context.BookAuthors.Where(ba => ba.BookId == book.Id)
                 .Include(a => a.Author)
                 .ToList();
+
+                book.NumberOfLoanedCopies = GetNumberOfLoanedCopies(book);
             }
 
             return book;
@@ -59,6 +71,8 @@ namespace ZLibrary.Persistence
                 book.Authors = context.BookAuthors.Where(ba => ba.BookId == book.Id)
                 .Include(a => a.Author)
                 .ToList();
+
+                book.NumberOfLoanedCopies = GetNumberOfLoanedCopies(book);
             }
 
             return book;
@@ -111,6 +125,8 @@ namespace ZLibrary.Persistence
             {
                 book.Authors = context.BookAuthors.Where(ba => ba.BookId == book.Id).Include(a => a.Author)
                                                                                     .ToList();
+
+                book.NumberOfLoanedCopies = GetNumberOfLoanedCopies(book);
             }
 
             return books;
@@ -127,6 +143,8 @@ namespace ZLibrary.Persistence
             {
                 book.Authors = context.BookAuthors.Where(ba => ba.BookId == book.Id).Include(a => a.Author)
                                                                                     .ToList();
+
+                book.NumberOfLoanedCopies = GetNumberOfLoanedCopies(book);
             }
 
             return books;
@@ -148,6 +166,7 @@ namespace ZLibrary.Persistence
             foreach (var book in books)
             {
                 book.Authors = context.BookAuthors.Where(ba => ba.BookId == book.Id).Include(a => a.Author).ToList();
+                book.NumberOfLoanedCopies = GetNumberOfLoanedCopies(book);
             }
 
             return books;
@@ -163,6 +182,7 @@ namespace ZLibrary.Persistence
             foreach (var book in books)
             {
                 book.Authors = context.BookAuthors.Where(ba => ba.BookId == book.Id).Include(a => a.Author).ToList();
+                book.NumberOfLoanedCopies = GetNumberOfLoanedCopies(book);
             }
 
             return books;

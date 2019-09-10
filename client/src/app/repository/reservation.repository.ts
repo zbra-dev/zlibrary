@@ -49,6 +49,11 @@ export class ReservationRepository {
     return this.httpClient.get(url).map((data: any) => data.map(r => OrderViewModelConverter.fromDTO(r)));
   }
 
+  public findOrderByMultipleStatus(status: ReservationStatus[]): Observable<Order[]> {
+    const url = `${URL}/orders`;
+    return this.httpClient.post(url, status).map((data: any) => data.map(r => OrderViewModelConverter.fromDTO(r)));
+  }
+
   public approve(reservationId: number) {
     return this.httpClient.post(`${URL}/approved/${reservationId}`, ' ', {
       headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -56,8 +61,15 @@ export class ReservationRepository {
     });
   }
 
-  public reject(reservationId: number) {
-    const orderUrl = `${URL}/rejected`;
+  public wait(reservationId: number) {
+    return this.httpClient.post(`${URL}/waiting/${reservationId}`, ' ', {
+      headers: new HttpHeaders().set('Content-Type', 'application/json'),
+      responseType: 'text'
+    });
+  }
+
+  public cancel(reservationId: number) {
+    const orderUrl = `${URL}/canceled`;
     const dto = { id: reservationId, description: '' }
     const json = JSON.stringify(dto);
     return this.httpClient.post(orderUrl, json, {

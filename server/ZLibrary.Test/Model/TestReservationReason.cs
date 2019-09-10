@@ -31,9 +31,9 @@ namespace ZLibrary.Test.Model
         public void TestCreateReservationReasonPropertiesStatusRejectedAndDescriptionNull()
         {
             var reason = new ReservationReason();
-            reason.Status = ReservationStatus.Rejected;
+            reason.Status = ReservationStatus.Canceled;
             Assert.IsNotNull(reason);
-            Assert.AreEqual(ReservationStatus.Rejected, reason.Status);
+            Assert.AreEqual(ReservationStatus.Canceled, reason.Status);
             Assert.IsNull(reason.Description);
         }
 

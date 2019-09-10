@@ -5,7 +5,7 @@ namespace ZLibrary.Model
         Requested,
         Approved,
         Waiting,
-        Rejected,
+        Canceled,
         Returned
     }
 }

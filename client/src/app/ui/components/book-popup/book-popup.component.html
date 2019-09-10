@@ -38,9 +38,6 @@
         <div *ngIf="canAddToWaitingList" class="reservation-box-unavailable" (click)="order()">
             <div class="available-button-text-unavailable">{{ 'BOOKS.ADD_WAITING_LIST' | translate }}</div>
         </div>
-        <div *ngIf="canAdminProvideBookToUsers" class="reservation-box-unavailable" (click)="openReturnBookList()">
-            <div class="available-button-text-unavailable">{{ 'BOOKS.PROVIDE_TO_USERS' | translate }}</div>
-        </div>
     </div>
     <div *ngIf="requestedForReservation" class="request-reservation-container">
         <div class="availability-box">

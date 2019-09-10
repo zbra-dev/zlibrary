@@ -97,11 +97,11 @@ namespace ZLibrary.Test.Model
             var reservation = new Reservation(bookId, user);
 
             Assert.IsNotNull(reservation);
-            reservation.Reason.Status = ReservationStatus.Rejected;
+            reservation.Reason.Status = ReservationStatus.Canceled;
             reservation.Reason.Description = "Test";
             Assert.AreEqual(bookId, reservation.BookId);
             Assert.AreEqual(user, reservation.User);
-            Assert.AreEqual(ReservationStatus.Rejected, reservation.Reason.Status);
+            Assert.AreEqual(ReservationStatus.Canceled, reservation.Reason.Status);
             Assert.AreEqual("Test", reservation.Reason.Description);
             Assert.IsNotNull(reservation.StartDate);
             Assert.AreEqual(DateTime.Now.Date, reservation.StartDate.Date);

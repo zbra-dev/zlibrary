@@ -13,7 +13,8 @@ namespace ZLibrary.API
         Task<IList<Reservation>> FindBookReservations(long bookId);
         Task<Reservation> Order(Book book, User user);
         Task ApprovedReservation(Reservation reservation, Book book);
-        Task RejectedReservation(Reservation reservation);
+        Task AddToWaitingList(Reservation reservation, Book book);
+        Task CancelReservation(Reservation reservation);
         Task ReturnReservation(Reservation reservation, Book book);
         Task OrderNext(long bookId);
         Task<IList<Reservation>> FindByStatus(ReservationStatus reservationStatus);

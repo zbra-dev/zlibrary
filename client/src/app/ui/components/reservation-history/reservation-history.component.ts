@@ -32,8 +32,16 @@ export class ReservationHistoryComponent implements OnInit {
         return this.reservationHistoryType === ReservationHistoryType.Waiting;
     }
 
+    public get hasReservations(): boolean {
+        return this.reservations && this.reservations.length > 0;
+    }
+
     ngOnInit() {
         this.user = this.authService.getLoggedUser();
+        this.showReservations();
+    }
+
+    public refreshList() {
         this.showReservations();
     }
 
