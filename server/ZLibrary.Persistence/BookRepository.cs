@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using ZLibrary.Model;
 using Microsoft.EntityFrameworkCore;
+using Impress;
+using ZLibrary.Utils;
 
 namespace ZLibrary.Persistence
 {
@@ -22,24 +24,7 @@ namespace ZLibrary.Persistence
                 .Include(book => book.Publisher)
                 .ToListAsync();
 
-            foreach (var book in books)
-            {
-                book.Authors = context.BookAuthors.Where(ba => ba.BookId == book.Id)
-                .Include(a => a.Author)
-                .ToList();
-
-                book.NumberOfLoanedCopies = GetNumberOfLoanedCopies(book);
-            }
-
-            return books;
-        }
-
-        private int GetNumberOfLoanedCopies(Book book)
-        {
-            return context.Loans
-                    .Where(l => l.Reservation.Reason.Status == ReservationStatus.Approved
-                                && l.Reservation.BookId == book.Id)
-                    .Count();
+            return EnrichAuthors(books);
         }
 
         public async Task<Book> FindById(long id)
@@ -114,78 +99,69 @@ namespace ZLibrary.Persistence
             return book;
         }
 
-        public async Task<IList<Book>> FindByTitleOrSynopsis(string text)
+        public async Task<IList<Book>> FindByFilter(BookFilter filter)
         {
-            var books = await context.Books
+            IQueryable<Book> query = context.Books
                 .Include(book => book.Publisher)
-                .Where(b => b.Title.Contains(text) || b.Synopsis.Contains(text))
-                .ToListAsync();
+                .Include(book => book.Authors);
 
-            foreach (var book in books)
+            if (!string.IsNullOrWhiteSpace(filter.FreeSearch))
             {
-                book.Authors = context.BookAuthors.Where(ba => ba.BookId == book.Id).Include(a => a.Author)
-                                                                                    .ToList();
+                var text = filter.FreeSearch;
+                query = query.Where(b => b.Title.Contains(text)
+                    || b.Synopsis.Contains(text)
+                    || b.IsbnCode.Contains(text)
+                    || b.Publisher.Name.Contains(text)
+                    || b.Authors.Any(a => a.Author.Name.Contains(text))
+                );
+            }
 
+            if (!filter.AllowNoCopies)
+            {
+                query = query.Where(b => b.NumberOfCopies > 0);
+            }
+
+            query = query.OrderBy(b => b.Title);
+
+            var books = await query.ToListAsync();
+
+            return EnrichAuthors(books);
+        }
+
+        private List<Book> EnrichAuthors(List<Book> books)
+        {
+            var booksIds = books.Select(b => b.Id).ToSet();
+
+            var authorsMapping = context.BookAuthors.Where(ba => booksIds.Contains(ba.BookId))
+                    .Include(bookAuthor => bookAuthor.Author)
+                    .Select(bookAuthor => bookAuthor.Author)
+                    .Distinct()
+                    .ToDictionary(author => author.Id);
+
+            foreach(var book in books)
+            {
+                foreach (var bookAuthor in book.Authors)
+                {
+                    bookAuthor.Author = authorsMapping.MaybeGet(bookAuthor.AuthorId).OrNull();
+                }
                 book.NumberOfLoanedCopies = GetNumberOfLoanedCopies(book);
             }
 
             return books;
         }
 
-        public async Task<IList<Book>> FindByIsbn(string isbn)
+        private int GetNumberOfLoanedCopies(Book book)
         {
-            var books = await context.Books
-                .Include(book => book.Publisher)
-                .Where(b => b.IsbnCode.Contains(isbn))
-                .ToListAsync();
-
-            foreach (var book in books)
-            {
-                book.Authors = context.BookAuthors.Where(ba => ba.BookId == book.Id).Include(a => a.Author)
-                                                                                    .ToList();
-
-                book.NumberOfLoanedCopies = GetNumberOfLoanedCopies(book);
-            }
-
-            return books;
+            return context.Loans
+                    .Where(l => l.Reservation.Reason.Status == ReservationStatus.Approved
+                                && l.Reservation.BookId == book.Id)
+                    .Count();
         }
 
         public async Task<bool> HasBookWithIsbn(Isbn isbn)
         {
             return await context.Books
                          .AnyAsync(b => b.IsbnCode == isbn.ToString());
-        }
-
-        public async Task<IList<Book>> FindByAuthor(string author)
-        {
-            var books = await context.Books
-               .Include(book => book.Publisher)
-               .Where(b => b.Authors.Any(a => a.Author.Name.Contains(author)))
-               .ToListAsync();
-
-            foreach (var book in books)
-            {
-                book.Authors = context.BookAuthors.Where(ba => ba.BookId == book.Id).Include(a => a.Author).ToList();
-                book.NumberOfLoanedCopies = GetNumberOfLoanedCopies(book);
-            }
-
-            return books;
-        }
-
-        public async Task<IList<Book>> FindByPublisher(string publisher)
-        {
-            var books = await context.Books
-                .Include(book => book.Publisher)
-                .Where(b => b.Publisher.Name.Contains(publisher))
-                .ToListAsync();
-
-            foreach (var book in books)
-            {
-                book.Authors = context.BookAuthors.Where(ba => ba.BookId == book.Id).Include(a => a.Author).ToList();
-                book.NumberOfLoanedCopies = GetNumberOfLoanedCopies(book);
-            }
-
-            return books;
         }
     }
 }

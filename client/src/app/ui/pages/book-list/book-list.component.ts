@@ -57,6 +57,7 @@ export class BookListComponent implements OnInit {
     public toggleSidebar(): void {
         document.getElementById('background').classList.toggle('active');
         if (document.getElementById('sidebar').classList.toggle('active') === false) {
+            this.bookPopupComponent.bookForm.reset();
             this.isBusy = false;
         }
     }

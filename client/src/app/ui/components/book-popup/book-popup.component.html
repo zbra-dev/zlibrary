@@ -23,10 +23,6 @@
             </div>
         </div>
     </div>
-    <div *ngIf="isAdmin" class="admin-options-container">
-        <div class="admin-options" (click)="canEdit = true">{{ 'BOOKS.SIMPLE_EDIT' | translate }}</div>
-        <div *ngIf="canEdit" class="admin-options">{{ 'BOOKS.DELETE' | translate }}</div>
-    </div>
     <div *ngIf="canRequestReservation" class="request-reservation-container">
         <div class="availability-box">
             <div *ngIf="canRequestBookRental" class="available-text">{{ 'BOOKS.AVAILABLE' | translate }}</div>
@@ -80,8 +76,8 @@
                     {{ 'BOOKS.FIELD.REQUIRED' | translate }}
                 </div>
             </label>
-            <input [(ngModel)]="book.title" [ngClass]="{ 'input-invalid': isBookTitleInvalid}" name="title" type="text"
-                class="textbox-input" formControlName="titleControl">
+            <input [(ngModel)]="book.title" [ngClass]="{ 'input-invalid': isBookTitleInvalid}"
+                name="title" type="text" class="textbox-input" formControlName="titleControl" >
             <div class="input-label">{{ 'BOOKS.FIELD.ISBN' | translate }}
                 <div class="validation-alert" *ngIf="isIsbnEmpty">
                     {{ 'BOOKS.FIELD.REQUIRED' | translate }}

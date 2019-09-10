@@ -50,6 +50,8 @@
         "BORROWED_COPIES": "O Livro não pode ser deletado pois possui copias emprestadas.",
         "RETURN": "Devolver",
         "RETURN_QUESTION": "Deseja devolver o livro?",
+        "QUIT_WAITING_LIST_QUESTION" : "Deseja sair da lista de espera?",
+        "QUIT": "Sair",
         "WITHOUT_RESERVATION": "Nenhuma reserva feita!",
         "RESERVATION": {
             "APPROVED": "Solicitação aprovada, aguarde a disponibilidade do livro.",

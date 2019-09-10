@@ -99,7 +99,7 @@ export class BookPopupComponent implements OnInit {
             numberOfCopiesControl: new FormControl(this.book.numberOfCopies, Validators.compose([
                 Validators.required,
                 Validators.maxLength(1),
-                BookValidator.validateNumberOfCopies(1, 5)
+                BookValidator.validateNumberOfCopies(0, 5)
             ])),
             editionControl: new FormControl(this.book.edition, Validators.compose([
                 Validators.required,
@@ -122,7 +122,7 @@ export class BookPopupComponent implements OnInit {
         if (!book) {
             throw new Error('Livro não pode ser nulo.');
         }
-        this.canEdit = false;
+        this.canEdit = this.isAdmin;
         //Set Image validate again because book reference has changed
         if (this.allowCoverImage) {
             this.bookForm.get('imageControl').setValidators(BookValidator.validateImageExtension(this.book));
@@ -423,8 +423,8 @@ export class BookPopupComponent implements OnInit {
         this.loaderMediator.execute(
             this.bookService.save(this.book, this.newCoverImage).subscribe(
                 book => {
-                    this.initWith(book);
                     this.updateBookListEvent.emit(null);
+                    this.onCancel();
                 }, error => {
                     this.toastMediator.show(`Erro ao salvar o livro: ${error}`);
                 }
@@ -433,11 +433,8 @@ export class BookPopupComponent implements OnInit {
     }
 
     public onCancel(): void {
-        this.canEdit = false;
         this.book = this.originalBook;
-        if (this.isNew) {
-            this.cancelEvent.emit(null);
-        }
+        this.cancelEvent.emit(null);
     }
 
     public openReturnBookList() {

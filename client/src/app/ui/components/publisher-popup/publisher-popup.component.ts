@@ -67,7 +67,7 @@ export class PublisherPopupComponent implements OnInit {
                 publisher => {
                     this.initNewPublisher();
                     this.publisherForm.reset();
-                    this.toastMediator.show(this.translate.instant('PUBLISHER.ADD'));
+                    this.toastMediator.show(this.translate.instant('PUBLISHERS.ADD'));
                     this.onCancel();
                 }, error => {
                     this.toastMediator.show(error);

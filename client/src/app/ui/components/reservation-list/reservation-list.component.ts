@@ -103,7 +103,7 @@ export class ReservationListComponent implements OnInit {
     }
 
      public cancelReservation() {
-        this.confirmMediator.showDialog(this.translate.instant('BOOKS.REJECT').toUpperCase(), this.translate.instant('BOOKS.REJECT_QUESTION')).subscribe(r => {
+        this.confirmMediator.showDialog(this.translate.instant('BOOKS.QUIT').toUpperCase(), this.translate.instant('BOOKS.QUIT_WAITING_LIST_QUESTION')).subscribe(r => {
             if (r) {
                 this.loaderMediator.execute(
                     this.reservationService.cancel(this.reservation.id)

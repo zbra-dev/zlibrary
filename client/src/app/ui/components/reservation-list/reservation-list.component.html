@@ -14,14 +14,12 @@
         </div>
         <span *ngIf="isBookRented"
             class="reservation-start-date">{{ 'BOOKS.RENTED_DATE' | translate:{'date': date | date:'MM/dd/yyyy' } }}</span>
-        <div *ngIf="" class="approved-waiting-list">
+        <div *ngIf="isReservationAccepted" class="approved-waiting-list">
             <span>{{ 'BOOKS.RESERVATION.APPROVED' | translate }}</span><br><span>{{ 'BOOKS.RESERVATION.ACCEPT' | translate:{'date': date | date:'MM/dd/yyyy' } }}</span>
             <span class="reservation-cancel"
                 (click)="cancelReservation()">{{ 'BOOKS.CANCEL_RESERVATION' | translate }}</span>
         </div>
         <span *ngIf="isRequested" class="requested-waiting-list">{{ 'BOOKS.RESERVATION.WAITING' | translate }}</span>
-        <span *ngIf="isRequested" class="reservation-cancel"
-            (click)="cancelReservation()">{{ 'BOOKS.CANCEL_RESERVATION' | translate }}</span>
         <div *ngIf="canRenewBook" class="reservation-renovate" (click)="renew()">
             {{ 'BOOKS.RESERVATION.RENEW' | translate }}</div>
         <div *ngIf="isRenewalRequested" class="reservation-requested">
