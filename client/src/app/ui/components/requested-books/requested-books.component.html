@@ -6,7 +6,7 @@
     </div>
     <div class="modal-body">
         <div *ngFor="let order of orders" class="modal-rectangle" style="display: flex;">
-            <zli-book-image  class="book-cover" [book]="order.book"></zli-book-image>
+            <book-image  class="book-cover" [book]="order.book"></book-image>
             <div class="book-information">
                 <span class="book-title">{{order.book.title}}</span>
                 <span class="book-authors" *ngFor="let author of order.book.authors; last as isLast">{{author.name}}{{isLast ? '' : ', '}}</span>
