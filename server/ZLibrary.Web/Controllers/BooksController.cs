@@ -138,7 +138,7 @@ namespace ZLibrary.Web
                 section = await reader.ReadNextSectionAsync();
             }
             var validationContext = new ValidationContext(bookFacade, authorService, publisherService);
-            var bookValidator = new BookValidator(validationContext, isbnValidator);
+            var bookValidator = new BookDtoValidator(validationContext, isbnValidator);
             var validationResult = bookValidator.Validate(dto);
 
             if (validationResult.HasError)

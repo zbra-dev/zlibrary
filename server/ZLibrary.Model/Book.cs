@@ -15,12 +15,24 @@ namespace ZLibrary.Model
         public int PublicationYear { get; set; }
         public int NumberOfCopies { get; set; }
         public int NumberOfLoanedCopies { get; set; }
-        public int NumberOfAvailableCopies { get; }
+        public int NumberOfAvailableCopies
+        {
+            get
+            {
+                return NumberOfCopies - NumberOfLoanedCopies;
+            }
+            set
+            {
+                NumberOfAvailableCopies = value;
+            }
+        }
+
         public Guid CoverImageKey { get; set; }
         public DateTime Created { get; set; }
         public string Edition { get; set; }
 
-        public Isbn Isbn {
+        public Isbn Isbn
+        {
             get
             {
                 return IsbnCode == null ? null : Isbn.FromString(IsbnCode);
@@ -72,11 +84,6 @@ namespace ZLibrary.Model
             var hash = 3;
             hash += 17 * Id.GetHashCode();
             return hash;
-        }
-
-        public int CalculateNumberOfAvailableCopies()
-        {
-            return NumberOfCopies - NumberOfLoanedCopies;
         }
     }
 }

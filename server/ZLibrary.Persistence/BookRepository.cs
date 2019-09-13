@@ -39,7 +39,12 @@ namespace ZLibrary.Persistence
                 .Include(a => a.Author)
                 .ToList();
 
-                book.NumberOfLoanedCopies = GetNumberOfLoanedCopies(book);
+                var bookSet = new HashSet<Book>();
+                bookSet.Add(book);
+
+                var loanedCopies = GetLoanedCopies(bookSet);
+
+                book.NumberOfLoanedCopies = loanedCopies[book.Id];
             }
 
             return book;
@@ -57,7 +62,12 @@ namespace ZLibrary.Persistence
                 .Include(a => a.Author)
                 .ToList();
 
-                book.NumberOfLoanedCopies = GetNumberOfLoanedCopies(book);
+                var bookSet = new HashSet<Book>();
+                bookSet.Add(book);
+
+                var loanedCopies = GetLoanedCopies(bookSet);
+
+                book.NumberOfLoanedCopies = loanedCopies[book.Id];
             }
 
             return book;
@@ -138,24 +148,36 @@ namespace ZLibrary.Persistence
                     .Distinct()
                     .ToDictionary(author => author.Id);
 
-            foreach(var book in books)
+            var loanedCopies = GetLoanedCopies(books.ToSet());
+
+            foreach (var book in books)
             {
                 foreach (var bookAuthor in book.Authors)
                 {
                     bookAuthor.Author = authorsMapping.MaybeGet(bookAuthor.AuthorId).OrNull();
                 }
-                book.NumberOfLoanedCopies = GetNumberOfLoanedCopies(book);
+
+                book.NumberOfLoanedCopies = loanedCopies[book.Id];
             }
 
             return books;
         }
 
-        private int GetNumberOfLoanedCopies(Book book)
+        internal IDictionary<long, int> GetLoanedCopies(ISet<Book> books)
         {
-            return context.Loans
-                    .Where(l => l.Reservation.Reason.Status == ReservationStatus.Approved
-                                && l.Reservation.BookId == book.Id)
-                    .Count();
+            var loans = context.Loans;
+
+            var dictionary = new Dictionary<long, int>();
+
+            foreach (var book in books)
+            {
+                var numberOfLoanedCopies = loans.Where(l => l.Reservation.Reason.Status == ReservationStatus.Approved
+                                                              && l.Reservation.BookId == book.Id)
+                                                 .Count();
+                dictionary.Add(book.Id, numberOfLoanedCopies);
+            }
+
+            return dictionary;
         }
 
         public async Task<bool> HasBookWithIsbn(Isbn isbn)

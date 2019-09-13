@@ -28,7 +28,7 @@ namespace ZLibrary.Test.Model
         }
 
         [TestMethod]
-        public void TestCreateReservationReasonPropertiesStatusRejectedAndDescriptionNull()
+        public void TestCreateReservationReasonPropertiesStatusCanceledAndDescriptionNull()
         {
             var reason = new ReservationReason();
             reason.Status = ReservationStatus.Canceled;

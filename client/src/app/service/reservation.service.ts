@@ -29,8 +29,8 @@ export class ReservationService {
         return this.repository.findOrderByStatus(status);
     }
 
-    public findOrdersByMultipleStatus(status: ReservationStatus[]): Observable<Order[]> {
-        return this.repository.findOrderByMultipleStatus(status);
+    public findRequestedOrders(): Observable<Order[]> {
+        return this.repository.findRequestedOrders();
     }
 
     public approve(reservationId: number) {

@@ -23,7 +23,7 @@
         </div>
       </div>
     </div>
-    <div *ngIf="!orders" class="modal-rectangle" style="display: flex;">
+    <div *ngIf="!hasOrders" class="modal-rectangle" style="display: flex;">
       <div class="message">{{ 'BOOKS.NOT_APPROVED_RESERVATIONS' | translate }}</div>
     </div>
   </div>

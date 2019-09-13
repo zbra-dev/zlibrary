@@ -2,11 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using ZLibrary.API;
 using ZLibrary.Model;
-using System.Collections.Generic;
 using System.Linq;
 using ZLibrary.Web.Controllers.Items;
 using System;
-using ZLibrary.Web.LookUps;
 using ZLibrary.Web.Converters;
 
 namespace ZLibrary.Web
@@ -14,251 +12,173 @@ namespace ZLibrary.Web
     [Route("api/[controller]")]
     public class ReservationsController : Controller
     {
-        private readonly IReservationService reservationService;
-        private readonly IUserService userService;
-        private readonly IBookService bookService;
-        private readonly ILoanService loanService;
-        private readonly IServiceDataLookUp serviceDataLookUp;
-        private readonly UserConverter userConverter;
-        private readonly ReservationConverter reservationConverter;
-        private readonly BookConverter bookConverter;
-        private readonly LoanConverter loanConverter;
 
-        public ReservationsController(IReservationService reservationService, IUserService userService, 
-            IBookService bookService, ILoanService loanService, UserConverter userConverter, ReservationConverter reservationConverter,
-            BookConverter bookConverter, LoanConverter loanConverter)
+        private readonly RichReservationConverter richReservationConverter;
+        private readonly OrderConverter orderConverter;
+        private readonly ReservationCancelRequestConverter reservationCancelRequestConverter;
+        private readonly ReservationReturnRequestConverter reservationReturnRequestConverter;
+        private readonly ReservationHoldRequestConverter reservationHoldRequestConverter;
+        private readonly ReservationApproveRequestConverter reservationApproveRequestConverter;
+        private readonly IReservationFacade reservationFacade;
+
+        public ReservationsController(RichReservationConverter richReservationConverter,
+            OrderConverter orderConverter,
+            ReservationCancelRequestConverter reservationCancelRequestConverter,
+            ReservationReturnRequestConverter reservationReturnRequestConverter,
+            ReservationHoldRequestConverter reservationHoldRequestConverter,
+            ReservationApproveRequestConverter reservationApproveRequestConverter,
+            IReservationFacade reservationFacade)
         {
-            this.reservationService = reservationService;
-            this.userService = userService;
-            this.bookService = bookService;
-            this.loanService = loanService;
-            this.serviceDataLookUp = new DefaultServiceDataLookUp(loanService, reservationService);
-            this.userConverter = userConverter;
-            this.reservationConverter = reservationConverter;
-            this.bookConverter = bookConverter;
-            this.loanConverter = loanConverter;
+            this.richReservationConverter = richReservationConverter;
+            this.orderConverter = orderConverter;
+            this.reservationCancelRequestConverter = reservationCancelRequestConverter;
+            this.reservationReturnRequestConverter = reservationReturnRequestConverter;
+            this.reservationHoldRequestConverter = reservationHoldRequestConverter;
+            this.reservationApproveRequestConverter = reservationApproveRequestConverter;
+            this.reservationFacade = reservationFacade;
         }
 
         [HttpGet]
         public async Task<IActionResult> FindAll()
         {
-            var reservations = await reservationService.FindAll();
-            return Ok(reservations.Select(r => reservationConverter.ConvertFromModel(r)));
+            var reservations = await reservationFacade.FindAll();
+            return Ok(reservations.Select(r => richReservationConverter.ConvertFromModel(r)).ToList());
         }
 
         [HttpGet("{id:long}", Name = "FindReservation")]
         public async Task<IActionResult> FindById(long id)
         {
-            var reservation = await reservationService.FindById(id);
-            if (reservation == null)
+            try
             {
-                return NotFound($"Nenhuma reserva encontrada com o ID: {id}.");
+                return Ok(richReservationConverter.ConvertFromModel(await reservationFacade.FindById(id)));
             }
-            return Ok(reservationConverter.ConvertFromModel(reservation));
+            catch (ReservationNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
 
         [HttpGet("user/{userId:long}", Name = "FindReservationByUserId")]
         public async Task<IActionResult> FindByUserId(long userId)
         {
-            var reservations = await reservationService.FindByUserId(userId);
-            if (reservations == null || !reservations.Any())
-            {
-                return NotFound($"Nenhuma reserva encontrada com o ID do usuário: {userId}.");
-            }
-
-            var reservationsDto = new List<ReservationResultDto>();
-            foreach (var reservation in reservations)
-            {
-                var loan = await serviceDataLookUp.LookUp(reservation);
-                var reservationDto = reservationConverter.ConvertFromModel(reservation);
-                reservationDto.Loan = loanConverter.ConvertFromModel(loan);
-                reservationsDto.Add(reservationDto);
-            }
-            return Ok(reservationsDto);
+            var reservations = await reservationFacade.FindByUserId(userId);
+            return Ok(reservations.Select(r => richReservationConverter.ConvertFromModel(r)).ToList());
         }
 
         [HttpGet("status/{statusName}", Name = "FindReservationsByStatus")]
         public async Task<IActionResult> FindReservationsByStatus(string statusName)
         {
             ReservationStatus reservationStatus;
-            if (!Enum.TryParse<ReservationStatus>(statusName, out reservationStatus)) 
+            if (!Enum.TryParse<ReservationStatus>(statusName, out reservationStatus))
             {
                 return BadRequest($"Não foi possível converter o status [{statusName}]");
             }
-            var reservations = await reservationService.FindByStatus(reservationStatus);
-            if (reservations == null || !reservations.Any())
-            {
-                return NotFound($"Nenhuma reserva encontrada com o status: {reservationStatus}.");
-            }
-            return Ok(reservations.Select(r => reservationConverter.ConvertFromModel(r)));
+
+            var reservations = await reservationFacade.FindByStatus(reservationStatus);
+            return Ok(reservations.Select(r => richReservationConverter.ConvertFromModel(r)).ToList());
         }
 
         [HttpGet("orders/{statusName}", Name = "FindOrdersByStatus")]
         public async Task<IActionResult> FindOrdersByStatus(string statusName)
         {
             ReservationStatus reservationStatus;
-            if (!Enum.TryParse<ReservationStatus>(statusName, out reservationStatus)) 
+            if (!Enum.TryParse<ReservationStatus>(statusName, out reservationStatus))
             {
                 return BadRequest($"Não foi possível converter o status [{statusName}]");
             }
-            var reservations = await reservationService.FindByStatus(reservationStatus);
-            if (reservations == null || !reservations.Any())
-            {
-                return NotFound($"Nenhuma reserva encontrada com o status: {reservationStatus}.");
-            }
-            var orderList = new List<OrderDto>();
-            var reservationResultList = reservations.Select(r => reservationConverter.ConvertFromModel(r));
-            foreach (var reservationResult in reservationResultList) 
-            {
-                var order = new OrderDto();
-                order.Reservation = reservationResult;
-                order.Book = bookConverter.ConvertFromModel(await bookService.FindById(reservationResult.BookId));
-                order.User = userConverter.ConvertFromModel(await userService.FindById(reservationResult.UserId));
-                orderList.Add(order);
-            }
-            return Ok(orderList);
+
+            var reservations = await reservationFacade.FindByStatus(reservationStatus);
+            return Ok(reservations.Select(r => orderConverter.ConvertFromModel(r.Reservation)));
+
         }
 
-        [HttpPost("orders", Name = "FindOrdersByMultipleStatus")]
-        public async Task<IActionResult> FindOrdersByMultipleStatus([FromBody]ReservationStatus[] statusNames)
+        [HttpGet("requested-orders")]
+        public async Task<IActionResult> FindRequestedOrders()
         {
-            var orderList = new List<OrderDto>();
-            foreach (var statusName in statusNames)
-            {
-                ReservationStatus reservationStatus;
-                if (!Enum.TryParse<ReservationStatus>(statusName.ToString(), out reservationStatus))
-                {
-                    return BadRequest($"Não foi possível converter o status [{statusName}]");
-                }
-                var reservations = await reservationService.FindByStatus(reservationStatus);
-                if (reservations == null)
-                {
-                    return NotFound($"Nenhuma reserva encontrada com o status: {reservationStatus}.");
-                }
-                var reservationResultList = reservations.Select(r => reservationConverter.ConvertFromModel(r));
-                foreach (var reservationResult in reservationResultList)
-                {
-                    var order = new OrderDto();
-                    order.Reservation = reservationResult;
-                    order.Book = bookConverter.ConvertFromModel(await bookService.FindById(reservationResult.BookId));
-                    order.User = userConverter.ConvertFromModel(await userService.FindById(reservationResult.UserId));
-                    orderList.Add(order);
-                }
-            }
-            return Ok(orderList);
+            var reservations = await reservationFacade.FindRequestedOrders();
+
+            return Ok(reservations.Select(r => orderConverter.ConvertFromModel(r.Reservation)));
         }
 
         [HttpPost("order")]
-        public async Task<IActionResult> Order([FromBody]ReservationRequestDto value)
+        public async Task<IActionResult> CreateOrder([FromBody]ReservationRequestDto value)
         {
-            var user = await userService.FindById(value.UserId);
-            if (user == null)
-            {
-                return NotFound($"Nenhum usuário encontrado com o ID: {value.UserId}.");
-            }
-
-            var book = await bookService.FindById(value.BookId);
-            if (book == null)
-            {
-                return NotFound($"Nenhum livro encontrado com o ID: {value.BookId}.");
-            }
-
-            return Ok(reservationConverter.ConvertFromModel(
-                await reservationService.Order(book, user)
+            return Ok(richReservationConverter.ConvertFromModel(
+                await reservationFacade.CreateOrder(value.BookId, value.UserId)
             ));
         }
 
-        [HttpPost("approved/{id:long}")]
-        public async Task<IActionResult> UpdateLoanStatusToApproved(long id)
+        [HttpPost("approved")]
+        public async Task<IActionResult> ApproveReservation([FromBody]ReservationApproveRequestDto reservationApproveRequestDto)
         {
-            var reservation = await reservationService.FindById(id);
-            if (reservation == null)
-            {
-                return NotFound($"Nenhuma reserva encontrada com o ID: {id}.");
-            }
             try
             {
-                var book = await bookService.FindById(reservation.BookId);
-                if (book == null)
-                {
-                    return NotFound($"Nenhum livro encontrado com o ID: {reservation.BookId}.");
-                }
-                await reservationService.ApprovedReservation(reservation, book);
+                await reservationFacade.ApproveReservation(reservationApproveRequestConverter.ConvertToModel(reservationApproveRequestDto));
                 return Ok();
+            }
+            catch (ReservationNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (BookNotFoundException ex)
+            {
+                return NotFound(ex.Message);
             }
             catch (ReservationApprovedException ex)
             {
                 return BadRequest(ex.Message);
             }
-            catch (InvalidOperationException ex)
+        }
+
+        [HttpPost("waiting")]
+        public async Task<IActionResult> HoldReservation([FromBody]ReservationHoldRequestDto reservationHoldRequestDto)
+        {
+            try
             {
-                return BadRequest(ex.Message);
+                await reservationFacade.QueueReservation(reservationHoldRequestConverter.ConvertToModel(reservationHoldRequestDto));
+                return Ok();
+            }
+            catch (ReservationNotFoundException ex)
+            {
+                return NotFound(ex.Message);
             }
         }
 
-        [HttpPost("waiting/{id:long}")]
-        public async Task<IActionResult> UpdateReservationStatusToWaiting(long id)
+        [HttpPost("returned")]
+        public async Task<IActionResult> ReturnReservation([FromBody]ReservationReturnRequestDto reservationReturnRequestDto)
         {
-            var reservation = await reservationService.FindById(id);
-            if (reservation == null)
-            {
-                return NotFound($"Nenhuma reserva encontrada com o ID: {id}.");
-            }
             try
             {
-                var book = await bookService.FindById(reservation.BookId);
-                if (book == null)
-                {
-                    return NotFound($"Nenhum livro encontrado com o ID: {reservation.BookId}.");
-                }
-                await reservationService.AddToWaitingList(reservation, book);
+                await reservationFacade.ReturnReservation(reservationReturnRequestConverter.ConvertToModel(reservationReturnRequestDto));
                 return Ok();
+            }
+            catch (ReservationNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (BookNotFoundException ex)
+            {
+                return NotFound(ex.Message);
             }
             catch (ReservationApprovedException ex)
             {
                 return BadRequest(ex.Message);
             }
-            catch (InvalidOperationException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpPost("returned/{id:long}")]
-        public async Task<IActionResult> UpdateReservationStatusToReturned(long id)
-        {
-            var reservation = await reservationService.FindById(id);
-            if (reservation == null)
-            {
-                return NotFound($"Nenhuma reserva encontrada com o ID: {id}.");
-            }
-            try
-            {
-                var book = await bookService.FindById(reservation.BookId);
-                await reservationService.ReturnReservation(reservation, book);
-                return Ok();
-            }
-            catch (Exception ex)
+            catch (InvalidLoanException ex)
             {
                 return BadRequest(ex.Message);
             }
         }
 
         [HttpPost("canceled")]
-        public async Task<IActionResult> UpdateReservationStatusToCanceled([FromBody]ReservationRejectDto value)
+        public async Task<IActionResult> CancelReservation([FromBody]ReservationCancelRequestDto reservationCancelRequestDto)
         {
-            var reservation = await reservationService.FindById(value.Id);
-            if (reservation == null)
-            {
-                return NotFound($"Nenhuma reserva encontrada com o ID: {value.Id}.");
-            }
-            reservation.Reason.Description = value.Description;
             try
             {
-                await reservationService.CancelReservation(reservation);
+                await reservationFacade.CancelReservation(reservationCancelRequestConverter.ConvertToModel(reservationCancelRequestDto));
                 return Ok();
             }
-            catch (ReservationApprovedException ex)
+            catch (ReservationNotFoundException ex)
             {
                 return BadRequest(ex.Message);
             }

@@ -69,6 +69,16 @@ namespace ZLibrary.Persistence
                 .SingleOrDefaultAsync(l => l.Reservation.Id == reservationId);
         }
 
+        public async Task<IList<Loan>> FindByReservationsIds(IList<long> reservationIds)
+        {
+            return await context.Loans
+                .Include(l => l.Reservation)
+                .Include(l => l.Reservation.Reason)
+                .Include(l => l.Reservation.User)
+                .Where(l => reservationIds.Contains(l.Reservation.Id))
+                .ToListAsync();
+        }
+
         public async Task<Loan> Update(Loan loan)
         {
             context.Loans.Update(loan);

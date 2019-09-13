@@ -28,7 +28,7 @@ namespace ZLibrary.Web.Converters
                 Authors = model.Authors.Select(ba => authorConverter.ConvertFromModel(ba.Author)).ToArray(),
                 NumberOfCopies = model.NumberOfCopies,
                 NumberOfLoanedCopies = model.NumberOfLoanedCopies,
-                NumberOfAvailableCopies = model.CalculateNumberOfAvailableCopies(),
+                NumberOfAvailableCopies = model.NumberOfAvailableCopies,
                 CoverImageKey = model.CoverImageKey,
                 Edition =  model.Edition
             };

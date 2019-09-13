@@ -6,12 +6,12 @@ using ZLibrary.Web.Controllers.Items;
 
 namespace ZLibrary.Web.Validators
 {
-    public class BookValidator : IValidator<BookDto>
+    public class BookDtoValidator : IValidator<BookDto>
     {
         private readonly ValidationContext context;
         private readonly IsbnValidator isbnValidator;
 
-        public BookValidator(ValidationContext context, IsbnValidator isbnValidator)
+        public BookDtoValidator(ValidationContext context, IsbnValidator isbnValidator)
         {
             this.context = context;
             this.isbnValidator = isbnValidator;

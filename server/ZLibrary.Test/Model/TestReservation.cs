@@ -53,7 +53,7 @@ namespace ZLibrary.Test.Model
         }
 
         [TestMethod]
-        public void TestReservationChangeStatusApprovedPropertie()
+        public void TestReservationChangeStatusApprovedProperty()
         {
             var bookId = 3;
             var user = new User();
@@ -72,7 +72,7 @@ namespace ZLibrary.Test.Model
 
 
         [TestMethod]
-        public void TestReservationChangeStatusWaitingPropertie()
+        public void TestReservationChangeStatusWaitingProperty()
         {
             var bookId = 3;
             var user = new User();
@@ -90,7 +90,7 @@ namespace ZLibrary.Test.Model
         }
 
         [TestMethod]
-        public void TestReservationChangeStatusRejectedPropertie()
+        public void TestReservationChangeStatusCanceledProperty()
         {
             var bookId = 3;
             var user = new User();

@@ -48,7 +48,7 @@ export class RequestedBooksComponent implements OnInit {
     }
 
     public showRequestedReservations() {
-        this.reservationService.findOrdersByMultipleStatus([ReservationStatus.Requested, ReservationStatus.Waiting])
+        this.reservationService.findRequestedOrders()
             .subscribe((orders: Order[]) => {
                 this.orders = this.convertToGroupedOrders(orders);
             });

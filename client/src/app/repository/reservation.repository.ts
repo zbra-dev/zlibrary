@@ -39,7 +39,6 @@ export class ReservationRepository {
   }
 
   public findByStatus(status: ReservationStatus): Observable<Reservation[]> {
-    console.log('ReservationStatus[status] ===> ' + ReservationStatus[status]);
     const url = `${URL}/status/${ReservationStatus[status]}`;
     return this.httpClient.get(url).map((data: any) => data.map(r => ReservationViewModelConverter.fromDTO(r)));
   }
@@ -49,20 +48,24 @@ export class ReservationRepository {
     return this.httpClient.get(url).map((data: any) => data.map(r => OrderViewModelConverter.fromDTO(r)));
   }
 
-  public findOrderByMultipleStatus(status: ReservationStatus[]): Observable<Order[]> {
-    const url = `${URL}/orders`;
-    return this.httpClient.post(url, status).map((data: any) => data.map(r => OrderViewModelConverter.fromDTO(r)));
+  public findRequestedOrders(): Observable<Order[]> {
+    const url = `${URL}/requested-orders`;
+    return this.httpClient.get(url).map((data: any) => data.map(r => OrderViewModelConverter.fromDTO(r)));
   }
 
   public approve(reservationId: number) {
-    return this.httpClient.post(`${URL}/approved/${reservationId}`, ' ', {
+    const dto = { id: reservationId};
+    const json = JSON.stringify(dto);
+    return this.httpClient.post(`${URL}/approved`, json, {
       headers: new HttpHeaders().set('Content-Type', 'application/json'),
       responseType: 'text'
     });
   }
 
   public wait(reservationId: number) {
-    return this.httpClient.post(`${URL}/waiting/${reservationId}`, ' ', {
+    const dto = { id: reservationId};
+    const json = JSON.stringify(dto);
+    return this.httpClient.post(`${URL}/waiting`, json, {
       headers: new HttpHeaders().set('Content-Type', 'application/json'),
       responseType: 'text'
     });
@@ -70,7 +73,7 @@ export class ReservationRepository {
 
   public cancel(reservationId: number) {
     const orderUrl = `${URL}/canceled`;
-    const dto = { id: reservationId, description: '' }
+    const dto = { id: reservationId};
     const json = JSON.stringify(dto);
     return this.httpClient.post(orderUrl, json, {
       headers: new HttpHeaders().set('Content-Type', 'application/json'),
@@ -79,7 +82,9 @@ export class ReservationRepository {
   }
 
   public returnBook(reservationId: number) {
-    return this.httpClient.post(`${URL}/returned/${reservationId}`, ' ', {
+    const dto = { id: reservationId};
+    const json = JSON.stringify(dto);
+    return this.httpClient.post(`${URL}/returned`, json, {
       headers: new HttpHeaders().set('Content-Type', 'application/json'),
       responseType: 'text'
     });

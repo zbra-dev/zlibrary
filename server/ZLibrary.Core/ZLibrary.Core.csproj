@@ -5,10 +5,15 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Validators\**" />
+    <EmbeddedResource Remove="Validators\**" />
+    <None Remove="Validators\**" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\ZLibrary.API\ZLibrary.API.csproj" />
     <ProjectReference Include="..\ZLibrary.Persistence\ZLibrary.Persistence.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Validators\" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
   </ItemGroup>
 </Project>

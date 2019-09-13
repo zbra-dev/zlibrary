@@ -128,6 +128,17 @@
     cursor: pointer;
 }
 
+.reject-button{
+    font-size: 18px;
+    font-family: Roboto;
+    color: #4a90e2;
+    background-color: transparent;
+    border-color: transparent;
+    right: 10%;
+    position: absolute;
+    cursor: pointer;
+}
+
 .reservation-requested, .reservation-expired{
     font-size: 18px;
     font-family: Roboto;

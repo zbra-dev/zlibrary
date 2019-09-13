@@ -41,6 +41,10 @@ export class ApprovedBooksComponent implements OnInit {
       )
   }
 
+  public get hasOrders(): boolean {
+    return this.orders && this.orders.length > 0;
+}
+
   private convertToGroupedOrders(orders: Order[]): GroupedOrder[] {
 
     let groups = orders.reduce((g: Array<Order[]>, order: Order) => {

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -66,16 +65,16 @@ namespace ZLibrary.Core
             return await reservationRepository.FindByUserId(userId);
         }
 
-        public async Task ApprovedReservation(Reservation reservation, Book book)
+        public async Task ApproveReservation(Reservation reservation, Book book)
         {
-            if (reservation.IsApproved || reservation.IsRejected)
+            if(reservation.IsApproved)
             {
-                throw new ReservationApprovedException($"O Status da reserversa precisa ser Solicitado ou Aguardando.");
+                return;
             }
 
-            if (book == null)
+            if (!(reservation.IsRequested || reservation.IsWaiting))
             {
-                throw new InvalidOperationException("Livro não pode ser nulo.");
+                throw new ReservationApprovedException("O Status da reserversa precisa ser Solicitada ou Aguardando.");
             }
 
             var loans = await loanService.FindByBookId(reservation.BookId);
@@ -91,11 +90,16 @@ namespace ZLibrary.Core
             }
         }
 
-        public async Task AddToWaitingList(Reservation reservation, Book book)
+        public async Task QueueReservation(Reservation reservation)
         {
-            if (book == null)
+            if(reservation.IsWaiting)
             {
-                throw new InvalidOperationException("Livro indefinido.");
+                return;
+            }
+
+            if (!reservation.IsRequested)
+            {
+                throw new ReservationApprovedException("O Status da reserversa precisa ser Solicitada");
             }
 
             reservation.Reason.Status = ReservationStatus.Waiting;
@@ -104,21 +108,21 @@ namespace ZLibrary.Core
 
         public async Task ReturnReservation(Reservation reservation, Book book)
         {
-            if (!reservation.IsApproved)
+            if(reservation.IsReturned)
             {
-                throw new ReservationApprovedException($"O Status da reserversa precisa ser Aprovada.");
+                return;
             }
 
-            if (book == null)
+            if (!reservation.IsApproved)
             {
-                throw new InvalidOperationException("Livro indefinido.");
+                throw new ReservationApprovedException("O Status da reserversa precisa ser Aprovada.");
             }
 
             var loans = await loanService.FindByBookId(reservation.BookId);
-            var loanBorrowedByUser = loans.SingleOrDefault(l => l.Reservation.User.Id == reservation.User.Id && l.Status == LoanStatus.Borrowed);
+            var loanBorrowedByUser = loans.SingleOrDefault(loan => loan.Reservation.User.Id == reservation.User.Id && loan.Status == LoanStatus.Borrowed);
             if (loanBorrowedByUser == null)
             {
-                throw new ReservationApprovedException($"Status inválido do emprestimo");
+                throw new InvalidLoanException("Status inválido do emprestimo");
             }
             await loanService.ReturnLoan(loanBorrowedByUser.Id);
             reservation.Reason.Status = ReservationStatus.Returned;
@@ -127,9 +131,14 @@ namespace ZLibrary.Core
 
         public async Task CancelReservation(Reservation reservation)
         {
+            if(reservation.IsCanceled)
+            {
+                return;
+            }
+
             if (!reservation.IsRequested && !reservation.IsWaiting)
             {
-                throw new ReservationApprovedException($"O Status da reserversa precsisa ser Solicitado ou na Lista de Espera.");
+                throw new ReservationApprovedException("O Status da reserversa precsisa ser Solicitado ou na Lista de Espera.");
             }
             reservation.Reason.Status = ReservationStatus.Canceled;
             await reservationRepository.Update(reservation);

@@ -8,6 +8,6 @@ export class Reservation {
                 public bookId: number,
                 public reservationReason: ReservationReason,
                 public startDate: string,
-                public loan: Loan) {
+                public loan: Loan | null) {
     }
 }
