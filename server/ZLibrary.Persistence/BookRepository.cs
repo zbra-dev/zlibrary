@@ -39,12 +39,12 @@ namespace ZLibrary.Persistence
                 .Include(a => a.Author)
                 .ToList();
 
-                var bookSet = new HashSet<Book>();
-                bookSet.Add(book);
+                var bookIdsSet = new HashSet<long>();
+                bookIdsSet.Add(book.Id);
 
-                var loanedCopies = GetLoanedCopies(bookSet);
+                var loanedCopies = GetLoanedCopies(bookIdsSet);
 
-                book.NumberOfLoanedCopies = loanedCopies[book.Id];
+                book.NumberOfLoanedCopies = loanedCopies.MaybeGet(book.Id).Or(0);
             }
 
             return book;
@@ -62,12 +62,12 @@ namespace ZLibrary.Persistence
                 .Include(a => a.Author)
                 .ToList();
 
-                var bookSet = new HashSet<Book>();
-                bookSet.Add(book);
+                var bookIdsSet = new HashSet<long>();
+                bookIdsSet.Add(book.Id);
 
-                var loanedCopies = GetLoanedCopies(bookSet);
+                var loanedCopies = GetLoanedCopies(bookIdsSet);
 
-                book.NumberOfLoanedCopies = loanedCopies[book.Id];
+                book.NumberOfLoanedCopies = loanedCopies.MaybeGet(book.Id).Or(0);
             }
 
             return book;
@@ -140,15 +140,15 @@ namespace ZLibrary.Persistence
 
         private List<Book> EnrichAuthors(List<Book> books)
         {
-            var booksIds = books.Select(b => b.Id).ToSet();
+            var bookIds = books.Select(b => b.Id).ToSet();
 
-            var authorsMapping = context.BookAuthors.Where(ba => booksIds.Contains(ba.BookId))
+            var authorsMapping = context.BookAuthors.Where(ba => bookIds.Contains(ba.BookId))
                     .Include(bookAuthor => bookAuthor.Author)
                     .Select(bookAuthor => bookAuthor.Author)
                     .Distinct()
                     .ToDictionary(author => author.Id);
 
-            var loanedCopies = GetLoanedCopies(books.ToSet());
+            var loanedCopies = GetLoanedCopies(bookIds);
 
             foreach (var book in books)
             {
@@ -157,27 +157,21 @@ namespace ZLibrary.Persistence
                     bookAuthor.Author = authorsMapping.MaybeGet(bookAuthor.AuthorId).OrNull();
                 }
 
-                book.NumberOfLoanedCopies = loanedCopies[book.Id];
+                book.NumberOfLoanedCopies = loanedCopies.MaybeGet(book.Id).Or(0);
             }
 
             return books;
         }
 
-        internal IDictionary<long, int> GetLoanedCopies(ISet<Book> books)
+        internal IDictionary<long, int> GetLoanedCopies(ISet<long> bookIds)
         {
-            var loans = context.Loans;
+            var loans = context.Loans
+                .Where(l => l.Reservation.Reason.Status == ReservationStatus.Approved)
+                .Where(l => bookIds.Contains(l.Reservation.BookId))
+                .GroupBy(l => l.Reservation.BookId)
+                .ToDictionary(it => it.Key, it => it.Count());
 
-            var dictionary = new Dictionary<long, int>();
-
-            foreach (var book in books)
-            {
-                var numberOfLoanedCopies = loans.Where(l => l.Reservation.Reason.Status == ReservationStatus.Approved
-                                                              && l.Reservation.BookId == book.Id)
-                                                 .Count();
-                dictionary.Add(book.Id, numberOfLoanedCopies);
-            }
-
-            return dictionary;
+            return loans;
         }
 
         public async Task<bool> HasBookWithIsbn(Isbn isbn)

@@ -9,7 +9,7 @@ import { AbstractControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-    selector: 'zli-author-popup',
+    selector: 'author-popup',
     templateUrl: './author-popup.component.html',
     styleUrls: ['./author-popup.component.scss']
 })

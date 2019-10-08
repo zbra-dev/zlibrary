@@ -1,5 +1,5 @@
-<zli-navbar></zli-navbar>
-<zli-loading-overlay [isBusy]="isBusy">
+<navbar></navbar>
+<loading-overlay [isBusy]="isBusy">
     <div id="background" (click)="toggleSidebar()"></div>
     <div class="book-window">
         <div class="search-container">
@@ -12,8 +12,8 @@
         </button>
         </div>
         <div class="book-container">
-            <zli-book class="book-grid" *ngFor="let book of books;" [class.selected]="book === selectedBook" [user]="user" [book]="book"
-                (deleted)="onBookDeleted($event)" (view)="onSelect($event)" (edit)="onBookEdited($event)"></zli-book>
+            <book class="book-grid" *ngFor="let book of books;" [class.selected]="book === selectedBook" [user]="user" [book]="book"
+                (deleted)="onBookDeleted($event)" (view)="onSelect($event)" (edit)="onBookEdited($event)"></book>
             <div id="sidebar">
                 <div>
                     <div id="close" (click)="toggleSidebar()"></div>
@@ -22,4 +22,4 @@
             </div>
         </div>
     </div>
-</zli-loading-overlay>
+</loading-overlay>

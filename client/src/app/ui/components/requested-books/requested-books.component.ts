@@ -1,7 +1,6 @@
-import { User } from './../../../model/user';
 import { Book } from './../../../model/book';
 import { ReservationStatus } from './../../../model/reservation-status';
-import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ReservationService } from '../../../service/reservation.service';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { ToastMediator } from '../../mediators/toast.mediator';
@@ -11,9 +10,10 @@ import { ConfirmMediator } from '../../mediators/confirm.mediator';
 import { TranslateService } from '@ngx-translate/core';
 import { GroupedOrder } from '../../../model/grouped-order';
 import { Reservation } from '../../../model/reservation';
+import { GroupedOrdersConverter } from '../../../repository/converter/grouped-orders.converter';
 
 @Component({
-    selector: 'zli-requested-books',
+    selector: 'requested-books',
     templateUrl: './requested-books.component.html',
     styleUrls: ['./requested-books.component.scss'],
     encapsulation: ViewEncapsulation.Emulated
@@ -23,7 +23,8 @@ export class RequestedBooksComponent implements OnInit {
         private toastMediator: ToastMediator,
         private confirmMediator: ConfirmMediator,
         private loaderMediator: LoaderMediator,
-        private translate: TranslateService) {
+        private translate: TranslateService,
+        private abstractGroupedOrdersConverter: GroupedOrdersConverter) {
     }
 
     public orders: GroupedOrder[];
@@ -50,35 +51,8 @@ export class RequestedBooksComponent implements OnInit {
     public showRequestedReservations() {
         this.reservationService.findRequestedOrders()
             .subscribe((orders: Order[]) => {
-                this.orders = this.convertToGroupedOrders(orders);
+                this.orders = this.abstractGroupedOrdersConverter.convertToGroupedOrders(orders);
             });
-    }
-
-    private convertToGroupedOrders(orders: Order[]): GroupedOrder[] {
-
-        let groups = orders.reduce((g: Array<Order[]>, order: Order) => {
-            g[order.book.id] = g[order.book.id] || [];
-            g[order.book.id].push(order);
-            return g;
-        }, []).filter(g => g.length > 0);
-
-        let groupedOrders: GroupedOrder[] = new Array<GroupedOrder>();
-
-        for (let i = 0; i < groups.length; i++) {
-            let book: Book;
-            let reservations = new Array<Reservation>();
-            let users = new Array<User>();
-            let groupedOrder: GroupedOrder;
-            for (let j = 0; j < groups[i].length; j++) {
-                book = groups[i][j].book;
-                users.push(groups[i][j].user);
-                reservations.push(groups[i][j].reservation);
-            }
-            groupedOrder = new GroupedOrder(reservations, book, users);
-            groupedOrders.push(groupedOrder);
-        }
-
-        return groupedOrders;
     }
 
     public acceptReservation(reservation: Reservation) {

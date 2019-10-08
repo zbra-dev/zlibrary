@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewEncapsulation, forwardRef, SimpleChanges, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, forwardRef, SimpleChanges, ChangeDetectorRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl, ControlValueAccessor, Validator } from '@angular/forms';
 import { ToastMediator } from '../../mediators/toast.mediator';
 
 @Component({
-    selector: 'zli-load-image',
+    selector: 'load-image',
     templateUrl: './load-image.component.html',
     styleUrls: ['./load-image.component.scss'],
     providers: [

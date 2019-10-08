@@ -1,7 +1,7 @@
 <div *ngIf="!canManageBook" class="popup-container">
     <div class="book-container">
         <h1 class="about-book-title">{{ 'BOOKS.ABOUT' | translate }}</h1>
-        <zli-book-image class="book-image" [book]="book"></zli-book-image>
+        <book-image class="book-image" [book]="book"></book-image>
         <div class="book-information-container">
             <h2 class="book-title">{{ book.title }}</h2>
             <div class="book-information-label">{{ 'BOOKS.FIELD.ISBN' | translate }}
@@ -65,9 +65,9 @@
                 <div class="edit-image-text" *ngIf="isImageSelected">{{ 'IMAGE.EDIT' | translate }}</div>
             </div>
             <div class="image-hover"></div>
-            <zli-load-image class="input-image" #loadImage [formControlName]="'imageControl'"
-                (ngModelChange)="setCoverImage($event)"></zli-load-image>
-            <zli-book-image class="book-image-loaded" *ngIf="isImageLoaded" [book]="book"></zli-book-image>
+            <load-image class="input-image" #loadImage [formControlName]="'imageControl'"
+                (ngModelChange)="setCoverImage($event)"></load-image>
+            <book-image class="book-image-loaded" *ngIf="isImageLoaded" [book]="book"></book-image>
             <div class="add-image-button" [innerHTML]="'IMAGE.NEW' | translate"></div>
         </div>
         <div class="book-inputs-container">
@@ -103,19 +103,19 @@
                     {{ 'BOOKS.FIELD.REQUIRED' | translate }}
                 </div>
             </label>
-            <zli-multi-selection-typeahead [ngClass]="{ 'input-invalid': isAuthorInvalid}"
+            <multi-selection-typeahead [ngClass]="{ 'input-invalid': isAuthorInvalid}"
                 [suggestionAdapter]="authorSuggestionAdapter" [(ngModel)]="book.authors"
                 [formControlName]="'authorsControl'">
-            </zli-multi-selection-typeahead>
+            </multi-selection-typeahead>
             <label class="input-label">{{ 'BOOKS.FIELD.PUBLISHER' | translate }}
                 <div class="validation-alert" *ngIf="isPublisherEmpty">
                     {{ 'BOOKS.FIELD.REQUIRED' | translate }}
                 </div>
             </label>
-            <zli-single-selection-typeahead [ngClass]="{ 'input-invalid': isPublisherInvalid}"
+            <single-selection-typeahead [ngClass]="{ 'input-invalid': isPublisherInvalid}"
                 [suggestionAdapter]="publisherSuggestionAdapter" [(ngModel)]="book.publisher"
                 [formControlName]="'publisherControl'">
-            </zli-single-selection-typeahead>
+            </single-selection-typeahead>
             <label class="input-label">{{ 'BOOKS.FIELD.PUBLICATION_YEAR' | translate }}
                 <div class="validation-alert" *ngIf="isPublicationYearEmpty">
                     {{ 'BOOKS.FIELD.REQUIRED' | translate }}

@@ -20,7 +20,7 @@ import { LoanService } from './loan.service';
         UserService,
         LoanService,
         FeatureSettingsService
-    ]
+    ],
 })
 export class ServiceModule {
 }

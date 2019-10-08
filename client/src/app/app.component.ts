@@ -2,7 +2,7 @@ import { Component, ViewContainerRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-    selector: 'zli-root',
+    selector: 'root',
     templateUrl: './app.component.html'
 })
 export class AppComponent {

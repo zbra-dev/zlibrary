@@ -8,14 +8,11 @@ import { ToastMediator } from '../../mediators/toast.mediator';
 import { AuthService } from '../../../service/auth.service';
 import { Book } from '../../../model/book';
 import { User } from '../../../model/user';
-import { CoverImageService } from '../../../service/cover-image.service';
-import { DatePipe, getLocaleDateTimeFormat } from '@angular/common';
-import { Locale } from 'ngx-bootstrap/bs-moment/locale/locale.class';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfirmMediator } from '../../mediators/confirm.mediator';
 
 @Component({
-    selector: 'zli-reservation-list',
+    selector: 'reservation-list',
     templateUrl: './reservation-list.component.html',
     styleUrls: ['./reservation-list.component.scss'],
     encapsulation: ViewEncapsulation.Emulated

@@ -46,7 +46,7 @@ export function HttpLoaderFactory(http: HttpClient){
     imports: [
         RouterModule.forRoot(
             appRoutes,
-            { enableTracing: true } // Debugging purposes only
+            //{ enableTracing: true } // Debugging purposes only
         ),
         ModalModule.forRoot(),
         BrowserModule,

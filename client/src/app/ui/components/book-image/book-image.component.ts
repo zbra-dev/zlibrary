@@ -7,7 +7,7 @@ import { Book } from '../../../model/book';
 const BASE64_BASE_URL = 'data:image/jpg;base64,';
 
 @Component({
-    selector: 'zli-book-image',
+    selector: 'book-image',
     templateUrl: './book-image.component.html',
     styleUrls: ['./book-image.component.scss'],
     encapsulation: ViewEncapsulation.None

@@ -1,11 +1,8 @@
-import { Component, forwardRef, Input, OnChanges, OnInit, SimpleChanges, Output, EventEmitter } from '@angular/core';
-import { ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR, Validator } from '@angular/forms';
-import { Subject } from 'rxjs/Subject';
-import { ToastMediator } from '../../mediators/toast.mediator';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Suggestion } from '../typeahead/suggestion';
 
 @Component({
-    selector: 'zli-list-results',
+    selector: 'list-results',
     templateUrl: './list-results.component.html',
     styleUrls: ['./list-results.component.scss'],
 })

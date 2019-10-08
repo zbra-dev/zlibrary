@@ -27,19 +27,19 @@ namespace ZLibrary.Persistence
                  .Include(reservation => reservation.Book)
                  .ToListAsync();
 
-            var loanedCopies = GetNumberOfLoanedCopies(reservations.Select(r => r.Book).ToSet());
+            var loanedCopies = GetNumberOfLoanedCopies(reservations.Select(r => r.Book.Id).ToSet());
 
             foreach(var reservation in reservations)
             {
-                reservation.Book.NumberOfLoanedCopies = loanedCopies[reservation.BookId];
+                reservation.Book.NumberOfLoanedCopies = loanedCopies.MaybeGet(reservation.BookId).Or(0);
             }
 
             return reservations;
         }
 
-        private IDictionary<long, int> GetNumberOfLoanedCopies(ISet<Book> books)
+        private IDictionary<long, int> GetNumberOfLoanedCopies(ISet<long> booksIds)
         {
-            return bookRepository.GetLoanedCopies(books);
+            return bookRepository.GetLoanedCopies(booksIds);
         }
 
         public async Task<IList<Reservation>> FindByBookId(long BookId)
@@ -52,14 +52,14 @@ namespace ZLibrary.Persistence
 
             if (reservations != null && reservations.Any())
             {
-                var bookSet = new HashSet<Book>();
-                bookSet.Add(reservations.First().Book);
+                var bookSet = new HashSet<long>();
+                bookSet.Add(reservations.First().Book.Id);
 
                 var loanedCopies = GetNumberOfLoanedCopies(bookSet);
 
                 foreach (var reservation in reservations)
                 {
-                    reservation.Book.NumberOfLoanedCopies = loanedCopies[reservation.BookId];
+                    reservation.Book.NumberOfLoanedCopies = loanedCopies.MaybeGet(reservation.BookId).Or(0);
                 }
             }
 
@@ -74,11 +74,11 @@ namespace ZLibrary.Persistence
                 .Include(reservation => reservation.Book)
                 .ToListAsync();
 
-            var loanedCopies = GetNumberOfLoanedCopies(reservations.Select(r => r.Book).ToSet());
+            var loanedCopies = GetNumberOfLoanedCopies(reservations.Select(r => r.Book.Id).ToSet());
 
             foreach (var reservation in reservations)
             {
-                reservation.Book.NumberOfLoanedCopies = loanedCopies[reservation.BookId];
+                reservation.Book.NumberOfLoanedCopies = loanedCopies.MaybeGet(reservation.BookId).Or(0);
             }
 
             return reservations;
@@ -93,11 +93,11 @@ namespace ZLibrary.Persistence
                 .Include(reservation => reservation.Book)
                 .ToListAsync();
 
-            var loanedCopies = GetNumberOfLoanedCopies(reservations.Select(r => r.Book).ToSet());
+            var loanedCopies = GetNumberOfLoanedCopies(reservations.Select(r => r.Book.Id).ToSet());
 
             foreach (var reservation in reservations)
             {
-                reservation.Book.NumberOfLoanedCopies = loanedCopies[reservation.BookId];
+                reservation.Book.NumberOfLoanedCopies = loanedCopies.MaybeGet(reservation.BookId).Or(0);
             }
 
             return reservations;
@@ -113,10 +113,10 @@ namespace ZLibrary.Persistence
 
             if (reservation != null)
             {
-                var bookSet = new HashSet<Book>();
-                bookSet.Add(reservation.Book);
+                var bookSet = new HashSet<long>();
+                bookSet.Add(reservation.Book.Id);
                 var loanedCopies = GetNumberOfLoanedCopies(bookSet);
-                reservation.Book.NumberOfLoanedCopies = loanedCopies[reservation.BookId];
+                reservation.Book.NumberOfLoanedCopies = loanedCopies.MaybeGet(reservation.BookId).Or(0);
             }
 
             return reservation;
@@ -130,11 +130,11 @@ namespace ZLibrary.Persistence
                 .Include(reservation => reservation.Book)
                 .ToListAsync();
 
-            var loanedCopies = GetNumberOfLoanedCopies(reservations.Select(r => r.Book).ToSet());
+            var loanedCopies = GetNumberOfLoanedCopies(reservations.Select(r => r.Book.Id).ToSet());
 
             foreach (var reservation in reservations)
             {
-                reservation.Book.NumberOfLoanedCopies = loanedCopies[reservation.BookId];
+                reservation.Book.NumberOfLoanedCopies = loanedCopies.MaybeGet(reservation.BookId).Or(0);
             }
 
             return reservations;

@@ -2,12 +2,11 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 import { Reservation } from '../../../model/reservation';
 import { Book } from '../../../model/book';
-import { ReservationService } from '../../../service/reservation.service';
 import { BookService } from '../../../service/book.service';
 import { ReservationStatus } from '../../../model/reservation-status';
 
 @Component({
-  selector: 'zli-return-book-list',
+  selector: 'return-book-list',
   templateUrl: './return-book-list.component.html',
   styleUrls: ['./return-book-list.component.scss']
 })

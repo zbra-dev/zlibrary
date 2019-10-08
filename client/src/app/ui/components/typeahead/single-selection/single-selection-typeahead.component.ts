@@ -5,7 +5,7 @@ import { NG_VALUE_ACCESSOR, NG_VALIDATORS, ControlValueAccessor, Validator, Form
 import { Suggestion } from './../suggestion';
 
 @Component({
-    selector: 'zli-single-selection-typeahead',
+    selector: 'single-selection-typeahead',
     templateUrl: './single-selection-typeahead.component.html',
     styleUrls: ['./../typeahead.component.scss'],
     providers: [
