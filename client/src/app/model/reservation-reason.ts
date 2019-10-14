@@ -7,11 +7,15 @@ export class ReservationReason {
     }
     
     public get isRejected(): boolean {
-        return this.status == ReservationStatus.Rejected;
+        return this.status == ReservationStatus.Canceled;
     }
 
     public get isReturned(): boolean {
         return this.status == ReservationStatus.Returned;
+    }
+
+    public get isWaiting(): boolean {
+        return this.status == ReservationStatus.Waiting;
     }
 
 

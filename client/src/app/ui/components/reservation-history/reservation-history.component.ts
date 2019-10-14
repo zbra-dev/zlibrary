@@ -1,16 +1,13 @@
 import { ReservationStatus } from './../../../model/reservation-status';
-import { element } from 'protractor';
-import { ReactiveFormsModule } from '@angular/forms';
 import { Reservation } from './../../../model/reservation';
 import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 import { ReservationService } from '../../../service/reservation.service';
 import { AuthService } from '../../../service/auth.service';
 import { User } from '../../../model/user';
-import index from '@angular/cli/lib/cli';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
 
 @Component({
-    selector: 'zli-reservation-history',
+    selector: 'reservation-history',
     templateUrl: './reservation-history.component.html',
     styleUrls: ['./reservation-history.component.scss'],
     encapsulation: ViewEncapsulation.Emulated
@@ -32,8 +29,16 @@ export class ReservationHistoryComponent implements OnInit {
         return this.reservationHistoryType === ReservationHistoryType.Waiting;
     }
 
+    public get hasReservations(): boolean {
+        return this.reservations && this.reservations.length > 0;
+    }
+
     ngOnInit() {
         this.user = this.authService.getLoggedUser();
+        this.showReservations();
+    }
+
+    public refreshList() {
         this.showReservations();
     }
 

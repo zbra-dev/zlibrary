@@ -6,5 +6,5 @@
     </div>
     <input type="text" class="suggestion-query" *ngIf="!selectionLimit || selected.length < selectionLimit" (keydown)="onKeyDown($event)"
         (focus)="setSuggestionResults()" (blur)="onBlur()" [ngModel]="query" (ngModelChange)="onQueryChanged($event)">
-    <zli-list-results *ngIf="!!searchResults.length" [candidate]="candidate" [searchResults]="searchResults" (selectElement)="selectElement($event)"></zli-list-results>
+    <list-results *ngIf="!!searchResults.length" [candidate]="candidate" [searchResults]="searchResults" (selectElement)="selectElement($event)"></list-results>
 </div>

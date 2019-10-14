@@ -34,9 +34,6 @@
         <div *ngIf="canAddToWaitingList" class="reservation-box-unavailable" (click)="order()">
             <div class="available-button-text-unavailable">{{ 'BOOKS.ADD_WAITING_LIST' | translate }}</div>
         </div>
-        <div *ngIf="canAdminProvideBookToUsers" class="reservation-box-unavailable" (click)="openReturnBookList()">
-            <div class="available-button-text-unavailable">{{ 'BOOKS.PROVIDE_TO_USERS' | translate }}</div>
-        </div>
     </div>
     <div *ngIf="requestedForReservation" class="request-reservation-container">
         <div class="availability-box">
@@ -106,19 +103,19 @@
                     {{ 'BOOKS.FIELD.REQUIRED' | translate }}
                 </div>
             </label>
-            <zli-multi-selection-typeahead [ngClass]="{ 'input-invalid': isAuthorInvalid}"
+            <multi-selection-typeahead [ngClass]="{ 'input-invalid': isAuthorInvalid}"
                 [suggestionAdapter]="authorSuggestionAdapter" [(ngModel)]="book.authors"
                 [formControlName]="'authorsControl'">
-            </zli-multi-selection-typeahead>
+            </multi-selection-typeahead>
             <label class="input-label">{{ 'BOOKS.FIELD.PUBLISHER' | translate }}
                 <div class="validation-alert" *ngIf="isPublisherEmpty">
                     {{ 'BOOKS.FIELD.REQUIRED' | translate }}
                 </div>
             </label>
-            <zli-single-selection-typeahead [ngClass]="{ 'input-invalid': isPublisherInvalid}"
+            <single-selection-typeahead [ngClass]="{ 'input-invalid': isPublisherInvalid}"
                 [suggestionAdapter]="publisherSuggestionAdapter" [(ngModel)]="book.publisher"
                 [formControlName]="'publisherControl'">
-            </zli-single-selection-typeahead>
+            </single-selection-typeahead>
             <label class="input-label">{{ 'BOOKS.FIELD.PUBLICATION_YEAR' | translate }}
                 <div class="validation-alert" *ngIf="isPublicationYearEmpty">
                     {{ 'BOOKS.FIELD.REQUIRED' | translate }}

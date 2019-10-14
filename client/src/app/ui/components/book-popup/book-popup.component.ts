@@ -349,7 +349,7 @@ export class BookPopupComponent implements OnInit {
     public refreshReservationStatus() {
 
         const currentReservations = this.book.reservations
-            .filter(r => r.userId === this.user.id && (!r.reservationReason.isRejected || r.reservationReason.isApproved && !!r.loan && !r.loan.isReturned));
+            .filter(r => r.userId === this.user.id && (!r.reservationReason.isRejected && !r.reservationReason.isReturned || r.reservationReason.isApproved && !!r.loan && !r.loan.isReturned));
 
         if (currentReservations.length === 0) {
             return;
@@ -361,7 +361,7 @@ export class BookPopupComponent implements OnInit {
             .subscribe((reservations: Reservation[]) => {
 
                 const userReservations = reservations
-                    .filter(r => r.id === currentReservation.id && !r.reservationReason.isReturned);
+                    .filter(r => r.id === currentReservation.id);
 
                 if (userReservations.length !== 0) {
                     this.printReservationState(userReservations[0]);

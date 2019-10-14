@@ -96,7 +96,7 @@
 }
 
 .requested-waiting-list{
-    right: 125px;
+    right: 245px;
     text-align: center;
     position: absolute;
     color: mediumblue;
@@ -122,9 +122,20 @@
     color: #4a90e2;
     background-color: transparent;
     border-color: transparent;
-    right: 56px;
+    right: 25%;
     position: absolute;
-    margin-top: 60px;
+    margin-top: 10%;
+    cursor: pointer;
+}
+
+.reject-button{
+    font-size: 18px;
+    font-family: Roboto;
+    color: #4a90e2;
+    background-color: transparent;
+    border-color: transparent;
+    right: 10%;
+    position: absolute;
     cursor: pointer;
 }
 

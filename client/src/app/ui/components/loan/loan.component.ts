@@ -8,7 +8,7 @@ import { ToastMediator } from '../../mediators/toast.mediator';
 import { LoanService } from '../../../service/loan.service';
 
 @Component({
-  selector: 'zli-loan',
+  selector: 'loan',
   templateUrl: './loan.component.html',
   styleUrls: ['./loan.component.scss']
 })

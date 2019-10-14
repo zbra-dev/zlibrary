@@ -8,7 +8,7 @@ import { AuthService } from '../../../service/auth.service';
 import { BookPopupComponent } from '../../components/book-popup/book-popup.component';
 
 @Component({
-    selector: 'zli-book-list',
+    selector: 'book-list',
     templateUrl: './book-list.component.html',
     styleUrls: ['./book-list.component.scss'],
     encapsulation: ViewEncapsulation.Emulated

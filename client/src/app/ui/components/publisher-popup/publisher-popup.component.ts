@@ -8,7 +8,7 @@ import { PublisherValidator } from '../../validators/publisher-validator';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-    selector: 'zli-publisher-popup',
+    selector: 'publisher-popup',
     templateUrl: './publisher-popup.component.html',
     styleUrls: ['./publisher-popup.component.scss']
 })

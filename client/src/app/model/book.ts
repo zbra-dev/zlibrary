@@ -15,13 +15,15 @@ export class Book {
     public synopsis: string;
     public publicationYear: number;
     public numberOfCopies: number;
+    public numberOfLoanedCopies: number;
+    public numberOfAvailableCopies: number;
     public coverImageKey: string;
     public created: Date;
     public reservations: Reservation[];
     public edition: string;
 
     public get isAvailable(): boolean {
-        return this.numberOfCopies > 0 && this.reservations.filter(r => r.reservationReason.isApproved && !!r.loan && !r.loan.isReturned).length < this.numberOfCopies;
+        return this.numberOfAvailableCopies > 0;
     }
 
     public hasBookReservation(user: User): boolean {

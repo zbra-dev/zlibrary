@@ -9,5 +9,5 @@
       <span class="column-title">{{ 'BOOKS.RENTED_DATE' | translate:{'date': date | date:'MM/dd/yyyy' } }}</span>
       <span class="column-title">{{ 'BOOKS.RENTED_EXPIRE' | translate }}</span>
   </div>
- <zli-loan *ngFor="let reservation of reservations;" [reservation]="reservation" (refreshReservations)="refreshReservations()"></zli-loan>
+ <loan *ngFor="let reservation of reservations;" [reservation]="reservation" (refreshReservations)="refreshReservations()"></loan>
 </div>

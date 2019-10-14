@@ -13,6 +13,8 @@ export class BookViewModelConverter {
         book.synopsis = dto.synopsis;
         book.publicationYear = dto.publicationYear;
         book.numberOfCopies = dto.numberOfCopies;
+        book.numberOfLoanedCopies = dto.numberOfLoanedCopies;
+        book.numberOfAvailableCopies = dto.numberOfAvailableCopies;
         book.coverImageKey = dto.coverImageKey;
         book.created = dto.created;
         book.reservations = !!dto.reservations ? dto.reservations.map(r => ReservationViewModelConverter.fromDTO(r)) : [];

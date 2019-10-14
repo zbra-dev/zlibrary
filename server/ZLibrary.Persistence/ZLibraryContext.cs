@@ -39,6 +39,8 @@ namespace ZLibrary.Persistence
 
             modelBuilder.Entity<Book>()
               .Ignore(b => b.Isbn)
+              .Ignore(b => b.NumberOfLoanedCopies)
+              .Ignore(b => b.NumberOfAvailableCopies)
               .Property(b => b.IsbnCode).HasColumnName("ISBN");
         }
     }

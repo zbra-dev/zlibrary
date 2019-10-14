@@ -11,7 +11,7 @@ import { ReservationService } from '../../../service/reservation.service';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-    selector: 'zli-book',
+    selector: 'book',
     templateUrl: './book.component.html',
     styleUrls: ['./book.component.scss'],
     encapsulation: ViewEncapsulation.None

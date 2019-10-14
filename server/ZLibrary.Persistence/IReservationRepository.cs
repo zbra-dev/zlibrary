@@ -13,5 +13,6 @@ namespace ZLibrary.Persistence
         Task<Reservation> Save(Reservation reservation);
         Task Update(Reservation reservation);
         Task<IList<Reservation>> FindByStatus(ReservationStatus reservationStatus);
+        Task<IList<Reservation>> FindRequestedOrders();
     }
 }

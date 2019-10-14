@@ -6,19 +6,32 @@
     </div>
     <div class="modal-body">
         <div *ngFor="let order of orders" class="modal-rectangle" style="display: flex;">
-            <book-image  class="book-cover" [book]="order.book"></book-image>
+            <book-image class="book-cover" [book]="order.book"></book-image>
             <div class="book-information">
                 <span class="book-title">{{order.book.title}}</span>
-                <span class="book-authors" *ngFor="let author of order.book.authors; last as isLast">{{author.name}}{{isLast ? '' : ', '}}</span>
+                <span class="book-authors"
+                    *ngFor="let author of order.book.authors; last as isLast">{{author.name}}{{isLast ? '' : ', '}}</span>
+                <div>
+                    <span>{{ 'BOOKS.AVAILABLE_COPIES' | translate }} = {{order.book.numberOfAvailableCopies}}
+                        {{ 'BOOKS.OF' | translate }}
+                        {{order.book.numberOfCopies}}</span>
+                </div>
             </div>
             <div class="user-information">
-                <img src="../../../../assets/images/user_icon.png" width="20" height="20">
-                <span class="user-name">{{order.user.name}}</span>
+                <div *ngFor="let user of order.users; let i = index">
+                    <img src="../../../../assets/images/user_icon.png" width="20" height="20">
+                    <span class="user-name">{{user.name}}</span>
+                    <button *ngIf="canLoanBook(order.book)" type="button" class="accept-button"
+                        (click)="acceptReservation(order.reservations[i])">{{ 'BOOKS.BORROW' | translate }}</button>
+                    <button *ngIf="showEnterWaitingList(order.reservations[i], order.book)" type="button"
+                        class="accept-button"
+                        (click)="holdReservation(order.reservations[i])">{{ 'BOOKS.ADD_WAITING_LIST' | translate }}</button>
+                    <button type="button" class="reject-button"
+                        (click)="cancelReservation(order.reservations[i])">{{ 'BUTTON.CANCEL' | translate }}</button>
+                </div>
             </div>
-            <button type="button" class="accept-button" (click)="acceptReservation(order)">{{ 'BOOKS.APPROVE' | translate }}</button>
-            <button type="button" class="reject-button" (click)="rejectReservation(order)">{{ 'BOOKS.REJECT' | translate }}</button>
         </div>
-        <div *ngIf="!orders" class="modal-rectangle" style="display: flex;">
+        <div *ngIf="!hasOrders" class="modal-rectangle" style="display: flex;">
             <div class="message">{{ 'BOOKS.NO_RESERVATIONS' | translate }}</div>
         </div>
     </div>

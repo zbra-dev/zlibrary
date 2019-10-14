@@ -14,6 +14,6 @@ namespace ZLibrary.Persistence
         Task<IList<Loan>> FindAll();
         Task<Loan> Update(Loan loan);
         Task Create(Loan loan);
-
+        Task<IList<Loan>> FindByReservationsIds(IList<long> reservationIds);
     }
 }

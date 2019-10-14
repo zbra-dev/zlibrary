@@ -1,10 +1,8 @@
 import { Component, OnInit, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal/bs-modal-ref.service';
-import { Book } from '../../../model/book';
-
 
 @Component({
-    selector: 'zli-confirm',
+    selector: 'confirm',
     templateUrl: './confirm.component.html',
     styleUrls: ['./confirm.component.scss'],
     encapsulation: ViewEncapsulation.Emulated

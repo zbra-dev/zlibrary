@@ -82,6 +82,7 @@ namespace ZLibrary.Web
 
 
             //services
+            services.AddTransient<IReservationFacade, ReservationFacade>();
             services.AddTransient<IBookFacade, BookFacade>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IBookService, BookService>();
@@ -93,6 +94,7 @@ namespace ZLibrary.Web
 
             //repositories
             services.AddTransient<IBookRepository, BookRepository>();
+            services.AddTransient<BookRepository, BookRepository>();
             services.AddTransient<IReservationRepository, ReservationRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IAuthorRepository, AuthorRepository>();
@@ -114,6 +116,12 @@ namespace ZLibrary.Web
             services.AddTransient<ReservationConverter, ReservationConverter>();
             services.AddTransient<UserConverter, UserConverter>();
             services.AddTransient<BookFilterConverter, BookFilterConverter>();
+            services.AddTransient<OrderConverter, OrderConverter>();
+            services.AddTransient<RichReservationConverter, RichReservationConverter>();
+            services.AddTransient<ReservationCancelRequestConverter, ReservationCancelRequestConverter>();
+            services.AddTransient<ReservationReturnRequestConverter, ReservationReturnRequestConverter>();
+            services.AddTransient<ReservationHoldRequestConverter, ReservationHoldRequestConverter>();
+            services.AddTransient<ReservationApproveRequestConverter, ReservationApproveRequestConverter>();
 
             //validators
             services.AddTransient<AuthorDtoValidator, AuthorDtoValidator>();

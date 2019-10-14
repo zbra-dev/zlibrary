@@ -5,7 +5,7 @@ import { Subject } from 'rxjs/Subject';
 const TOAST_TIMEOUT = 50000;
 
 @Component({
-    selector: 'zli-toast',
+    selector: 'toast',
     templateUrl: './toast.component.html',
     styleUrls: ['./toast.component.scss'],
     encapsulation: ViewEncapsulation.Emulated

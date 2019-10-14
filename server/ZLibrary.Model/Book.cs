@@ -14,11 +14,25 @@ namespace ZLibrary.Model
         public string Synopsis { get; set; }
         public int PublicationYear { get; set; }
         public int NumberOfCopies { get; set; }
+        public int NumberOfLoanedCopies { get; set; }
+        public int NumberOfAvailableCopies
+        {
+            get
+            {
+                return NumberOfCopies - NumberOfLoanedCopies;
+            }
+            set
+            {
+                NumberOfAvailableCopies = value;
+            }
+        }
+
         public Guid CoverImageKey { get; set; }
         public DateTime Created { get; set; }
         public string Edition { get; set; }
 
-        public Isbn Isbn {
+        public Isbn Isbn
+        {
             get
             {
                 return IsbnCode == null ? null : Isbn.FromString(IsbnCode);
