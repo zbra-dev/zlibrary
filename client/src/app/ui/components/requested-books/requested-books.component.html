@@ -12,7 +12,8 @@
                 <span class="book-authors"
                     *ngFor="let author of order.book.authors; last as isLast">{{author.name}}{{isLast ? '' : ', '}}</span>
                 <div>
-                    <span>Cópias Disponíveis = {{order.book.numberOfAvailableCopies}} de
+                    <span>{{ 'BOOKS.AVAILABLE_COPIES' | translate }} = {{order.book.numberOfAvailableCopies}}
+                        {{ 'BOOKS.OF' | translate }}
                         {{order.book.numberOfCopies}}</span>
                 </div>
             </div>

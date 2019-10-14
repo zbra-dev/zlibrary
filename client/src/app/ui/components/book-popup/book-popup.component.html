@@ -68,8 +68,8 @@
             <load-image class="input-image" #loadImage [formControlName]="'imageControl'"
                 (ngModelChange)="setCoverImage($event)"></load-image>
             <book-image class="book-image-loaded" *ngIf="isImageLoaded" [book]="book"></book-image>
-            <div class="add-image-button" [innerHTML]="'IMAGE.NEW' | translate"></div>
-        </div>
+            <div *ngIf="!isImageLoaded" class="add-image-button" [innerHTML]="'IMAGE.NEW' | translate"></div>
+        </div>       
         <div class="book-inputs-container">
             <label class="input-label" style="margin-top: 0;">{{ 'BOOKS.FIELD.NAME' | translate }}
                 <div class="validation-alert" *ngIf="isBookTitleEmpty">

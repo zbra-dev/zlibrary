@@ -53,6 +53,8 @@
         "QUIT_WAITING_LIST_QUESTION" : "Deseja sair da lista de espera?",
         "QUIT": "Sair",
         "WITHOUT_RESERVATION": "Nenhuma reserva feita!",
+        "AVAILABLE_COPIES": "Cópias Disponíveis",
+        "OF": "de",
         "RESERVATION": {
             "APPROVED": "Solicitação aprovada, aguarde a disponibilidade do livro.",
             "ACCEPT": "Aceita em {{ date }}",

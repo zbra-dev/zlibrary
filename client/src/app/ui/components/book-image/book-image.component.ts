@@ -15,6 +15,7 @@ const BASE64_BASE_URL = 'data:image/jpg;base64,';
 export class BookImageComponent implements OnInit {
     public coverImageURL: string;
     public isLoading: boolean;
+    public bookTitle: string;
 
     constructor(private coverImageService: CoverImageService,
         private loaderMediator: LoaderMediator,
@@ -26,6 +27,7 @@ export class BookImageComponent implements OnInit {
     set book(book: Book) {
         if (!!book && !!book.id) {
             this.loadImage(book.coverImageKey);
+            this.bookTitle = book.title;
         }
     }
 
@@ -37,7 +39,7 @@ export class BookImageComponent implements OnInit {
             this.loaderMediator.execute(
                 this.coverImageService.loadImage(coverImageKey).subscribe(
                     image => {
-                        this.coverImageURL = `${BASE64_BASE_URL}${image}`;
+                        this.coverImageURL = image ? `${BASE64_BASE_URL}${image}` : null;
                     }, error => {
                         this.coverImageURL = null;
                         this.toastMediator.show(`Erro ao carregar a imagem: ${error}`);
@@ -46,6 +48,7 @@ export class BookImageComponent implements OnInit {
                     }
                 )
             );
+            
         }
     }
 }
